@@ -7,6 +7,13 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Mondo Pool Care – analiza vode i webshop | Mondo Acqua</title>
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+      <link rel="manifest" href="/manifest.webmanifest" />
+      <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+      <meta name="theme-color" content="#020D12" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      <meta name="apple-mobile-web-app-title" content="Pool Care" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
       <meta name="description" content="Analyze pool water chemistry effortlessly with this app, designed for pool owners and professionals to ensure safe and balanced water conditions." />
@@ -20,6 +27,13 @@
       
       <div id="root"></div>
       <script type="module" src="/src/main.tsx"></script>
+      <script>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/sw.js').catch(function () {});
+          });
+        }
+      </script>
       
     </body>
   </html>
