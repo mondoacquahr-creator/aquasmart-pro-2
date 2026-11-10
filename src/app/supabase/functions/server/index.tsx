@@ -796,7 +796,14 @@ registerRoute(app, 'post', '/member/analyses', authMiddleware, memberOnly, async
   const a = cleanAnalysis(body);
   if (a.values.pH === null && a.values.freeChlorine === null) return c.json({ error: 'Analiza nema vrijednosti.' }, 400);
   const id = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}`;
-  const item = { id, ...a, createdAt: new Date().toISOString() };
+  const photoPath = cleanStr(body.photoPath, 200);
+  const appearance = cleanAppearance(body.appearance);
+  const item = {
+    id, ...a,
+    ...(photoPath.startsWith(`company-${user.id}/water/`) ? { photoPath } : {}),
+    ...(appearance ? { appearance } : {}),
+    createdAt: new Date().toISOString(),
+  };
   await kv.set(`member:${user.id}:analyses:${id}`, item);
   // Čuvamo najviše MAX_MEMBER_ANALYSES najnovijih.
   const all = (await kv.getByPrefix(`member:${user.id}:analyses:`)).sort(byDateDesc);
@@ -810,6 +817,92 @@ registerRoute(app, 'delete', '/member/analyses/:id', authMiddleware, memberOnly,
   const user = c.get('user');
   await kv.del(`member:${user.id}:analyses:${cleanStr(c.req.param('id'), 80)}`);
   return c.json({ success: true });
+});
+
+// ---------- Fotografija bazena: spremanje i AI procjena izgleda vode ----------
+
+const CLARITY = ['clear', 'slightly_cloudy', 'cloudy', 'green'];
+const ALGAE = ['none', 'possible', 'visible'];
+const cleanAppearance = (v: any) => {
+  if (!v || typeof v !== 'object' || !CLARITY.includes(v.clarity)) return null;
+  return {
+    isPool: v.isPool !== false,
+    clarity: v.clarity,
+    algae: ALGAE.includes(v.algae) ? v.algae : 'none',
+    debris: v.debris === true,
+    note: cleanStr(v.note, 300),
+  };
+};
+
+const WATER_PHOTO_DAILY = 10;
+const GEMINI_VISION_MODEL = 'gemini-2.5-flash';
+
+const assessWaterPhoto = async (mime: string, data: string) => {
+  const apiKey = Deno.env.get('GEMINI_API_KEY');
+  if (!apiKey) return null;
+  const prompt = [
+    'You are an expert in swimming pool water care. Look at this photo taken by a pool owner.',
+    'Judge only what is clearly visible. If unsure, choose the milder option.',
+    'isPool: true if the photo shows the water of a swimming pool.',
+    'clarity: clear (bottom clearly visible, blue water), slightly_cloudy (bottom visible but hazy), cloudy (milky, bottom hard to see), green (green or greenish water).',
+    'algae: none, possible (slight green or brown tint, patches on walls or floor), visible (clear algae growth or green water).',
+    'debris: true if leaves, insects or dirt are visible on the surface or the floor.',
+    'note: one short, plain sentence in Croatian for the pool owner describing what you see in the water (no product names, no doses).',
+  ].join(' ');
+  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_VISION_MODEL}:generateContent`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
+    body: JSON.stringify({
+      contents: [{ parts: [{ inline_data: { mime_type: mime, data } }, { text: prompt }] }],
+      generationConfig: {
+        responseMimeType: 'application/json',
+        responseSchema: {
+          type: 'OBJECT',
+          properties: {
+            isPool: { type: 'BOOLEAN' },
+            clarity: { type: 'STRING', enum: CLARITY },
+            algae: { type: 'STRING', enum: ALGAE },
+            debris: { type: 'BOOLEAN' },
+            note: { type: 'STRING' },
+          },
+          required: ['isPool', 'clarity', 'algae', 'debris', 'note'],
+        },
+      },
+    }),
+  });
+  if (!r.ok) {
+    console.error('Gemini water photo error', r.status, await r.text().catch(() => ''));
+    return null;
+  }
+  const j = await r.json();
+  const text = (j?.candidates?.[0]?.content?.parts || []).map((p: any) => p.text).filter(Boolean).join('');
+  try { return cleanAppearance(JSON.parse(text)); } catch { return null; }
+};
+
+registerRoute(app, 'post', '/member/water-photo', authMiddleware, memberOnly, async (c: any) => {
+  const user = c.get('user');
+  const body = await c.req.json().catch(() => ({}));
+  const m = typeof body.image === 'string' ? body.image.match(/^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/) : null;
+  if (!m) return c.json({ error: 'Pošaljite fotografiju bazena.' }, 400);
+  if (m[2].length > 4_000_000) return c.json({ error: 'Fotografija je prevelika.' }, 400);
+
+  const day = new Date().toISOString().slice(0, 10);
+  const counterKey = `member:${user.id}:photo-count:${day}`;
+  const used = Number((await kv.get(counterKey))?.n || 0);
+  if (used >= WATER_PHOTO_DAILY) {
+    return c.json({ error: `Danas ste poslali najviše fotografija (${WATER_PHOTO_DAILY}). Pokušajte sutra.` }, 429);
+  }
+
+  const bytes = Uint8Array.from(atob(m[2]), (ch) => ch.charCodeAt(0));
+  const ext = m[1] === 'image/png' ? 'png' : m[1] === 'image/webp' ? 'webp' : 'jpg';
+  const path = `company-${getCompanyId(user)}/water/${Date.now()}.${ext}`;
+  const { error } = await adminClient().storage.from(BUCKET_NAME).upload(path, bytes, { contentType: m[1] });
+  if (error) return c.json({ error: error.message }, 500);
+  await kv.set(counterKey, { n: used + 1 });
+
+  let assessment = null;
+  try { assessment = await assessWaterPhoto(m[1], m[2]); } catch (err) { console.error('Water photo assessment failed:', err); }
+  return c.json({ success: true, path, assessment });
 });
 
 const FREE_VISIT_DAYS = 365;
@@ -872,6 +965,9 @@ registerRoute(app, 'delete', '/member/account', authMiddleware, memberOnly, asyn
   const visits = await kv.getByPrefix(`member:${user.id}:visits:`);
   keys.push(...visits.map((v: any) => `admin:visit-requests:${v.id}`));
   if (keys.length) await kv.mdel(keys);
+  // Fotografije bazena tog vlasnika
+  const { data: photos } = await supabase.storage.from(BUCKET_NAME).list(`company-${user.id}/water`, { limit: 1000 });
+  if (photos?.length) await supabase.storage.from(BUCKET_NAME).remove(photos.map((f: any) => `company-${user.id}/water/${f.name}`));
   const { error } = await supabase.auth.admin.deleteUser(user.id);
   if (error) return c.json({ error: error.message }, 500);
   return c.json({ success: true });

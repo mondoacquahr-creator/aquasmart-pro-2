@@ -29,10 +29,20 @@ const IDEAL_RANGES = {
   orp: { min: 650, max: 750, critical: { min: 600, max: 800 }, publicPool: { min: 720, max: 740 } },
 };
 
+// Izgled vode procijenjen s fotografije bazena (AI).
+export interface WaterAppearance {
+  isPool?: boolean;
+  clarity: 'clear' | 'slightly_cloudy' | 'cloudy' | 'green';
+  algae: 'none' | 'possible' | 'visible';
+  debris?: boolean;
+  note?: string;
+}
+
 export function analyzeWater(
   params: WaterParameters, 
   poolVolume: number, 
-  disinfectionSystem?: 'salt-electrolysis' | 'chlorine+ph' | 'peroxide' | 'tablets' | ''
+  disinfectionSystem?: 'salt-electrolysis' | 'chlorine+ph' | 'peroxide' | 'tablets' | '',
+  appearance?: WaterAppearance | null
 ): AnalysisResult {
   console.log('🔬 === WATER ANALYSIS START ===');
   console.log('📊 Input Parameters:', params);
@@ -236,6 +246,37 @@ export function analyzeWater(
     }
   }
 
+  // Izgled vode s fotografije bazena (AI procjena)
+  if (appearance && appearance.isPool !== false) {
+    const hasFloc = () => recommendations.some(r => r.productId === 'flocculant');
+    if (appearance.clarity === 'green' || appearance.algae === 'visible') {
+      overallStatus = 'critical';
+      issues.push('Voda je zelena ili s vidljivim algama (fotografija bazena)');
+      if (!recommendations.some(r => r.productId === 'chlorine-granules-shock')) {
+        const shock = Products.calculateChlorineShock(params.freeChlorine ?? 0, poolVolume, true);
+        if (shock) recommendations.push(shock);
+      }
+      const floc = Products.calculateFlocculant(poolVolume, 'very-cloudy');
+      if (floc && !hasFloc()) {
+        floc.priority = 3;
+        floc.instructions = 'Nakon šok kloriranja, kad voda više nije zelena. ' + floc.instructions;
+        recommendations.push(floc);
+      }
+      insights.push('🟢 Na fotografiji je voda zelena ili s algama: prvo šok kloriranje i filtracija 24 sata, zatim algicid prema uputi na pakiranju i flokulant.');
+    } else if (appearance.clarity === 'cloudy' || appearance.clarity === 'slightly_cloudy') {
+      if (overallStatus === 'ok') overallStatus = 'warning';
+      issues.push(appearance.clarity === 'cloudy' ? 'Voda je mutna (fotografija bazena)' : 'Voda je blago mutna (fotografija bazena)');
+      const floc = Products.calculateFlocculant(poolVolume, appearance.clarity === 'cloudy' ? 'very-cloudy' : 'slightly-cloudy');
+      if (floc && !hasFloc()) recommendations.push(floc);
+      insights.push('💧 Mutna voda: provjerite filter i vrijeme filtracije, a nakon flokulanta usisajte talog s dna.');
+      if (appearance.algae === 'possible') insights.push('🔎 Na fotografiji su moguće početne alge: pratite boju vode i razinu klora idućih dana.');
+    } else if (appearance.clarity === 'clear') {
+      insights.push('📷 Na fotografiji je voda bistra.');
+      if (appearance.algae === 'possible') insights.push('🔎 Na fotografiji su moguće početne alge: pratite boju vode i razinu klora idućih dana.');
+    }
+    if (appearance.debris) insights.push('🍂 Na fotografiji se vide lišće ili nečistoće: očistite skimmer i usisajte dno.');
+  }
+
   // Alkalinity Analysis
   if (params.alkalinity !== undefined) {
     if (params.alkalinity < IDEAL_RANGES.alkalinity.critical.min) {
@@ -268,7 +309,7 @@ export function analyzeWater(
       
       // Suggest flocculant for clarity
       const floc = Products.calculateFlocculant(poolVolume, 'slightly-cloudy');
-      if (floc) {
+      if (floc && !recommendations.some(r => r.productId === 'flocculant')) {
         floc.priority = 3;
         recommendations.push(floc);
       }

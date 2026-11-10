@@ -9,6 +9,8 @@ import { WaterBackground } from './WaterBackground';
 import { ReadingCard } from './ReadingCard';
 import { memberApi, isMemberLoggedIn } from '../lib/memberApi';
 import { TesterScanButton } from './TesterScan';
+import { PoolPhotoCheck } from './PoolPhotoCheck';
+import type { WaterAppearance } from '../lib/waterAnalysis';
 
 interface WaterAnalysisProps {
   onBack: () => void;
@@ -32,6 +34,8 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
     orp: '',
   });
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
+  const [appearance, setAppearance] = useState<WaterAppearance | null>(null);
+  const [photoPath, setPhotoPath] = useState<string | null>(null);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const savedForResult = useRef<AnalysisResult | null>(null);
 
@@ -64,6 +68,8 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
       status: analysisResult.status,
       message: analysisResult.message,
       issues: analysisResult.issues,
+      ...(photoPath ? { photoPath } : {}),
+      ...(appearance ? { appearance } : {}),
       recommendations: analysisResult.recommendations.map(r => ({
         productName: r.productName,
         dosage: r.dosage,
@@ -93,7 +99,7 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
       orp: testResults.orp ? parseFloat(testResults.orp) : undefined,
     };
 
-    const result = analyzeWater(params, parseFloat(poolVolume), 'chlorine');
+    const result = analyzeWater(params, parseFloat(poolVolume), 'chlorine', appearance);
     setAnalysisResult(result);
     setSaveStatus('idle');
     savedForResult.current = null;
@@ -288,6 +294,9 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
 
               <div className="mb-6">
                 <TesterScanButton onResult={(ph, cl) => setTestResults(prev => ({ ...prev, ph: String(ph), freeChlorine: String(cl) }))} />
+                <div className="mt-3">
+                  <PoolPhotoCheck onRegisterMember={onRegisterMember} onChange={(a, p) => { setAppearance(a); setPhotoPath(p); }} />
+                </div>
               </div>
 
               {/* Pool Volume Input */}

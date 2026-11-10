@@ -10,6 +10,8 @@ import { T } from '../lib/theme';
 import { WaterBackground } from './WaterBackground';
 import { memberApi, isMemberLoggedIn } from '../lib/memberApi';
 import { TesterScanButton } from './TesterScan';
+import { PoolPhotoCheck } from './PoolPhotoCheck';
+import type { WaterAppearance } from '../lib/waterAnalysis';
 
 interface GuestAnalysisProps {
   onBack?: () => void;
@@ -32,6 +34,8 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
     orp: '',
   });
   const [result, setResult] = useState<any>(null);
+  const [appearance, setAppearance] = useState<WaterAppearance | null>(null);
+  const [photoPath, setPhotoPath] = useState<string | null>(null);
   const [showResults, setShowResults] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const savedForResult = useRef<any>(null);
@@ -63,6 +67,8 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
       status: result.status,
       message: result.message,
       issues: result.issues,
+      ...(photoPath ? { photoPath } : {}),
+      ...(appearance ? { appearance } : {}),
       recommendations: (result.recommendations || []).map((r: any) => ({
         productName: r.productName,
         dosage: r.dosage,
@@ -92,7 +98,7 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
       orp: parameters.orp ? parseFloat(parameters.orp) : undefined,
     };
 
-    const analysisResult = analyzeWater(analysisParams, parseFloat(poolVolume), '');
+    const analysisResult = analyzeWater(analysisParams, parseFloat(poolVolume), '', appearance);
     setResult(analysisResult);
     setShowResults(true);
   };
@@ -426,6 +432,7 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
 
           {/* Očitavanje Pooltestera kamerom */}
           <TesterScanButton onResult={(ph, cl) => setParameters(prev => ({ ...prev, pH: String(ph), freeChlorine: String(cl) }))} />
+          <PoolPhotoCheck onRegisterMember={onRegisterMember} onChange={(a, p) => { setAppearance(a); setPhotoPath(p); }} />
 
           {/* pH */}
           <div>

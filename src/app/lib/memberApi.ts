@@ -50,6 +50,8 @@ export interface MemberAnalysis {
   message?: string;
   issues?: string[];
   recommendations?: MemberRecommendation[];
+  photoPath?: string;
+  appearance?: { isPool?: boolean; clarity: string; algae: string; debris?: boolean; note?: string };
 }
 
 export interface MemberVisit {

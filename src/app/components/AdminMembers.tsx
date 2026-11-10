@@ -49,6 +49,48 @@ function AdminErrorCard({ kind, onRetry, onLogin }: {
   );
 }
 
+// Fotografija bazena uz analizu (privatna, učitava se na zahtjev).
+const CLARITY_HR: Record<string, string> = { clear: 'bistra', slightly_cloudy: 'blago mutna', cloudy: 'mutna', green: 'zelena' };
+function AnalysisPhoto({ path, appearance }: { path?: string; appearance?: any }) {
+  const [url, setUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [failed, setFailed] = useState(false);
+  if (!path && !appearance) return null;
+  const load = async () => {
+    if (!path) return;
+    setLoading(true); setFailed(false);
+    try {
+      const res: any = await api.getImageUrl(path);
+      setUrl(res?.url || null);
+      if (!res?.url) setFailed(true);
+    } catch { setFailed(true); }
+    setLoading(false);
+  };
+  return (
+    <div className="mt-2 space-y-1.5">
+      {appearance && (
+        <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          Fotografija: voda {CLARITY_HR[appearance.clarity] || appearance.clarity}
+          {appearance.algae === 'visible' ? ', vidljive alge' : appearance.algae === 'possible' ? ', moguće alge' : ''}
+          {appearance.debris ? ', nečistoće' : ''}
+          {appearance.note ? ` – ${appearance.note}` : ''}
+        </p>
+      )}
+      {path && !url && (
+        <button onClick={load} disabled={loading} className="text-xs font-semibold flex items-center gap-1.5 hover:opacity-80" style={{ color: '#5CE1E6' }}>
+          <ImageIcon className="w-3.5 h-3.5" />
+          {loading ? 'Učitavanje…' : failed ? 'Pokušaj ponovno učitati fotografiju' : 'Prikaži fotografiju bazena'}
+        </button>
+      )}
+      {url && (
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          <img src={url} alt="Fotografija bazena" className="w-full max-w-xs rounded-xl" />
+        </a>
+      )}
+    </div>
+  );
+}
+
 function pHColor(v?: number) {
   if (!v) return T.muted;
   if (v >= 7.2 && v <= 7.6) return '#2EE6A6';
@@ -497,6 +539,7 @@ function MemberDetail({ memberId, onBack, onNavigate, onLogin }: { memberId: str
                     </span>
                   )}
                 </div>
+                <AnalysisPhoto path={a.photoPath} appearance={a.appearance} />
               </div>
             ))}
           </div>
