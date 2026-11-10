@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, Droplet, AlertCircle, TrendingUp, Zap, Package, CheckCircle, ShoppingCart, Droplets } from 'lucide-react';
 import { analyzeWater, IDEAL_RANGES } from '../lib/waterAnalysis';
+import { ReadingCard } from './ReadingCard';
 import { calculateTreatmentCost } from '../lib/productPrices';
 import { motion } from 'motion/react';
 import { useLanguage } from '../lib/languageContext';
@@ -168,6 +169,13 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
             </div>
           )}
 
+          {/* Vizualna kartica očitanja */}
+          <ReadingCard
+            values={{ ph: parameters.pH, freeChlorine: parameters.freeChlorine, alkalinity: parameters.alkalinity, hardness: parameters.hardness, temperature: parameters.temperature }}
+            volume={poolVolume}
+            recommendations={result.recommendations || []}
+          />
+
           {/* Status Card */}
           <div className={`relative overflow-hidden bg-gradient-to-br ${getStatusColor(result.status)} rounded-3xl p-6 text-white shadow-2xl`}>
             <div className="relative z-10">
@@ -198,7 +206,7 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
 
               <div className="space-y-3">
                 {matchedProducts.map((item: any, idx: number) => {
-                  const rec = result.recommendations[idx] as any;
+                  const rec = (result.recommendations.find((r: any) => r.productName === item.productType) ?? result.recommendations[idx]) as any;
                   const inCart = cart.items.find((c) => c.productId === item.product.id);
                   const recDosage = rec?.dosage || item.quantityText;
 

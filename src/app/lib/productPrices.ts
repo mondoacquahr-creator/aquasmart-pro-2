@@ -410,9 +410,32 @@ export function calculateTreatmentCost(recommendations: any[]): TreatmentCost {
   for (const rec of recommendations) {
     console.log('🔍 Processing recommendation:', rec.productName, rec.quantity, rec.unit);
     
+    const safeProductName = String(rec.productName || "");
+
+    // Alternative (npr. granule uz tekući pH Minus) ne idu u košaricu
+    if (safeProductName.toLowerCase().includes('(alternativa)')) continue;
+
+    // Tekući pH Minus: kanister 5 L, količina = broj kanistera
+    if (rec.productId === 'ph-minus-liquid' && rec.quantity) {
+      const product = IVERO_PRICES['ph-minus-liquid-5l'];
+      const litres = rec.unit === 'ml' ? rec.quantity / 1000 : rec.quantity;
+      const quantity = Math.max(1, Math.ceil(litres / 5));
+      items.push({
+        productType: rec.productName,
+        productName: product.name,
+        amountNeeded: rec.quantity,
+        unit: rec.unit,
+        product,
+        quantity,
+        quantityText: `${quantity} x ${product.size}`,
+        totalCost: quantity * product.priceEUR,
+      });
+      totalEUR += quantity * product.priceEUR;
+      continue;
+    }
+
     // Extract product type from productName
     let productType: string | null = null;
-    const safeProductName = String(rec.productName || "");
     
     for (const [key, value] of Object.entries(productTypeMap)) {
       if (safeProductName.toLowerCase().includes(key.toLowerCase())) {
@@ -442,6 +465,9 @@ export function calculateTreatmentCost(recommendations: any[]): TreatmentCost {
       amountInKgOrL = amountNeeded / 1000;
     } else if (unit === 'ml') {
       amountInKgOrL = amountNeeded / 1000;
+    } else if (String(unit).startsWith('tablet')) {
+      // Klor tablete: broj tableta u kg (1 tableta = 200 g)
+      amountInKgOrL = amountNeeded * 0.2;
     }
 
     try {

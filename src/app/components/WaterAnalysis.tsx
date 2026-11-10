@@ -6,6 +6,7 @@ import { calculateTreatmentCost } from '../lib/productPrices';
 import { MONDO_CONTACT, addRecommended } from '../lib/mondoShop';
 import { T } from '../lib/theme';
 import { WaterBackground } from './WaterBackground';
+import { ReadingCard } from './ReadingCard';
 import { memberApi, isMemberLoggedIn } from '../lib/memberApi';
 
 interface WaterAnalysisProps {
@@ -409,6 +410,12 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
                 <h2 className="text-3xl font-semibold mb-2">Plan Tretmana</h2>
                 <p style={{ color: T.muted }}>Točne doze i upute za uravnoteženje vode u bazenu</p>
               </div>
+
+              {analysisResult && (
+                <div className="mb-8 w-full max-w-xl mx-auto">
+                  <ReadingCard values={testResults} volume={poolVolume} recommendations={analysisResult.recommendations} />
+                </div>
+              )}
 
               {!analysisResult && (
                 <div className="glass-card p-12 text-center">
