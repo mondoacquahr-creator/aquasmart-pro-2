@@ -4,6 +4,7 @@ import { WaterBackground } from './WaterBackground';
 import { motion, AnimatePresence } from 'motion/react';
 import { Users, FileText, Package, BarChart3, MapPin, UserCog, Warehouse, Home, Plus, Download, Upload, Trash2, TrendingUp, TrendingDown, Calendar, Eye, Settings, MoreHorizontal, Droplets, CheckCircle, Clock, AlertCircle, Shield, Loader2, Copy, X, ArrowLeft } from 'lucide-react';
 import { AquaSmartProLogo } from './AquaSmartProLogo';
+import { ImportWizard, ImportField, ImportResult } from './ImportWizard';
 import * as XLSX from 'xlsx';
 import { WorkOrderDetailsModal } from './WorkOrderDetailsModal';
 import { useLanguage } from '../lib/languageContext';
@@ -28,6 +29,10 @@ interface Client {
   status: string;
   phone?: string;
   email?: string;
+  address?: string;
+  notes?: string;
+  poolVolume?: number;
+  poolType?: string;
 }
 
 interface WorkOrder {
@@ -92,6 +97,9 @@ interface WarehouseItem {
   trend: 'up' | 'down' | 'stable';
   category: string;
   price?: number;
+  code?: string;
+  supplier?: string;
+  notes?: string;
 }
 
 const STORAGE_KEYS = {
@@ -109,6 +117,7 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
   });
   useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [currentView]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [importing, setImporting] = useState<null | 'clients' | 'warehouse'>(null);
   const warehouseFileInputRef = useRef<HTMLInputElement>(null);
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);
 
@@ -317,6 +326,90 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
     window.addEventListener('popstate', handlePop);
     return () => window.removeEventListener('popstate', handlePop);
   }, []);
+
+  // ── Čarobnjak za uvoz ────────────────────────────────────────────────────
+  const CLIENT_FIELDS: ImportField[] = [
+    { key: 'name', label: 'Ime i prezime / naziv', synonyms: ['klijent', 'kupac', 'naziv', 'ime i prezime', 'puno ime', 'tvrtka', 'name', 'customer', 'client'] },
+    { key: 'firstName', label: 'Ime', synonyms: ['ime', 'first name', 'firstname'] },
+    { key: 'lastName', label: 'Prezime', synonyms: ['prezime', 'last name', 'lastname', 'surname'] },
+    { key: 'address', label: 'Adresa', synonyms: ['adresa', 'ulica', 'ulica i broj', 'address', 'street'] },
+    { key: 'city', label: 'Mjesto', synonyms: ['mjesto', 'grad', 'lokacija', 'opcina', 'city', 'location', 'postanski broj i mjesto'] },
+    { key: 'phone', label: 'Telefon', synonyms: ['telefon', 'mobitel', 'mob', 'tel', 'gsm', 'phone', 'mobile', 'broj telefona'] },
+    { key: 'email', label: 'E-mail', synonyms: ['email', 'e mail', 'mail', 'e-posta'] },
+    { key: 'pools', label: 'Broj bazena', type: 'number', synonyms: ['bazeni', 'broj bazena', 'brojbazena', 'pools'] },
+    { key: 'poolVolume', label: 'Volumen bazena (m³)', type: 'number', synonyms: ['volumen', 'm3', 'zapremnina', 'kubikaza', 'volume'] },
+    { key: 'poolType', label: 'Vrsta bazena', synonyms: ['vrsta bazena', 'tip bazena', 'bazen', 'pool type'] },
+    { key: 'lastService', label: 'Zadnji servis', type: 'date', synonyms: ['zadnji servis', 'zadnjiservis', 'last service'] },
+    { key: 'nextService', label: 'Sljedeći servis', type: 'date', synonyms: ['sljedeci servis', 'sljedeciservis', 'next service'] },
+    { key: 'notes', label: 'Napomena', synonyms: ['napomena', 'biljeska', 'opis', 'notes', 'note', 'komentar'] },
+  ];
+  const WAREHOUSE_FIELDS: ImportField[] = [
+    { key: 'name', label: 'Naziv artikla', required: true, synonyms: ['naziv', 'artikl', 'proizvod', 'opis artikla', 'name', 'item', 'product'] },
+    { key: 'code', label: 'Šifra', synonyms: ['sifra', 'šifra', 'kod', 'code', 'sku', 'kataloski broj', 'ean'] },
+    { key: 'category', label: 'Kategorija', synonyms: ['kategorija', 'grupa', 'vrsta', 'category', 'group'] },
+    { key: 'unit', label: 'Jedinica mjere', synonyms: ['jedinica', 'jm', 'jed mj', 'mjera', 'unit', 'uom'] },
+    { key: 'stock', label: 'Stanje (količina)', type: 'number', synonyms: ['stanje', 'kolicina', 'količina', 'zaliha', 'kom', 'qty', 'quantity', 'stock'] },
+    { key: 'minStock', label: 'Minimalna zaliha', type: 'number', synonyms: ['minimalno', 'min', 'min zaliha', 'minimalna kolicina', 'min stock'] },
+    { key: 'price', label: 'Cijena (€)', type: 'number', synonyms: ['cijena', 'vpc', 'mpc', 'nabavna cijena', 'price', 'eur'] },
+    { key: 'supplier', label: 'Dobavljač', synonyms: ['dobavljac', 'dobavljač', 'supplier', 'proizvodac'] },
+    { key: 'notes', label: 'Napomena', synonyms: ['napomena', 'opis', 'notes'] },
+  ];
+  const nkey = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();
+  const clientName = (r: Record<string, any>) => (r.name || [r.firstName, r.lastName].filter(Boolean).join(' ')).trim();
+
+  const importClients = (rows: Record<string, any>[], mode: 'update' | 'skip'): ImportResult => {
+    const list = [...clients];
+    let added = 0, updated = 0, skipped = 0;
+    const today = new Date().toISOString().split('T')[0];
+    rows.forEach((r, i) => {
+      const name = clientName(r);
+      const data: Partial<Client> = {
+        name, location: r.city, address: r.address, phone: r.phone, email: r.email,
+        pools: r.pools !== undefined ? Math.max(1, Math.round(r.pools)) : undefined,
+        poolVolume: r.poolVolume, poolType: r.poolType, notes: r.notes,
+        lastService: r.lastService, nextService: r.nextService,
+      };
+      Object.keys(data).forEach((k) => (data as any)[k] === undefined && delete (data as any)[k]);
+      const idx = list.findIndex((c) => nkey(c.name) === nkey(name));
+      if (idx >= 0) {
+        if (mode === 'skip') { skipped++; return; }
+        list[idx] = { ...list[idx], ...data };
+        updated++;
+      } else {
+        list.push({
+          id: `import_${Date.now()}_${i}`, status: 'active', pools: 1, location: '',
+          lastService: today, nextService: new Date(Date.now() + 14 * 864e5).toISOString().split('T')[0],
+          ...data, name,
+        } as Client);
+        added++;
+      }
+    });
+    updateClients(list);
+    return { added, updated, skipped };
+  };
+
+  const importWarehouse = (rows: Record<string, any>[], mode: 'update' | 'skip'): ImportResult => {
+    const list = [...warehouse];
+    let added = 0, updated = 0, skipped = 0;
+    rows.forEach((r, i) => {
+      const data: Partial<WarehouseItem> = {
+        name: String(r.name), code: r.code, category: r.category, unit: r.unit,
+        stock: r.stock, minStock: r.minStock, price: r.price, supplier: r.supplier, notes: r.notes,
+      };
+      Object.keys(data).forEach((k) => (data as any)[k] === undefined && delete (data as any)[k]);
+      const idx = list.findIndex((w) => (r.code && w.code && nkey(String(w.code)) === nkey(String(r.code))) || nkey(w.name) === nkey(String(r.name)));
+      if (idx >= 0) {
+        if (mode === 'skip') { skipped++; return; }
+        list[idx] = { ...list[idx], ...data };
+        updated++;
+      } else {
+        list.push({ id: Date.now() + i, category: 'Ostalo', unit: 'kom', stock: 0, minStock: 0, trend: 'stable', ...data } as WarehouseItem);
+        added++;
+      }
+    });
+    updateWarehouse(list);
+    return { added, updated, skipped };
+  };
 
   // Download Warehouse Excel Template
   const downloadWarehouseTemplate = () => {
@@ -799,6 +892,30 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
   return (
     <div className="min-h-screen relative" style={{ background: T.pageBg }}>
       <WaterBackground />
+      {importing === 'clients' && (
+        <ImportWizard
+          title="Uvoz klijenata"
+          storageKey="mpc_import_map_clients"
+          fields={CLIENT_FIELDS}
+          existingNames={clients.map((c) => c.name)}
+          duplicateLabel="Klijent već postoji"
+          mappingCheck={(keys) => (keys.includes('name') || keys.includes('firstName') || keys.includes('lastName') ? null : 'Povežite stupac s imenom klijenta (Ime i prezime / naziv, ili Ime i Prezime).')}
+          validate={(r) => (clientName(r) ? null : 'Nedostaje ime klijenta')}
+          onImport={importClients}
+          onClose={() => setImporting(null)}
+        />
+      )}
+      {importing === 'warehouse' && (
+        <ImportWizard
+          title="Uvoz skladišta"
+          storageKey="mpc_import_map_warehouse"
+          fields={WAREHOUSE_FIELDS}
+          existingNames={warehouse.map((w) => w.name)}
+          duplicateLabel="Artikl već postoji"
+          onImport={importWarehouse}
+          onClose={() => setImporting(null)}
+        />
+      )}
       <input
         type="file"
         ref={fileInputRef}
@@ -1064,7 +1181,7 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
                     <Download className="w-4 h-4" />
                     <span>Predložak</span>
                   </button>
-                  <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'rgba(92,225,230,0.1)', border: '1px solid rgba(92,225,230,0.3)', color: '#5CE1E6' }}>
+                  <button onClick={() => setImporting('clients')} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'rgba(92,225,230,0.1)', border: '1px solid rgba(92,225,230,0.3)', color: '#5CE1E6' }}>
                     <Upload className="w-4 h-4" />
                     <span>Uvoz iz Excela</span>
                   </button>
@@ -1109,7 +1226,7 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
                     <Download className="w-4 h-4" />
                     <span>Predložak</span>
                   </button>
-                  <button onClick={() => warehouseFileInputRef.current?.click()} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'rgba(92,225,230,0.1)', border: '1px solid rgba(92,225,230,0.3)', color: '#5CE1E6' }}>
+                  <button onClick={() => setImporting('warehouse')} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'rgba(92,225,230,0.1)', border: '1px solid rgba(92,225,230,0.3)', color: '#5CE1E6' }}>
                     <Upload className="w-4 h-4" />
                     <span>Uvoz iz Excela</span>
                   </button>
