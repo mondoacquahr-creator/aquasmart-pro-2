@@ -25,7 +25,7 @@ export function TermsOfUse() {
           
           {/* Header */}
           <div className="border-b border-amber-500/20 pb-4">
-            <h2 className="text-2xl font-bold text-amber-400 mb-2">AquaSmart Pro</h2>
+            <h2 className="text-2xl font-bold text-amber-400 mb-2">AcquaSmart Pro</h2>
             <p className="text-slate-400">Zadnje ažurirano: {new Date().toLocaleDateString('hr-HR')}</p>
           </div>
 
@@ -35,7 +35,7 @@ export function TermsOfUse() {
               © Autorska prava
             </h3>
             <p className="text-slate-300 leading-relaxed">
-              <strong>AquaSmart Pro</strong> je zaštićena aplikacija. Sva autorska prava zadržana.
+              <strong>AcquaSmart Pro</strong> je zaštićena aplikacija. Sva autorska prava zadržana.
               Kod, dizajn, logo, naziv aplikacije i sav sadržaj su vlasništvo autora i zaštićeni su 
               hrvatskim i međunarodnim zakonima o autorskim pravima i intelektualnom vlasništvu.
             </p>
@@ -48,7 +48,7 @@ export function TermsOfUse() {
           <div>
             <h3 className="text-lg font-bold text-amber-400 mb-3">1. Prihvaćanje uvjeta</h3>
             <p className="text-slate-300 leading-relaxed">
-              Korištenjem aplikacije AquaSmart Pro prihvaćate ove Uvjete korištenja u cijelosti. 
+              Korištenjem aplikacije AcquaSmart Pro prihvaćate ove Uvjete korištenja u cijelosti. 
               Ako se ne slažete s bilo kojim dijelom ovih uvjeta, nemojte koristiti aplikaciju.
             </p>
           </div>
@@ -83,7 +83,7 @@ export function TermsOfUse() {
               intelektualnog vlasništva.
             </p>
             <p className="text-slate-300 leading-relaxed mt-2">
-              Naziv <strong>"AquaSmart Pro"</strong> i pripadajući logo su registrirani (ili u 
+              Naziv <strong>"AcquaSmart Pro"</strong> i pripadajući logo su registrirani (ili u 
               procesu registracije) žigovi i ne smiju se koristiti bez pisanog dopuštenja vlasnika.
             </p>
           </div>

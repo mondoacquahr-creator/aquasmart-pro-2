@@ -132,7 +132,7 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
             </div>
           </motion.div>
           <h1 className="text-3xl font-bold mb-1" style={{ letterSpacing: '-0.02em' }}>
-            {isMember ? 'Moj bazen – besplatna registracija' : <>Pridružite se AQUA<span className="gradient-text">SMART</span> PRO</>}
+            {isMember ? 'Moj bazen – besplatna registracija' : <>Pridružite se ACQUA<span className="gradient-text">SMART</span> PRO</>}
           </h1>
           {!isMember && (
             <p className="text-sm mt-2" style={{ color: 'rgba(255,255,255,0.5)' }}>Započnite 30 dana besplatnog probnog razdoblja</p>

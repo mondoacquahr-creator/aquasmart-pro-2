@@ -410,7 +410,7 @@ export function WorkOrderPrintView() {
         </div>
 
         <div className="mt-8 text-center text-sm text-gray-600">
-          <div className="font-bold text-teal-600 text-lg mb-1">AquaSmart Pro</div>
+          <div className="font-bold text-teal-600 text-lg mb-1">AcquaSmart Pro</div>
           <div>Mondo Acqua d.o.o. | Profesionalna analiza bazenske vode</div>
         </div>
       </div>

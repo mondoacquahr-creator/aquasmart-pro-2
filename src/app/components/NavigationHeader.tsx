@@ -120,7 +120,7 @@ export function NavigationHeader({
                 onClick={() => navigate('/app')}
                 className="text-xl font-black tracking-tight"
               >
-                <span style={{ color: textColor }}>AQUA</span>
+                <span style={{ color: textColor }}>ACQUA</span>
                 <span className="text-[#D4AF37]">SMART</span>
               </button>
             </div>
@@ -273,7 +273,7 @@ export function NavigationHeader({
             onClick={() => navigate('/app')}
             className="text-lg font-black tracking-tight"
           >
-            <span style={{ color: textColor }}>AQUA</span>
+            <span style={{ color: textColor }}>ACQUA</span>
             <span className="text-[#D4AF37]">SMART</span>
           </button>
         </div>

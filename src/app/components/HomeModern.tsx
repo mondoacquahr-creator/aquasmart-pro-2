@@ -123,7 +123,7 @@ export function HomeModern() {
                 <Droplet className="w-12 h-12 text-[#D4AF37]" />
               </motion.div>
               <h1 className="text-6xl font-black tracking-tighter">
-                <span className="text-[#D4AF37]">AQUA</span>
+                <span className="text-[#D4AF37]">ACQUA</span>
                 <span className="text-white">SMART</span>
                 <span className="text-slate-400 ml-3 text-4xl">PRO</span>
               </h1>
@@ -216,7 +216,7 @@ export function HomeModern() {
             className="text-center mt-16 pt-8 border-t border-slate-800/50"
           >
             <p className="text-slate-500 text-sm">
-              © {new Date().getFullYear()} Mondo Acqua d.o.o. • AquaSmart Pro v1.0.0
+              © {new Date().getFullYear()} Mondo Acqua d.o.o. • AcquaSmart Pro v1.0.0
             </p>
           </motion.div>
         </div>

@@ -40,7 +40,7 @@ export function generateAnalysisPDF(data: PDFExportData): void {
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(24);
   doc.setFont('helvetica', 'bold');
-  doc.text('AquaSmart Pro', 15, 15);
+  doc.text('AcquaSmart Pro', 15, 15);
   
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
@@ -594,7 +594,7 @@ export function generateWorkOrderPDF(workOrder: any, pool: Pool, client?: Client
   
   doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
   doc.setFontSize(8);
-  doc.text('AquaSmart Pro | Modern & Simple Work Order and Maintenance Management CMMS', margin, yPos + 15);
+  doc.text('AcquaSmart Pro | Modern & Simple Work Order and Maintenance Management CMMS', margin, yPos + 15);
   doc.text('www.mondoacqua.hr', margin + width, yPos + 15, { align: 'right' });
 
   // --- ANALYSIS SECTION ---

@@ -38,7 +38,7 @@ export function RoleSelection() {
              <span className="text-xs font-black text-[#D4AF37] uppercase tracking-[0.4em]">Premium Systems</span>
           </div>
           <h1 className="text-5xl font-black text-white mb-4 tracking-tighter">
-            AQUA<span className="text-[#D4AF37]">SMART</span> PRO
+            ACQUA<span className="text-[#D4AF37]">SMART</span> PRO
           </h1>
           <div className="h-1.5 w-24 bg-[#D4AF37] mx-auto rounded-full mb-6"></div>
           <p className="text-gray-500 text-sm font-bold uppercase tracking-widest">{t('roleSelection.title')}</p>

@@ -200,7 +200,7 @@ export function LandingHero() {
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
             <Droplet className="w-8 h-8 text-[#D4AF37]" />
             <div className="text-xl font-black tracking-tighter">
-              <span className="text-[#D4AF37]">AQUA</span>
+              <span className="text-[#D4AF37]">ACQUA</span>
               <span className="text-white">SMART</span>
               <span className="text-slate-400 text-sm ml-2">PRO</span>
             </div>
@@ -435,7 +435,7 @@ export function LandingHero() {
             </div>
 
             <h1 className="text-5xl md:text-7xl font-black leading-tight mb-6">
-              <span className="text-[#D4AF37]">AQUA</span>
+              <span className="text-[#D4AF37]">ACQUA</span>
               <span className="text-white">SMART</span>
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-slate-400">

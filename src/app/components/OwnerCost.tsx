@@ -311,7 +311,7 @@ export function OwnerCost() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button
               onClick={() => {
-                const subject = 'Narudžba - AquaSmart Pro';
+                const subject = 'Narudžba - AcquaSmart Pro';
                 const itemsList = orderItems.map(i => `- ${i.name} (${i.size}) x${i.quantity} = ${(i.price * i.quantity).toFixed(2)}€`).join('\n');
                 const body = `Pozdrav Mondo Acqua,\n\nŽelim naručiti sljedeće proizvode:\n\n${itemsList}\n\nUkupno: ${totalEUR.toFixed(2)} €\n\nIme:\nKontakt broj:`;
                 window.location.href = `mailto:info@mondo-acqua.hr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;

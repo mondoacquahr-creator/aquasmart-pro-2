@@ -35,9 +35,9 @@ export function AquaSmartProLogo({ size = 'md', variant = 'employer' }: AquaSmar
         />
       </div>
 
-      {/* AQUASMART PRO Text - SREDINA */}
+      {/* ACQUASMART PRO Text - SREDINA */}
       <h1 className={`font-bold ${config.text} leading-none tracking-tight`}>
-        <span className="text-white">AQUA</span>
+        <span className="text-white">ACQUA</span>
         <span 
           className="bg-gradient-to-r bg-clip-text text-transparent"
           style={{

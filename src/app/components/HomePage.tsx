@@ -123,7 +123,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-200 drop-shadow-2xl mb-4">
-            <span className="tracking-tight font-extrabold">AquaSmart</span>
+            <span className="tracking-tight font-extrabold">AcquaSmart</span>
             <span className="text-3xl md:text-5xl text-cyan-400 font-light tracking-wider ml-4">Pro</span>
           </h1>
           

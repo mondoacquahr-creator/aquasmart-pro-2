@@ -104,7 +104,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         h1line1: 'Od testa vode',
         h1line2: 'do točne doze.',
         h1line3: 'U 30 sekundi.',
-        desc: 'Upišite očitanja, AquaSmart izračuna kemiju prema deklaraciji proizvoda i preporuči točno što kupiti.',
+        desc: 'Upišite očitanja, AcquaSmart izračuna kemiju prema deklaraciji proizvoda i preporuči točno što kupiti.',
         ctaAnalysis: 'Pokreni analizu →',
         ctaDemo: 'Pogledaj demo',
         tagline: 'Besplatno za vlasnike bazena · 30 dana besplatno za servisere',
@@ -147,7 +147,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         copyright: '© 2026 Vladimir Perić – Mondo Acqua d.o.o. Sva prava pridržana.',
         ipTitle: 'Zaštita intelektualnog vlasništva',
         ipText: 'Svi elementi ovog softvera zaštićeni su međunarodnim zakonima o autorskim pravima i intelektualnom vlasništvu. Neovlašteno kopiranje, distribuiranje ili reprodukcija je strogo zabranjena.',
-        trademarkText: 'AQUASMART PRO™ je zaštićeni trademark. Pool Visualizer™, AquaSmart AR™ i svi povezani logotipi su vlasništvo MONDO ACQUA d.o.o.',
+        trademarkText: 'ACQUASMART PRO™ je zaštićeni trademark. Pool Visualizer™, AcquaSmart AR™ i svi povezani logotipi su vlasništvo MONDO ACQUA d.o.o.',
         prohibited: 'NEOVLAŠTENA UPORABA ZABRANJENA',
       },
     },
@@ -165,7 +165,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         h1line1: 'From water test',
         h1line2: 'to exact dose.',
         h1line3: 'In 30 seconds.',
-        desc: 'Enter your readings. AquaSmart calculates the chemistry from product declarations and recommends exactly what to buy.',
+        desc: 'Enter your readings. AcquaSmart calculates the chemistry from product declarations and recommends exactly what to buy.',
         ctaAnalysis: 'Start analysis →',
         ctaDemo: 'Watch demo',
         tagline: 'Free for pool owners · 30 days free for professionals',
@@ -208,7 +208,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         copyright: '© 2026 Vladimir Perić – Mondo Acqua d.o.o. All rights reserved.',
         ipTitle: 'Intellectual Property Protection',
         ipText: 'All elements of this software are protected by international copyright laws. Unauthorized copying, distribution or reproduction is strictly prohibited.',
-        trademarkText: 'AQUASMART PRO™ is a registered trademark. Pool Visualizer™, AquaSmart AR™ and related logos are property of MONDO ACQUA d.o.o.',
+        trademarkText: 'ACQUASMART PRO™ is a registered trademark. Pool Visualizer™, AcquaSmart AR™ and related logos are property of MONDO ACQUA d.o.o.',
         prohibited: 'UNAUTHORIZED USE PROHIBITED',
       },
     },
@@ -226,7 +226,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         h1line1: "Dal test dell'acqua",
         h1line2: 'alla dose esatta.',
         h1line3: 'In 30 secondi.',
-        desc: "Inserisci le letture, AquaSmart calcola la chimica secondo le dichiarazioni del prodotto.",
+        desc: "Inserisci le letture, AcquaSmart calcola la chimica secondo le dichiarazioni del prodotto.",
         ctaAnalysis: 'Avvia analisi →',
         ctaDemo: 'Guarda demo',
         tagline: 'Gratuito per proprietari · 30 giorni gratis per professionisti',
@@ -269,7 +269,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         copyright: '© 2026 Vladimir Perić – Mondo Acqua d.o.o. Tutti i diritti riservati.',
         ipTitle: 'Protezione della Proprietà Intellettuale',
         ipText: 'Tutti gli elementi di questo software sono protetti dalle leggi internazionali sul copyright.',
-        trademarkText: 'AQUASMART PRO™ è un marchio registrato. Pool Visualizer™, AquaSmart AR™ sono di proprietà di MONDO ACQUA d.o.o.',
+        trademarkText: 'ACQUASMART PRO™ è un marchio registrato. Pool Visualizer™, AcquaSmart AR™ sono di proprietà di MONDO ACQUA d.o.o.',
         prohibited: 'USO NON AUTORIZZATO VIETATO',
       },
     },
@@ -287,7 +287,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         h1line1: 'Vom Wassertest',
         h1line2: 'zur exakten Dosis.',
         h1line3: 'In 30 Sekunden.',
-        desc: 'Geben Sie die Messwerte ein, AquaSmart berechnet die Chemie anhand der Produktdeklarationen.',
+        desc: 'Geben Sie die Messwerte ein, AcquaSmart berechnet die Chemie anhand der Produktdeklarationen.',
         ctaAnalysis: 'Analyse starten →',
         ctaDemo: 'Demo ansehen',
         tagline: 'Kostenlos für Poolbesitzer · 30 Tage kostenlos für Profis',
@@ -330,7 +330,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         copyright: '© 2026 Vladimir Perić – Mondo Acqua d.o.o. Alle Rechte vorbehalten.',
         ipTitle: 'Schutz des geistigen Eigentums',
         ipText: 'Alle Elemente dieser Software sind durch internationale Urheberrechtsgesetze geschützt.',
-        trademarkText: 'AQUASMART PRO™ ist eine eingetragene Marke. Pool Visualizer™, AquaSmart AR™ sind Eigentum der MONDO ACQUA d.o.o.',
+        trademarkText: 'ACQUASMART PRO™ ist eine eingetragene Marke. Pool Visualizer™, AcquaSmart AR™ sind Eigentum der MONDO ACQUA d.o.o.',
         prohibited: 'UNERLAUBTE NUTZUNG VERBOTEN',
       },
     },
@@ -482,7 +482,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                 <Droplets className="w-5 h-5 text-black" />
               </div>
               <span className="text-lg font-bold tracking-tight select-none">
-                <span className="text-white">AQUA</span>
+                <span className="text-white">ACQUA</span>
                 <span className="accent-grad-text">SMART</span>
                 <span className="text-white"> PRO</span>
               </span>
@@ -1436,7 +1436,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                     <Droplets className="w-4 h-4 text-black" />
                   </div>
                   <span className="font-bold text-sm">
-                    <span className="text-white">AQUA</span>
+                    <span className="text-white">ACQUA</span>
                     <span className="accent-grad-text">SMART</span>
                     <span className="text-white"> PRO</span>
                   </span>

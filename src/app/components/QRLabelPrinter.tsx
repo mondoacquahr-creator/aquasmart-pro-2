@@ -63,7 +63,7 @@ export function QRLabelPrinter({ items, onClose }: QRLabelPrinterProps) {
                 </p>
                 <div className="mt-1 flex items-center justify-center gap-1">
                   <span className="text-[10px] bg-amber-500 text-zinc-900 px-1.5 rounded font-black">
-                    AquaSmart Pro
+                    AcquaSmart Pro
                   </span>
                 </div>
               </div>

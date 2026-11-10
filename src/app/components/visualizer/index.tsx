@@ -448,7 +448,7 @@ export default function VisualizerApp() {
             
             <div className="flex flex-col items-start">
               <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-200 drop-shadow-2xl flex items-baseline gap-3">
-                <span className="tracking-tight font-extrabold">AquaSmart</span>
+                <span className="tracking-tight font-extrabold">AcquaSmart</span>
                 <span className="text-2xl text-cyan-400 font-light tracking-wider">Pro</span>
               </h1>
               <div className="flex items-center gap-2 mt-1">

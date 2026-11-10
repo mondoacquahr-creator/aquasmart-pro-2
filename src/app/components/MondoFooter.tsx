@@ -14,7 +14,7 @@ export function MondoFooter({ variant = 'full' }: MondoFooterProps) {
   const labels = {
     hr: {
       contact: "Kontakt",
-      about: "O AquaSmart Pro",
+      about: "O AcquaSmart Pro",
       tags: ["Analiza vode", "Dosing engine", "IVERO proizvodi"],
       privacy: "Pravila privatnosti",
       terms: "Uvjeti korištenja",
@@ -22,7 +22,7 @@ export function MondoFooter({ variant = 'full' }: MondoFooterProps) {
     },
     en: {
       contact: "Contact",
-      about: "About AquaSmart Pro",
+      about: "About AcquaSmart Pro",
       tags: ["Water Analysis", "Dosing Engine", "IVERO Products"],
       privacy: "Privacy Policy",
       terms: "Terms of Use",
@@ -30,7 +30,7 @@ export function MondoFooter({ variant = 'full' }: MondoFooterProps) {
     },
     it: {
       contact: "Contatto",
-      about: "Info AquaSmart Pro",
+      about: "Info AcquaSmart Pro",
       tags: ["Analisi Acqua", "Motore di Dosaggio", "Prodotti IVERO"],
       privacy: "Privacy Policy",
       terms: "Termini d'uso",
@@ -38,7 +38,7 @@ export function MondoFooter({ variant = 'full' }: MondoFooterProps) {
     }
   }[language] || {
     contact: "Kontakt",
-    about: "O AquaSmart Pro",
+    about: "O AcquaSmart Pro",
     tags: ["Analiza vode", "Dosing engine", "IVERO proizvodi"],
     privacy: "Pravila privatnosti",
     terms: "Uvjeti korištenja",
@@ -73,7 +73,7 @@ export function MondoFooter({ variant = 'full' }: MondoFooterProps) {
             
             {/* Copyright */}
             <div className="text-xs text-gray-400 text-center">
-              © {new Date().getFullYear()} AquaSmart Pro - Powered by Mondo Acqua d.o.o.
+              © {new Date().getFullYear()} AcquaSmart Pro - Powered by Mondo Acqua d.o.o.
             </div>
           </div>
         </div>
@@ -168,7 +168,7 @@ export function MondoFooter({ variant = 'full' }: MondoFooterProps) {
             </div>
           </div>
 
-          {/* About AquaSmart Pro */}
+          {/* About AcquaSmart Pro */}
           <div>
             <h4 className="font-bold text-lg mb-4 text-cyan-300">{labels.about}</h4>
             <p className="text-sm text-gray-300 leading-relaxed mb-3">
@@ -203,7 +203,7 @@ export function MondoFooter({ variant = 'full' }: MondoFooterProps) {
           {/* Trademark Notice */}
           <div className="mt-6 pt-4 border-t border-gray-800/50">
             <p className="text-xs text-gray-500 text-center leading-relaxed">
-              AQUASMART PRO™ je zaštićeni trademark. Pool Visualizer™, AquaSmart AR™ i svi povezani logotipi su vlasništvo MONDO ACQUA d.o.o.<br/>
+              ACQUASMART PRO™ je zaštićeni trademark. Pool Visualizer™, AcquaSmart AR™ i svi povezani logotipi su vlasništvo MONDO ACQUA d.o.o.<br/>
               Sva prava pridržana. Neovlaštena upotreba zaštićenih znakova je zabranjena.
             </p>
           </div>

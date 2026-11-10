@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router';
 const SHOTS_DATA = (t: any) => [
   {
     id: 'hero',
-    title: "AQUASMART",
+    title: "ACQUASMART",
     subtitle: t.subtitle,
     image: "https://images.unsplash.com/photo-1763479142885-47f05d01cad1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzd2ltbWluZyUyMHBvb2wlMjBleHRlcmlvcnxlbnwxfHx8fDE3NzE5NDc0OTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
     accent: "#D4AF37",

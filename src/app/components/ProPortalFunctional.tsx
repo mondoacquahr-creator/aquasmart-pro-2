@@ -195,7 +195,7 @@ export function ProPortalFunctional({ onBack, userRole: initialRole }: ProPortal
     const ws = XLSX.utils.json_to_sheet(template);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Klijenti');
-    XLSX.writeFile(wb, 'AquaSmart_Klijenti_Template.xlsx');
+    XLSX.writeFile(wb, 'AcquaSmart_Klijenti_Template.xlsx');
   };
 
   // Add new client manually
@@ -437,7 +437,7 @@ export function ProPortalFunctional({ onBack, userRole: initialRole }: ProPortal
 
             <div>
               <h1 className="font-bold text-xl">
-                AQUA<span style={{ color: '#D4A853' }}>SMART</span> PRO
+                ACQUA<span style={{ color: '#D4A853' }}>SMART</span> PRO
               </h1>
               <p className="text-sm" style={{ color: selectedRole === 'employee' ? '#4A9FD8' : '#D4A853' }}>
                 {selectedRole === 'employee' ? 'Izvršitelj Access' : 'Poslodavac Access'}

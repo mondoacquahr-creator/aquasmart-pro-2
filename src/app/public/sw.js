@@ -1,4 +1,4 @@
-// AquaSmart Pro Service Worker
+// AcquaSmart Pro Service Worker
 const CACHE_NAME = 'aquasmart-v1.0.0';
 const RUNTIME_CACHE = 'aquasmart-runtime';
 
@@ -107,7 +107,7 @@ async function syncAnalysis() {
 // Push notifications support (future feature)
 self.addEventListener('push', (event) => {
   const data = event.data ? event.data.json() : {};
-  const title = data.title || 'AquaSmart Pro';
+  const title = data.title || 'AcquaSmart Pro';
   const options = {
     body: data.body || 'Nova notifikacija',
     icon: '/icons/icon-192x192.png',

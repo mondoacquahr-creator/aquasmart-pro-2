@@ -25,7 +25,7 @@ export function LandingFooter() {
               </div>
               <div>
                 <div className="text-xl font-black text-white tracking-tight">
-                  AQUA<span className="text-[#D4AF37]">SMART</span>
+                  ACQUA<span className="text-[#D4AF37]">SMART</span>
                 </div>
                 <div className="text-[8px] text-gray-500 font-bold uppercase tracking-wider">
                   Professional

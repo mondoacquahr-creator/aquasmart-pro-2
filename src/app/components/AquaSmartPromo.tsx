@@ -9,7 +9,7 @@ import visualizerImg from 'figma:asset/d1667fe5082cfc64105a776b49ca47d8d1029630.
 
 const SCREENSHOTS = [
   {
-    title: 'AQUASMART PRO Platform',
+    title: 'ACQUASMART PRO Platform',
     subtitle: 'Profesionalna Upravna Ploča',
     features: [
       'Upravljanje klijentima i bazenima',
@@ -191,7 +191,7 @@ export function AquaSmartPromo({ onClose }: AquaSmartPromoProps) {
               
               <div>
                 <h1 className="font-bold text-xl">Prezentacija</h1>
-                <p className="text-sm gradient-text">AQUASMART PRO Promo</p>
+                <p className="text-sm gradient-text">ACQUASMART PRO Promo</p>
               </div>
             </div>
 

@@ -1,6 +1,6 @@
 {
-  "name": "AquaSmart Pro - Pool Water Analyzer",
-  "short_name": "AquaSmart Pro",
+  "name": "AcquaSmart Pro - Pool Water Analyzer",
+  "short_name": "AcquaSmart Pro",
   "description": "Profesionalna analiza vode za bazene s Ivero proizvodima i doziranjem",
   "start_url": "/",
   "display": "standalone",

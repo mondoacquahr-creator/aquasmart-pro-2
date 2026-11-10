@@ -115,7 +115,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       <div className="min-h-screen bg-[#030213] flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-gold-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gold-500 font-medium tracking-widest uppercase text-xs">Učitavam AquaSmart Pro...</p>
+          <p className="text-gold-500 font-medium tracking-widest uppercase text-xs">Učitavam AcquaSmart Pro...</p>
         </div>
       </div>
     );

@@ -160,7 +160,7 @@ export function OwnerChat() {
               <div className="flex justify-start">
                 <div className="bg-slate-800 rounded-2xl rounded-tl-none p-4 shadow-lg border border-amber-500/10 max-w-[85%]">
                   <p className="text-sm text-slate-200">
-                    Pozdrav! 👋 Ja sam vaš AquaSmart agent. Kako vam mogu pomoći danas s vašim bazenom?
+                    Pozdrav! 👋 Ja sam vaš AcquaSmart agent. Kako vam mogu pomoći danas s vašim bazenom?
                   </p>
                   <p className="text-[10px] text-slate-500 mt-2">Sustav podrške</p>
                 </div>

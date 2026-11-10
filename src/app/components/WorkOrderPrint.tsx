@@ -53,7 +53,7 @@ export function WorkOrderPrint({ pool, analysis, client }: WorkOrderPrintProps) 
         marginBottom: '25px',
         borderRadius: '8px',
       }}>
-        <h1 style={{ margin: 0, fontSize: '28pt', fontWeight: 'bold' }}>AquaSmart Pro</h1>
+        <h1 style={{ margin: 0, fontSize: '28pt', fontWeight: 'bold' }}>AcquaSmart Pro</h1>
         <p style={{ margin: '5px 0 0 0', fontSize: '12pt', opacity: 0.95 }}>Radni nalog - Analiza bazenske vode</p>
         <p style={{ margin: '5px 0 0 0', fontSize: '10pt', opacity: 0.9 }}>{formatDate(analysis.date)}</p>
       </div>

@@ -242,7 +242,7 @@ export function More() {
             </div>
             <div className="flex items-center gap-2 px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded-full">
               <Crown className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider">AquaSmart Pro</span>
+              <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider">AcquaSmart Pro</span>
             </div>
           </div>
 
@@ -367,7 +367,7 @@ export function More() {
         <div className="mt-10 mb-6 bg-gradient-to-tr from-zinc-900 to-black border border-[#D4AF37]/10 rounded-2xl p-6 text-center shadow-2xl relative overflow-hidden">
           <div className="absolute inset-0 bg-[#D4AF37]/5 animate-pulse"></div>
           <div className="relative z-10 space-y-3">
-            <div className="text-2xl font-black tracking-tighter text-white">AquaSmart <span className="text-[#D4AF37]">Pro</span></div>
+            <div className="text-2xl font-black tracking-tighter text-white">AcquaSmart <span className="text-[#D4AF37]">Pro</span></div>
             <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
               © {new Date().getFullYear()} Mondo Acqua d.o.o.
             </div>

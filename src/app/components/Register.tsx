@@ -79,7 +79,7 @@ export function Register() {
             <h1 className="text-xl font-black tracking-tight uppercase">{t('auth.register')}</h1>
           </div>
           <div className="px-3 py-1 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full">
-            <span className="text-[10px] font-black text-[#D4AF37] uppercase tracking-wider">AquaSmart Pro</span>
+            <span className="text-[10px] font-black text-[#D4AF37] uppercase tracking-wider">AcquaSmart Pro</span>
           </div>
         </div>
       </div>

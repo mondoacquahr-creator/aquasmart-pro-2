@@ -185,7 +185,7 @@ export function AquaSmartAvatar({
 export function AvatarShowcase() {
   return (
     <div className="p-8 bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-8">AquaSmart Avatar Opcije</h1>
+      <h1 className="text-3xl font-bold text-center mb-8">AcquaSmart Avatar Opcije</h1>
       
       <div className="max-w-4xl mx-auto space-y-8">
         {/* DropBot - RECOMMENDED */}

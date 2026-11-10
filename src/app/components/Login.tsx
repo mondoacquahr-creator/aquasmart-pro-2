@@ -108,7 +108,7 @@ export function Login() {
             <Droplet className="w-10 h-10 text-black" />
           </div>
           <h1 className="text-4xl font-black tracking-tighter mb-2">
-            AQUA<span className="text-[#D4AF37]">SMART</span> PRO
+            ACQUA<span className="text-[#D4AF37]">SMART</span> PRO
           </h1>
           <div className="h-1 w-12 bg-[#D4AF37] rounded-full mb-4"></div>
           <p className="text-gray-500 text-xs font-bold uppercase tracking-[0.3em]">{t('auth.professionalLogin')}</p>

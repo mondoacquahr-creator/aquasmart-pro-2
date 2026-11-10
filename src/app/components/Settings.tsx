@@ -181,7 +181,7 @@ export function Settings() {
               </div>
               <div>
                 <h3 className="font-bold text-gray-300">{t('common.darkMode')}</h3>
-                <p className="text-xs text-gray-500">Uvijek aktivno za AquaSmart Pro</p>
+                <p className="text-xs text-gray-500">Uvijek aktivno za AcquaSmart Pro</p>
               </div>
             </div>
             <button
@@ -276,7 +276,7 @@ export function Settings() {
           </div>
           
           <div className="mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-[10px] text-gray-500 font-bold uppercase tracking-widest">
-            <div>AquaSmart Pro v1.0.0 Gold</div>
+            <div>AcquaSmart Pro v1.0.0 Gold</div>
             <div>© {new Date().getFullYear()} Mondo Acqua d.o.o.</div>
           </div>
         </div>

@@ -143,7 +143,7 @@ const downloadExcelTemplate = () => {
     ['3. Brišite primjere iz Predložak sheet-a'],
     ['4. Unesite svoje podatke'],
     ['5. Spremite kao .xlsx datoteku'],
-    ['6. Uvezite u AquaSmart Pro'],
+    ['6. Uvezite u AcquaSmart Pro'],
     [''],
     ['Verzija template-a: 1.0'],
     ['Datum: ' + new Date().toLocaleDateString('hr-HR')]
@@ -155,7 +155,7 @@ const downloadExcelTemplate = () => {
   XLSX.utils.book_append_sheet(wb, ws2, 'PRAVILA I UPUTE');
   
   // Download
-  XLSX.writeFile(wb, `AquaSmart_Skladiste_Template_${new Date().toISOString().split('T')[0]}.xlsx`);
+  XLSX.writeFile(wb, `AcquaSmart_Skladiste_Template_${new Date().toISOString().split('T')[0]}.xlsx`);
 };
 
 export function Warehouse() {

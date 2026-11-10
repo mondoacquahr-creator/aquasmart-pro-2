@@ -71,7 +71,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
 
   const buildOrderText = () => {
     const lines: string[] = [
-      'Narudžba – AquaSmart',
+      'Narudžba – AcquaSmart',
       '',
       `Ime: ${name}`,
       `Telefon: ${phone}`,
@@ -123,7 +123,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
   const handleEmail = () => {
     if (!validate()) return;
     window.open(
-      `mailto:${MONDO_CONTACT.email}?subject=${encodeURIComponent('Narudžba – AquaSmart')}&body=${encodeURIComponent(buildOrderText())}`,
+      `mailto:${MONDO_CONTACT.email}?subject=${encodeURIComponent('Narudžba – AcquaSmart')}&body=${encodeURIComponent(buildOrderText())}`,
       '_blank'
     );
     setConfirmedVia('email');

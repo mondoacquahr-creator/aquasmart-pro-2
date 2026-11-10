@@ -55,7 +55,7 @@ export function ClientImport() {
     const ws = XLSX.utils.json_to_sheet(template);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Klijenti');
-    XLSX.writeFile(wb, 'AquaSmart_Template.xlsx');
+    XLSX.writeFile(wb, 'AcquaSmart_Template.xlsx');
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

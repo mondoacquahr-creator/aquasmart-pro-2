@@ -103,7 +103,7 @@ export function Home() {
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#D4AF37]/60">Professional Hub</span>
                 </motion.div>
                 <h1 className="text-5xl font-black mb-3 tracking-tighter">
-                  <span className="text-[#D4AF37]">AQUA</span>SMART <span className="text-white">PRO</span>
+                  <span className="text-[#D4AF37]">ACQUA</span>SMART <span className="text-white">PRO</span>
                 </h1>
                 <p className="text-slate-400 text-lg font-medium">{t('common.welcome')}, <span className="text-white">{user?.name || t('roles.employer')}</span></p>
                 <div className="mt-6">
@@ -260,7 +260,7 @@ export function Home() {
                 <span className="text-[9px] font-black uppercase tracking-[0.4em] text-[#D4AF37]/60">Field Specialist</span>
               </motion.div>
               <h1 className="text-5xl font-black mb-2 tracking-tighter">
-                <span className="text-[#D4AF37]">AQUA</span>SMART
+                <span className="text-[#D4AF37]">ACQUA</span>SMART
               </h1>
               <p className="text-slate-400 text-lg font-medium">
                 {t('common.welcome')}, <span className="text-white">{localStorage.getItem('currentEmployeeName') || t('roles.employee')}</span>

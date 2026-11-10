@@ -212,7 +212,7 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
               </div>
 
               <h1 className="text-8xl font-black mb-6" style={{ letterSpacing: '-0.05em', lineHeight: '1' }}>
-                <span className="text-white">AQUA</span>
+                <span className="text-white">ACQUA</span>
                 <span className="bg-gradient-to-r from-[#FFD60A] to-[#FF8A1F] bg-clip-text text-transparent">SMART</span>
                 <span className="text-white"> PRO™</span>
               </h1>

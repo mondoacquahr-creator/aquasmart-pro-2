@@ -90,7 +90,7 @@ export function OwnerMode() {
             <AquaSmartAvatar variant="dropbot" size="xl" />
           </div>
           <h1 className="text-4xl font-black text-white mb-2 tracking-tighter">
-            AQUA<span className="text-[#D4AF37]">SMART</span> PRO
+            ACQUA<span className="text-[#D4AF37]">SMART</span> PRO
           </h1>
           <p className="text-gray-500 text-xs font-bold uppercase tracking-[0.3em]">
             {language === 'hr' ? 'Profesionalna briga o vašem bazenu' : language === 'it' ? 'Cura professionale della tua piscina' : 'Professional care for your pool'}
