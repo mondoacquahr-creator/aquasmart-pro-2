@@ -9,6 +9,7 @@ import {
   Target, Award, Settings, Database, Video
 } from 'lucide-react';
 import { T } from '../lib/theme';
+import { AppIcon } from './AppIcon';
 import { WaterBackground } from './WaterBackground';
 
 interface ProductShowcaseProps {
@@ -205,12 +206,6 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 backdrop-blur-xl"
-                style={{ background: T.cardBg, border: T.cardBorder }}>
-                <Sparkles className="w-4 h-4" style={{ color: T.cyan }} />
-                <span className="text-xs font-bold uppercase tracking-wider text-white">Centar za Iskustvo Proizvoda</span>
-              </div>
-
               <h1 className="text-8xl font-black mb-6" style={{ letterSpacing: '-0.05em', lineHeight: '1' }}>
                 <span className="text-white">MONDO </span>
                 <span className="bg-gradient-to-r from-[#7FDBFF] to-[#1E88E5] bg-clip-text text-transparent">POOL CARE</span>
@@ -308,7 +303,7 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
                       style={{ background: `linear-gradient(135deg, ${feature.color}10 0%, transparent 100%)` }}></div>
 
                     <div className="relative z-10">
-                      <div className="text-6xl mb-4">{feature.image}</div>
+                      <div className="mb-6"><AppIcon icon={feature.icon} size={76} tone="cyan" /></div>
                       <h4 className="text-2xl font-bold mb-2 text-white">{feature.title}</h4>
                       <p className="text-sm mb-4" style={{ color: T.muted }}>{feature.subtitle}</p>
                       <p className="text-sm mb-6 leading-relaxed" style={{ color: T.faint }}>{feature.description}</p>
@@ -372,7 +367,7 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
                     )}
 
                     <div className="relative z-10">
-                      <div className="text-6xl mb-4">{feature.image}</div>
+                      <div className="mb-6"><AppIcon icon={feature.icon} size={76} /></div>
                       <h4 className="text-2xl font-bold mb-2 text-white">{feature.title}</h4>
                       <p className="text-sm mb-4" style={{ color: T.muted }}>{feature.subtitle}</p>
                       <p className="text-sm mb-6 leading-relaxed" style={{ color: T.faint }}>{feature.description}</p>
@@ -438,20 +433,8 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
                     viewport={{ once: true }}
                     className="text-center"
                   >
-                    <motion.div
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      className="w-20 h-20 mx-auto mb-4 rounded-2xl flex items-center justify-center relative overflow-hidden"
-                      style={{
-                        background: `${step.color}20`,
-                        border: `2px solid ${step.color}`,
-                        boxShadow: `0 0 30px ${step.color}40`
-                      }}
-                    >
-                      <step.icon className="w-10 h-10" style={{ color: step.color }} />
-                      <div className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
-                        style={{ background: step.color, color: '#000' }}>
-                        {idx + 1}
-                      </div>
+                    <motion.div whileHover={{ scale: 1.08 }} className="w-20 mx-auto mb-4 flex justify-center">
+                      <AppIcon icon={step.icon} size={80} badge={idx + 1} />
                     </motion.div>
 
                     <h4 className="text-sm font-bold text-white mb-2">{step.title}</h4>

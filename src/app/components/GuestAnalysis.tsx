@@ -71,13 +71,13 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
   }, [result, showResults]);
 
   const handleAnalyze = () => {
-    if (!poolVolume || !parameters.pH || !parameters.freeChlorine) {
+    if (!poolVolume || !parameters.pH || (!parameters.freeChlorine && !parameters.orp)) {
       alert(
         language === 'hr'
-          ? 'Molimo unesite volumen bazena, pH i slobodni klor'
+          ? 'Molimo unesite volumen bazena, pH te slobodni klor ili Redox (ORP)'
           : language === 'it'
-          ? 'Si prega di inserire il volume della piscina, il pH e il cloro libero'
-          : 'Please enter pool volume, pH and free chlorine'
+          ? 'Si prega di inserire il volume della piscina, il pH e il cloro libero o il redox (ORP)'
+          : 'Please enter pool volume, pH and free chlorine or redox (ORP)'
       );
       return;
     }
@@ -171,7 +171,7 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
 
           {/* Vizualna kartica očitanja */}
           <ReadingCard
-            values={{ ph: parameters.pH, freeChlorine: parameters.freeChlorine, alkalinity: parameters.alkalinity, hardness: parameters.hardness, temperature: parameters.temperature }}
+            values={{ ph: parameters.pH, freeChlorine: parameters.freeChlorine, orp: parameters.orp, alkalinity: parameters.alkalinity, hardness: parameters.hardness, temperature: parameters.temperature }}
             volume={poolVolume}
             recommendations={result.recommendations || []}
           />

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { equipmentSpec } from '../lib/equipmentSpec';
 import { motion } from 'motion/react';
 import { Droplets, LogOut, RefreshCw, ChevronDown, ChevronUp, Trash2, Save, CheckCircle, AlertTriangle, XCircle, Phone, MapPin, Calendar, Wrench, BarChart2, User, Home, FlaskConical, Package, Star } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
@@ -406,7 +407,8 @@ function PoolTab({ data, onSaved }: { data: MemberData; onSaved: () => void }) {
 
   const f = (field: keyof MemberPool) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const v = e.target.value;
-    setForm(prev => ({ ...prev, [field]: v === '' ? undefined : (typeof prev[field] === 'number' ? parseFloat(v) || undefined : v) }));
+    const numeric = (e.target as HTMLInputElement).type === 'number';
+    setForm(prev => ({ ...prev, [field]: v === '' ? undefined : (numeric || typeof prev[field] === 'number' ? (isNaN(parseFloat(v.replace(',', '.'))) ? undefined : parseFloat(v.replace(',', '.'))) : v) }));
     setSaved(false);
   };
 
@@ -478,14 +480,37 @@ function PoolTab({ data, onSaved }: { data: MemberData; onSaved: () => void }) {
           className="w-full px-4 py-4 rounded-2xl text-white transition-all" placeholder="npr. kvarcni pijesak 0.4–0.8 mm"
           style={{ ...inputStyle }} />
       </div>
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>Punjenje filtera (kg)</label>
+          {inp('filterLoad', 'npr. 75', 'number')}
+        </div>
+        <div>
+          <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>Snaga pumpe</label>
+          <div className="flex gap-2">
+            <div className="flex-1 min-w-0">{inp('pumpPower', 'npr. 0.75', 'number')}</div>
+            <select value={form.pumpPowerUnit || 'kW'} onChange={f('pumpPowerUnit')}
+              className="px-3 py-4 rounded-2xl transition-all" style={{ ...inputStyle, width: 86 }}>
+              <option value="kW">kW</option>
+              <option value="HP">KS</option>
+            </select>
+          </div>
+        </div>
+      </div>
       <div>
         <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>Dezinfekcija</label>
-        {sel('disinfection', ['Klor tablete', 'Klor granule', 'Sol / elektroliza', 'Aktivni kisik', 'UV', 'Ostalo'])}
+        {sel('disinfection', ['Klor tablete', 'Multitablete', 'Klor granule', 'Sol / elektroliza', 'Aktivni kisik', 'UV', 'Ostalo'])}
       </div>
       <div>
         <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>Grijanje</label>
         {sel('heating', ['Nema', 'Toplinska pumpa', 'Solarno', 'Izmjenjivač', 'Ostalo'])}
       </div>
+      {form.heating && form.heating !== 'Nema' && (
+        <div>
+          <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>Snaga grijanja (kW)</label>
+          {inp('heatingPower', 'npr. 12', 'number')}
+        </div>
+      )}
       <div>
         <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>Pokrivač</label>
         {sel('cover', ['Nema', 'Solarni', 'Zimski', 'Rolo', 'Ostalo'])}
@@ -540,7 +565,7 @@ function EquipmentTab({ data, onRequestVisit }: { data: MemberData; onRequestVis
           <div className="flex items-start justify-between gap-2 mb-2">
             <div>
               <p className="font-semibold text-white">{eq.type}</p>
-              {(eq.brand || eq.model) && <p className="text-sm" style={{ color: T.muted }}>{[eq.brand, eq.model].filter(Boolean).join(' ')}</p>}
+              {(eq.brand || eq.model || equipmentSpec(eq)) && <p className="text-sm" style={{ color: T.muted }}>{[eq.brand, eq.model, equipmentSpec(eq)].filter(Boolean).join(' · ')}</p>}
             </div>
             <StatusBadge condition={eq.condition} />
           </div>
@@ -613,7 +638,7 @@ function ProfileTab({ data, onSaved, onLogout, onDeleted }: {
           style={{ ...inputStyle }} />
       </div>
       <div>
-        <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>Mjesto</label>
+        <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>Poštanski broj i mjesto</label>
         <input type="text" value={form.city || ''} onChange={e => setForm({ ...form, city: e.target.value })}
           className="w-full px-4 py-4 rounded-2xl text-white transition-all" placeholder="Zagreb"
           style={{ ...inputStyle }} />
@@ -737,7 +762,7 @@ function VisitModal({ data, onClose, onSuccess }: { data: MemberData; onClose: (
                 style={{ ...inputStyle }} />
             </div>
             <div>
-              <label className="text-xs font-semibold uppercase tracking-wider mb-1.5 block" style={{ color: T.faint }}>Mjesto</label>
+              <label className="text-xs font-semibold uppercase tracking-wider mb-1.5 block" style={{ color: T.faint }}>Poštanski broj i mjesto</label>
               <input type="text" value={form.city} onChange={e => setForm({ ...form, city: e.target.value })}
                 className="w-full px-4 py-3 rounded-xl text-white" placeholder="Zagreb"
                 style={{ ...inputStyle }} />
@@ -830,11 +855,18 @@ export function MemberPortal({ onLogout, onNavigate }: MemberPortalProps) {
                 </div>
               </div>
             </div>
-            <button onClick={onLogout}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:bg-white/10"
-              style={{ border: '1px solid rgba(255,255,255,0.12)', color: T.muted }}>
-              <LogOut className="w-4 h-4" /> Odjava
+            <div className="flex items-center gap-2">
+            <button onClick={() => onNavigate('home')}
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:bg-white/10"
+              style={{ border: '1px solid rgba(255,255,255,0.12)', color: T.muted }} aria-label="Početna">
+              <Home className="w-4 h-4" /> <span className="hidden sm:inline">Početna</span>
             </button>
+            <button onClick={onLogout}
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:bg-white/10"
+              style={{ border: '1px solid rgba(255,255,255,0.12)', color: T.muted }}>
+              <LogOut className="w-4 h-4" /> <span className="hidden sm:inline">Odjava</span>
+            </button>
+            </div>
           </div>
 
           {/* Tabs */}

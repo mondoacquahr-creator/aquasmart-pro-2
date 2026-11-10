@@ -22,7 +22,7 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
   const [showProConfirm, setShowProConfirm] = useState(false);
 
   // Member form state
-  const [memberData, setMemberData] = useState({ name: '', email: '', phone: '', city: '', password: '', confirmPassword: '' });
+  const [memberData, setMemberData] = useState({ name: '', email: '', phone: '', address: '', city: '', password: '', confirmPassword: '' });
   const [showMemberPassword, setShowMemberPassword] = useState(false);
   const [showMemberConfirm, setShowMemberConfirm] = useState(false);
   const [consent, setConsent] = useState(false);
@@ -66,6 +66,8 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
     if (!memberData.email.trim()) { setError('Upišite e-mail adresu.'); return; }
     if (memberData.password.length < 8) { setError('Lozinka mora imati najmanje 8 znakova.'); return; }
     if (memberData.password !== memberData.confirmPassword) { setError('Lozinke se ne podudaraju.'); return; }
+    if (!memberData.phone.trim()) { setError('Upišite telefon (za dostavu i dogovor termina).'); return; }
+    if (!memberData.address.trim() || !memberData.city.trim()) { setError('Upišite adresu i mjesto za dostavu.'); return; }
     if (!consent) { setError('Za registraciju je potrebna privola.'); return; }
     setIsLoading(true);
     try {
@@ -77,7 +79,9 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
         consent: true,
         phone: memberData.phone || undefined,
         city: memberData.city || undefined,
+        address: memberData.address || undefined,
       });
+      try { localStorage.setItem('memberName', memberData.name); } catch {}
       onRegisterSuccess();
     } catch (err: any) {
       setIsLoading(false);
@@ -218,7 +222,7 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
               </div>
               {/* Phone */}
               <div>
-                <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: 'rgba(255,255,255,0.5)' }}>TELEFON</label>
+                <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: 'rgba(255,255,255,0.5)' }}>TELEFON *</label>
                 <div className="relative">
                   <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(255,255,255,0.3)' }} />
                   <input type="tel" value={memberData.phone} onChange={e => setMemberData({ ...memberData, phone: e.target.value })}
@@ -226,13 +230,24 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
                     style={inputStyle} />
                 </div>
               </div>
+              <p className="text-xs pt-1" style={{ color: 'rgba(255,255,255,0.5)' }}>Podaci za dostavu – upisuju se jednom i sami se popunjavaju kod narudžbe.</p>
+              {/* Address */}
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: 'rgba(255,255,255,0.5)' }}>ADRESA (ULICA I BROJ) *</label>
+                <div className="relative">
+                  <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(255,255,255,0.3)' }} />
+                  <input type="text" autoComplete="street-address" value={memberData.address} onChange={e => setMemberData({ ...memberData, address: e.target.value })}
+                    className="w-full pl-12 pr-4 py-4 rounded-2xl text-white transition-all" placeholder="Ilica 1"
+                    style={inputStyle} />
+                </div>
+              </div>
               {/* City */}
               <div>
-                <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: 'rgba(255,255,255,0.5)' }}>MJESTO</label>
+                <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: 'rgba(255,255,255,0.5)' }}>POŠTANSKI BROJ I MJESTO *</label>
                 <div className="relative">
                   <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(255,255,255,0.3)' }} />
                   <input type="text" value={memberData.city} onChange={e => setMemberData({ ...memberData, city: e.target.value })}
-                    className="w-full pl-12 pr-4 py-4 rounded-2xl text-white transition-all" placeholder="Zagreb"
+                    className="w-full pl-12 pr-4 py-4 rounded-2xl text-white transition-all" placeholder="10000 Zagreb"
                     style={inputStyle} />
                 </div>
               </div>

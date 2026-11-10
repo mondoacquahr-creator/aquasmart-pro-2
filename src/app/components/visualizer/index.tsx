@@ -18,10 +18,10 @@ export default function VisualizerApp() {
   
   const [step, setStep] = useState<'dest' | 'source' | 'done'>('dest');
   
-  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [step]);
   
   // Store display dimensions before DOM elements disappear
   const [destDisplaySize, setDestDisplaySize] = useState({ width: 0, height: 0 });
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [step]);
   const [sourceDisplaySize, setSourceDisplaySize] = useState({ width: 0, height: 0 });
   
   // UI helpers - VISUAL ONLY!

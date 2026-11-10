@@ -104,10 +104,10 @@ const STORAGE_KEYS = {
 export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps) {
   const { t } = useLanguage();
   const [currentView, setCurrentView] = useState<'home' | 'employees' | 'work-orders' | 'clients' | 'warehouse' | 'analytics' | 'more'>(() => {
-  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [currentView]);
     const saved = sessionStorage.getItem('employer_view');
     return (saved as any) || 'home';
   });
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [currentView]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const warehouseFileInputRef = useRef<HTMLInputElement>(null);
   const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrder | null>(null);

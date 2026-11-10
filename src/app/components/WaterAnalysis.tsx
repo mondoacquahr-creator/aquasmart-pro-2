@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef } from 'react';
-import { Beaker, Droplets, TrendingUp, AlertCircle, CheckCircle, ArrowLeft, Download, Share2, BarChart3, MapPin, Phone, Mail, MessageCircle, Sparkles, Package, ShoppingCart } from 'lucide-react';
+import { Beaker, Droplets, TrendingUp, AlertCircle, CheckCircle, ArrowLeft, Download, Share2, BarChart3, MapPin, Phone, Mail, MessageCircle, Sparkles, Package, ShoppingCart, Zap } from 'lucide-react';
 import { analyzeWater, AnalysisResult } from '../lib/waterAnalysis';
 import { calculateTreatmentCost } from '../lib/productPrices';
 import { MONDO_CONTACT, addRecommended } from '../lib/mondoShop';
@@ -28,6 +28,7 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
     hardness: '',
     cyanuricAcid: '',
     temperature: '',
+    orp: '',
   });
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
@@ -57,6 +58,7 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
       hardness: testResults.hardness ? parseFloat(testResults.hardness) : undefined,
       cyanuricAcid: testResults.cyanuricAcid ? parseFloat(testResults.cyanuricAcid) : undefined,
       temperature: testResults.temperature ? parseFloat(testResults.temperature) : undefined,
+      orp: testResults.orp ? parseFloat(testResults.orp) : undefined,
       volume: poolVolume ? parseFloat(poolVolume) : undefined,
       status: analysisResult.status,
       message: analysisResult.message,
@@ -74,8 +76,8 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
   };
 
   const handleAnalyze = () => {
-    if (!poolVolume || !testResults.ph || !testResults.freeChlorine) {
-      alert('Molimo unesite volumen bazena, pH i slobodni klor');
+    if (!poolVolume || !testResults.ph || (!testResults.freeChlorine && !testResults.orp)) {
+      alert('Molimo unesite volumen bazena, pH te slobodni klor ili Redox (ORP)');
       return;
     }
 
@@ -87,6 +89,7 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
       hardness: testResults.hardness ? parseFloat(testResults.hardness) : undefined,
       cyanuricAcid: testResults.cyanuricAcid ? parseFloat(testResults.cyanuricAcid) : undefined,
       temperature: testResults.temperature ? parseFloat(testResults.temperature) : undefined,
+      orp: testResults.orp ? parseFloat(testResults.orp) : undefined,
     };
 
     const result = analyzeWater(params, parseFloat(poolVolume), 'chlorine');
@@ -99,12 +102,13 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
   const analyzeParameter = (param: string, value: number) => {
     const ranges: any = {
       ph: { min: 7.2, max: 7.6, ideal: 7.4 },
-      freeChlorine: { min: 1.0, max: 3.0, ideal: 2.0 },
+      freeChlorine: { min: 0.5, max: 1.5, ideal: 1.0 },
       totalChlorine: { min: 1.0, max: 3.0, ideal: 2.0 },
       alkalinity: { min: 80, max: 120, ideal: 100 },
       hardness: { min: 200, max: 400, ideal: 300 },
       cyanuricAcid: { min: 30, max: 50, ideal: 40 },
       temperature: { min: 20, max: 30, ideal: 25 },
+      orp: { min: 650, max: 750, ideal: 700 },
     };
     const range = ranges[param];
     if (!range) return 'unknown';
@@ -126,7 +130,8 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
 
   const parameters = [
     { id: 'ph', label: 'pH razina', unit: '', icon: Droplets, idealRange: '7.2 - 7.6' },
-    { id: 'freeChlorine', label: 'Slobodni klor', unit: 'mg/l', icon: Beaker, idealRange: '1.0 - 3.0' },
+    { id: 'freeChlorine', label: 'Slobodni klor', unit: 'mg/l', icon: Beaker, idealRange: '0.5 - 1.5' },
+    { id: 'orp', label: 'Redox (ORP)', unit: 'mV', icon: Zap, idealRange: '650 - 750' },
     { id: 'totalChlorine', label: 'Ukupni klor', unit: 'mg/l', icon: Beaker, idealRange: '1.0 - 3.0' },
     { id: 'alkalinity', label: 'Ukupna alkalnost', unit: 'mg/l', icon: TrendingUp, idealRange: '80 - 120' },
     { id: 'hardness', label: 'Tvrdoća vode (Ca)', unit: 'mg/l', icon: Droplets, idealRange: '200 - 400' },
@@ -141,7 +146,9 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
       .filter(item => item.product.id !== 'unknown')
       .map(item => ({ productId: item.product.id, quantity: item.quantity }));
 
-    let summary = `Volumen ${poolVolume} m³, pH ${testResults.ph}, slobodni klor ${testResults.freeChlorine} mg/l`;
+    let summary = `Volumen ${poolVolume} m³, pH ${testResults.ph}`;
+    if (testResults.freeChlorine) summary += `, slobodni klor ${testResults.freeChlorine} mg/l`;
+    if (testResults.orp) summary += `, Redox ${testResults.orp} mV`;
     if (testResults.alkalinity) summary += `, alkalnost ${testResults.alkalinity} mg/l`;
 
     addRecommended(items, summary);

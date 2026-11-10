@@ -17,6 +17,7 @@ export interface RegisterData {
   consent?: boolean;
   phone?: string;
   city?: string;
+  address?: string;
 }
 
 export const authService = {
@@ -198,6 +199,7 @@ export const authService = {
         consent: data.consent,
         phone: data.phone,
         city: data.city,
+        address: data.address,
       });
 
       // Nakon uspješne registracije, prijavljujemo korisnika odmah

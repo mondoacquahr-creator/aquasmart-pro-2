@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { IDEAL_RANGES } from '../lib/waterAnalysis';
 
 // Vizualna kartica očitanja (isti stil kao primjer na naslovnici), ali sa stvarnim vrijednostima.
 
@@ -6,14 +7,16 @@ const CARD_BG = 'rgba(10,40,52,0.55)';
 const CARD_BORDER = '1px solid rgba(120,220,255,0.12)';
 const CYAN = '#5CE1E6';
 
-type ParamId = 'ph' | 'freeChlorine' | 'totalChlorine' | 'alkalinity' | 'hardness' | 'cyanuricAcid' | 'temperature';
+type ParamId = 'ph' | 'freeChlorine' | 'orp' | 'totalChlorine' | 'alkalinity' | 'hardness' | 'cyanuricAcid' | 'temperature';
 
+// Rasponi su isti kao u analizi (lib/waterAnalysis), da kartica i status vode uvijek govore isto.
 const PARAMS: { id: ParamId; label: string; unit: string; min: number; max: number }[] = [
-  { id: 'ph', label: 'pH', unit: '', min: 7.2, max: 7.6 },
-  { id: 'freeChlorine', label: 'Slobodni klor', unit: 'mg/L', min: 1.0, max: 3.0 },
+  { id: 'ph', label: 'pH', unit: '', min: IDEAL_RANGES.pH.min, max: IDEAL_RANGES.pH.max },
+  { id: 'freeChlorine', label: 'Slobodni klor', unit: 'mg/L', min: IDEAL_RANGES.freeChlorine.min, max: IDEAL_RANGES.freeChlorine.max },
+  { id: 'orp', label: 'Redox (ORP)', unit: 'mV', min: IDEAL_RANGES.orp.min, max: IDEAL_RANGES.orp.max },
   { id: 'totalChlorine', label: 'Ukupni klor', unit: 'mg/L', min: 1.0, max: 3.0 },
-  { id: 'alkalinity', label: 'Alkalitet', unit: 'mg/L', min: 80, max: 120 },
-  { id: 'hardness', label: 'Tvrdoća (Ca)', unit: 'mg/L', min: 200, max: 400 },
+  { id: 'alkalinity', label: 'Alkalitet', unit: 'mg/L', min: IDEAL_RANGES.alkalinity.min, max: IDEAL_RANGES.alkalinity.max },
+  { id: 'hardness', label: 'Tvrdoća (Ca)', unit: 'mg/L', min: IDEAL_RANGES.hardness.min, max: IDEAL_RANGES.hardness.max },
   { id: 'cyanuricAcid', label: 'Cijanurna kiselina', unit: 'mg/L', min: 30, max: 50 },
   { id: 'temperature', label: 'Temperatura', unit: '°C', min: 20, max: 30 },
 ];
@@ -108,29 +111,32 @@ export function ReadingCard({ values, volume, recommendations }: ReadingCardProp
               <span className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.7)' }}>{r.label}</span>
               <span className="text-xl font-bold text-white">{fmt(r.value)}{r.unit ? ` ${r.unit}` : ''}</span>
             </div>
-            <div className="relative h-2.5 rounded-full mb-1.5" style={{ background: 'rgba(255,255,255,0.1)' }}>
-              {/* idealni raspon */}
-              <div className="absolute inset-y-0 rounded-full" style={{ left: '33.3%', width: '33.4%', background: 'rgba(46,230,166,0.16)' }} />
+            <div className="relative h-3 rounded-full mt-1" style={{ background: 'rgba(255,255,255,0.08)' }}>
+              {/* ciljni raspon: jasno označen */}
+              <div
+                className="absolute -inset-y-1 rounded-md"
+                style={{ left: '33.3%', width: '33.4%', background: 'rgba(46,230,166,0.22)', boxShadow: 'inset 0 0 0 1.5px rgba(46,230,166,0.85)' }}
+              />
               <motion.div
                 className="absolute inset-y-0 left-0 rounded-full"
-                style={{ background: r.grad }}
+                style={{ background: r.grad, opacity: 0.9 }}
                 initial={{ width: '0%' }}
                 animate={{ width: `${r.pct}%` }}
                 transition={{ delay: 0.3 + idx * 0.15, duration: 1.1, ease: [0.4, 0, 0.2, 1] }}
               />
               <motion.div
-                className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white"
-                style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.4)', marginLeft: '-8px' }}
+                className="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white"
+                style={{ boxShadow: `0 0 0 3px ${r.color}, 0 2px 10px rgba(0,0,0,0.5)`, marginLeft: '-10px' }}
                 initial={{ left: '0%' }}
                 animate={{ left: `${r.pct}%` }}
                 transition={{ delay: 0.3 + idx * 0.15, duration: 1.1, ease: [0.4, 0, 0.2, 1] }}
               />
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-xs" style={{ color: 'rgba(255,255,255,0.38)' }}>
-                Cilj {fmt(r.min)} – {fmt(r.max)}
-              </span>
-              <span className="text-xs font-semibold" style={{ color: r.color }}>{r.status}</span>
+            <div className="relative h-5 mt-2 text-xs">
+              <span className="absolute -translate-x-1/2 font-semibold" style={{ left: '33.3%', color: 'rgba(46,230,166,0.95)' }}>{fmt(r.min)}</span>
+              <span className="absolute -translate-x-1/2 font-semibold" style={{ left: '66.7%', color: 'rgba(46,230,166,0.95)' }}>{fmt(r.max)}</span>
+              <span className="absolute left-0" style={{ color: 'rgba(255,255,255,0.4)' }}>Cilj</span>
+              <span className="absolute right-0 font-bold" style={{ color: r.color }}>{r.status}</span>
             </div>
           </div>
         ))}

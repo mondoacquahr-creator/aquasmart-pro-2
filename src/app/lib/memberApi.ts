@@ -19,6 +19,10 @@ export interface MemberPool {
   disinfection?: string;
   poolYear?: number;
   heating?: string;
+  heatingPower?: number;
+  pumpPower?: number;
+  pumpPowerUnit?: 'kW' | 'HP';
+  filterLoad?: number;
   cover?: string;
   address?: string;
   notes?: string;
@@ -66,6 +70,9 @@ export interface MemberEquipment {
   model?: string;
   year?: number;
   condition?: 'ok' | 'watch' | 'replace';
+  power?: number;
+  powerUnit?: 'kW' | 'HP';
+  capacity?: number;
   notes?: string;
   inspectedAt?: string;
 }

@@ -1,4 +1,7 @@
 import { MondoLogo } from './MondoLogo';
+import { AppIcon } from './AppIcon';
+import { MemberChip } from './MemberChip';
+import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'motion/react';
 import imgPrije from '../../imports/mondo-prije.jpg';
 import imgPoslijeDan from '../../imports/mondo-poslije-dan.jpg';
@@ -26,7 +29,7 @@ const readingBars = [
   {
     label: 'pH',
     value: '7.8',
-    knobPct: 65,
+    knobPct: 83,
     barGrad: 'linear-gradient(90deg, #FFD60A 0%, #FF8A1F 55%, #FF2D55 100%)',
     goal: 'Cilj 7.2 – 7.6',
     status: 'Malo visoko',
@@ -34,17 +37,17 @@ const readingBars = [
   },
   {
     label: 'Slobodni klor',
-    value: '0.6 mg/L',
-    knobPct: 15,
+    value: '0.3 mg/L',
+    knobPct: 27,
     barGrad: 'linear-gradient(90deg, #FFF6CC, #FFD60A)',
-    goal: 'Cilj 1.0 – 3.0',
+    goal: 'Cilj 0.5 – 1.5',
     status: 'Nisko',
     statusColor: '#FFD60A',
   },
   {
     label: 'Alkalitet',
     value: '110 mg/L',
-    knobPct: 40,
+    knobPct: 58,
     barGrad: 'linear-gradient(90deg, #CFF5E7, #1FA97A)',
     goal: 'Cilj 80 – 120',
     status: 'U redu',
@@ -69,6 +72,9 @@ const PRO_ITEMS = [
 
 export function HomePageNew({ onNavigate }: HomePageNewProps) {
   const [showMenu, setShowMenu] = useState(false);
+  const { user } = useAuth();
+  const isMember = localStorage.getItem('userRole') === 'member';
+  const memberName = user?.name || localStorage.getItem('memberName') || '';
   const [showQuickMenu, setShowQuickMenu] = useState(false);
   const [showDropMenu, setShowDropMenu] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('hr');
@@ -666,6 +672,9 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                 </AnimatePresence>
               </div>
 
+              {isMember ? (
+                <MemberChip name={memberName} onClick={() => onNavigate('member-portal' as any)} />
+              ) : (<>
               {/* Login */}
               <button
                 onClick={() => onNavigate('login')}
@@ -686,6 +695,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                   <UserPlus className="w-4 h-4" />
                 </span>
               </button>
+              </>)}
 
               {/* Mobile hamburger */}
               <button
@@ -905,6 +915,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                       <span className="text-xl font-bold text-white">{bar.value}</span>
                     </div>
                     <div className="relative h-2.5 rounded-full mb-1.5" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                      <div className="absolute -inset-y-1 rounded-md" style={{ left: '33.3%', width: '33.4%', background: 'rgba(46,230,166,0.22)', boxShadow: 'inset 0 0 0 1.5px rgba(46,230,166,0.85)' }} />
                       <motion.div
                         className="absolute inset-y-0 left-0 rounded-full"
                         style={{ background: bar.barGrad }}
@@ -1077,12 +1088,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                   className="px-8 py-8 flex flex-col gap-4"
                   style={{ borderColor: 'rgba(120,220,255,0.1)' }}
                 >
-                  <div
-                    className="w-11 h-11 rounded-2xl flex items-center justify-center"
-                    style={{ background: 'rgba(92,225,230,0.12)' }}
-                  >
-                    <Icon className="w-5 h-5" style={{ color: CYAN }} />
-                  </div>
+                  <AppIcon icon={Icon} size={52} />
                   <div>
                     <p className="font-bold text-base text-white mb-1">{title}</p>
                     <p className="text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>{desc}</p>
@@ -1316,12 +1322,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                 className="p-6 text-left rounded-3xl transition-all group"
                 style={{ background: CARD_BG, border: CARD_BORDER }}
               >
-                <div
-                  className="w-11 h-11 rounded-2xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
-                  style={{ background: 'rgba(92,225,230,0.12)' }}
-                >
-                  <Icon className="w-5 h-5" style={{ color: CYAN }} />
-                </div>
+                <div className="mb-4 transition-transform group-hover:scale-110 w-fit"><AppIcon icon={Icon} size={52} /></div>
                 <h3 className="font-bold text-base text-white mb-1.5">{title}</h3>
                 <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.55)' }}>{desc}</p>
                 <span

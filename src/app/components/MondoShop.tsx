@@ -17,6 +17,9 @@ import {
   calcCartTotals,
 } from '../lib/mondoShop';
 import { T } from '../lib/theme';
+import { MemberChip } from './MemberChip';
+import { useAuth } from '../contexts/AuthContext';
+import { memberApi, isMemberLoggedIn } from '../lib/memberApi';
 import { WaterBackground } from './WaterBackground';
 
 interface MondoShopProps {
@@ -45,6 +48,25 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
   const [address, setAddress] = useState('');
   const [note, setNote] = useState('');
   const [validationError, setValidationError] = useState('');
+  const { user } = useAuth();
+  const [memberName, setMemberName] = useState<string>(() => user?.name || localStorage.getItem('memberName') || '');
+
+  // Registrirani član: podaci za narudžbu popunjavaju se iz profila
+  useEffect(() => {
+    if (!member || !isMemberLoggedIn()) return;
+    memberApi.getMemberMe().then((d: any) => {
+      const pr = d?.profile || {};
+      if (pr.name) setMemberName(pr.name);
+      setName((v) => v || pr.name || user?.name || '');
+      setPhone((v) => v || pr.phone || '');
+      setEmail((v) => v || pr.email || user?.email || '');
+      const addr = [pr.address, pr.city].filter(Boolean).join(', ');
+      setAddress((v) => v || addr);
+    }).catch(() => {
+      setName((v) => v || user?.name || '');
+      setEmail((v) => v || user?.email || '');
+    });
+  }, [member]);
 
   // Open checkout immediately if openCheckout flag is set
   useEffect(() => {
@@ -470,7 +492,9 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
             </div>
           </div>
 
-          {/* Right – Košarica always visible */}
+          {/* Right – ime člana + Košarica */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+          {member && memberName && <div className="hidden sm:block"><MemberChip name={memberName} label="član · popust" /></div>}
           <button
             onClick={() => {
               if (cartCount > 0) {
@@ -496,6 +520,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
               </span>
             )}
           </button>
+          </div>
         </div>
       </div>
 

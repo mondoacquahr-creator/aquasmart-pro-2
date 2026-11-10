@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { POWER_TYPES, KW_ONLY_TYPES, CAPACITY_TYPES, equipmentSpec } from '../lib/equipmentSpec';
 import { Loader2, Search, ArrowLeft, Phone, MapPin, Calendar, Wrench, ChevronDown, ChevronUp, Trash2, Plus, X, Image as ImageIcon, CheckCircle, AlertTriangle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { T } from '../lib/theme';
@@ -108,6 +109,9 @@ function EquipmentForm({
     year: initial?.year ? String(initial.year) : '',
     condition: initial?.condition || 'ok',
     notes: initial?.notes || '',
+    power: initial?.power ? String(initial.power) : '',
+    powerUnit: (initial?.powerUnit as 'kW' | 'HP') || 'kW',
+    capacity: initial?.capacity ? String(initial.capacity) : '',
     inspectedAt: initial?.inspectedAt ? initial.inspectedAt.slice(0, 10) : today(),
     photos: (initial?.photos || []) as string[],
   });
@@ -156,6 +160,9 @@ function EquipmentForm({
       await adminMembersApi.saveMemberEquipment(memberId, {
         ...form,
         year: form.year ? Number(form.year) : undefined,
+        power: form.power && POWER_TYPES.includes(form.type) ? Number(form.power.replace(',', '.')) : undefined,
+        powerUnit: KW_ONLY_TYPES.includes(form.type) ? 'kW' : form.powerUnit,
+        capacity: form.capacity && CAPACITY_TYPES.includes(form.type) ? Number(form.capacity.replace(',', '.')) : undefined,
       });
       onSaved();
     } catch (err: any) {
@@ -206,6 +213,32 @@ function EquipmentForm({
           </select>
         </div>
       </div>
+
+      {POWER_TYPES.includes(form.type) && (
+        <div>
+          <label className="text-xs font-semibold mb-1 block" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            Snaga {KW_ONLY_TYPES.includes(form.type) ? '(kW)' : ''}
+          </label>
+          <div className="flex gap-2">
+            <input type="number" step="0.01" value={form.power} onChange={e => setForm(p => ({ ...p, power: e.target.value }))}
+              className="flex-1 min-w-0 px-4 py-3 rounded-xl text-white" placeholder={form.type === 'Toplinska pumpa' ? 'npr. 12' : 'npr. 0.75'} style={inputStyle} />
+            {!KW_ONLY_TYPES.includes(form.type) && (
+              <select value={form.powerUnit} onChange={e => setForm(p => ({ ...p, powerUnit: e.target.value as 'kW' | 'HP' }))}
+                className="px-3 py-3 rounded-xl text-white" style={{ ...inputStyle, background: 'rgba(2,13,18,0.8)', width: 86 }}>
+                <option value="kW">kW</option>
+                <option value="HP">KS</option>
+              </select>
+            )}
+          </div>
+        </div>
+      )}
+      {CAPACITY_TYPES.includes(form.type) && (
+        <div>
+          <label className="text-xs font-semibold mb-1 block" style={{ color: 'rgba(255,255,255,0.4)' }}>Punjenje filtera (kg)</label>
+          <input type="number" step="1" value={form.capacity} onChange={e => setForm(p => ({ ...p, capacity: e.target.value }))}
+            className="w-full px-4 py-3 rounded-xl text-white" placeholder="npr. 75" style={inputStyle} />
+        </div>
+      )}
 
       <div>
         <label className="text-xs font-semibold mb-1 block" style={{ color: 'rgba(255,255,255,0.4)' }}>Napomena</label>
@@ -536,7 +569,7 @@ function MemberDetail({ memberId, onBack, onNavigate, onLogin }: { memberId: str
                       <ConditionBadge condition={eq.condition} />
                     </div>
                     <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                      {[eq.brand, eq.model].filter(Boolean).join(' ')}
+                      {[eq.brand, eq.model, equipmentSpec(eq)].filter(Boolean).join(' · ')}
                       {eq.year && <span style={{ color: 'rgba(255,255,255,0.4)' }}> · {eq.year} ({new Date().getFullYear() - eq.year} god.)</span>}
                     </p>
                     {eq.notes && <p className="text-xs mt-1 italic" style={{ color: 'rgba(255,255,255,0.35)' }}>{eq.notes}</p>}
@@ -927,7 +960,7 @@ function EquipmentReportTab({ onLogin }: { onLogin: () => void }) {
               <ConditionBadge condition={item.condition} />
             </div>
             <p className="text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
-              {item.type} · {[item.brand, item.model].filter(Boolean).join(' ')}
+              {item.type} · {[item.brand, item.model, equipmentSpec(item)].filter(Boolean).join(' · ')}
               {item.age != null && <span style={{ color: 'rgba(255,255,255,0.4)' }}> · {item.age} god.</span>}
             </p>
             {item.inspectedAt && (
