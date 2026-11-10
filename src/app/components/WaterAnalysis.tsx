@@ -8,6 +8,7 @@ import { T } from '../lib/theme';
 import { WaterBackground } from './WaterBackground';
 import { ReadingCard } from './ReadingCard';
 import { memberApi, isMemberLoggedIn } from '../lib/memberApi';
+import { TesterScanButton } from './TesterScan';
 
 interface WaterAnalysisProps {
   onBack: () => void;
@@ -283,6 +284,10 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
               <div className="mb-6">
                 <h2 className="text-3xl font-semibold mb-2">Testiranje Parametara</h2>
                 <p style={{ color: T.muted }}>Unesite izmjerene vrijednosti</p>
+              </div>
+
+              <div className="mb-6">
+                <TesterScanButton onResult={(ph, cl) => setTestResults(prev => ({ ...prev, ph: String(ph), freeChlorine: String(cl) }))} />
               </div>
 
               {/* Pool Volume Input */}

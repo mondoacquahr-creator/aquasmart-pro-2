@@ -9,6 +9,7 @@ import { addToCart, addRecommended, useCart } from '../lib/mondoShop';
 import { T } from '../lib/theme';
 import { WaterBackground } from './WaterBackground';
 import { memberApi, isMemberLoggedIn } from '../lib/memberApi';
+import { TesterScanButton } from './TesterScan';
 
 interface GuestAnalysisProps {
   onBack?: () => void;
@@ -422,6 +423,9 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
               required
             />
           </div>
+
+          {/* Očitavanje Pooltestera kamerom */}
+          <TesterScanButton onResult={(ph, cl) => setParameters(prev => ({ ...prev, pH: String(ph), freeChlorine: String(cl) }))} />
 
           {/* pH */}
           <div>

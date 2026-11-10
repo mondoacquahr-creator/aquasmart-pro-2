@@ -29,7 +29,6 @@ import { OwnerCost } from "./components/OwnerCost";
 import { OwnerChat } from "./components/OwnerChat";
 import { OwnerVideo } from "./components/OwnerVideo";
 import { OwnerMaintenance } from "./components/OwnerMaintenance";
-import { VisualTest } from "./components/VisualTest";
 import { ProductPrices } from "./components/ProductPrices";
 import { MondoAdmin } from "./components/MondoAdmin";
 import { AppShots } from "./components/AppShots";
@@ -100,10 +99,6 @@ export const router = createBrowserRouter([
       {
         path: "owner-maintenance",
         Component: OwnerMaintenance,
-      },
-      {
-        path: "visual-test",
-        Component: VisualTest,
       },
       {
         path: "shots",
