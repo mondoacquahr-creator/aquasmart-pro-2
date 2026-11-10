@@ -19,10 +19,7 @@ export function OwnerMode() {
     navigate('/');
   };
   
-  const isAdmin = 
-    user?.email === 'info@mondo-acqua.hr' || 
-    user?.email === 'admin@mondo-acqua.hr' || 
-    user?.email === 'profesionalac@aquasmart.hr';
+  const isAdmin = localStorage.getItem('userRole') === 'admin';
 
   const secondaryActions = [
     { icon: DollarSign, title: language === 'hr' ? 'Cjenik' : 'Prices', path: '/prices', color: 'text-emerald-400' },

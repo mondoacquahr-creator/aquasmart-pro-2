@@ -64,13 +64,12 @@ export function LoginPage({ onBack, onLoginSuccess, onGoToRegister }: LoginPageP
     }
   };
 
-  const handleQuickLogin = async (type: 'employee' | 'employer' | 'admin' | 'mondo') => {
+  const handleQuickLogin = async (type: 'employee' | 'employer' | 'admin') => {
     setIsLoading(true);
 
     const credentials =
       type === 'employee' ? { email: 'employee@aquasmart.hr', password: 'employee123' } :
       type === 'employer' ? { email: 'employer@aquasmart.hr', password: 'employer123' } :
-      type === 'mondo' ? { email: 'info@mondo-acqua.hr', password: 'mondoadmin123' } :
       { email: 'admin@aquasmart.hr', password: 'admin123' };
 
     try {
@@ -430,7 +429,7 @@ export function LoginPage({ onBack, onLoginSuccess, onGoToRegister }: LoginPageP
               whileTap={{ scale: 0.98 }}
               onClick={() => handleQuickLogin('admin')}
               disabled={isLoading}
-              className="py-3 text-xs font-medium rounded-xl transition-all backdrop-blur-xl"
+              className="col-span-2 py-3 text-xs font-medium rounded-xl transition-all backdrop-blur-xl"
               style={{
                 background: 'rgba(255,0,0,0.05)',
                 border: '1px solid rgba(255,0,0,0.2)',
@@ -438,21 +437,6 @@ export function LoginPage({ onBack, onLoginSuccess, onGoToRegister }: LoginPageP
               }}
             >
               🛠️ Demo admin
-            </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => handleQuickLogin('mondo')}
-              disabled={isLoading}
-              className="py-3 text-xs font-medium rounded-xl transition-all backdrop-blur-xl"
-              style={{
-                background: 'rgba(212,175,55,0.1)',
-                border: '1px solid rgba(212,175,55,0.3)',
-                color: '#D4AF37'
-              }}
-            >
-              👑 Mondo admin
             </motion.button>
           </div>
 

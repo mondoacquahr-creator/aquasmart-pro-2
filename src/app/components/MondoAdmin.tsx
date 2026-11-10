@@ -126,10 +126,8 @@ export function MondoAdmin({ onBack, onNavigate }: MondoAdminProps) {
   const [inquiriesError, setInquiriesError] = useState<ApiErrorKind | null>(null);
 
   const userEmail = localStorage.getItem('userEmail') || '';
-  const isAdmin =
-    userEmail === 'info@mondo-acqua.hr' ||
-    userEmail === 'admin@mondo-acqua.hr' ||
-    userEmail === 'profesionalac@aquasmart.hr';
+  // Prava provjera je na poslužitelju; ovo samo odlučuje što se prikazuje.
+  const isAdmin = localStorage.getItem('userRole') === 'admin';
 
   const fetchData = async () => {
     if (!isAdmin) return;

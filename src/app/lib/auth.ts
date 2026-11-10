@@ -23,52 +23,6 @@ export interface RegisterData {
 export const authService = {
   // Prijava
   async login(credentials: LoginCredentials): Promise<User> {
-    // MONDO ACQUA ADMIN ACCOUNTS
-    if (credentials.email === 'info@mondo-acqua.hr' && credentials.password === 'mondoadmin123') {
-      const adminUser: User = {
-        id: 'mondo-admin-1',
-        email: 'info@mondo-acqua.hr',
-        name: 'Mondo Acqua Admin',
-        role: 'professional',
-        createdAt: new Date().toISOString(),
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(adminUser));
-      localStorage.setItem('userRole', 'admin');
-      localStorage.setItem('userEmail', 'info@mondo-acqua.hr');
-      localStorage.removeItem('isDemo');
-      return adminUser;
-    }
-
-    if (credentials.email === 'admin@mondo-acqua.hr' && credentials.password === 'mondoadmin123') {
-      const adminUser: User = {
-        id: 'mondo-admin-2',
-        email: 'admin@mondo-acqua.hr',
-        name: 'Mondo Acqua Administrator',
-        role: 'professional',
-        createdAt: new Date().toISOString(),
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(adminUser));
-      localStorage.setItem('userRole', 'admin');
-      localStorage.setItem('userEmail', 'admin@mondo-acqua.hr');
-      localStorage.removeItem('isDemo');
-      return adminUser;
-    }
-
-    if (credentials.email === 'profesionalac@aquasmart.hr' && credentials.password === 'mondoadmin123') {
-      const adminUser: User = {
-        id: 'mondo-admin-3',
-        email: 'profesionalac@aquasmart.hr',
-        name: 'Mondo Acqua Profesionalac',
-        role: 'professional',
-        createdAt: new Date().toISOString(),
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(adminUser));
-      localStorage.setItem('userRole', 'admin');
-      localStorage.setItem('userEmail', 'profesionalac@aquasmart.hr');
-      localStorage.removeItem('isDemo');
-      return adminUser;
-    }
-
     // Demo bypass for testing
     if (credentials.email === 'profesionalac@aquasmart.hr' && credentials.password === 'pro123') {
       const demoUser: User = {
@@ -159,9 +113,9 @@ export const authService = {
       localStorage.removeItem('userPermissions');
     } else {
       localStorage.removeItem('isDemo');
-      const emailLower = (data.user.email || '').toLowerCase();
       let role: string | null = null;
-      if (emailLower === 'info@mondo-acqua.hr' || emailLower === 'admin@mondo-acqua.hr' || emailLower === 'profesionalac@aquasmart.hr') {
+      // Mondo admin određuje poslužitelj (app_metadata.mondoAdmin), ne e-mail ni lozinka u kodu.
+      if (am.mondoAdmin === true) {
         role = 'admin';
       } else if (am.role === 'employee') {
         role = 'employee';
@@ -170,6 +124,7 @@ export const authService = {
       } else if (am.role === 'member') {
         role = 'member';
       }
+      localStorage.setItem('userEmail', data.user.email || '');
       if (role) {
         localStorage.setItem('userRole', role);
       } else {
@@ -234,6 +189,7 @@ export const authService = {
     }
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem('userRole');
+    localStorage.removeItem('userEmail');
     localStorage.removeItem('selectedEmployee');
     localStorage.removeItem('aquasmart_cart');
     localStorage.removeItem('currentEmployeeId');
