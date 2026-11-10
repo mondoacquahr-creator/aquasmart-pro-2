@@ -223,7 +223,7 @@ export function LoginPage({ onBack, onLoginSuccess, onGoToRegister }: LoginPageP
                     className="w-full py-5 text-lg font-bold flex items-center justify-center gap-3 rounded-2xl transition-all relative overflow-hidden group text-black"
                     style={{
                       background: T.accent,
-                      boxShadow: '0 8px 30px rgba(255,138,31,0.35)'
+                      boxShadow: '0 8px 30px rgba(79,195,240,0.35)'
                     }}
                   >
                     {resetSending ? (
@@ -335,7 +335,7 @@ export function LoginPage({ onBack, onLoginSuccess, onGoToRegister }: LoginPageP
               className="w-full py-5 text-lg font-bold flex items-center justify-center gap-3 rounded-2xl mt-8 transition-all relative overflow-hidden group text-black"
               style={{
                 background: T.accent,
-                boxShadow: '0 8px 30px rgba(255,138,31,0.35)'
+                boxShadow: '0 8px 30px rgba(79,195,240,0.35)'
               }}
             >
               {isLoading ? (

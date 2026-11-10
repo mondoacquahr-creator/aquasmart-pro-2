@@ -277,7 +277,7 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
                 <button
                   onClick={handleOrderRecommended}
                   className="w-full text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all"
-                  style={{ background: T.accent, boxShadow: '0 8px 30px rgba(255,138,31,0.35)' }}
+                  style={{ background: T.accent, boxShadow: '0 8px 30px rgba(79,195,240,0.35)' }}
                 >
                   <ShoppingCart className="w-5 h-5" />
                   {language === 'hr' ? 'Naruči preporučene proizvode' : 'Order recommended products'}
@@ -524,7 +524,7 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
           <button
             onClick={handleAnalyze}
             className="w-full text-black py-4 rounded-xl font-bold hover:opacity-90 transition-all flex items-center justify-center gap-2"
-            style={{ background: T.accent, boxShadow: '0 8px 30px rgba(255,138,31,0.35)' }}
+            style={{ background: T.accent, boxShadow: '0 8px 30px rgba(79,195,240,0.35)' }}
           >
             <Zap className="w-5 h-5" />
             {t('guestAnalysis.analyzeBtn')}

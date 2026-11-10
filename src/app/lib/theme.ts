@@ -1,6 +1,6 @@
 export const T = {
   pageBg: 'radial-gradient(ellipse at 80% 0%, #08303D 0%, #041820 45%, #020D12 100%)',
-  accent: 'linear-gradient(90deg, #FFD60A 0%, #FF8A1F 55%, #FF2D55 100%)',
+  accent: 'linear-gradient(90deg, #7FDBFF 0%, #4FC3F0 45%, #1E88E5 100%)',
   cyan: '#5CE1E6',
   yellow: '#FFD60A',
   green: '#2EE6A6',

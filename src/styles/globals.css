@@ -8,8 +8,8 @@
   --bg-elevated: #161616;
   
   --accent-primary: #FFFFFF;
-  --accent-gradient-start: #FF1744;
-  --accent-gradient-end: #FFD700;
+  --accent-gradient-start: #7FDBFF;
+  --accent-gradient-end: #1E88E5;
   --accent-gold: #FFD700;
   --accent-green: #00FF88;
   
@@ -124,7 +124,7 @@
 
 /* Ultra Modern Button Styles */
 .btn-primary {
-  background: linear-gradient(135deg, #FF1744 0%, #FFD700 100%);
+  background: linear-gradient(135deg, #7FDBFF 0%, #1E88E5 100%);
   color: #FFFFFF;
   border-radius: 16px;
   font-weight: 600;
@@ -140,7 +140,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #FF1744 0%, #FFD700 100%);
+  background: linear-gradient(135deg, #7FDBFF 0%, #1E88E5 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -194,7 +194,7 @@
 
 /* Gradient Text Effect */
 .gradient-text {
-  background: linear-gradient(135deg, #FF1744 0%, #FFD700 100%);
+  background: linear-gradient(135deg, #7FDBFF 0%, #1E88E5 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

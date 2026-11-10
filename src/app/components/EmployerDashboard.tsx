@@ -330,7 +330,7 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
     const ws = XLSX.utils.json_to_sheet(template);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Skladište');
-    XLSX.writeFile(wb, 'AcquaSmart_Skladiste_Predlozak.xlsx');
+    XLSX.writeFile(wb, 'MondoPoolCare_Skladiste_Predlozak.xlsx');
   };
 
   // Excel Import for Warehouse
@@ -450,7 +450,7 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
     const ws = XLSX.utils.json_to_sheet(template);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Klijenti');
-    XLSX.writeFile(wb, 'AcquaSmart_Klijenti_Template.xlsx');
+    XLSX.writeFile(wb, 'MondoPoolCare_Klijenti_Predlozak.xlsx');
   };
 
   // Add functions
@@ -578,7 +578,7 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
   };
 
   const handleCopyLoginData = () => {
-    const text = `AcquaSmart Pro – prijava\nAdresa: ${window.location.origin}\nE-mail: ${addEmpEmail}\nPrivremena lozinka: ${addEmpPassword}`;
+    const text = `Mondo Pool Care – prijava\nAdresa: ${window.location.origin}\nE-mail: ${addEmpEmail}\nPrivremena lozinka: ${addEmpPassword}`;
     navigator.clipboard.writeText(text).catch(() => {});
     setAddEmpCopied(true);
     setTimeout(() => setAddEmpCopied(false), 2000);

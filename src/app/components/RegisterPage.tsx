@@ -132,7 +132,7 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
             </div>
           </motion.div>
           <h1 className="text-3xl font-bold mb-1" style={{ letterSpacing: '-0.02em' }}>
-            {isMember ? 'Moj bazen – besplatna registracija' : <>Pridružite se ACQUA<span className="gradient-text">SMART</span> PRO</>}
+            {isMember ? 'Moj bazen – besplatna registracija' : 'Pridružite se Mondo Pool Care'}
           </h1>
           {!isMember && (
             <p className="text-sm mt-2" style={{ color: 'rgba(255,255,255,0.5)' }}>Započnite 30 dana besplatnog probnog razdoblja</p>
@@ -366,7 +366,7 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
               <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                 type="submit" disabled={isLoading}
                 className="w-full py-5 text-lg font-bold flex items-center justify-center gap-3 rounded-2xl mt-8 transition-all relative overflow-hidden group text-black"
-                style={{ background: T.accent, boxShadow: '0 8px 30px rgba(255,138,31,0.35)' }}>
+                style={{ background: T.accent, boxShadow: '0 8px 30px rgba(79,195,240,0.35)' }}>
                 {isLoading ? (
                   <><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div><span>Izrada računa...</span></>
                 ) : (

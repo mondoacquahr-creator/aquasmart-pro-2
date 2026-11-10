@@ -496,7 +496,7 @@ export function AIVisualizer({ onManual }: { onManual: () => void }) {
               disabled={!rect}
               className="w-full py-4 rounded-2xl font-semibold text-lg transition-all"
               style={rect
-                ? { background: T.accent, color: '#000000', boxShadow: '0 8px 30px rgba(255,138,31,0.35)', cursor: 'pointer' }
+                ? { background: T.accent, color: '#000000', boxShadow: '0 8px 30px rgba(79,195,240,0.35)', cursor: 'pointer' }
                 : { background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.2)', cursor: 'not-allowed' }
               }
             >
@@ -608,7 +608,7 @@ export function AIVisualizer({ onManual }: { onManual: () => void }) {
               <button
                 onClick={() => setShowInquiry(v => !v)}
                 className="col-span-2 py-4 rounded-xl font-bold text-base"
-                style={{ background: T.accent, color: '#000', boxShadow: '0 8px 30px rgba(255,138,31,0.35)' }}
+                style={{ background: T.accent, color: '#000', boxShadow: '0 8px 30px rgba(79,195,240,0.35)' }}
               >
                 Zatraži ponudu
               </button>
@@ -682,7 +682,7 @@ export function AIVisualizer({ onManual }: { onManual: () => void }) {
                       style={{
                         background: T.accent,
                         color: '#000',
-                        boxShadow: '0 8px 30px rgba(255,138,31,0.35)',
+                        boxShadow: '0 8px 30px rgba(79,195,240,0.35)',
                         opacity: inquiryLoading ? 0.7 : 1,
                       }}
                     >

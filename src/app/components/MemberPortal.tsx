@@ -280,7 +280,7 @@ function OverviewTab({ data, onRequestVisit, onNewAnalysis, onNavigate }: {
       <button
         onClick={() => onNavigate('products')}
         className="w-full py-4 rounded-2xl text-sm font-bold text-black transition-all hover:opacity-90"
-        style={{ background: T.accent, boxShadow: '0 6px 20px rgba(255,138,31,0.25)' }}
+        style={{ background: T.accent, boxShadow: '0 6px 20px rgba(79,195,240,0.25)' }}
       >
         {(data as any).profile?.planActive
           ? 'Webshop – 15 % popusta na kemiju i opremu (+5 % iznad 2.000 €)'

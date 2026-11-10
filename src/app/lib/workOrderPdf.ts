@@ -458,7 +458,7 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
 </head>
 <body>
   <header>
-    <div class="company">${escapeHtml(data.companyName || "AcquaSmart Pro")}</div>
+    <div class="company">${escapeHtml(data.companyName || "Mondo Pool Care")}</div>
     <div class="document-meta">
       <strong>RADNI NALOG br. ${escapeHtml(order.id)}</strong>
       <span>${escapeHtml(formatDate(documentDate))}</span>
@@ -515,7 +515,7 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
       </figure>
     `).join("")}</div>` : "")}
 
-  <footer>Dokument generiran u AcquaSmart Pro · ${escapeHtml(generatedAt.toLocaleString("hr-HR"))}</footer>
+  <footer>Dokument generiran u Mondo Pool Care · ${escapeHtml(generatedAt.toLocaleString("hr-HR"))}</footer>
 </body>
 </html>`;
 

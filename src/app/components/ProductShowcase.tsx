@@ -129,7 +129,7 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
   const workflowSteps = [
     { icon: Users, title: 'Dodaj Klijenta', desc: 'Kreiraj profil s bazenom i kontaktom', color: T.cyan },
     { icon: BeakerIcon, title: 'Analiza Vode', desc: 'Unesi parametre i dobij AI preporuke', color: '#00FF88' },
-    { icon: FileText, title: 'Radni Nalog', desc: 'Kreiraj nalog sa kemikalijama', color: T.yellow },
+    { icon: FileText, title: 'Radni Nalog', desc: 'Kreiraj nalog sa kemikalijama', color: T.cyan },
     { icon: Package, title: 'Skladište', desc: 'Automatsko skidanje sa zaliha', color: '#FF6B35' },
     { icon: DollarSign, title: 'Faktura', desc: 'Generiraj PDF fakturu', color: '#FFB020' },
     { icon: BarChart3, title: 'Analitika', desc: 'Prati prihode i performanse', color: T.cyan },
@@ -207,14 +207,13 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 backdrop-blur-xl"
                 style={{ background: T.cardBg, border: T.cardBorder }}>
-                <Sparkles className="w-4 h-4" style={{ color: T.yellow }} />
+                <Sparkles className="w-4 h-4" style={{ color: T.cyan }} />
                 <span className="text-xs font-bold uppercase tracking-wider text-white">Centar za Iskustvo Proizvoda</span>
               </div>
 
               <h1 className="text-8xl font-black mb-6" style={{ letterSpacing: '-0.05em', lineHeight: '1' }}>
-                <span className="text-white">ACQUA</span>
-                <span className="bg-gradient-to-r from-[#FFD60A] to-[#FF8A1F] bg-clip-text text-transparent">SMART</span>
-                <span className="text-white"> PRO™</span>
+                <span className="text-white">MONDO </span>
+                <span className="bg-gradient-to-r from-[#7FDBFF] to-[#1E88E5] bg-clip-text text-transparent">POOL CARE</span>
               </h1>
 
               <p className="text-2xl mb-12 max-w-3xl mx-auto leading-relaxed" style={{ color: T.muted }}>
@@ -231,7 +230,7 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
                 </div>
                 <div className="flex items-center gap-3 px-6 py-3 rounded-2xl backdrop-blur-xl"
                   style={{ background: T.cardBg, border: T.cardBorder }}>
-                  <Shield className="w-5 h-5" style={{ color: T.yellow }} />
+                  <Shield className="w-5 h-5" style={{ color: T.cyan }} />
                   <span className="text-white font-medium">6 Pro Alata</span>
                 </div>
                 <div className="flex items-center gap-3 px-6 py-3 rounded-2xl backdrop-blur-xl"
@@ -337,7 +336,7 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
             {/* PRO FEATURES */}
             <div>
               <div className="flex items-center gap-3 mb-8">
-                <Lock className="w-6 h-6" style={{ color: T.yellow }} />
+                <Lock className="w-6 h-6" style={{ color: T.cyan }} />
                 <h3 className="text-3xl font-bold text-white">Profesionalni alati</h3>
                 <div className="px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider"
                   style={{ background: T.accent, color: '#000' }}>
@@ -381,7 +380,7 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
                       <div className="space-y-2 mb-6">
                         {feature.features.map((f, i) => (
                           <div key={i} className="flex items-center gap-2 text-sm">
-                            <Check className="w-4 h-4" style={{ color: T.yellow }} />
+                            <Check className="w-4 h-4" style={{ color: T.cyan }} />
                             <span style={{ color: T.muted }}>{f}</span>
                           </div>
                         ))}
@@ -416,7 +415,7 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
               <h2 className="text-6xl font-black mb-4 text-white" style={{ letterSpacing: '-0.03em' }}>
                 Kompletan radni proces.
                 <br />
-                <span className="bg-gradient-to-r from-[#FFD60A] to-[#FF8A1F] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#7FDBFF] to-[#1E88E5] bg-clip-text text-transparent">
                   Od klijenta do fakture.
                 </span>
               </h2>
@@ -476,7 +475,7 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
                 <TrendingUp className="w-12 h-12 mx-auto mb-4 text-[#00FF88]" />
                 <h3 className="text-2xl font-bold text-white mb-2">Rezultat?</h3>
                 <p className="text-lg mb-6" style={{ color: T.muted }}>
-                  <span style={{ color: T.yellow }} className="font-bold">75% brže</span> procesiranje naloga,{' '}
+                  <span style={{ color: T.cyan }} className="font-bold">75% brže</span> procesiranje naloga,{' '}
                   <span className="text-[#00FF88] font-bold">0% grešaka</span> u fakturiranju,{' '}
                   <span style={{ color: T.cyan }} className="font-bold">100% zadovoljstvo</span> klijenata
                 </p>
@@ -486,7 +485,7 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
                   style={{
                     background: T.accent,
                     color: '#000',
-                    boxShadow: '0 8px 30px rgba(255,138,31,0.35)',
+                    boxShadow: '0 8px 30px rgba(79,195,240,0.35)',
                   }}
                 >
                   Započni besplatno

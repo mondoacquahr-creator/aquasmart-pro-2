@@ -56,7 +56,7 @@ export default function App() {
         <button
           onClick={() => setCurrentPage('home')}
           className="px-8 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition-transform text-black"
-          style={{ background: T.accent, boxShadow: '0 8px 30px rgba(255,138,31,0.35)' }}
+          style={{ background: T.accent, boxShadow: '0 8px 30px rgba(79,195,240,0.35)' }}
         >
           Povratak na Početnu
         </button>
@@ -250,7 +250,7 @@ export default function App() {
                     className="w-full py-5 text-lg font-bold flex items-center justify-center gap-3 rounded-2xl transition-all relative overflow-hidden group text-black"
                     style={{
                       background: T.accent,
-                      boxShadow: '0 8px 30px rgba(255,138,31,0.35)'
+                      boxShadow: '0 8px 30px rgba(79,195,240,0.35)'
                     }}
                   >
                     <span>Odjava</span>
@@ -334,7 +334,7 @@ export default function App() {
                         className="w-full py-5 text-lg font-bold flex items-center justify-center gap-3 rounded-2xl transition-all relative overflow-hidden text-black"
                         style={{
                           background: T.accent,
-                          boxShadow: '0 8px 30px rgba(255,138,31,0.35)',
+                          boxShadow: '0 8px 30px rgba(79,195,240,0.35)',
                           opacity: recoveryLoading ? 0.7 : 1
                         }}
                       >

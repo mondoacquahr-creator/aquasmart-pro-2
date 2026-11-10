@@ -111,7 +111,7 @@ export function ProPortal({ onBack, onRoleSelect }: ProPortalProps) {
               {/* CTA */}
               <div className="text-center">
                 <span className="inline-block px-6 py-3 rounded-xl font-bold transition-all group-hover:scale-105 text-black"
-                  style={{ background: T.accent, boxShadow: '0 6px 24px rgba(255,138,31,0.3)' }}>
+                  style={{ background: T.accent, boxShadow: '0 6px 24px rgba(79,195,240,0.3)' }}>
                   Odaberi Izvršitelj
                 </span>
               </div>
@@ -135,14 +135,14 @@ export function ProPortal({ onBack, onRoleSelect }: ProPortalProps) {
           >
             {/* Background tint on Hover */}
             <div className="absolute inset-0 rounded-[32px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: 'rgba(255,214,10,0.04)' }}></div>
+              style={{ background: 'rgba(79,195,240,0.04)' }}></div>
 
             <div className="relative z-10">
               {/* Icon */}
               <div className="flex justify-center mb-8">
                 <div className="w-24 h-24 flex items-center justify-center rounded-3xl transition-all group-hover:scale-110"
-                  style={{ background: 'rgba(255,214,10,0.12)', border: '1px solid rgba(255,214,10,0.2)' }}>
-                  <Briefcase className="w-12 h-12" style={{ color: T.yellow }} />
+                  style={{ background: 'rgba(79,195,240,0.12)', border: '1px solid rgba(79,195,240,0.2)' }}>
+                  <Briefcase className="w-12 h-12" style={{ color: T.cyan }} />
                 </div>
               </div>
 
@@ -162,7 +162,7 @@ export function ProPortal({ onBack, onRoleSelect }: ProPortalProps) {
                   'Napredna analitika i izvještaji'
                 ].map((feature, idx) => (
                   <div key={idx} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: T.yellow }} />
+                    <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: T.cyan }} />
                     <span className="text-sm" style={{ color: T.muted }}>{feature}</span>
                   </div>
                 ))}
@@ -171,7 +171,7 @@ export function ProPortal({ onBack, onRoleSelect }: ProPortalProps) {
               {/* CTA */}
               <div className="text-center">
                 <span className="inline-block px-6 py-3 rounded-xl font-bold transition-all group-hover:scale-105 text-black"
-                  style={{ background: T.accent, boxShadow: '0 6px 24px rgba(255,138,31,0.3)' }}>
+                  style={{ background: T.accent, boxShadow: '0 6px 24px rgba(79,195,240,0.3)' }}>
                   Odaberi Poslodavac
                 </span>
               </div>

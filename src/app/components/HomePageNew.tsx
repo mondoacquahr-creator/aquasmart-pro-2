@@ -1,3 +1,4 @@
+import { MondoLogo } from './MondoLogo';
 import { motion, AnimatePresence } from 'motion/react';
 import imgPrije from '../../imports/mondo-prije.jpg';
 import imgPoslijeDan from '../../imports/mondo-poslije-dan.jpg';
@@ -16,7 +17,7 @@ interface HomePageNewProps {
   onNavigate: (page: 'visualizer' | 'promo' | 'analysis' | 'products' | 'login' | 'register' | 'member-register' | 'member-portal' | 'free-portal' | 'pro-portal') => void;
 }
 
-const ACCENT = 'linear-gradient(90deg, #FFD60A 0%, #FF8A1F 55%, #FF2D55 100%)';
+const ACCENT = 'linear-gradient(90deg, #7FDBFF 0%, #4FC3F0 45%, #1E88E5 100%)';
 const CARD_BG = 'rgba(10,40,52,0.55)';
 const CARD_BORDER = '1px solid rgba(120,220,255,0.12)';
 const CYAN = '#5CE1E6';
@@ -26,7 +27,7 @@ const readingBars = [
     label: 'pH',
     value: '7.8',
     knobPct: 65,
-    barGrad: ACCENT,
+    barGrad: 'linear-gradient(90deg, #FFD60A 0%, #FF8A1F 55%, #FF2D55 100%)',
     goal: 'Cilj 7.2 – 7.6',
     status: 'Malo visoko',
     statusColor: '#FFD60A',
@@ -104,7 +105,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         h1line1: 'Od testa vode',
         h1line2: 'do točne doze.',
         h1line3: 'U 30 sekundi.',
-        desc: 'Upišite očitanja, AcquaSmart izračuna kemiju prema deklaraciji proizvoda i preporuči točno što kupiti.',
+        desc: 'Upišite očitanja, Mondo Pool Care izračuna kemiju prema deklaraciji proizvoda i preporuči točno što kupiti.',
         ctaAnalysis: 'Pokreni analizu →',
         ctaDemo: 'Pogledaj demo',
         tagline: 'Besplatno za vlasnike bazena · 30 dana besplatno za servisere',
@@ -147,7 +148,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         copyright: '© 2026 Vladimir Perić – Mondo Acqua d.o.o. Sva prava pridržana.',
         ipTitle: 'Zaštita intelektualnog vlasništva',
         ipText: 'Svi elementi ovog softvera zaštićeni su međunarodnim zakonima o autorskim pravima i intelektualnom vlasništvu. Neovlašteno kopiranje, distribuiranje ili reprodukcija je strogo zabranjena.',
-        trademarkText: 'ACQUASMART PRO™ je zaštićeni trademark. Pool Visualizer™, AcquaSmart AR™ i svi povezani logotipi su vlasništvo MONDO ACQUA d.o.o.',
+        trademarkText: 'Mondo Pool Care™, Pool Visualizer™ i svi povezani logotipi vlasništvo su MONDO ACQUA d.o.o.',
         prohibited: 'NEOVLAŠTENA UPORABA ZABRANJENA',
       },
     },
@@ -165,7 +166,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         h1line1: 'From water test',
         h1line2: 'to exact dose.',
         h1line3: 'In 30 seconds.',
-        desc: 'Enter your readings. AcquaSmart calculates the chemistry from product declarations and recommends exactly what to buy.',
+        desc: 'Enter your readings. Mondo Pool Care calculates the chemistry from product declarations and recommends exactly what to buy.',
         ctaAnalysis: 'Start analysis →',
         ctaDemo: 'Watch demo',
         tagline: 'Free for pool owners · 30 days free for professionals',
@@ -208,7 +209,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         copyright: '© 2026 Vladimir Perić – Mondo Acqua d.o.o. All rights reserved.',
         ipTitle: 'Intellectual Property Protection',
         ipText: 'All elements of this software are protected by international copyright laws. Unauthorized copying, distribution or reproduction is strictly prohibited.',
-        trademarkText: 'ACQUASMART PRO™ is a registered trademark. Pool Visualizer™, AcquaSmart AR™ and related logos are property of MONDO ACQUA d.o.o.',
+        trademarkText: 'Mondo Pool Care™, Pool Visualizer™ and related logos are property of MONDO ACQUA d.o.o.',
         prohibited: 'UNAUTHORIZED USE PROHIBITED',
       },
     },
@@ -226,7 +227,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         h1line1: "Dal test dell'acqua",
         h1line2: 'alla dose esatta.',
         h1line3: 'In 30 secondi.',
-        desc: "Inserisci le letture, AcquaSmart calcola la chimica secondo le dichiarazioni del prodotto.",
+        desc: "Inserisci le letture, Mondo Pool Care calcola la chimica secondo le dichiarazioni del prodotto.",
         ctaAnalysis: 'Avvia analisi →',
         ctaDemo: 'Guarda demo',
         tagline: 'Gratuito per proprietari · 30 giorni gratis per professionisti',
@@ -269,7 +270,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         copyright: '© 2026 Vladimir Perić – Mondo Acqua d.o.o. Tutti i diritti riservati.',
         ipTitle: 'Protezione della Proprietà Intellettuale',
         ipText: 'Tutti gli elementi di questo software sono protetti dalle leggi internazionali sul copyright.',
-        trademarkText: 'ACQUASMART PRO™ è un marchio registrato. Pool Visualizer™, AcquaSmart AR™ sono di proprietà di MONDO ACQUA d.o.o.',
+        trademarkText: 'Mondo Pool Care™, Pool Visualizer™ e i relativi loghi sono di proprietà di MONDO ACQUA d.o.o.',
         prohibited: 'USO NON AUTORIZZATO VIETATO',
       },
     },
@@ -287,7 +288,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         h1line1: 'Vom Wassertest',
         h1line2: 'zur exakten Dosis.',
         h1line3: 'In 30 Sekunden.',
-        desc: 'Geben Sie die Messwerte ein, AcquaSmart berechnet die Chemie anhand der Produktdeklarationen.',
+        desc: 'Geben Sie die Messwerte ein, Mondo Pool Care berechnet die Chemie anhand der Produktdeklarationen.',
         ctaAnalysis: 'Analyse starten →',
         ctaDemo: 'Demo ansehen',
         tagline: 'Kostenlos für Poolbesitzer · 30 Tage kostenlos für Profis',
@@ -330,7 +331,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         copyright: '© 2026 Vladimir Perić – Mondo Acqua d.o.o. Alle Rechte vorbehalten.',
         ipTitle: 'Schutz des geistigen Eigentums',
         ipText: 'Alle Elemente dieser Software sind durch internationale Urheberrechtsgesetze geschützt.',
-        trademarkText: 'ACQUASMART PRO™ ist eine eingetragene Marke. Pool Visualizer™, AcquaSmart AR™ sind Eigentum der MONDO ACQUA d.o.o.',
+        trademarkText: 'Mondo Pool Care™, Pool Visualizer™ und zugehörige Logos sind Eigentum der MONDO ACQUA d.o.o.',
         prohibited: 'UNERLAUBTE NUTZUNG VERBOTEN',
       },
     },
@@ -437,7 +438,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
       <div className="min-h-screen" style={{ position: 'relative', zIndex: 1, color: '#fff' }}>
         <style>{`
           .accent-grad-text {
-            background: linear-gradient(90deg, #FFD60A 0%, #FF8A1F 55%, #FF2D55 100%);
+            background: linear-gradient(90deg, #7FDBFF 0%, #4FC3F0 45%, #1E88E5 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -474,19 +475,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         >
           <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between gap-4">
             {/* Logo */}
-            <div className="flex items-center gap-3 shrink-0">
-              <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{ background: ACCENT, boxShadow: '0 4px 16px rgba(255,140,0,0.35)' }}
-              >
-                <Droplets className="w-5 h-5 text-black" />
-              </div>
-              <span className="text-lg font-bold tracking-tight select-none">
-                <span className="text-white">ACQUA</span>
-                <span className="accent-grad-text">SMART</span>
-                <span className="text-white"> PRO</span>
-              </span>
-            </div>
+            <MondoLogo size={42} />
 
             {/* Desktop nav */}
             <nav className="hidden md:flex items-center gap-1">
@@ -852,7 +841,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                 style={{
                   background: ACCENT,
                   color: '#0a0a0a',
-                  boxShadow: '0 6px 28px rgba(255,180,0,0.35)',
+                  boxShadow: '0 6px 28px rgba(79,195,240,0.35)',
                 }}
               >
                 {t.hero.ctaAnalysis}
@@ -1399,7 +1388,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
               whileTap={{ scale: 0.97 }}
               onClick={() => onNavigate('register')}
               className="px-7 py-3.5 text-sm font-bold rounded-full transition-all"
-              style={{ background: ACCENT, color: '#0a0a0a', boxShadow: '0 6px 24px rgba(255,180,0,0.3)' }}
+              style={{ background: ACCENT, color: '#0a0a0a', boxShadow: '0 6px 24px rgba(79,195,240,0.3)' }}
             >
               {t.servisere.ctaTrial}
             </motion.button>
@@ -1428,19 +1417,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
             <div className="grid md:grid-cols-3 gap-8 mb-8 pb-8" style={{ borderBottom: '1px solid rgba(120,220,255,0.08)' }}>
               {/* Brand */}
               <div>
-                <div className="flex items-center gap-2.5 mb-3">
-                  <div
-                    className="w-8 h-8 rounded-xl flex items-center justify-center"
-                    style={{ background: ACCENT }}
-                  >
-                    <Droplets className="w-4 h-4 text-black" />
-                  </div>
-                  <span className="font-bold text-sm">
-                    <span className="text-white">ACQUA</span>
-                    <span className="accent-grad-text">SMART</span>
-                    <span className="text-white"> PRO</span>
-                  </span>
-                </div>
+                <div className="mb-3"><MondoLogo size={34} compact /></div>
                 <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
                   {t.footer.tagline}
                 </p>

@@ -71,7 +71,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
 
   const buildOrderText = () => {
     const lines: string[] = [
-      'Narudžba – AcquaSmart',
+      'Narudžba – Mondo Pool Care',
       '',
       `Ime: ${name}`,
       `Telefon: ${phone}`,
@@ -123,7 +123,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
   const handleEmail = () => {
     if (!validate()) return;
     window.open(
-      `mailto:${MONDO_CONTACT.email}?subject=${encodeURIComponent('Narudžba – AcquaSmart')}&body=${encodeURIComponent(buildOrderText())}`,
+      `mailto:${MONDO_CONTACT.email}?subject=${encodeURIComponent('Narudžba – Mondo Pool Care')}&body=${encodeURIComponent(buildOrderText())}`,
       '_blank'
     );
     setConfirmedVia('email');
@@ -464,7 +464,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
               <Waves className="w-5 h-5" style={{ color: '#020D12' }} />
             </div>
             <div className="min-w-0">
-              <div className="font-bold text-white leading-tight">Mondo Aqua</div>
+              <div className="font-bold text-white leading-tight">Mondo Acqua</div>
               <div className="text-xs leading-tight" style={{ color: T.muted }}>webshop</div>
             </div>
           </div>
@@ -481,7 +481,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
             className="relative flex items-center gap-2 px-4 py-2 rounded-full font-bold text-[#020D12] flex-shrink-0 transition-all hover:opacity-90"
             style={{
               background: T.accent,
-              boxShadow: '0 0 16px rgba(255,214,10,0.35)',
+              boxShadow: '0 0 16px rgba(79,195,240,0.35)',
             }}
           >
             <ShoppingCart className="w-4 h-4" />
@@ -508,7 +508,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
               className="text-xs font-semibold tracking-widest uppercase mb-2"
               style={{ color: T.cyan }}
             >
-              Mondo Aqua · Webshop
+              Mondo Acqua · Webshop
             </p>
             <h1
               className="font-bold text-white leading-tight mb-2"
@@ -647,7 +647,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
                 className="flex-shrink-0 px-4 py-1.5 rounded-full font-bold text-[#020D12] text-sm transition-all hover:opacity-90"
                 style={{
                   background: T.accent,
-                  boxShadow: '0 0 12px rgba(255,214,10,0.3)',
+                  boxShadow: '0 0 12px rgba(79,195,240,0.3)',
                 }}
               >
                 + Dodaj
