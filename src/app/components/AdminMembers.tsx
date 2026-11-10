@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { POWER_TYPES, KW_ONLY_TYPES, CAPACITY_TYPES, equipmentSpec } from '../lib/equipmentSpec';
-import { Loader2, Search, ArrowLeft, Phone, MapPin, Calendar, Wrench, ChevronDown, ChevronUp, Trash2, Plus, X, Image as ImageIcon, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Loader2, Search, ArrowLeft, Phone, MapPin, Calendar, Wrench, ChevronDown, ChevronUp, Trash2, Plus, X, Image as ImageIcon, CheckCircle, AlertTriangle, Download } from 'lucide-react';
 import { motion } from 'motion/react';
 import { T } from '../lib/theme';
 import { adminMembersApi, AdminMember, AdminMemberDetail, VisitRequest, EquipmentReportItem } from '../lib/adminMembersApi';
 import { api, ApiErrorKind, getApiErrorKind } from '../lib/supabase';
 import { authService } from '../lib/auth';
+import { exportToExcel, hrDate } from '../lib/excelExport';
 
 interface AdminMembersProps {
   onNavigate: (page: any) => void;
@@ -667,17 +668,42 @@ function MembersTab({ members, loading, error, onReload, onSelectMember, onLogin
 
   return (
     <div className="space-y-4">
-      {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(255,255,255,0.3)' }} />
-        <input
-          type="text"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Pretraži po imenu, e-mailu ili gradu..."
-          className="w-full pl-10 pr-4 py-3 rounded-xl text-white"
-          style={inputStyle}
-        />
+      {/* Search + izvoz */}
+      <div className="flex gap-2 flex-wrap">
+        <div className="relative" style={{ flex: '999 1 260px', minWidth: 0 }}>
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'rgba(255,255,255,0.3)' }} />
+          <input
+            type="text"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Pretraži po imenu, e-mailu ili gradu..."
+            className="w-full pl-10 pr-4 py-3 rounded-xl text-white"
+            style={inputStyle}
+          />
+        </div>
+        <button
+          onClick={() => exportToExcel('vlasnici-bazena', 'Vlasnici bazena', members.map(m => ({
+            'Ime i prezime': m.name || '',
+            'E-mail': m.email || '',
+            'Telefon': m.phone || '',
+            'Mjesto': m.city || '',
+            'Paket': m.plan === 'care' ? 'Mondo Care' : 'Besplatno članstvo',
+            'Paket vrijedi do': hrDate(m.planValidUntil),
+            'Registriran': hrDate(m.createdAt),
+            'Volumen bazena (m³)': m.pool?.volume ?? '',
+            'Broj analiza': m.analysesCount ?? 0,
+            'Zadnja analiza': hrDate(m.lastAnalysis),
+            'Oprema (kom)': m.equipmentCount ?? 0,
+            'Oprema za praćenje / zamjenu': m.needsAttention ?? 0,
+            'Zadnji posjet': hrDate(m.lastVisit),
+          })))}
+          disabled={members.length === 0}
+          className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold"
+          style={{ background: 'rgba(92,225,230,0.1)', border: '1px solid rgba(92,225,230,0.3)', color: '#5CE1E6', opacity: members.length === 0 ? 0.5 : 1 }}
+        >
+          <Download className="w-4 h-4" />
+          Izvoz u Excel
+        </button>
       </div>
 
       {filtered.length === 0 && (

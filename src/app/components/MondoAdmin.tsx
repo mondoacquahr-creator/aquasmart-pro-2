@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { T } from '../lib/theme';
 import { WaterBackground } from './WaterBackground';
-import { ArrowLeft, MessageCircle, ShoppingBag, Clock, CheckCircle, Package, User, ExternalLink, Loader2, MessageSquare, Database, HelpCircle, Plus, Pencil, Trash2, X, Image as ImageIcon, ToggleLeft, ToggleRight, Users } from 'lucide-react';
+import { ArrowLeft, MessageCircle, ShoppingBag, Clock, CheckCircle, Package, User, ExternalLink, Loader2, MessageSquare, Database, HelpCircle, Plus, Pencil, Trash2, X, Image as ImageIcon, ToggleLeft, ToggleRight, Users, Briefcase } from 'lucide-react';
 import { AdminMembers } from './AdminMembers';
+import { AdminServicers } from './AdminServicers';
 import { motion } from 'motion/react';
 import { MondoFooter } from './MondoFooter';
 import { api, getApiErrorKind, ApiErrorKind } from '../lib/supabase';
@@ -45,7 +46,7 @@ interface Inquiry {
   note?: string;
 }
 
-type ActiveTab = 'orders' | 'messages' | 'catalog' | 'inquiries' | 'members';
+type ActiveTab = 'orders' | 'messages' | 'catalog' | 'inquiries' | 'members' | 'servicers';
 
 interface MondoAdminProps {
   onBack: () => void;
@@ -346,7 +347,7 @@ export function MondoAdmin({ onBack, onNavigate }: MondoAdminProps) {
             </div>
           </div>
           <button
-            onClick={accessMode !== 'live' ? () => {} : activeTab === 'catalog' ? fetchCatalog : activeTab === 'inquiries' ? fetchInquiries : activeTab === 'members' ? () => {} : fetchData}
+            onClick={accessMode !== 'live' ? () => {} : activeTab === 'catalog' ? fetchCatalog : activeTab === 'inquiries' ? fetchInquiries : (activeTab === 'members' || activeTab === 'servicers') ? () => {} : fetchData}
             disabled={accessMode !== 'live' || isLoading || catalogLoading || inquiriesLoading}
             className="p-2 rounded-xl hover:bg-white/5 transition-colors"
             style={{ background: 'rgba(255,255,255,0.04)' }}
@@ -368,6 +369,7 @@ export function MondoAdmin({ onBack, onNavigate }: MondoAdminProps) {
               { key: 'catalog', icon: Database, label: 'Katalog bazena' },
               { key: 'inquiries', icon: HelpCircle, label: 'Upiti s vizualizatora' },
               { key: 'members', icon: Users, label: 'Vlasnici bazena' },
+              { key: 'servicers', icon: Briefcase, label: 'Serviseri' },
             ] as const
           ).map(tab => (
             <button
@@ -791,6 +793,17 @@ export function MondoAdmin({ onBack, onNavigate }: MondoAdminProps) {
             </div>
           ) : (
             <AdminMembers onNavigate={onNavigate} demoMode={accessMode === 'demo'} />
+          )
+        )}
+
+        {/* ── Serviseri ── */}
+        {activeTab === 'servicers' && (
+          accessMode === 'checking' ? (
+            <div className="flex justify-center py-16">
+              <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#5CE1E6' }} />
+            </div>
+          ) : (
+            <AdminServicers onNavigate={onNavigate} demoMode={accessMode === 'demo'} />
           )
         )}
 

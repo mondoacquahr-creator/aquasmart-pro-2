@@ -902,6 +902,54 @@ registerRoute(app, 'get', '/admin/members', authMiddleware, mondoOnly, async (c:
   return c.json(out.sort(byDateDesc));
 });
 
+// Popis servisera (tvrtki) za Mondo admin: nositelji tvrtki, bez Mondo admina.
+const TRIAL_DAYS = 30;
+const countKeys = async (prefix: string): Promise<number> => {
+  const { count } = await adminClient().from('kv_store_381f82bd')
+    .select('key', { count: 'exact', head: true }).like('key', `${prefix}%`);
+  return count || 0;
+};
+registerRoute(app, 'get', '/admin/servicers', authMiddleware, mondoOnly, async (c: any) => {
+  const supabase = adminClient();
+  const users: any[] = [];
+  for (let page = 1; page <= 20; page++) {
+    const { data, error } = await supabase.auth.admin.listUsers({ page, perPage: 1000 });
+    if (error) return c.json({ error: error.message }, 500);
+    users.push(...(data?.users || []));
+    if (!data?.users || data.users.length < 1000) break;
+  }
+  const owners = users.filter((u: any) => getRole(u) === 'owner' && !isMondoAdmin(u));
+  const now = Date.now();
+  const out = await Promise.all(owners.map(async (u: any) => {
+    const companyId = getCompanyId(u);
+    const employees = users.filter((e: any) => getRole(e) === 'employee' && e.app_metadata?.companyId === companyId);
+    const [clientsCount, workOrdersCount] = await Promise.all([
+      countKeys(`c:${companyId}:clients:`),
+      countKeys(`c:${companyId}:work-orders:`),
+    ]);
+    const createdAt = u.created_at || null;
+    const trialEnds = createdAt ? new Date(new Date(createdAt).getTime() + TRIAL_DAYS * 86400000) : null;
+    const trialDaysLeft = trialEnds ? Math.ceil((trialEnds.getTime() - now) / 86400000) : null;
+    return {
+      id: u.id,
+      companyName: u.app_metadata?.companyName || u.user_metadata?.companyName || '',
+      name: u.user_metadata?.name || '',
+      email: u.email || '',
+      phone: u.user_metadata?.phone || u.phone || '',
+      createdAt,
+      lastSignInAt: u.last_sign_in_at || null,
+      trialEndsAt: trialEnds ? trialEnds.toISOString() : null,
+      trialDaysLeft,
+      employeesCount: employees.length,
+      activeEmployeesCount: employees.filter((e: any) => !(e.banned_until && new Date(e.banned_until).getTime() > now)).length,
+      clientsCount,
+      workOrdersCount,
+    };
+  }));
+  out.sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
+  return c.json(out);
+});
+
 registerRoute(app, 'get', '/admin/members/:id', authMiddleware, mondoOnly, async (c: any) => {
   const id = cleanStr(c.req.param('id'), 80);
   const data = await loadMember(id);
@@ -1047,6 +1095,35 @@ const signupHandler = async (c: any) => {
         phone: cleanStr(body.phone, 40), city: cleanStr(body.city, 80), address: cleanStr(body.address, 200),
         consentAt: now, createdAt: now,
       });
+    }
+
+    // Obavijest Mondo Acqui o novoj registraciji (greška u slanju ne ruši registraciju)
+    try {
+      const kind = appRole === 'member' ? 'NOVI VLASNIK BAZENA' : appRole === 'owner' ? 'NOVI SERVISER' : 'NOVA REGISTRACIJA';
+      const city = cleanStr(body.city, 80);
+      const phone = cleanStr(body.phone, 40);
+      const subjectName = appRole === 'owner' && companyName ? `${companyName} – ${name}` : name;
+      const row = (label: string, value: string) => value
+        ? `<p style="margin: 6px 0;"><strong>${label}:</strong> ${escapeHtml(value)}</p>` : '';
+      await resend.emails.send({
+        from: 'Mondo Pool Care <orders@resend.dev>',
+        to: [MONDO_ACQUA_EMAIL],
+        subject: `${kind}: ${subjectName}${city ? ' – ' + city : ''}`,
+        html: `
+          <div style="font-family: sans-serif; max-width: 600px;">
+            <h2 style="color: #002344;">${kind}</h2>
+            ${row('Tvrtka', appRole === 'owner' ? companyName : '')}
+            ${row('Ime', name)}
+            ${row('E-mail', email)}
+            ${row('Telefon', phone)}
+            ${row('Mjesto', city)}
+            ${row('Adresa', cleanStr(body.address, 200))}
+            ${row('Registriran', new Date().toLocaleString('hr-HR', { timeZone: 'Europe/Zagreb' }))}
+            <p style="color: #666; font-size: 13px;">Popis svih registracija je u Mondo admin panelu (${appRole === 'owner' ? 'kartica Serviseri' : 'kartica Vlasnici bazena'}).</p>
+          </div>`,
+      } as any);
+    } catch (mailErr) {
+      console.error('Signup notification email failed:', mailErr);
     }
 
     return c.json({ success: true, user: { id: newUser.id, email: newUser.email } });
