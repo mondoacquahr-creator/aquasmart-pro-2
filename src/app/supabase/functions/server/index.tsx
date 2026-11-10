@@ -148,6 +148,20 @@ const registerRoute = (app: Hono, method: 'get' | 'post' | 'delete' | 'put', pat
 
 registerRoute(app, 'get', '/health', (c: any) => c.json({ status: "ok" }));
 
+// Detalji proizvoda u webshopu (opis, upute i doziranje prema proizvođaču, tehnički podaci). Javno čitanje.
+registerRoute(app, 'get', '/shop/details', async (c: any) => {
+  try {
+    const { data, error } = await adminClient().from('kv_store_381f82bd').select('key, value').like('key', 'shop:details:%');
+    if (error) return c.json({ error: error.message }, 500);
+    const out: Record<string, any> = {};
+    for (const r of data || []) out[String(r.key).slice('shop:details:'.length)] = r.value;
+    c.header('Cache-Control', 'public, max-age=3600');
+    return c.json(out);
+  } catch (err: any) {
+    return c.json({ error: err.message }, 500);
+  }
+});
+
 // ---------- Tko sam ja ----------
 
 registerRoute(app, 'get', '/me', authMiddleware, (c: any) => {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { IVERO_PRICES } from './productPrices';
 import { VAGNER_EQUIPMENT } from './vagnerEquipment';
+import { api } from './supabase';
 
 export const MONDO_CONTACT = {
   name: 'Mondo Acqua d.o.o.',
@@ -100,6 +101,27 @@ const equipmentProducts: ShopProduct[] = VAGNER_EQUIPMENT.map((p) => ({
 export const SHOP_PRODUCTS: ShopProduct[] = [...chemProducts, ...equipmentProducts];
 
 export const findProduct = (id: string): ShopProduct | undefined => SHOP_PRODUCTS.find((p) => p.id === id);
+
+// Detalji proizvoda (opis, upute i doziranje prema proizvođaču, tehnički podaci) – učitavaju se sa servera jednom.
+export interface ProductDetails {
+  description?: string;
+  usage?: string[];
+  warning?: string;
+  params?: [string, string][];
+  source?: string;
+  sourceUrl?: string;
+}
+
+let detailsPromise: Promise<Record<string, ProductDetails>> | null = null;
+
+export function loadProductDetails(): Promise<Record<string, ProductDetails>> {
+  if (!detailsPromise) {
+    detailsPromise = api.get('shop/details')
+      .then((d: any) => (d && typeof d === 'object' && !d.error ? d : {}))
+      .catch((err: any) => { detailsPromise = null; throw err; });
+  }
+  return detailsPromise;
+}
 
 export const isEquipment = (id: string): boolean => id.startsWith('vg-');
 

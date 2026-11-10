@@ -21,6 +21,7 @@ import { MemberChip } from './MemberChip';
 import { useAuth } from '../contexts/AuthContext';
 import { memberApi, isMemberLoggedIn } from '../lib/memberApi';
 import { WaterBackground } from './WaterBackground';
+import { ProductDetailSheet } from './ProductDetailSheet';
 
 interface MondoShopProps {
   onBack: () => void;
@@ -39,6 +40,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('Sve');
   const [confirmedVia, setConfirmedVia] = useState<'whatsapp' | 'email' | null>(null);
+  const [detailId, setDetailId] = useState<string | null>(null);
 
   // Form state
   const [name, setName] = useState('');
@@ -695,8 +697,9 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
                 <div className="hidden sm:flex items-center gap-4">
                   {/* Image */}
                   <div
-                    className="rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center"
+                    className="rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center cursor-pointer"
                     style={{ width: 88, height: 72, background: '#fff' }}
+                    onClick={() => setDetailId(product.id)}
                   >
                     {product.imageUrl ? (
                       <>
@@ -722,7 +725,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
                   </div>
 
                   {/* Text */}
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 cursor-pointer" onClick={() => setDetailId(product.id)}>
                     <p className="text-[10px] font-bold uppercase tracking-widest mb-0.5" style={{ color: T.cyan }}>
                       {product.category}
                     </p>
@@ -736,6 +739,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
                     >
                       {isEquipment(product.id) ? product.size : `Pakiranje: ${product.size}`}
                     </span>
+                    <span className="ml-2 text-[12px] font-semibold" style={{ color: T.cyan }}>Detalji ›</span>
                   </div>
 
                   {/* Price */}
@@ -767,7 +771,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
                 {/* ── MOBILE layout (<sm): two rows ── */}
                 <div className="flex sm:hidden flex-col gap-2">
                   {/* Row 1: image + text */}
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3 cursor-pointer" onClick={() => setDetailId(product.id)}>
                     {/* Image */}
                     <div
                       className="rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center"
@@ -811,6 +815,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
                       >
                         {isEquipment(product.id) ? product.size : `Pakiranje: ${product.size}`}
                       </span>
+                      <span className="ml-2 text-[11px] font-semibold" style={{ color: T.cyan }}>Detalji ›</span>
                     </div>
                   </div>
 
@@ -851,6 +856,21 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
           </p>
         )}
       </div>
+
+      {/* ── KARTICA PROIZVODA ────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {detailId && findProduct(detailId) && (
+          <ProductDetailSheet
+            key={detailId}
+            product={findProduct(detailId)!}
+            qty={cart.items.find((i) => i.productId === detailId)?.quantity || 0}
+            member={member}
+            care={care}
+            onClose={() => setDetailId(null)}
+            onRegisterMember={onRegisterMember}
+          />
+        )}
+      </AnimatePresence>
 
       {/* ── STICKY BOTTOM BAR ────────────────────────────────────────────── */}
       <AnimatePresence>
