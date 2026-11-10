@@ -530,21 +530,13 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Pretraži proizvode..."
               className="input-glass w-full pl-10 pr-4 py-2.5 rounded-2xl text-sm"
-              style={{ background: T.inputBg, border: T.inputBorder }}
+              style={{ background: T.inputBg, border: T.inputBorder, paddingLeft: 40 }}
             />
           </div>
         </div>
 
-        {/* Category pills – single scrollable row */}
-        <div
-          className="flex items-center gap-2 mt-5 overflow-x-auto pb-1"
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            scrollSnapType: 'x mandatory',
-          }}
-        >
-          <style>{`div.shop-pills-wrap::-webkit-scrollbar { display: none; }`}</style>
+        {/* Category pills – wrap so every category (incl. equipment) is always visible */}
+        <div className="flex flex-wrap items-center gap-2 mt-5 pb-1">
           {CATEGORIES.map((cat) => (
             <React.Fragment key={cat}>
               {cat === 'Pumpe' && (
