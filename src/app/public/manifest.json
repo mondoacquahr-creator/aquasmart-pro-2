@@ -1,0 +1,123 @@
+{
+  "name": "AquaSmart Pro - Pool Water Analyzer",
+  "short_name": "AquaSmart Pro",
+  "description": "Profesionalna analiza vode za bazene s Ivero proizvodima i doziranjem",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0891B2",
+  "theme_color": "#0891B2",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "hr",
+  "dir": "ltr",
+  "categories": ["productivity", "utilities", "business"],
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Početni ekran s brzim pristupom analizama"
+    },
+    {
+      "src": "/screenshots/analysis.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Analiza vode s pametnim preporukama"
+    },
+    {
+      "src": "/screenshots/pools.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Upravljanje bazenima"
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "shortcuts": [
+    {
+      "name": "Nova analiza",
+      "short_name": "Analiza",
+      "description": "Započni novu analizu vode",
+      "url": "/pools",
+      "icons": [
+        {
+          "src": "/icons/shortcut-analysis.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Moji bazeni",
+      "short_name": "Bazeni",
+      "description": "Pregled svih bazena",
+      "url": "/pools",
+      "icons": [
+        {
+          "src": "/icons/shortcut-pools.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}

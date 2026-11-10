@@ -1,0 +1,124 @@
+Running frontend commit 93a62d3c6e0bdc4ec3ca734e33e2b9aeafbc43d8
+vendor-core-4ad04edb85d11631.min.js.br:54 Statsig is not ready to log exposures, will retry in 1 seconds
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:54Understand this warning
+vendor-core-4ad04edb85d11631.min.js.br:54 Loaded 35 scripts (5968152b), 35 from cache (5968152b)
+vendor-core-4ad04edb85d11631.min.js.br:54 [import] git: d8b90192eac75cb4aa704abca3b9e1b62a62eb9b, stamp: 4A9A3243F1C2AD74
+2892-ac9b856904f183f2.min.js.br:779 The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127
+initialize @ 2892-ac9b856904f183f2.min.js.br:779Understand this warning
+vendor-core-4ad04edb85d11631.min.js.br:54 Statsig is not ready to log exposures, will retry in 1 seconds
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:54Understand this warning
+/make/nOiUbxKBTYoPewPrV7nuuM/Pool-Water-Analysis-App?t=TbULxXvyudZ2PKbp-0:1 Unchecked runtime.lastError: The message port closed before a response was received.Understand this error
+vendor-core-4ad04edb85d11631.min.js.br:54 Autosave Changes not available or already claimed by another tab undefined
+vendor-core-4ad04edb85d11631.min.js.br:54 [Fullscreen] Booting... (emscripten version 4.0.21)
+vendor-core-4ad04edb85d11631.min.js.br:54 [GPU] graphicsAPI:"WebGPU", vendor:"Google Inc. (Intel)" renderer:"ANGLE (Intel, Intel(R) HD Graphics 520 (0x00001916) Direct3D11 vs_5_0 ps_5_0, D3D11)" deviceArchitecture:"gen-9" deviceDescription:"" webGPUDevice:"" webGPUVendor:"intel" bindings:"emdawnwebgpu"
+vendor-core-4ad04edb85d11631.min.js.br:54 [Fullscreen] Ready in 2375.0ms
+vendor-core-4ad04edb85d11631.min.js.br:54 [FullscreenApp] calling setEditorTheme and setting preference light
+vendor-core-4ad04edb85d11631.min.js.br:54 [MultiplayerSession] connecting to wss://www.figma.com/api/multiplayer/nOiUbxKBTYoPewPrV7nuuM?role=editor&tracking_session_id=qUxDWCcJV3xJzC3k&version=151&recentReload=0&file-load-streaming-compression&user-id=1601268384598478270&client_release=93a62d3c6e0bdc4ec3ca734e33e2b9aeafbc43d8
+vendor-core-4ad04edb85d11631.min.js.br:54 [FullscreenApp] calling setEditorTheme and setting preference light
+vendor-core-4ad04edb85d11631.min.js.br:54 [MultiplayerSession] Joining file version 106 (initial load)
+vendor-core-4ad04edb85d11631.min.js.br:54 Migration succeeded: context: fullscreen_migrate_SceneGraphManager, version: 106, duration: 0ms.
+2vendor-core-4ad04edb85d11631.min.js.br:54 [devtools] Initialized LS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:1190 [esbuild-wasm] Initializing from URL: /webpack-artifacts/assets/2b68f2d3d5e8b3d6.wasm
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:1190 [esbuild-wasm] Initialized
+vendor-core-4ad04edb85d11631.min.js.br:54 [Fullscreen] loadtime=12.93s maxmem=155631900
+/api/make/fetch_ds_code_gen_status:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:1190 [lightningcss-wasm] Initialized
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+vendor-core-4ad04edb85d11631.min.js.br:54 Sentry event id: 741c83d7b73146ea9447b8fcbb726d8f
+vendor-core-4ad04edb85d11631.min.js.br:54 Sentry event id: c3114497c9444a33aac5803cb4076601
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+sryuogkaebeznmadchcr.supabase.co/functions/v1/make-server-381f82bd:1  Failed to load resource: the server responded with a status of 404 ()Understand this error
+sryuogkaebeznmadchcr.supabase.co/functions/v1/make-server-381f82bd:1  Failed to load resource: the server responded with a status of 404 ()Understand this error
+sryuogkaebeznmadchcr.supabase.co/functions/v1/make-server-381f82bd:1  Failed to load resource: the server responded with a status of 404 ()Understand this error
+sryuogkaebeznmadchcr.supabase.co/functions/v1/make-server-381f82bd:1  Failed to load resource: the server responded with a status of 404 ()Understand this error
+sryuogkaebeznmadchcr.supabase.co/functions/v1/make-server-381f82bd:1  Failed to load resource: the server responded with a status of 404 ()Understand this error
+sryuogkaebeznmadchcr.supabase.co/functions/v1/make-server-381f82bd:1  Failed to load resource: the server responded with a status of 404 ()Understand this error
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+vendor-core-4ad04edb85d11631.min.js.br:54 Too many elapsed hits of react since last report
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:54Understand this warning
+vendor-core-4ad04edb85d11631.min.js.br:54 Logged performance for react too many times in one animation frame
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:54Understand this warning
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.10MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.10MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+2vendor-core-4ad04edb85d11631.min.js.br:54 Logged performance for react too many times in one animation frame
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:54Understand this warning
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.07MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.07MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Processing 0.07MB of CSS (environment: browser)
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Encoded size: 0.07MB
+devtools_worker-49fd8f0bd2ce7ffe.min.js.br:3079 [lightningCSS] Transform completed successfully

@@ -1,0 +1,15 @@
+export const T = {
+  pageBg: 'radial-gradient(ellipse at 80% 0%, #08303D 0%, #041820 45%, #020D12 100%)',
+  accent: 'linear-gradient(90deg, #FFD60A 0%, #FF8A1F 55%, #FF2D55 100%)',
+  cyan: '#5CE1E6',
+  yellow: '#FFD60A',
+  green: '#2EE6A6',
+  cardBg: 'rgba(10,40,52,0.55)',
+  cardBorder: '1px solid rgba(120,220,255,0.12)',
+  cardShadow: '0 20px 60px rgba(0,0,0,0.35)',
+  inputBg: 'rgba(2,13,18,0.6)',
+  inputBorder: '1px solid rgba(120,220,255,0.18)',
+  text: '#FFFFFF',
+  muted: 'rgba(255,255,255,0.65)',
+  faint: 'rgba(255,255,255,0.45)',
+};

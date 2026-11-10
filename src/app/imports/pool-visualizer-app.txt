@@ -1,0 +1,265 @@
+POOL VISUALIZER MOBILE APP - COMPLETE SOURCE CODE
+This document contains the complete Flutter source code for:
+- AR Mode (live camera placement using AR)
+- Photo Mode (take photo and insert pool model)
+- Model selection
+- Screenshot export
+
+1. pubspec.yaml
+
+name: pool_visualizer
+description: Internal Pool Visualization Tool
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  image_picker: ^1.0.4
+  screenshot: ^2.1.0
+  ar_flutter_plugin: ^0.7.3
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/models/pool_modern.glb
+    - assets/models/pool_infinity.glb
+    - assets/models/pool_classic.glb
+    - assets/models/pool_preview.png
+
+2. lib/main.dart
+
+import 'package:flutter/material.dart';
+import 'mode_selection.dart';
+
+void main() {
+  runApp(const PoolApp());
+}
+
+class PoolApp extends StatelessWidget {
+  const PoolApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ModeSelectionScreen(),
+    );
+  }
+}
+
+3. lib/mode_selection.dart
+
+import 'package:flutter/material.dart';
+import 'photo_mode.dart';
+import 'ar_screen.dart';
+
+class ModeSelectionScreen extends StatelessWidget {
+  const ModeSelectionScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Pool Visualizer")),
+      body: Column(
+        children: [
+          ListTile(
+            title: const Text("AR način (uživo kamera)"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const ARScreen(
+                      modelPath: "assets/models/pool_modern.glb"),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text("Foto način (slikaj i ubaci bazen)"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const PhotoModeScreen(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+4. lib/photo_mode.dart
+
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:screenshot/screenshot.dart';
+
+class PhotoModeScreen extends StatefulWidget {
+  const PhotoModeScreen({super.key});
+
+  @override
+  State<PhotoModeScreen> createState() => _PhotoModeScreenState();
+}
+
+class _PhotoModeScreenState extends State<PhotoModeScreen> {
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
+  final ScreenshotController screenshotController = ScreenshotController();
+
+  Offset position = const Offset(100, 300);
+  double scale = 1.0;
+  double rotation = 0.0;
+
+  Future<void> _pickImage() async {
+    final pickedFile =
+        await _picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  void _saveImage() async {
+    final image = await screenshotController.capture();
+    if (image != null) {
+      final directory = await Directory('/storage/emulated/0/Download')
+          .create(recursive: true);
+      final file = File('${directory.path}/pool_visualization.png');
+      await file.writeAsBytes(image);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Slika spremljena u Download folder")),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Foto Vizualizacija"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.save),
+            onPressed: _saveImage,
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _pickImage,
+        child: const Icon(Icons.camera_alt),
+      ),
+      body: _image == null
+          ? const Center(child: Text("Slikaj lokaciju"))
+          : Screenshot(
+              controller: screenshotController,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Image.file(_image!, fit: BoxFit.cover),
+                  ),
+                  Positioned(
+                    left: position.dx,
+                    top: position.dy,
+                    child: GestureDetector(
+                      onScaleUpdate: (details) {
+                        setState(() {
+                          scale = details.scale;
+                          rotation = details.rotation;
+                          position += details.focalPointDelta;
+                        });
+                      },
+                      child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()
+                          ..scale(scale)
+                          ..rotateZ(rotation),
+                        child: Image.asset(
+                          "assets/models/pool_preview.png",
+                          width: 300,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+    );
+  }
+}
+
+5. lib/ar_screen.dart
+
+import 'package:flutter/material.dart';
+import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
+import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
+import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
+import 'package:ar_flutter_plugin/models/ar_node.dart';
+import 'package:vector_math/vector_math_64.dart';
+
+class ARScreen extends StatefulWidget {
+  final String modelPath;
+  const ARScreen({super.key, required this.modelPath});
+
+  @override
+  State<ARScreen> createState() => _ARScreenState();
+}
+
+class _ARScreenState extends State<ARScreen> {
+  late ARSessionManager arSessionManager;
+  late ARObjectManager arObjectManager;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ARView(
+        onARViewCreated: onARViewCreated,
+      ),
+    );
+  }
+
+  void onARViewCreated(
+      ARSessionManager sessionManager,
+      ARObjectManager objectManager,
+      ) {
+    arSessionManager = sessionManager;
+    arObjectManager = objectManager;
+
+    arSessionManager.onInitialize(
+      showFeaturePoints: false,
+      showPlanes: true,
+    );
+
+    arObjectManager.onInitialize();
+
+    arSessionManager.onPlaneOrPointTap = (hits) {
+      final hit = hits.first;
+
+      final node = ARNode(
+        type: NodeType.localGLTF2,
+        uri: widget.modelPath,
+        scale: Vector3(1.0, 1.0, 1.0),
+        position: hit.worldTransform.getTranslation(),
+        rotation: hit.worldTransform.getRotation(),
+      );
+
+      arObjectManager.addNode(node);
+    };
+  }
+
+  @override
+  void dispose() {
+    arSessionManager.dispose();
+    super.dispose();
+  }
+}
+

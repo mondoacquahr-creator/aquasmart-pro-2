@@ -1,0 +1,46 @@
+Running frontend commit b1cf43759fd15f21f25594bb16ad0d707c086fd0
+vendor-core-8d98bf0feb336918.min.js.br:54 Statsig is not ready to log exposures, will retry in 1 seconds
+(anonymous) @ vendor-core-8d98bf0feb336918.min.js.br:54Understand this warning
+vendor-core-8d98bf0feb336918.min.js.br:54 Loaded 35 scripts (5959704b), 35 from cache (5959704b)
+3169-b1634affc5a160e8.min.js.br:779 The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127
+initialize @ 3169-b1634affc5a160e8.min.js.br:779Understand this warning
+vendor-core-8d98bf0feb336918.min.js.br:54 [import] git: 0b2f44ed43a79f7a554e1384aa3bc703de46ede0, stamp: 0DADCFF8A4EA28DA
+vendor-core-8d98bf0feb336918.min.js.br:54 Autosave Changes not available or already claimed by another tab undefined
+/make/nOiUbxKBTYoPewPrV7nuuM/Pool-Water-Analysis-App?t=AxDG8jTTat8Djrpq-0&preview-route=%2Fapp%2Fpool-visualizer:1 Unchecked runtime.lastError: The message port closed before a response was received.Understand this error
+vendor-core-8d98bf0feb336918.min.js.br:54 Statsig is not ready to log exposures, will retry in 1 seconds
+(anonymous) @ vendor-core-8d98bf0feb336918.min.js.br:54Understand this warning
+vendor-core-8d98bf0feb336918.min.js.br:54 [Fullscreen] Booting... (emscripten version 4.0.21)
+vendor-core-8d98bf0feb336918.min.js.br:54 [GPU] graphicsAPI:"WebGPU", vendor:"Google Inc. (Intel)" renderer:"ANGLE (Intel, Intel(R) HD Graphics 520 (0x00001916) Direct3D11 vs_5_0 ps_5_0, D3D11)" deviceArchitecture:"gen-9" deviceDescription:"" webGPUDevice:"" webGPUVendor:"intel" bindings:"emdawnwebgpu"
+vendor-core-8d98bf0feb336918.min.js.br:54 [Fullscreen] Ready in 1207.1ms
+vendor-core-8d98bf0feb336918.min.js.br:54 [FullscreenApp] calling setEditorTheme and setting preference light
+vendor-core-8d98bf0feb336918.min.js.br:54 [MultiplayerSession] connecting to wss://www.figma.com/api/multiplayer/nOiUbxKBTYoPewPrV7nuuM?role=editor&tracking_session_id=3NKuV4cQ9hdAcu6v&version=151&recentReload=0&file-load-streaming-compression&user-id=1601268384598478270&client_release=b1cf43759fd15f21f25594bb16ad0d707c086fd0
+vendor-core-8d98bf0feb336918.min.js.br:54 [FullscreenApp] calling setEditorTheme and setting preference light
+32The resource <URL> was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.Understand this warning
+vendor-core-8d98bf0feb336918.min.js.br:54 [MultiplayerSession] Joining file version 106 (initial load)
+vendor-core-8d98bf0feb336918.min.js.br:54 Migration succeeded: context: fullscreen_migrate_SceneGraphManager, version: 106, duration: 0ms.
+fc9ed329-a4eb-4a9b-b…eview.figma.site/:1 Uncaught (in promise) MessageNotSentErrorUnderstand this error
+/api/make/fetch_ds_code_gen_status:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
+2vendor-core-8d98bf0feb336918.min.js.br:54 [devtools] Initialized LS
+devtools_worker-32bac009041fb177.min.js.br:1190 [esbuild-wasm] Initializing from URL: /webpack-artifacts/assets/2b68f2d3d5e8b3d6.wasm
+devtools_worker-32bac009041fb177.min.js.br:1190 [esbuild-wasm] Initialized
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-32bac009041fb177.min.js.br:1190 [lightningcss-wasm] Initialized
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Processing 0.23MB of CSS (environment: browser)
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Encoded size: 0.23MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Transform completed successfully
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 [ProtectedRoute] user: null
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 [ProtectedRoute] allowedRoles: Array(1)
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 [ProtectedRoute] No user, redirecting to /login
+vendor-core-8d98bf0feb336918.min.js.br:54 [Fullscreen] loadtime=31.14s maxmem=124632040
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 [Login] Attempting login with: profesionalac@aquasmart.hr
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 [Login] Login successful, user: {id: 'demo-prof-id', email: 'profesionalac@aquasmart.hr', name: 'Demo Profesionalac', role: 'professional', createdAt: '2026-02-25T21:32:13.537Z'}
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 [Login] Professional user, savedRole: null
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 [Login] Redirecting to /role-selection
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 Skipping sync: No active Supabase session (User might be in Demo mode or session expired)
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 [ProtectedRoute] user: {id: 'demo-prof-id', email: 'profesionalac@aquasmart.hr', name: 'Demo Profesionalac', role: 'professional', createdAt: '2026-02-25T21:32:13.537Z'}
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 [ProtectedRoute] allowedRoles: ['professional']
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 [ProtectedRoute] Access granted
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 Skipping sync: No active Supabase session (User might be in Demo mode or session expired)
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 🚀 Pre-loading OpenCV...
+code_components_preview_iframe-8da591d0c952173a.min.js.br:28 ⏳ Loading OpenCV from CDN...

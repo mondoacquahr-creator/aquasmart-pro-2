@@ -1,0 +1,405 @@
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { Globe } from 'lucide-react';
+
+export type Language = 'hr' | 'en' | 'de' | 'it';
+
+export const translations: Record<Language, any> = {
+  hr: {
+    home: {
+      title: 'Uređenje Eksterijera',
+      subtitle: 'Vizualizirajte svoj savršeni vanjski prostor s profesionalnim alatima za dizajn',
+      jacuzzi: { title: 'Jacuzzi', description: 'Postavite luksuzni jacuzzi u vaš vanjski prostor' },
+      pool: { title: 'Bazen', description: 'Vizualizirajte bazen savršenih dimenzija' },
+      other: { title: 'Ostalo', description: 'Dodajte bilo koji drugi objekt po želji' },
+      select: 'Odaberi',
+      selectQuestion: 'Koji objekt želite postaviti?',
+      workflow: 'Jednostavan proces u 5 koraka:',
+      workflowSteps: 'Odaberite tip → Učitajte fotografiju → Uredite prostor → Učitajte objekt → Postavite objekt',
+      poweredBy: 'Powered by',
+    },
+    steps: {
+      uploadSpace: 'Učitaj prostor',
+      editSpace: 'Uredi prostor',
+      uploadObject: 'Učitaj objekt',
+      cropObject: 'Izreži objekt',
+      placeObject: 'Postavi objekt',
+    },
+    photoUpload: {
+      title: 'Učitajte fotografiju vanjskog prostora',
+      description: 'Dodajte fotografiju dvorišta, vrta ili terase gdje želite postaviti objekt',
+      uploadButton: 'Učitaj Fotografiju',
+      dropzone: 'Kliknite ili povucite fotografiju ovdje',
+      formats: 'PNG, JPG ili WEBP (maks. 10MB)',
+      camera: 'Slikaj',
+      saved: 'Učitaj spremljene objekte',
+      changePhoto: 'Promijeni Fotografiju',
+      next: 'Nastavi',
+      back: 'Natrag',
+    },
+    photoEdit: {
+      title: 'Uredite svoj prostor',
+      description: 'Označite područje gdje želite postaviti objekt',
+      cropSpace: 'Označi prostor',
+      cropDescription: 'Povucite točke da označite područje za objekt',
+      eraseObjects: 'Obriši objekte',
+      eraseDescription: 'Uklonite neželjene objekte iz fotografije',
+      brushSize: 'Veličina kista',
+      reset: 'Resetiraj',
+      apply: 'Primijeni',
+      next: 'Nastavi',
+      back: 'Natrag',
+    },
+    objectGallery: {
+      jacuzziTitle: 'Jacuzzi Modeli',
+      poolTitle: 'Bazen Modeli',
+      otherTitle: 'Ostali Objekti',
+      jacuzziDescription: 'Odaberite savršen jacuzzi za vaš prostor ili uploadajte vlastiti',
+      poolDescription: 'Odaberite idealan bazen za vaše dvorište ili uploadajte vlastiti',
+      otherDescription: 'Odaberite objekt ili uploadajte vlastiti',
+      galleryTitle: 'Galerija Objekata',
+      uploadCustomTitle: 'Uploadajte Vlastiti Objekt',
+      uploadCustomDescription: 'Imate vlastitu fotografiju? Dodajte je ovdje',
+      selected: 'Odabrano:',
+      confirm: 'Potvrdi Odabir',
+      or: 'ili',
+      back: 'Natrag',
+    },
+    galleryObjects: {
+      jacuzziRound: 'Okrugli Jacuzzi - Luksuzni',
+      jacuzziSquare: 'Kvadratni Jacuzzi - Premium',
+      jacuzziOutdoor: 'Vanjski Jacuzzi - Spa',
+      jacuzziModern: 'Moderni Jacuzzi - Minimalistički',
+      poolMondoAcqua1: 'Klasični Pravokutni Bazen',
+      poolMondoAcqua2: 'Moderni Bazen s Drvenom Terasom',
+      poolMondoAcqua3: 'Elegantni Bazen s Pokrivačem',
+      poolMondoAcqua4: 'Bijeli Rub Premium Bazen',
+      poolMondoAcqua5: 'Bazen s Pokrivačem Nadsvod - Family',
+      poolMondoAcqua7: 'Moderni Sivi Rub Bazen - Elegantni',
+      poolMondoAcqua8: 'Vrtni Bazen s Drvenom Terasom - Premium',
+      poolRectangular: 'Pravokutni Bazen - Klasični',
+      poolInfinity: 'Infinity Bazen - Premium',
+      poolRound: 'Okrugli Bazen - Kompaktni',
+      poolModern: 'Moderni Bazen - Dizajnerski',
+      poolLuxury: 'Luksuzni Bazen - Resort Stil',
+      poolCompact: 'Kompaktni Bazen - Minimalistički',
+      poolNatural: 'Prirodni Bazen - Organski',
+      poolLap: 'Lap Bazen - Sportski',
+      sauna: 'Sauna - Outdoor',
+      fountain: 'Fontana - Dekorativna',
+      pond: 'Vrtni Ribnjak',
+      pergola: 'Pergola s Bazenom',
+    },
+    objectUpload: {
+      title: 'Učitajte fotografiju objekta',
+      description: 'Dodajte fotografiju bazena, jacuzzi-ja ili drugog objekta',
+      uploadButton: 'Učitaj Objekt',
+      dropzone: 'Kliknite ili povucite fotografiju ovdje',
+      formats: 'PNG, JPG ili WEBP (maks. 10MB)',
+      camera: 'Slikaj',
+      saved: 'Spremi objekt',
+      next: 'Nastavi',
+      back: 'Natrag',
+    },
+    objectCrop: {
+      title: 'Izolirajte objekt',
+      description: 'Povucite točke da precizno izrežete objekt',
+      dragCorners: 'Povucite kutove da izolirate objekt',
+      precision: 'Povećajte preciznost za bolje rezultate',
+      reset: 'Resetiraj',
+      apply: 'Primijeni',
+      next: 'Nastavi',
+      back: 'Natrag',
+    },
+    designCanvas: {
+      title: 'Dizajn i Transformacija',
+      description: 'Vaš objekt je automatski postavljen na označeni prostor',
+      addAnother: 'Dodaj Drugi Objekt',
+      finish: 'Završi Projekt',
+      back: 'Natrag',
+      delete: 'Obriši',
+      objects: 'Objekti',
+    },
+    results: {
+      title: 'Vaš Projekt je Gotov!',
+      subtitle: 'Preuzmite rezultat ili zatražite ponudu',
+      before: 'Prije',
+      after: 'Nakon',
+      print: 'Ispiši',
+      downloadPdf: 'Preuzmi PDF',
+      sendOffer: 'Pošalji Upit za Ponudu',
+      startNew: 'Počni Novi Projekt',
+      projectDetails: 'Detalji Projekta',
+      type: 'Tip',
+      objects: 'Objekti',
+      exterior: 'Eksterijer',
+      interior: 'Interijer',
+    },
+    aiAssistant: {
+      title: 'AI Asistent',
+      placeholder: 'Postavite pitanje...',
+      tips: {
+        photoUpload: 'Učitajte jasnu fotografiju vanjskog prostora s dobrim osvjetljenjem.',
+        photoEdit: 'Precizno označite područje gdje želite postaviti objekt.',
+        objectGallery: 'Odaberite objekt iz galerije ili uploadajte vlastiti.',
+        objectUpload: 'Uploadajte fotografiju objekta s transparentnom pozadinom za najbolje rezultate.',
+        objectCrop: 'Povucite kutove da precizno izolujete objekt.',
+        designCanvas: 'Vaš objekt je automatski transformiran i postavljen. Možete dodati više objekata.',
+      },
+    },
+    common: {
+      loading: 'Učitavanje...',
+      error: 'Greška',
+      success: 'Uspješno',
+      cancel: 'Odustani',
+      save: 'Spremi',
+      delete: 'Obriši',
+      edit: 'Uredi',
+      close: 'Zatvori',
+      or: 'ili',
+    },
+  },
+  en: {
+    home: {
+      title: 'Exterior Design',
+      subtitle: 'Visualize your perfect outdoor space with professional design tools',
+      jacuzzi: { title: 'Jacuzzi', description: 'Place a luxury jacuzzi in your outdoor space' },
+      pool: { title: 'Pool', description: 'Visualize a pool with perfect dimensions' },
+      other: { title: 'Other', description: 'Add any other object of your choice' },
+      select: 'Select',
+      selectQuestion: 'Which object would you like to place?',
+      workflow: 'Simple 5-step process:',
+      workflowSteps: 'Select type → Upload photo → Edit space → Upload object → Place object',
+      poweredBy: 'Powered by',
+    },
+    steps: {
+      uploadSpace: 'Upload Space',
+      editSpace: 'Edit Space',
+      uploadObject: 'Upload Object',
+      cropObject: 'Crop Object',
+      placeObject: 'Place Object',
+    },
+    photoUpload: {
+      title: 'Upload Outdoor Space Photo',
+      description: 'Add a photo of your yard, garden or terrace where you want to place the object',
+      uploadButton: 'Upload Photo',
+      dropzone: 'Click or drag photo here',
+      formats: 'PNG, JPG or WEBP (max. 10MB)',
+      camera: 'Take Photo',
+      saved: 'Load Saved Objects',
+      changePhoto: 'Change Photo',
+      next: 'Continue',
+      back: 'Back',
+    },
+    photoEdit: {
+      title: 'Edit Your Space',
+      description: 'Mark the area where you want to place the object',
+      cropSpace: 'Mark Space',
+      cropDescription: 'Drag points to mark the area for the object',
+      eraseObjects: 'Erase Objects',
+      eraseDescription: 'Remove unwanted objects from the photo',
+      brushSize: 'Brush Size',
+      reset: 'Reset',
+      apply: 'Apply',
+      next: 'Continue',
+      back: 'Back',
+    },
+    objectGallery: {
+      jacuzziTitle: 'Jacuzzi Models',
+      poolTitle: 'Pool Models',
+      otherTitle: 'Other Objects',
+      jacuzziDescription: 'Choose the perfect jacuzzi for your space or upload your own',
+      poolDescription: 'Choose the ideal pool for your yard or upload your own',
+      otherDescription: 'Choose an object or upload your own',
+      galleryTitle: 'Object Gallery',
+      uploadCustomTitle: 'Upload Custom Object',
+      uploadCustomDescription: 'Have your own photo? Add it here',
+      selected: 'Selected:',
+      confirm: 'Confirm Selection',
+      or: 'or',
+      back: 'Back',
+    },
+    galleryObjects: {
+      jacuzziRound: 'Round Jacuzzi - Luxury',
+      jacuzziSquare: 'Square Jacuzzi - Premium',
+      jacuzziOutdoor: 'Outdoor Jacuzzi - Spa',
+      jacuzziModern: 'Modern Jacuzzi - Minimalist',
+      poolMondoAcqua1: 'Classic Rectangular Pool',
+      poolMondoAcqua2: 'Modern Pool with Wooden Deck',
+      poolMondoAcqua3: 'Elegant Pool with Cover',
+      poolMondoAcqua4: 'White Edge Premium Pool',
+      poolMondoAcqua5: 'Pool with Dome Cover - Family',
+      poolMondoAcqua7: 'Modern Grey Edge Pool - Elegant',
+      poolMondoAcqua8: 'Garden Pool with Wooden Deck - Premium',
+      poolRectangular: 'Rectangular Pool - Classic',
+      poolInfinity: 'Infinity Pool - Premium',
+      poolRound: 'Round Pool - Compact',
+      poolModern: 'Modern Pool - Designer',
+      poolLuxury: 'Luxury Pool - Premium',
+      poolCompact: 'Compact Pool - Minimalist',
+      poolNatural: 'Natural Pool - Organic',
+      poolLap: 'Lap Pool - Sports',
+      sauna: 'Sauna - Outdoor',
+      fountain: 'Fountain - Decorative',
+      pond: 'Garden Pond',
+      pergola: 'Pergola with Pool',
+    },
+    objectUpload: {
+      title: 'Upload Object Photo',
+      description: 'Add a photo of a pool, jacuzzi or other object',
+      uploadButton: 'Upload Object',
+      dropzone: 'Click or drag photo here',
+      formats: 'PNG, JPG or WEBP (max. 10MB)',
+      camera: 'Take Photo',
+      saved: 'Save Object',
+      next: 'Continue',
+      back: 'Back',
+    },
+    objectCrop: {
+      title: 'Isolate Object',
+      description: 'Drag points to precisely crop the object',
+      dragCorners: 'Drag corners to isolate the object',
+      precision: 'Increase precision for better results',
+      reset: 'Reset',
+      apply: 'Apply',
+      next: 'Continue',
+      back: 'Back',
+    },
+    designCanvas: {
+      title: 'Design & Transform',
+      description: 'Your object has been automatically placed in the marked space',
+      addAnother: 'Add Another Object',
+      finish: 'Finish Project',
+      back: 'Back',
+      delete: 'Delete',
+      objects: 'Objects',
+    },
+    results: {
+      title: 'Your Project is Complete!',
+      subtitle: 'Download the result or request a quote',
+      before: 'Before',
+      after: 'After',
+      print: 'Print',
+      downloadPdf: 'Download PDF',
+      sendOffer: 'Send Quote Request',
+      startNew: 'Start New Project',
+      projectDetails: 'Project Details',
+      type: 'Type',
+      objects: 'Objects',
+      exterior: 'Exterior',
+      interior: 'Interior',
+    },
+    aiAssistant: {
+      title: 'AI Assistant',
+      placeholder: 'Ask a question...',
+      tips: {
+        photoUpload: 'Upload a clear photo of the outdoor space with good lighting.',
+        photoEdit: 'Precisely mark the area where you want to place the object.',
+        objectGallery: 'Choose an object from the gallery or upload your own.',
+        objectUpload: 'Upload a photo of the object with a transparent background for best results.',
+        objectCrop: 'Drag the corners to precisely isolate the object.',
+        designCanvas: 'Your object has been automatically transformed and placed. You can add more objects.',
+      },
+    },
+    common: {
+      loading: 'Loading...',
+      error: 'Error',
+      success: 'Success',
+      cancel: 'Cancel',
+      save: 'Save',
+      delete: 'Delete',
+      edit: 'Edit',
+      close: 'Close',
+      or: 'or',
+    },
+  },
+  de: {
+      home: { title: 'Außengestaltung', subtitle: '', jacuzzi: {title:'', description: ''}, pool: {title:'', description:''}, other: {title:'', description:''}, select: 'Auswählen', selectQuestion: '', workflow: '', workflowSteps: '', poweredBy: ''},
+      steps: { uploadSpace: '', editSpace: '', uploadObject: '', cropObject: '', placeObject: ''},
+      photoUpload: { title: '', description: '', uploadButton: '', dropzone: '', formats: '', camera: '', saved: '', changePhoto: '', next: 'Weiter', back: 'Zurück' },
+      photoEdit: { title: '', description: '', cropSpace: '', cropDescription: '', eraseObjects: '', eraseDescription: '', brushSize: '', reset: '', apply: '', next: 'Weiter', back: 'Zurück' },
+      objectGallery: { jacuzziTitle: '', poolTitle: '', otherTitle: '', jacuzziDescription: '', poolDescription: '', otherDescription: '', galleryTitle: '', uploadCustomTitle: '', uploadCustomDescription: '', selected: '', confirm: '', or: '', back: 'Zurück' },
+      galleryObjects: { jacuzziRound: '', jacuzziSquare: '', jacuzziOutdoor: '', jacuzziModern: '', poolMondoAcqua1: 'Classic Rectangular Pool', poolMondoAcqua2: 'Modern Pool with Wooden Deck', poolMondoAcqua3: 'Elegant Pool with Cover', poolMondoAcqua4: 'White Edge Premium Pool', poolMondoAcqua5: 'Pool with Dome Cover - Family', poolMondoAcqua7: 'Modern Grey Edge Pool - Elegant', poolMondoAcqua8: 'Garden Pool with Wooden Deck - Premium', poolRectangular: '', poolInfinity: '', poolRound: '', poolModern: '', poolLuxury: '', poolCompact: '', poolNatural: '', poolLap: '', sauna: '', fountain: '', pond: '', pergola: '' },
+      objectUpload: { title: '', description: '', uploadButton: '', dropzone: '', formats: '', camera: '', saved: '', next: 'Weiter', back: 'Zurück' },
+      objectCrop: { title: '', description: '', dragCorners: '', precision: '', reset: '', apply: '', next: 'Weiter', back: 'Zurück' },
+      designCanvas: { title: '', description: '', addAnother: '', finish: '', back: 'Zurück', delete: '', objects: '' },
+      results: { title: '', subtitle: '', before: '', after: '', print: '', downloadPdf: '', sendOffer: '', startNew: '', projectDetails: '', type: '', objects: '', exterior: '', interior: '' },
+      aiAssistant: { title: '', placeholder: '', tips: { photoUpload: '', photoEdit: '', objectGallery: '', objectUpload: '', objectCrop: '', designCanvas: '' } },
+      common: { loading: '', error: '', success: '', cancel: '', save: '', delete: '', edit: '', close: '', or: '' }
+  },
+  it: {
+      home: { title: 'Design Esterno', subtitle: '', jacuzzi: {title:'', description: ''}, pool: {title:'', description:''}, other: {title:'', description:''}, select: 'Seleziona', selectQuestion: '', workflow: '', workflowSteps: '', poweredBy: ''},
+      steps: { uploadSpace: '', editSpace: '', uploadObject: '', cropObject: '', placeObject: ''},
+      photoUpload: { title: '', description: '', uploadButton: '', dropzone: '', formats: '', camera: '', saved: '', changePhoto: '', next: 'Continua', back: 'Indietro' },
+      photoEdit: { title: '', description: '', cropSpace: '', cropDescription: '', eraseObjects: '', eraseDescription: '', brushSize: '', reset: '', apply: '', next: 'Continua', back: 'Indietro' },
+      objectGallery: { jacuzziTitle: '', poolTitle: '', otherTitle: '', jacuzziDescription: '', poolDescription: '', otherDescription: '', galleryTitle: '', uploadCustomTitle: '', uploadCustomDescription: '', selected: '', confirm: '', or: '', back: 'Indietro' },
+      galleryObjects: { jacuzziRound: '', jacuzziSquare: '', jacuzziOutdoor: '', jacuzziModern: '', poolMondoAcqua1: 'Classic Rectangular Pool', poolMondoAcqua2: 'Modern Pool with Wooden Deck', poolMondoAcqua3: 'Elegant Pool with Cover', poolMondoAcqua4: 'White Edge Premium Pool', poolMondoAcqua5: 'Pool with Dome Cover - Family', poolMondoAcqua7: 'Modern Grey Edge Pool - Elegant', poolMondoAcqua8: 'Garden Pool with Wooden Deck - Premium', poolRectangular: '', poolInfinity: '', poolRound: '', poolModern: '', poolLuxury: '', poolCompact: '', poolNatural: '', poolLap: '', sauna: '', fountain: '', pond: '', pergola: '' },
+      objectUpload: { title: '', description: '', uploadButton: '', dropzone: '', formats: '', camera: '', saved: '', next: 'Continua', back: 'Indietro' },
+      objectCrop: { title: '', description: '', dragCorners: '', precision: '', reset: '', apply: '', next: 'Continua', back: 'Indietro' },
+      designCanvas: { title: '', description: '', addAnother: '', finish: '', back: 'Indietro', delete: '', objects: '' },
+      results: { title: '', subtitle: '', before: '', after: '', print: '', downloadPdf: '', sendOffer: '', startNew: '', projectDetails: '', type: '', objects: '', exterior: '', interior: '' },
+      aiAssistant: { title: '', placeholder: '', tips: { photoUpload: '', photoEdit: '', objectGallery: '', objectUpload: '', objectCrop: '', designCanvas: '' } },
+      common: { loading: '', error: '', success: '', cancel: '', save: '', delete: '', edit: '', close: '', or: '' }
+  }
+};
+
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: any;
+}
+
+const VisLanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+export function VisLanguageProvider({ children }: { children: ReactNode }) {
+  const [language, setLanguageState] = useState<Language>('hr');
+  const t = translations[language] || translations.hr;
+  return (
+    <VisLanguageContext.Provider value={{ language, setLanguage: setLanguageState, t }}>
+      {children}
+    </VisLanguageContext.Provider>
+  );
+}
+
+export function useVisLanguage() {
+  const context = useContext(VisLanguageContext);
+  if (context === undefined) {
+    throw new Error('useVisLanguage must be used within a VisLanguageProvider');
+  }
+  return context;
+}
+
+export function LanguageSelector({ variant = 'app' }: { variant?: 'home' | 'app' }) {
+  const { language, setLanguage } = useVisLanguage();
+  const LANGUAGES = [
+    { code: 'hr' as Language, name: 'Hrvatski', flag: '🇭🇷' },
+    { code: 'en' as Language, name: 'English', flag: '🇬🇧' },
+    { code: 'de' as Language, name: 'Deutsch', flag: '🇩🇪' },
+    { code: 'it' as Language, name: 'Italiano', flag: '🇮🇹' },
+  ];
+
+  return (
+    <div className="relative group">
+      <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+        <Globe className="w-4 h-4 text-white/70" />
+        <span className="text-sm font-medium text-white/90">
+          {LANGUAGES.find(l => l.code === language)?.flag}
+        </span>
+      </button>
+      <div className="absolute right-0 top-full mt-2 w-48 rounded-xl overflow-hidden bg-slate-900/95 backdrop-blur-xl border border-white/10 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+        {LANGUAGES.map((lang) => {
+          const isActive = language === lang.code;
+          return (
+            <button
+              key={lang.code}
+              onClick={() => setLanguage(lang.code)}
+              className={`w-full px-4 py-3 flex items-center gap-3 transition-all duration-200 ${isActive ? 'bg-blue-500/20 text-white' : 'text-white/70 hover:bg-white/5 hover:text-white'}`}
+            >
+              <span className="text-xl">{lang.flag}</span>
+              <span className="font-medium text-sm">{lang.name}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

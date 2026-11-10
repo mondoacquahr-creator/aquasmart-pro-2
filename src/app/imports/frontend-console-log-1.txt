@@ -1,0 +1,82 @@
+Running frontend commit b1cf43759fd15f21f25594bb16ad0d707c086fd0
+vendor-core-8d98bf0feb336918.min.js.br:54 Statsig is not ready to log exposures, will retry in 1 seconds
+(anonymous) @ vendor-core-8d98bf0feb336918.min.js.br:54Understand this warning
+vendor-core-8d98bf0feb336918.min.js.br:54 [import] git: 0b2f44ed43a79f7a554e1384aa3bc703de46ede0, stamp: 0DADCFF8A4EA28DA
+3169-b1634affc5a160e8.min.js.br:779 The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127
+initialize @ 3169-b1634affc5a160e8.min.js.br:779Understand this warning
+/make/nOiUbxKBTYoPewPrV7nuuM/Pool-Water-Analysis-App?t=4NF8DmMnC46P8fdP-0&preview-route=%2Fapp%2Fpool-visualizer:1 Unchecked runtime.lastError: The message port closed before a response was received.Understand this error
+vendor-core-8d98bf0feb336918.min.js.br:54 Autosave Changes not available or already claimed by another tab undefined
+vendor-core-8d98bf0feb336918.min.js.br:54 Loaded 35 scripts (5959704b), 35 from cache (5959704b)
+vendor-core-8d98bf0feb336918.min.js.br:54 [Fullscreen] Booting... (emscripten version 4.0.21)
+vendor-core-8d98bf0feb336918.min.js.br:54 [GPU] graphicsAPI:"WebGPU", vendor:"Google Inc. (Intel)" renderer:"ANGLE (Intel, Intel(R) HD Graphics 520 (0x00001916) Direct3D11 vs_5_0 ps_5_0, D3D11)" deviceArchitecture:"gen-9" deviceDescription:"" webGPUDevice:"" webGPUVendor:"intel" bindings:"emdawnwebgpu"
+vendor-core-8d98bf0feb336918.min.js.br:54 [Fullscreen] Ready in 2640.3ms
+vendor-core-8d98bf0feb336918.min.js.br:54 [FullscreenApp] calling setEditorTheme and setting preference light
+vendor-core-8d98bf0feb336918.min.js.br:54 [MultiplayerSession] connecting to wss://www.figma.com/api/multiplayer/nOiUbxKBTYoPewPrV7nuuM?role=editor&tracking_session_id=5pzLI8DRlHxR8yjq&version=151&recentReload=0&file-load-streaming-compression&user-id=1601268384598478270&client_release=b1cf43759fd15f21f25594bb16ad0d707c086fd0
+vendor-core-8d98bf0feb336918.min.js.br:54 [FullscreenApp] calling setEditorTheme and setting preference light
+vendor-core-8d98bf0feb336918.min.js.br:54 [MultiplayerSession] Joining file version 106 (initial load)
+vendor-core-8d98bf0feb336918.min.js.br:54 Migration succeeded: context: fullscreen_migrate_SceneGraphManager, version: 106, duration: 0ms.
+/api/make/fetch_ds_code_gen_status:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
+2vendor-core-8d98bf0feb336918.min.js.br:54 [devtools] Initialized LS
+devtools_worker-32bac009041fb177.min.js.br:1190 [esbuild-wasm] Initializing from URL: /webpack-artifacts/assets/2b68f2d3d5e8b3d6.wasm
+devtools_worker-32bac009041fb177.min.js.br:1190 [esbuild-wasm] Initialized
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-32bac009041fb177.min.js.br:1190 [lightningcss-wasm] Initialized
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Processing 0.23MB of CSS (environment: browser)
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Encoded size: 0.23MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Transform completed successfully
+ [ProtectedRoute] user: null
+ [ProtectedRoute] allowedRoles: Array(1)
+ [ProtectedRoute] No user, redirecting to /login
+vendor-core-8d98bf0feb336918.min.js.br:54 [Fullscreen] loadtime=23.99s maxmem=125271620
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Processing 0.23MB of CSS (environment: browser)
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Encoded size: 0.23MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Processing 0.23MB of CSS (environment: browser)
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Encoded size: 0.23MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Transform completed successfully
+images.unsplash.com/photo-1576610616656-d3aa5d1f4534?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80:1  Failed to load resource: net::ERR_QUIC_PROTOCOL_ERRORUnderstand this error
+images.unsplash.com/photo-1576610616656-d3aa5d1f4534?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80:1  Failed to load resource: net::ERR_QUIC_PROTOCOL_ERRORUnderstand this error
+images.unsplash.com/photo-1576610616656-d3aa5d1f4534?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80:1  Failed to load resource: net::ERR_QUIC_PROTOCOL_ERRORUnderstand this error
+images.unsplash.com/photo-1576610616656-d3aa5d1f4534?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80:1  Failed to load resource: net::ERR_QUIC_PROTOCOL_ERRORUnderstand this error
+images.unsplash.com/photo-1576610616656-d3aa5d1f4534?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80:1  Failed to load resource: net::ERR_QUIC_PROTOCOL_ERRORUnderstand this error
+images.unsplash.com/photo-1576610616656-d3aa5d1f4534?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80:1  Failed to load resource: net::ERR_QUIC_PROTOCOL_ERRORUnderstand this error
+vendor-core-8d98bf0feb336918.min.js.br:54 Too many elapsed hits of react since last report
+(anonymous) @ vendor-core-8d98bf0feb336918.min.js.br:54Understand this warning
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Processing 0.23MB of CSS (environment: browser)
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Encoded size: 0.23MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Processing 0.23MB of CSS (environment: browser)
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Encoded size: 0.23MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Processing 0.23MB of CSS (environment: browser)
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Encoded size: 0.23MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Transform completed successfully
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Found 5 CSS files in VFS
+devtools_worker-32bac009041fb177.min.js.br:3079 [bundleCode] Total CSS size to be processed by lightningcss: 0.01MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Processing 0.23MB of CSS (environment: browser)
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Encoded size: 0.23MB
+devtools_worker-32bac009041fb177.min.js.br:3079 [lightningCSS] Transform completed successfully
+ [Login] Attempting login with: profesionalac@aquasmart.hr
+ [Login] Login successful, user: Object
+ [Login] Professional user, savedRole: null
+ [Login] Redirecting to /role-selection
+ Skipping sync: No active Supabase session (User might be in Demo mode or session expired)
+ [ProtectedRoute] user: Object
+ [ProtectedRoute] allowedRoles: Array(1)
+ [ProtectedRoute] Access granted
+ Skipping sync: No active Supabase session (User might be in Demo mode or session expired)
+ 📉 Resizing image from 2048x1367 to 2000x1335
+ 🚀 Pre-loading OpenCV in background...
+ ⏳ Loading OpenCV from CDN...
+ ✅ OpenCV loaded from CDN

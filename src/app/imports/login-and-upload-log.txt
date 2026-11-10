@@ -1,0 +1,38 @@
+[Hydrated]
+glory-hash-41410625.figma.site/:1 Unchecked runtime.lastError: The message port closed before a response was received.Understand this error
+d65a3577392f516a945757dc8a76b0c54089a28a.js:62 Skipping sync: No active Supabase session (User might be in Demo mode or session expired)
+d65a3577392f516a945757dc8a76b0c54089a28a.js:62 [Login] Attempting login with: profesionalac@aquasmart.hr
+d65a3577392f516a945757dc8a76b0c54089a28a.js:62 [Login] Login successful, user: Object
+d65a3577392f516a945757dc8a76b0c54089a28a.js:62 [Login] Professional user, savedRole: null
+d65a3577392f516a945757dc8a76b0c54089a28a.js:62 [Login] Redirecting to /role-selection
+d65a3577392f516a945757dc8a76b0c54089a28a.js:62 Skipping sync: No active Supabase session (User might be in Demo mode or session expired)
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 [ProtectedRoute] user: Object
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 [ProtectedRoute] allowedRoles: Array(1)
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 [ProtectedRoute] Access granted
+d65a3577392f516a945757dc8a76b0c54089a28a.js:62 Skipping sync: No active Supabase session (User might be in Demo mode or session expired)
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 📉 Resizing image from 2048x1367 to 2000x1335
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🟡 ObjectGallery Next clicked
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🟡 Navigation to object-upload complete
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🟣 File input onChange fired! FileList
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🔵 1. File selected: 20240716_183936.jpg 5078529
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🔵 2. Creating FileReader IMMEDIATELY (no setTimeout)...
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🔵 3. FileReader done, creating object URL...
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🔵 4. Calling onNext...
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🟢 1. handleObjectUploadNext called with: 20240716_183936.jpg
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🟢 2. objectUrl length: 6771395
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🟢 3. Current step BEFORE: object-upload
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🟢 4. setCurrentObjectUpload called
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🟢 5. setCurrentStep called, should be object-crop now
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🔵 5. onNext called!
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🔴 ObjectCropStep RENDERED! objectUrl: data:image/jpeg;base64,/9j/4cCLRXhpZgAASUkqAAgAAAA
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🔴 ObjectCropStep useEffect running...
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🔴 Pool image loaded! Dimensions: 4000 x 3000
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🔴 ObjectCropStep RENDERED! objectUrl: data:image/jpeg;base64,/9j/4cCLRXhpZgAASUkqAAgAAAA
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🟢 6. setTimeout - currentStep should be: object-upload
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🔴 ObjectCropStep RENDERED! objectUrl: data:image/jpeg;base64,/9j/4cCLRXhpZgAASUkqAAgAAAA
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🔴 ObjectCropStep RENDERED! objectUrl: data:image/jpeg;base64,/9j/4cCLRXhpZgAASUkqAAgAAAA
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 🎯 PERSPECTIVE MODE ENABLED
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 Space points: (4) [{…}, {…}, {…}, {…}]
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 Object points: (4) [{…}, {…}, {…}, {…}]
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 ⏳ Loading OpenCV from CDN...
+d65a3577392f516a945757dc8a76b0c54089a28a.js:374 ✅ OpenCV loaded from CDN
