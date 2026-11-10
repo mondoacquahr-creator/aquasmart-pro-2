@@ -36,6 +36,7 @@ const errorStyle = { background: 'rgba(255,59,48,0.1)', border: '1px solid rgba(
 
 export function AIVisualizer({ onManual }: { onManual: () => void }) {
   const [step, setStep] = useState<Step>(1);
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [step]);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [photoAspect, setPhotoAspect] = useState<number>(4 / 3);
   const [pools, setPools] = useState<Pool[]>([]);

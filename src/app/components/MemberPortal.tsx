@@ -776,6 +776,7 @@ function VisitModal({ data, onClose, onSuccess }: { data: MemberData; onClose: (
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export function MemberPortal({ onLogout, onNavigate }: MemberPortalProps) {
   const [tab, setTab] = useState<Tab>('overview');
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [tab]);
   const [data, setData] = useState<MemberData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');

@@ -130,6 +130,11 @@ export default function App() {
   const [recoveryError, setRecoveryError] = useState('');
   const [recoverySuccess, setRecoverySuccess] = useState(false);
 
+  // Every page change starts at the top of the page
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+  }, [currentPage]);
+
   // Push history state on page change (skip when triggered by popstate)
   useEffect(() => {
     if (isPoppingState.current) {

@@ -32,6 +32,7 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
   const [member] = useState<boolean>(() => isMemberUser());
   const [care] = useState<boolean>(() => isCareUser());
   const [view, setView] = useState<'shop' | 'checkout' | 'confirmed'>('shop');
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [view]);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('Sve');
   const [confirmedVia, setConfirmedVia] = useState<'whatsapp' | 'email' | null>(null);

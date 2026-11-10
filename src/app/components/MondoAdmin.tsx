@@ -100,6 +100,7 @@ function AdminErrorCard({ kind, onRetry, onLogin }: {
 
 export function MondoAdmin({ onBack, onNavigate }: MondoAdminProps) {
   const [activeTab, setActiveTab] = useState<ActiveTab>('orders');
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [activeTab]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);

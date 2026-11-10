@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../lib/languageContext';
 import { motion } from 'motion/react';
@@ -23,6 +23,7 @@ export function LoginPage({ onBack, onLoginSuccess, onGoToRegister }: LoginPageP
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [view, setView] = useState<'login' | 'forgot'>('login');
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [view]);
   const [resetEmail, setResetEmail] = useState('');
   const [resetSending, setResetSending] = useState(false);
   const [resetError, setResetError] = useState('');

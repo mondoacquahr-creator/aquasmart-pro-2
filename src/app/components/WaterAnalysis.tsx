@@ -17,6 +17,7 @@ interface WaterAnalysisProps {
 
 export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }: WaterAnalysisProps) {
   const [activeTab, setActiveTab] = useState<'test' | 'recommendations'>('test');
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [activeTab]);
   const [poolVolume, setPoolVolume] = useState('');
   const [testResults, setTestResults] = useState({
     ph: '',

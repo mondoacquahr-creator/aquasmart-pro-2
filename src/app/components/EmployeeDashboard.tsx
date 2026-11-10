@@ -98,6 +98,7 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
 
   const [perms, setPerms] = useState(getPermissions);
   const [currentView, setCurrentView] = useState<'home' | 'work-orders' | 'water-analysis' | 'more' | 'warehouse' | 'clients'>(() => {
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [currentView]);
     const saved = sessionStorage.getItem('employee_view');
     return (saved as any) || 'home';
   });

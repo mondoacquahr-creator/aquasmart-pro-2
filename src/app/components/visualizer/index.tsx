@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Camera, Upload, Download, Scissors, Check, RefreshCw, Undo, Grid3x3, Eye, EyeOff, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -17,6 +17,8 @@ export default function VisualizerApp() {
   const [isSelectingSource, setIsSelectingSource] = useState(false);
   
   const [step, setStep] = useState<'dest' | 'source' | 'done'>('dest');
+  
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [step]);
   
   // Store display dimensions before DOM elements disappear
   const [destDisplaySize, setDestDisplaySize] = useState({ width: 0, height: 0 });
