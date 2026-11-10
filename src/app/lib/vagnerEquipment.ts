@@ -1,7 +1,8 @@
 // Oprema – Vagner Pool. Cijene preuzete s vagnerpool.com 22.10.2026. (bez PDV-a) i preračunate s 25 % PDV-a.
-export type EquipmentCategory = 'Pumpe' | 'Filteri' | 'Doziranje' | 'Elektroliza';
+export type EquipmentCategory = 'Pumpe' | 'Filteri' | 'Doziranje' | 'Elektroliza' | 'Testiranje';
 export interface EquipmentProduct { id: string; name: string; size: string; priceEUR: number; category: EquipmentCategory; description: string; imageUrl: string; }
 const IMG = 'https://www.vagnerpool.com/static/1/produkty/';
+const HR = 'https://www.vagnerpool.hr/static/1/produkty/';
 // [id, kategorija, naziv, pakiranje/kapacitet, cijena bez PDV-a, slika, opis]
 const ROWS: [string, EquipmentCategory, string, string, number, string, string][] = [
   ["vg-2191040138", "Pumpe", "Filtracijska pumpa Badu Magic 4", "4 m³/h · 230 V", 323.39, "3312099829.avif", "0,18 kW, 2840 o/min – za manje bazene"],
@@ -56,10 +57,34 @@ const ROWS: [string, EquipmentCategory, string, string, number, string, string][
   ["vg-93153090", "Elektroliza", "Slana elektroliza Zodiac Ei SALT 21", "do 90 m³", 1576.75, "eisaltrender.avif", "21 g/h klora"],
   ["vg-9313000", "Elektroliza", "ORP KIT za VA SALT SMART", "komplet", 140.3, "ORP%20kit.avif", "Mjerenje i regulacija Redoxa – zlatna elektroda"],
   ["vg-9313001", "Elektroliza", "pH KIT za VA HYDROSALT / SALT EVO+", "komplet", 266.34, "9313001.avif", "Mjerenje i regulacija pH"],
+  // Testeri – Vagner Pool. Cijene preuzete s vagnerpool.hr 10.11.2026. (bez PDV-a).
+  ["vg-690204", "Testiranje", "DPD tester „D” – Cl/pH s tabletama (Lovibond)", "komplet", 19.53, HR + "1782185609.avif", "Tester s tabletama za slobodni klor i pH"],
+  ["vg-690206", "Testiranje", "DPD tester „F” – Cl/pH s tabletama", "komplet", 12.02, HR + "4242092939.avif", "Tester s tabletama za slobodni klor i pH"],
+  ["vg-691204", "Testiranje", "Tester s kapima – Cl/pH (u kutiji)", "komplet", 8.43, HR + "2137429249.avif", "Mjerenje klora i pH kapima"],
+  ["vg-69020100", "Testiranje", "Tester s kapima – Cl/pH, set", "komplet", 3.49, HR + "test%20kapky.avif", "Mjerenje klora i pH kapima"],
+  ["vg-69020011", "Testiranje", "DPD tablete Phenol Red (pH)", "10 kom", 1.40, HR + "2971911857.avif", "Zamjenske tablete za pH u testeru"],
+  ["vg-69020021", "Testiranje", "DPD tablete br. 1 (slobodni klor)", "10 kom", 1.40, HR + "379337896.avif", "Zamjenske tablete za slobodni klor u testeru"],
+  ["vg-690200211", "Testiranje", "DPD tablete br. 3 (ukupni klor)", "10 kom", 1.40, HR + "1085344360.avif", "Zamjenske tablete za ukupni klor u testeru"],
+  ["vg-692481335", "Testiranje", "PoolCheck 3 u 1 – test trakice", "50 kom", 14.46, HR + "3v1poolcheck.avif", "Brzo mjerenje trakicama"],
+  ["vg-692481330", "Testiranje", "PoolCheck 6 u 1 – test trakice", "50 kom", 24.57, HR + "481330_BC_2017.avif", "Brzo mjerenje trakicama, 6 parametara"],
+  ["vg-692482341", "Testiranje", "PoolCheck Salt – test trakice za sol", "16 kom", 16.28, HR + "482341_BC_2017.avif", "Za bazene sa slanom elektrolizom"],
+  ["vg-EB200020", "Testiranje", "Blue Lagoon – test trakice za bakar", "50 kom", 26.63, HR + "DSC_0138.avif", "Za bazene s UV sterilizatorom i ionizatorom"],
+  ["vg-693486201N", "Testiranje", "Digitalni fotometar eXact EZ – 10 u 1", "uređaj", 307.01, HR + "eXact-EZ-Pool.avif", "Precizno digitalno mjerenje do 10 parametara"],
+  ["vg-693486101", "Testiranje", "Digitalni fotometar eXact iDip – Bluetooth, do 34 u 1", "uređaj", 478.92, HR + "eXact-iDip.avif", "Profesionalni fotometar s aplikacijom"],
+  ["vg-693486301", "Testiranje", "Bluetooth tester eXact pH+ – 5 u 1, Multi KIT", "komplet", 573.08, HR + "pH_plus_tester.avif", "Digitalni tester s Bluetoothom"],
+  ["vg-520WA100", "Testiranje", "Plutajući tester Blue Connect GOLD", "uređaj", 561.69, HR + "plovoucitesterblueconnectgold.avif", "Stalno mjerenje u bazenu s aplikacijom"],
+  ["vg-693486637", "Testiranje", "Trakice za fotometar eXact – slobodni klor", "pakiranje", 23.26, HR + "486637-FCL.avif", "Za eXact EZ i eXact iDip"],
+  ["vg-693486638", "Testiranje", "Trakice za fotometar eXact – ukupni klor", "pakiranje", 16.96, HR + "486638-BCL.avif", "Za eXact EZ i eXact iDip"],
+  ["vg-693486639", "Testiranje", "Trakice za fotometar eXact – pH", "pakiranje", 18.85, HR + "486639-II-PH.avif", "Za eXact EZ, eXact iDip i SafeSwim"],
+  ["vg-693486641", "Testiranje", "Trakice za fotometar eXact – alkalitet", "pakiranje", 24.50, HR + "486641-ALK.avif", "Za eXact EZ i eXact iDip"],
+  ["vg-693486629", "Testiranje", "Trakice za fotometar eXact – tvrdoća", "pakiranje", 25.13, HR + "CA_HARDNESS.avif", "Za eXact EZ i eXact iDip"],
+  ["vg-693486648", "Testiranje", "Trakice za fotometar eXact – vodikov peroksid", "pakiranje", 25.13, HR + "486648-PEROX.avif", "Za eXact EZ i eXact iDip"],
+  ["vg-693486639M", "Testiranje", "Trakice za fotometar eXact Micro – pH", "pakiranje", 19.74, HR + "Micro_PH.avif", "Za eXact Micro"],
+  ["vg-693484014", "Testiranje", "Glicinski prašci za fotometar eXact Micro", "pakiranje", 25.44, HR + "Micro_Glycine.avif", "Neutralizator za mjerenje u eXact Micro"],
 ];
 
 export const VAGNER_EQUIPMENT: EquipmentProduct[] = ROWS.map(([id, category, name, size, net, img, description]) => ({
   id, category, name, size, description,
   priceEUR: Math.round(net * 1.25 * 100) / 100,
-  imageUrl: IMG + img,
+  imageUrl: img.startsWith('http') ? img : IMG + img,
 }));
