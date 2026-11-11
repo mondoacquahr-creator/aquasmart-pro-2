@@ -283,7 +283,7 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
 
   const systemLabels: Record<string, string> = {
     klor: "Klor",
-    so: "Sol",
+    so: "Elektroliza",
     uv: "UV",
     ozon: "Ozon",
   };

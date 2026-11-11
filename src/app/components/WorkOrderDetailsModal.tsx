@@ -1551,19 +1551,19 @@ export function WorkOrderDetailsModal({
 
                 <div className="mb-6 p-6 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
                   <label className="block text-sm mb-3" style={{ color: 'rgba(255,255,255,0.6)' }}>Tip Sustava</label>
-                  <div className="grid grid-cols-4 gap-3">
-                    {['klor', 'so', 'uv', 'ozon'].map((type) => (
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {[['klor', 'Klor'], ['so', 'Elektroliza'], ['uv', 'UV'], ['ozon', 'Ozon']].map(([type, label]) => (
                       <button
                         key={type}
                         onClick={() => setAutomationData({ ...automationData, systemType: type })}
-                        className="px-4 py-3 rounded-xl font-medium transition-all uppercase"
+                        className="px-2 py-3 rounded-xl font-medium transition-all text-sm sm:text-base break-words"
                         style={{
                           background: automationData.systemType === type ? 'rgba(92,225,230,0.12)' : 'rgba(255,255,255,0.05)',
                           color: automationData.systemType === type ? '#5CE1E6' : 'rgba(255,255,255,0.5)',
                           border: automationData.systemType === type ? '1px solid rgba(92,225,230,0.3)' : '1px solid transparent'
                         }}
                       >
-                        {type}
+                        {label}
                       </button>
                     ))}
                   </div>
