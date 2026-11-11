@@ -50,6 +50,8 @@ type ActiveTab = 'orders' | 'messages' | 'catalog' | 'inquiries' | 'members' | '
 
 interface MondoAdminProps {
   onBack: () => void;
+  // Prelazak u Pro portal vlastite tvrtke (nalozi, klijenti, djelatnici)
+  onCompanyPortal?: () => void;
   onNavigate: (page: any) => void;
 }
 
@@ -99,7 +101,7 @@ function AdminErrorCard({ kind, onRetry, onLogin }: {
   );
 }
 
-export function MondoAdmin({ onBack, onNavigate }: MondoAdminProps) {
+export function MondoAdmin({ onBack, onNavigate, onCompanyPortal }: MondoAdminProps) {
   const [activeTab, setActiveTab] = useState<ActiveTab>('orders');
   useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [activeTab]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -346,6 +348,12 @@ export function MondoAdmin({ onBack, onNavigate }: MondoAdminProps) {
               <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.3)' }}>Upravljanje upitima i narudžbama</p>
             </div>
           </div>
+          <div className="flex items-center gap-2">
+          {onCompanyPortal && (
+            <button onClick={onCompanyPortal} className="px-3 py-2 rounded-xl text-sm font-bold flex items-center gap-2" style={{ background: T.accent, color: '#000' }}>
+              <Briefcase className="w-4 h-4" /> Moja tvrtka
+            </button>
+          )}
           <button
             onClick={accessMode !== 'live' ? () => {} : activeTab === 'catalog' ? fetchCatalog : activeTab === 'inquiries' ? fetchInquiries : (activeTab === 'members' || activeTab === 'servicers') ? () => {} : fetchData}
             disabled={accessMode !== 'live' || isLoading || catalogLoading || inquiriesLoading}
@@ -358,6 +366,7 @@ export function MondoAdmin({ onBack, onNavigate }: MondoAdminProps) {
               <Clock className="w-5 h-5" style={{ color: '#5CE1E6' }} />
             )}
           </button>
+          </div>
         </div>
 
         {/* Tabs */}

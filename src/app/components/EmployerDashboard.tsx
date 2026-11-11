@@ -19,6 +19,8 @@ import { authService } from '../lib/auth';
 interface EmployerDashboardProps {
   onBack: () => void;
   onNavigate: (page: string) => void;
+  // Samo za Mondo admina: povratak na admin panel
+  onAdminPanel?: () => void;
 }
 
 interface Client {
@@ -111,7 +113,7 @@ const STORAGE_KEYS = {
   WAREHOUSE: 'aquasmart_employer_warehouse',
 };
 
-export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps) {
+export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: EmployerDashboardProps) {
   const { t } = useLanguage();
   const [currentView, setCurrentView] = useState<'home' | 'employees' | 'work-orders' | 'clients' | 'warehouse' | 'analytics' | 'more'>(() => {
     const saved = sessionStorage.getItem('employer_view');
@@ -1020,6 +1022,13 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
         </div>
       )}
 
+      {onAdminPanel && (
+        <div className="max-w-7xl mx-auto px-6 pt-4">
+          <button onClick={onAdminPanel} className="w-full sm:w-auto px-4 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2" style={{ background: 'rgba(92,225,230,0.1)', border: '1px solid rgba(92,225,230,0.35)', color: '#5CE1E6' }}>
+            <ArrowLeft className="w-4 h-4" /> Mondo admin panel (upiti, narudžbe, članovi, serviseri)
+          </button>
+        </div>
+      )}
       <TrialBanner />
       {showCompanySettings && <CompanySettingsModal onClose={() => setShowCompanySettings(false)} />}
 

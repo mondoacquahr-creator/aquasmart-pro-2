@@ -82,6 +82,16 @@ export default function App() {
     setCurrentPage(savedRole === 'member' ? 'member-portal' : 'pro-portal');
   };
 
+  // Mondo admin može raditi i kao servis (Pro portal vlastite tvrtke)
+  const [adminView, setAdminView] = useState<'admin' | 'company'>(() => {
+    try { return localStorage.getItem('admin_view') === 'company' ? 'company' : 'admin'; } catch { return 'admin'; }
+  });
+  const switchAdminView = (v: 'admin' | 'company') => {
+    setAdminView(v);
+    try { localStorage.setItem('admin_view', v); } catch { /* ignore */ }
+    window.scrollTo(0, 0);
+  };
+
   const openShop = () => {
     setPrevPage(currentPage);
     setCurrentPage('shop');
@@ -227,8 +237,11 @@ export default function App() {
           {currentPage === 'pro-portal' && userRole === 'employee' && (
             <EmployeeDashboard onBack={handleLogout} onNavigate={(page) => handleNavigate(page)} />
           )}
-          {currentPage === 'pro-portal' && userRole === 'admin' && (
-            <MondoAdmin onBack={handleLogout} onNavigate={(page) => handleNavigate(page)} />
+          {currentPage === 'pro-portal' && userRole === 'admin' && adminView === 'company' && (
+            <EmployerDashboard onBack={handleLogout} onNavigate={(page) => handleNavigate(page)} onAdminPanel={() => switchAdminView('admin')} />
+          )}
+          {currentPage === 'pro-portal' && userRole === 'admin' && adminView !== 'company' && (
+            <MondoAdmin onBack={handleLogout} onNavigate={(page) => handleNavigate(page)} onCompanyPortal={() => switchAdminView('company')} />
           )}
           {currentPage === 'pro-portal' && !userRole && isDemo && (
             <ProPortal
