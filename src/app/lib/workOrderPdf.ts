@@ -73,6 +73,20 @@ export interface WorkOrderPrintData {
   automationData?: PrintableAutomation;
   photos: PrintablePhoto[];
   hidePrices: boolean;
+  // Ponuda za plaćanje: podaci tvrtke, IBAN, model i poziv na broj te HUB3 2D kod
+  payment?: {
+    companyName: string;
+    oib?: string;
+    address?: string;
+    city?: string;
+    email?: string;
+    phone?: string;
+    iban: string;
+    model: string;
+    reference: string;
+    description: string;
+    barcodeDataUrl?: string | null;
+  };
 }
 
 const escapeHtml = (value: unknown): string =>
@@ -345,7 +359,8 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
     }
   });
 
-  const title = `Radni-nalog-${safeTitlePart(order.id)}-${safeTitlePart(order.client)}-${formatDate(documentDate)}`;
+  const pay = !hidePrices ? data.payment : undefined;
+  const title = `${pay ? 'Ponuda' : 'Radni-nalog'}-${safeTitlePart(order.id)}-${safeTitlePart(order.client)}-${formatDate(documentDate)}`;
   const html = `<!doctype html>
 <html lang="hr">
 <head>
@@ -446,6 +461,13 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
     figure { width: 55mm; margin: 0; break-inside: avoid; }
     figure img { display: block; width: 55mm; height: 42mm; object-fit: cover; border: .25mm solid #cbd4d8; }
     figcaption { padding-top: 1.2mm; color: #0B2A3C; font-size: 8pt; font-weight: 700; }
+    .company-meta { margin-top: 1.5mm; color: #333; font-size: 8.5pt; line-height: 1.35; }
+    .payment-grid { display: flex; gap: 8mm; align-items: flex-start; }
+    .payment-grid .detail-grid { flex: 1; }
+    .barcode { width: 62mm; margin: 0; }
+    .barcode img { width: 62mm; height: auto; image-rendering: pixelated; border: 0; }
+    .barcode figcaption { text-align: center; font-size: 7.5pt; color: #59636a; }
+    .note { margin-top: 3mm; color: #59636a; font-size: 8pt; }
     footer {
       margin-top: 10mm;
       padding-top: 3mm;
@@ -458,9 +480,12 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
 </head>
 <body>
   <header>
-    <div class="company">${escapeHtml(data.companyName || "Mondo Pool Care")}</div>
+    <div>
+      <div class="company">${escapeHtml((pay && pay.companyName) || data.companyName || "Mondo Pool Care")}</div>
+      ${pay ? `<div class="company-meta">${[pay.address, pay.city].filter(Boolean).map(escapeHtml).join(", ")}${pay.oib ? ` · OIB ${escapeHtml(pay.oib)}` : ""}${pay.email ? `<br>${escapeHtml(pay.email)}` : ""}${pay.phone ? ` · ${escapeHtml(pay.phone)}` : ""}</div>` : ""}
+    </div>
     <div class="document-meta">
-      <strong>RADNI NALOG br. ${escapeHtml(order.id)}</strong>
+      <strong>${pay ? "PONUDA" : "RADNI NALOG"} br. ${escapeHtml(order.id)}</strong>
       <span>${escapeHtml(formatDate(documentDate))}</span>
     </div>
   </header>
@@ -499,6 +524,23 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
       <div><span>Kemija</span><strong>${escapeHtml(formatMoney(productsTotal))}</strong></div>
       <div class="grand"><span>UKUPNO</span><strong>${escapeHtml(formatMoney(grandTotal))}</strong></div>
     </div>` : ""}
+
+  ${pay ? `
+  <section class="payment">
+    <h2>Podaci za plaćanje</h2>
+    <div class="payment-grid">
+      <dl class="detail-grid">
+        <div><dt>Primatelj</dt><dd>${escapeHtml(pay.companyName)}</dd></div>
+        <div><dt>IBAN</dt><dd>${escapeHtml(pay.iban.replace(/(.{4})/g, "$1 ").trim())}</dd></div>
+        <div><dt>Model</dt><dd>${escapeHtml(pay.model)}</dd></div>
+        <div><dt>Poziv na broj</dt><dd>${escapeHtml(pay.reference)}</dd></div>
+        <div><dt>Iznos</dt><dd>${escapeHtml(formatMoney(grandTotal))}</dd></div>
+        <div><dt>Opis plaćanja</dt><dd>${escapeHtml(pay.description)}</dd></div>
+      </dl>
+      ${pay.barcodeDataUrl ? `<figure class="barcode"><img src="${pay.barcodeDataUrl}" alt="2D kod za plaćanje"><figcaption>Skenirajte mobilnim bankarstvom</figcaption></figure>` : ""}
+    </div>
+    <p class="note">Ovo je ponuda, a ne fiskalizirani račun. Račun se izdaje nakon uplate.</p>
+  </section>` : ""}
 
   ${section("Analiza vode", waterValues.length ? `
     <div class="water-grid">${waterValues.map(([label, value, unit]) => `

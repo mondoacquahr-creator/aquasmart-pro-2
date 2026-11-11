@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { T } from '../lib/theme';
 import { authService } from '../lib/auth';
 import { printWorkOrder } from '../lib/workOrderPdf';
+import { buildHub3, hub3BarcodeDataUrl, referenceFromOrder } from '../lib/hub3';
+import { loadCompanySettings } from '../lib/companySettings';
 import { api } from '../lib/supabase';
 import { isLiveMode } from '../lib/session';
 import { useEffect, useRef, useState } from 'react';
@@ -639,6 +641,48 @@ export function WorkOrderDetailsModal({
       automationData,
       photos: printablePhotos,
       hidePrices,
+    });
+  };
+
+  // Ponuda za plaćanje: podaci tvrtke iz Postavki, model HR00, poziv na broj iz broja naloga, HUB3 2D kod
+  const [offerError, setOfferError] = useState('');
+  const handlePrintOffer = async () => {
+    setOfferError('');
+    const cs = await loadCompanySettings().catch(() => null);
+    if (!cs?.iban) {
+      setOfferError('Za ponudu upišite naziv tvrtke i IBAN: Više → Postavke tvrtke.');
+      return;
+    }
+    const companyName = cs.companyName || authService.getCurrentUser()?.companyName || '';
+    const reference = referenceFromOrder(order.id);
+    const description = `Ponuda ${order.id}`;
+    const hub3 = buildHub3({
+      amountEUR: totals.grandTotal,
+      payerName: editedOrder.client || '',
+      payerAddress: editedOrder.location || '',
+      recipientName: companyName,
+      recipientAddress: cs.address || '',
+      recipientCity: cs.city || '',
+      iban: cs.iban,
+      model: 'HR00',
+      reference,
+      description,
+    });
+    const barcodeDataUrl = totals.grandTotal > 0 ? await hub3BarcodeDataUrl(hub3) : null;
+    void printWorkOrder({
+      order: editedOrder,
+      companyName,
+      services,
+      maintenanceTasks,
+      productsUsed,
+      waterAnalysis,
+      automationData,
+      photos: [],
+      hidePrices: false,
+      payment: {
+        companyName, oib: cs.oib, address: cs.address, city: cs.city, email: cs.email, phone: cs.phone,
+        iban: cs.iban, model: 'HR00', reference, description, barcodeDataUrl,
+      },
     });
   };
 
@@ -1879,9 +1923,23 @@ export function WorkOrderDetailsModal({
                     style={{ background: T.accent, color: '#000000' }}
                   >
                     <FileText className="w-5 h-5" />
-                    <span>Generiraj Račun PDF</span>
+                    <span>Radni nalog PDF</span>
                   </button>
                 </div>
+                <button
+                  onClick={handlePrintOffer}
+                  className="mt-4 w-full px-6 py-3 rounded-xl font-bold transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+                  style={{ border: '1px solid rgba(92,225,230,0.5)', color: '#5CE1E6', background: 'rgba(92,225,230,0.06)' }}
+                >
+                  <DollarSign className="w-5 h-5" />
+                  <span>Ponuda za plaćanje (IBAN i 2D kod)</span>
+                </button>
+                {offerError && (
+                  <p className="mt-2 text-sm p-3 rounded-xl" style={{ background: 'rgba(255,59,48,0.1)', border: '1px solid rgba(255,59,48,0.3)', color: '#FF8A80' }}>{offerError}</p>
+                )}
+                <p className="mt-2 text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                  Ponuda nije fiskalizirani račun. Račun izdajte iz programa za eRačune.
+                </p>
               </motion.div>
             )}
           </AnimatePresence>

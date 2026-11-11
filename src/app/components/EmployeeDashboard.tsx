@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'motion/react';
+import { TrialBanner } from './TrialBanner';
 import { T } from '../lib/theme';
 import { WaterBackground } from './WaterBackground';
 import { useState, useEffect, useCallback, useRef } from 'react';
@@ -816,6 +817,8 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
           </div>
         </div>
       )}
+
+      <TrialBanner />
 
       {/* Content */}
       <AnimatePresence mode="wait">

@@ -22,6 +22,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { memberApi, isMemberLoggedIn } from '../lib/memberApi';
 import { WaterBackground } from './WaterBackground';
 import { ProductDetailSheet } from './ProductDetailSheet';
+import { PayPalCheckout } from './PayPalCheckout';
+import { api } from '../lib/supabase';
 
 interface MondoShopProps {
   onBack: () => void;
@@ -41,7 +43,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
   useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [view]);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('Sve');
-  const [confirmedVia, setConfirmedVia] = useState<'whatsapp' | 'email' | null>(null);
+  const [confirmedVia, setConfirmedVia] = useState<'whatsapp' | 'email' | 'paypal' | null>(null);
   const [detailId, setDetailId] = useState<string | null>(null);
 
   // Form state
@@ -157,6 +159,19 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
     setView('confirmed');
   };
 
+  // Plaćeno PayPalom: narudžba se šalje Mondo Acqui e-mailom (s PayPal brojem transakcije)
+  const handlePayPalPaid = async (info: { paypalOrderId: string; payerEmail?: string; payerName?: string }) => {
+    const text = buildOrderText() + `\n\nPLAĆENO PAYPALOM: ${totals.total.toFixed(2)} € (transakcija ${info.paypalOrderId})`;
+    try {
+      await api.post('shop/paypal-order', {
+        paypalOrderId: info.paypalOrderId, amount: totals.total, payerEmail: info.payerEmail || '', payerName: info.payerName || '',
+        name, phone, email, delivery, address, note, orderText: text,
+      });
+    } catch { /* uplata je prošla; Mondo vidi transakciju u PayPalu */ }
+    setConfirmedVia('paypal');
+    setView('confirmed');
+  };
+
   // ── CONFIRMED VIEW ──────────────────────────────────────────────────────────
   if (view === 'confirmed') {
     return (
@@ -172,10 +187,11 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
             <CheckCircle className="w-10 h-10" style={{ color: '#2EFF88' }} />
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
-            <h2 className="text-2xl font-bold mb-3">Narudžba je pripremljena</h2>
+            <h2 className="text-2xl font-bold mb-3">{confirmedVia === 'paypal' ? 'Plaćanje je primljeno' : 'Narudžba je pripremljena'}</h2>
             <p style={{ color: T.muted }}>
-              Narudžba je pripremljena i otvorena u {confirmedVia === 'whatsapp' ? 'WhatsAppu' : 'e-mailu'}.
-              Pošaljite poruku i Mondo Acqua će vas kontaktirati.
+              {confirmedVia === 'paypal'
+                ? 'Hvala! Narudžba je plaćena PayPalom i poslana Mondo Acqui, koja će vas kontaktirati oko dostave.'
+                : <>Narudžba je pripremljena i otvorena u {confirmedVia === 'whatsapp' ? 'WhatsAppu' : 'e-mailu'}. Pošaljite poruku i Mondo Acqua će vas kontaktirati.</>}
             </p>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="space-y-3">
@@ -434,19 +450,19 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
               <Mail className="w-5 h-5" />
               Pošalji narudžbu e-mailom
             </button>
-            <div className="relative">
-              <button
-                disabled
-                className="w-full py-4 font-semibold text-base flex items-center justify-center gap-3 rounded-2xl cursor-not-allowed"
-                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.35)' }}
-              >
-                <CreditCard className="w-5 h-5" />
-                Plati odmah
-              </button>
-              <span className="absolute top-2 right-3 text-xs px-2 py-0.5 rounded-full font-semibold" style={{ background: T.accent, color: '#000' }}>
-                Uskoro
-              </span>
-            </div>
+            {totals.total > 0 && (
+              <div className="pt-2">
+                <p className="text-sm font-semibold flex items-center gap-2 mb-2" style={{ color: T.muted }}>
+                  <CreditCard className="w-4 h-4" /> Ili platite odmah ({fmtEUR(totals.total)}) – PayPal ili kartica
+                </p>
+                <PayPalCheckout
+                  amountEUR={totals.total}
+                  description="Narudžba – Mondo Pool Care"
+                  canPay={validate}
+                  onPaid={handlePayPalPaid}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

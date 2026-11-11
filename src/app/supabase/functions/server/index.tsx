@@ -136,6 +136,44 @@ const ownerOnly = async (c: any, next: any) => {
   await next();
 };
 
+// ---------- Probno razdoblje i pretplata tvrtke ----------
+// Nakon TRIAL_DAYS dana tvrtka (nositelj i djelatnici) može samo čitati podatke,
+// dok Mondo admin ne upiše plaćenu pretplatu (paidUntil) ili oznaku exempt.
+const TRIAL_DAYS = 30;
+const TRIAL_EXPIRED_MSG = 'Probno razdoblje od 30 dana je isteklo. Podatke i dalje možete pregledavati; za nastavak rada javite se Mondo Acqui: info@mondo-acqua.hr, +385 95 208 7321.';
+
+const companyBilling = async (user: any) => {
+  const companyId = getCompanyId(user);
+  const key = `company:${companyId}:billing`;
+  let b = await kv.get(key);
+  if (!b || !b.trialEndsAt) {
+    let created = user.created_at;
+    if (companyId !== user.id) {
+      const { data } = await adminClient().auth.admin.getUserById(companyId);
+      created = data?.user?.created_at || created;
+    }
+    const start = Date.parse(created || '') || Date.now();
+    b = { ...(b || {}), trialEndsAt: new Date(start + TRIAL_DAYS * 86400000).toISOString(), paidUntil: b?.paidUntil || '' };
+    await kv.set(key, b);
+  }
+  const today = new Date().toISOString().slice(0, 10);
+  const paid = !!b.paidUntil && b.paidUntil >= today;
+  const inTrial = Date.parse(b.trialEndsAt) > Date.now();
+  const trialDaysLeft = Math.ceil((Date.parse(b.trialEndsAt) - Date.now()) / 86400000);
+  const active = paid || inTrial || b.exempt === true || isMondoAdmin(user);
+  return { trialEndsAt: b.trialEndsAt, paidUntil: b.paidUntil || '', exempt: b.exempt === true, paid, inTrial, trialDaysLeft, active };
+};
+
+const activeCompanyOnly = async (c: any, next: any) => {
+  const user = c.get('user');
+  const role = getRole(user);
+  if ((role === 'owner' || role === 'employee') && !isMondoAdmin(user)) {
+    const b = await companyBilling(user);
+    if (!b.active) return c.json({ error: TRIAL_EXPIRED_MSG, code: 'TRIAL_EXPIRED' }, 402);
+  }
+  await next();
+};
+
 const BASE_PATH = "/make-server-381f82bd";
 const FUNCTIONS_PATH = "/functions/v1/make-server-381f82bd";
 
@@ -162,6 +200,82 @@ registerRoute(app, 'get', '/shop/details', async (c: any) => {
   }
 });
 
+// ---------- Webshop: narudžba plaćena PayPalom (javno; Mondo uplatu provjerava u PayPalu) ----------
+
+registerRoute(app, 'post', '/shop/paypal-order', async (c: any) => {
+  const body = await c.req.json().catch(() => ({}));
+  const str = (v: any, max: number) => String(v ?? '').trim().slice(0, max);
+  const paypalOrderId = str(body.paypalOrderId, 40);
+  if (!/^[A-Z0-9]{8,40}$/i.test(paypalOrderId)) return c.json({ error: 'Neispravan broj PayPal transakcije.' }, 400);
+  const key = `admin:paypal-orders:${paypalOrderId}`;
+  if (await kv.get(key)) return c.json({ success: true, duplicate: true });
+  const order = {
+    id: paypalOrderId,
+    amount: Number(body.amount) || 0,
+    payerEmail: str(body.payerEmail, 120), payerName: str(body.payerName, 120),
+    name: str(body.name, 120), phone: str(body.phone, 40), email: str(body.email, 120),
+    delivery: str(body.delivery, 40), address: str(body.address, 200), note: str(body.note, 1000),
+    orderText: str(body.orderText, 6000),
+    createdAt: new Date().toISOString(),
+  };
+  await kv.set(key, order);
+  try {
+    await resend.emails.send({
+      from: 'Mondo Pool Care <orders@resend.dev>',
+      to: [MONDO_ACQUA_EMAIL],
+      subject: `PLAĆENA NARUDŽBA (PayPal ${order.amount.toFixed(2)} €): ${order.name || order.payerName}`,
+      html: `<div style="font-family:sans-serif;max-width:600px">
+        <h2>Narudžba plaćena PayPalom</h2>
+        <p><strong>PayPal transakcija:</strong> ${escapeHtml(order.id)} – provjerite uplatu u PayPal računu prije slanja robe.</p>
+        <p><strong>Platitelj (PayPal):</strong> ${escapeHtml(order.payerName)} ${escapeHtml(order.payerEmail)}</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;background:#f6f8f9;padding:12px;border-radius:8px">${escapeHtml(order.orderText)}</pre>
+      </div>`,
+    } as any);
+  } catch (err) { console.error('PayPal order email failed:', err); }
+  return c.json({ success: true });
+});
+
+// ---------- Stanje pretplate tvrtke ----------
+
+registerRoute(app, 'get', '/company/status', authMiddleware, async (c: any) => {
+  const user = c.get('user');
+  const role = getRole(user);
+  if (role !== 'owner' && role !== 'employee') return c.json({ active: true });
+  return c.json(await companyBilling(user));
+});
+
+// ---------- Podaci tvrtke za ponude (naziv, OIB, adresa, IBAN) ----------
+
+const cleanIban = (v: any) => String(v ?? '').replace(/\s+/g, '').toUpperCase().slice(0, 34);
+
+registerRoute(app, 'get', '/company/settings', authMiddleware, async (c: any) => {
+  const user = c.get('user');
+  const role = getRole(user);
+  if (role !== 'owner' && role !== 'employee') return c.json({ error: 'Nemate pristup.' }, 403);
+  const s = (await kv.get(`company:${getCompanyId(user)}:settings`)) || {};
+  return c.json({ companyName: user.app_metadata?.companyName || user.user_metadata?.companyName || '', ...s });
+});
+
+registerRoute(app, 'put', '/company/settings', authMiddleware, ownerOnly, async (c: any) => {
+  const user = c.get('user');
+  const body = await c.req.json().catch(() => ({}));
+  const iban = cleanIban(body.iban);
+  if (iban && !/^HR\d{19}$/.test(iban)) return c.json({ error: 'IBAN mora biti hrvatski: HR i 19 znamenki.' }, 400);
+  const oib = String(body.oib ?? '').replace(/\D/g, '').slice(0, 11);
+  if (oib && oib.length !== 11) return c.json({ error: 'OIB mora imati 11 znamenki.' }, 400);
+  const settings = {
+    companyName: String(body.companyName ?? '').trim().slice(0, 120),
+    oib, iban,
+    address: String(body.address ?? '').trim().slice(0, 120),
+    city: String(body.city ?? '').trim().slice(0, 80),
+    email: String(body.email ?? '').trim().slice(0, 120),
+    phone: String(body.phone ?? '').trim().slice(0, 40),
+    updatedAt: new Date().toISOString(),
+  };
+  await kv.set(`company:${getCompanyId(user)}:settings`, settings);
+  return c.json({ success: true, settings });
+});
+
 // ---------- Tko sam ja ----------
 
 registerRoute(app, 'get', '/me', authMiddleware, (c: any) => {
@@ -180,7 +294,7 @@ registerRoute(app, 'get', '/me', authMiddleware, (c: any) => {
 
 // ---------- Slike ----------
 
-registerRoute(app, 'post', '/images/upload', authMiddleware, async (c: any) => {
+registerRoute(app, 'post', '/images/upload', authMiddleware, activeCompanyOnly, async (c: any) => {
   const user = c.get('user');
   const formData = await c.req.formData();
   const file = formData.get('file');
@@ -340,7 +454,8 @@ const createCrudRoutes = (resourceName: string) => {
     }
   });
 
-  registerRoute(app, 'post', `/${resourceName}`, authMiddleware, async (c: any) => {
+  const writeGuards = resourceName === 'notifications' ? [] : [activeCompanyOnly];
+  registerRoute(app, 'post', `/${resourceName}`, authMiddleware, ...writeGuards, async (c: any) => {
     const user = c.get('user');
     let item = await c.req.json();
     if (!item || item.id === undefined || item.id === null || item.id === '') {
@@ -407,7 +522,7 @@ const createCrudRoutes = (resourceName: string) => {
     }
   });
 
-  registerRoute(app, 'delete', `/${resourceName}/:id`, authMiddleware, async (c: any) => {
+  registerRoute(app, 'delete', `/${resourceName}/:id`, authMiddleware, ...writeGuards, async (c: any) => {
     const user = c.get('user');
     const id = c.req.param('id');
     try {
@@ -439,7 +554,7 @@ const createCrudRoutes = (resourceName: string) => {
 
 const isEmail = (s: any) => typeof s === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
 
-registerRoute(app, 'post', '/employees/create', authMiddleware, ownerOnly, async (c: any) => {
+registerRoute(app, 'post', '/employees/create', authMiddleware, ownerOnly, activeCompanyOnly, async (c: any) => {
   const owner = c.get('user');
   const body = await c.req.json().catch(() => ({}));
   const name = String(body.name || '').trim();
@@ -495,7 +610,7 @@ const loadCompanyEmployee = async (c: any) => {
   return { owner, id, companyId, existing, target };
 };
 
-registerRoute(app, 'post', '/employees/:id/permissions', authMiddleware, ownerOnly, async (c: any) => {
+registerRoute(app, 'post', '/employees/:id/permissions', authMiddleware, ownerOnly, activeCompanyOnly, async (c: any) => {
   const r: any = await loadCompanyEmployee(c);
   if (r.error) return r.error;
   const body = await c.req.json().catch(() => ({}));
@@ -523,7 +638,7 @@ const setActive = (active: boolean) => async (c: any) => {
 };
 
 registerRoute(app, 'post', '/employees/:id/deactivate', authMiddleware, ownerOnly, setActive(false));
-registerRoute(app, 'post', '/employees/:id/activate', authMiddleware, ownerOnly, setActive(true));
+registerRoute(app, 'post', '/employees/:id/activate', authMiddleware, ownerOnly, activeCompanyOnly, setActive(true));
 
 RESOURCES.forEach(createCrudRoutes);
 
@@ -542,7 +657,7 @@ registerRoute(app, 'get', '/messages', authMiddleware, async (c: any) => {
   }
 });
 
-registerRoute(app, 'post', '/messages', authMiddleware, async (c: any) => {
+registerRoute(app, 'post', '/messages', authMiddleware, activeCompanyOnly, async (c: any) => {
   const user = c.get('user');
   const message = await c.req.json();
   if (!message.id) return c.json({ error: 'Message must have ID' }, 400);
@@ -1071,7 +1186,6 @@ registerRoute(app, 'get', '/admin/members', authMiddleware, mondoOnly, async (c:
 });
 
 // Popis servisera (tvrtki) za Mondo admin: nositelji tvrtki, bez Mondo admina.
-const TRIAL_DAYS = 30;
 const countKeys = async (prefix: string): Promise<number> => {
   const { count } = await adminClient().from('kv_store_381f82bd')
     .select('key', { count: 'exact', head: true }).like('key', `${prefix}%`);
@@ -1096,7 +1210,8 @@ registerRoute(app, 'get', '/admin/servicers', authMiddleware, mondoOnly, async (
       countKeys(`c:${companyId}:work-orders:`),
     ]);
     const createdAt = u.created_at || null;
-    const trialEnds = createdAt ? new Date(new Date(createdAt).getTime() + TRIAL_DAYS * 86400000) : null;
+    const billing = (await kv.get(`company:${companyId}:billing`)) || {};
+    const trialEnds = billing.trialEndsAt ? new Date(billing.trialEndsAt) : createdAt ? new Date(new Date(createdAt).getTime() + TRIAL_DAYS * 86400000) : null;
     const trialDaysLeft = trialEnds ? Math.ceil((trialEnds.getTime() - now) / 86400000) : null;
     return {
       id: u.id,
@@ -1108,6 +1223,8 @@ registerRoute(app, 'get', '/admin/servicers', authMiddleware, mondoOnly, async (
       lastSignInAt: u.last_sign_in_at || null,
       trialEndsAt: trialEnds ? trialEnds.toISOString() : null,
       trialDaysLeft,
+      paidUntil: billing.paidUntil || '',
+      exempt: billing.exempt === true,
       employeesCount: employees.length,
       activeEmployeesCount: employees.filter((e: any) => !(e.banned_until && new Date(e.banned_until).getTime() > now)).length,
       clientsCount,
@@ -1116,6 +1233,22 @@ registerRoute(app, 'get', '/admin/servicers', authMiddleware, mondoOnly, async (
   }));
   out.sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
   return c.json(out);
+});
+
+// Pretplata servisera: Mondo admin upisuje do kada je plaćeno (prazno = samo probno razdoblje).
+registerRoute(app, 'post', '/admin/servicers/:id/subscription', authMiddleware, mondoOnly, async (c: any) => {
+  const id = cleanStr(c.req.param('id'), 80);
+  const { data } = await adminClient().auth.admin.getUserById(id);
+  if (!data?.user || getRole(data.user) !== 'owner') return c.json({ error: 'Serviser ne postoji.' }, 404);
+  const body = await c.req.json().catch(() => ({}));
+  const paidUntil = /^\d{4}-\d{2}-\d{2}$/.test(String(body.paidUntil || '')) ? String(body.paidUntil) : '';
+  const companyId = getCompanyId(data.user);
+  const key = `company:${companyId}:billing`;
+  const prev = (await kv.get(key)) || {};
+  const trialEndsAt = prev.trialEndsAt || new Date((Date.parse(data.user.created_at) || Date.now()) + TRIAL_DAYS * 86400000).toISOString();
+  const billing = { ...prev, trialEndsAt, paidUntil, exempt: body.exempt === true ? true : body.exempt === false ? false : prev.exempt === true, updatedAt: new Date().toISOString() };
+  await kv.set(key, billing);
+  return c.json({ success: true, billing });
 });
 
 registerRoute(app, 'get', '/admin/members/:id', authMiddleware, mondoOnly, async (c: any) => {

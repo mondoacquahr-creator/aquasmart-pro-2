@@ -1,4 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { TrialBanner } from './TrialBanner';
+import { CompanySettingsModal } from './CompanySettingsModal';
 import { T } from '../lib/theme';
 import { WaterBackground } from './WaterBackground';
 import { motion, AnimatePresence } from 'motion/react';
@@ -165,6 +167,7 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
   };
 
   // State with localStorage persistence (empty in live mode, populated from server)
+  const [showCompanySettings, setShowCompanySettings] = useState(false);
   const [clients, setClients] = useState<Client[]>(() => isDemoMode() ? loadData(STORAGE_KEYS.CLIENTS, [
     { id: '1', name: 'Hotel Adriatic', location: 'Split', pools: 3, lastService: '2026-02-25', nextService: '2026-03-10', status: 'active', phone: '+385 21 123 456', email: 'info@adriatic.hr' },
     { id: '2', name: 'Villa Sunset', location: 'Dubrovnik', pools: 1, lastService: '2026-02-20', nextService: '2026-03-05', status: 'active', phone: '+385 20 234 567', email: 'villa@sunset.hr' },
@@ -1017,6 +1020,9 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
         </div>
       )}
 
+      <TrialBanner />
+      {showCompanySettings && <CompanySettingsModal onClose={() => setShowCompanySettings(false)} />}
+
       {/* Content */}
       <AnimatePresence mode="wait">
         {currentView === 'home' && (
@@ -1511,7 +1517,7 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
                   { id: 'water-analysis', icon: Droplets, label: 'Analiza Vode', desc: 'Testiranje vode', color: '#2EFF88' },
                   { id: 'products', icon: Package, label: 'Proizvodi', desc: 'Katalog proizvoda', color: '#5CE1E6' },
                   { id: 'stores', icon: MapPin, label: 'Prodajna Mjesta', desc: 'Lokacije trgovina', color: '#FFB020' },
-                  { id: 'settings', icon: Settings, label: 'Postavke', desc: 'Podešavanja sustava', color: '#FF3B30' },
+                  { id: 'settings', icon: Settings, label: 'Postavke tvrtke', desc: 'Naziv, OIB, adresa i IBAN za ponude', color: '#FF3B30' },
                 ].map((item) => (
                   <motion.div
                     key={item.id}
@@ -1523,6 +1529,7 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
                       else if (item.id === 'water-analysis') onNavigate('water-analysis');
                       else if (item.id === 'products') onNavigate('products');
                       else if (item.id === 'stores') onNavigate('stores');
+                      else if (item.id === 'settings') setShowCompanySettings(true);
                       else alert(`${item.label} uskoro dostupno!`);
                     }}
                     className="p-8 rounded-3xl cursor-pointer backdrop-blur-xl group relative overflow-hidden"

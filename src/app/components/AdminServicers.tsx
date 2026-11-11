@@ -17,6 +17,8 @@ interface Servicer {
   lastSignInAt?: string | null;
   trialEndsAt?: string | null;
   trialDaysLeft?: number | null;
+  paidUntil?: string;
+  exempt?: boolean;
   employeesCount: number;
   activeEmployeesCount: number;
   clientsCount: number;
@@ -33,11 +35,45 @@ const errorBox = { background: 'rgba(255,59,48,0.1)', border: '1px solid rgba(25
 const inputStyle = { background: 'rgba(2,13,18,0.6)', border: '1px solid rgba(120,220,255,0.18)', fontSize: '16px', outline: 'none', color: '#fff' };
 
 function trialLabel(s: Servicer): { text: string; color: string; bg: string } {
+  if (s.exempt) return { text: 'Bez ograničenja', color: '#2EE6A6', bg: 'rgba(46,230,166,0.1)' };
+  if (s.paidUntil && s.paidUntil >= new Date().toISOString().slice(0, 10)) {
+    return { text: `Pretplata do ${hrDate(s.paidUntil)}`, color: '#2EE6A6', bg: 'rgba(46,230,166,0.1)' };
+  }
   const d = s.trialDaysLeft;
   if (d == null) return { text: 'Probno razdoblje: nepoznato', color: 'rgba(255,255,255,0.5)', bg: 'rgba(255,255,255,0.06)' };
   if (d > 7) return { text: `Probno: još ${d} dana`, color: '#2EE6A6', bg: 'rgba(46,230,166,0.1)' };
   if (d > 0) return { text: `Probno: još ${d} ${d === 1 ? 'dan' : 'dana'}`, color: '#FFB020', bg: 'rgba(255,176,32,0.12)' };
-  return { text: 'Probno razdoblje isteklo', color: '#FF8A80', bg: 'rgba(255,59,48,0.1)' };
+  return { text: 'Isteklo – samo pregled', color: '#FF8A80', bg: 'rgba(255,59,48,0.1)' };
+}
+
+// Mondo admin upisuje do kada je serviser platio pretplatu; nakon toga i nakon probnog razdoblja tvrtka može samo čitati.
+function SubscriptionEditor({ s, onSaved }: { s: Servicer; onSaved: () => void }) {
+  const [paidUntil, setPaidUntil] = useState(s.paidUntil || '');
+  const [saving, setSaving] = useState(false);
+  const [err, setErr] = useState('');
+  const save = async (value: string, exempt?: boolean) => {
+    setSaving(true); setErr('');
+    try {
+      await api.invoke(`admin/servicers/${s.id}/subscription`, { method: 'POST', body: { paidUntil: value, ...(exempt !== undefined ? { exempt } : {}) } });
+      onSaved();
+    } catch (e: any) { setErr(e?.message || 'Spremanje nije uspjelo.'); }
+    setSaving(false);
+  };
+  const plusYear = () => { const d = new Date(); d.setFullYear(d.getFullYear() + 1); return d.toISOString().slice(0, 10); };
+  return (
+    <div className="mt-3 pt-3 flex flex-wrap items-center gap-2 text-xs" style={{ borderTop: '1px solid rgba(120,220,255,0.08)' }}>
+      <span style={{ color: 'rgba(255,255,255,0.55)' }}>Pretplata plaćena do:</span>
+      <input type="date" value={paidUntil} onChange={e => setPaidUntil(e.target.value)}
+        className="px-2 py-1.5 rounded-lg" style={{ ...inputStyle, fontSize: '13px' }} />
+      <button disabled={saving} onClick={() => save(paidUntil)} className="px-3 py-1.5 rounded-lg font-semibold" style={{ background: '#5CE1E6', color: '#000' }}>Spremi</button>
+      <button disabled={saving} onClick={() => { const v = plusYear(); setPaidUntil(v); save(v); }} className="px-3 py-1.5 rounded-lg font-semibold" style={{ border: '1px solid rgba(92,225,230,0.4)', color: '#5CE1E6' }}>+1 godina</button>
+      <button disabled={saving} onClick={() => save(paidUntil, !s.exempt)} className="px-3 py-1.5 rounded-lg font-semibold" style={{ border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.75)' }}>
+        {s.exempt ? 'Vrati ograničenje' : 'Bez ograničenja'}
+      </button>
+      {saving && <Loader2 className="w-4 h-4 animate-spin" style={{ color: '#5CE1E6' }} />}
+      {err && <span style={{ color: '#FF8A80' }}>{err}</span>}
+    </div>
+  );
 }
 
 export function AdminServicers({ onNavigate, demoMode = false }: Props) {
@@ -197,6 +233,7 @@ export function AdminServicers({ onNavigate, demoMode = false }: Props) {
                 <span className="flex items-center gap-1.5"><ClipboardList className="w-3.5 h-3.5" />Radni nalozi: {s.workOrdersCount}</span>
                 <span>Zadnja prijava: {hrDate(s.lastSignInAt) || '—'}</span>
               </div>
+              {!demoMode && <SubscriptionEditor s={s} onSaved={load} />}
             </motion.div>
           );
         })}
