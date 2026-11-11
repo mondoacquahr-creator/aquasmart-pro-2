@@ -58,7 +58,6 @@ const readingBars = [
 ];
 
 const FREE_ITEMS = [
-  { Icon: FlaskConical, title: 'Analiza vode', desc: 'Upišite očitanja i dobijte točne doze', page: 'analysis' as const },
   { Icon: ShoppingCart, title: 'Webshop Mondo Acqua', desc: 'Kemija i oprema za bazen', page: 'products' as const },
   { Icon: MapPin, title: 'Prodajna mjesta', desc: 'Gdje kupiti Mondo Acqua proizvode', page: 'free-portal' as const },
   { Icon: Droplets, title: 'Moj bazen', desc: 'Povijest analiza, podsjetnici i pogodnosti', page: 'member-register' as const, memberPage: 'member-portal' as const },
