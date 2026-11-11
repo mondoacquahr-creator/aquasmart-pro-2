@@ -12,7 +12,7 @@ import {
   Droplets, Users, FileText,
   LogIn, UserPlus, Lock, BeakerIcon, ShoppingCart, MapPin, Menu, X,
   Phone, Mail, Building, Copyright, Globe, Sparkles,
-  FlaskConical, Activity, Play, Warehouse, UserCog,
+  Play, Warehouse, UserCog,
   ChevronDown, BarChart3, Percent, BadgePercent, LineChart, Wrench, CheckCircle2, MessageCircle,
 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
@@ -1009,16 +1009,22 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
               style={{ '--tw-divide-opacity': '1' } as React.CSSProperties}
             >
               {[
-                { Icon: FlaskConical, title: t.steps.title1, desc: t.steps.desc1 },
-                { Icon: Activity, title: t.steps.title2, desc: t.steps.desc2 },
-                { Icon: BeakerIcon, title: t.steps.title3, desc: t.steps.desc3 },
-              ].map(({ Icon, title, desc }, idx) => (
+                { img: '/koraci/testiraj.jpg', title: t.steps.title1, desc: t.steps.desc1 },
+                { img: '/koraci/analiziraj.jpg', title: t.steps.title2, desc: t.steps.desc2 },
+                { img: '/koraci/doziraj.jpg', title: t.steps.title3, desc: t.steps.desc3 },
+              ].map(({ img, title, desc }, idx) => (
                 <div
                   key={idx}
-                  className="px-8 py-8 flex flex-col gap-4"
+                  className="p-5 md:p-6 flex flex-col gap-4"
                   style={{ borderColor: 'rgba(120,220,255,0.1)' }}
                 >
-                  <AppIcon icon={Icon} size={52} />
+                  <img
+                    src={img}
+                    alt={title}
+                    loading="lazy"
+                    className="w-full rounded-2xl object-cover"
+                    style={{ aspectRatio: '4 / 3', border: '1px solid rgba(120,220,255,0.12)' }}
+                  />
                   <div>
                     <p className="font-bold text-base text-white mb-1">{title}</p>
                     <p className="text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>{desc}</p>
