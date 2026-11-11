@@ -1559,7 +1559,6 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
-                  { id: 'visualizer', icon: Eye, label: 'Pool Visualizer', desc: 'AR vizualizacija bazena', color: '#5CE1E6' },
                   { id: 'analytics', icon: BarChart3, label: 'Analitika', desc: 'Statistike i izvještaji', color: '#5CE1E6' },
                   { id: 'water-analysis', icon: Droplets, label: 'Analiza Vode', desc: 'Testiranje vode', color: '#2EFF88' },
                   { id: 'products', icon: Package, label: 'Proizvodi', desc: 'Katalog proizvoda', color: '#5CE1E6' },

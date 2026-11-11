@@ -59,7 +59,6 @@ const FREE_ITEMS = [
   { Icon: FlaskConical, title: 'Analiza vode', desc: 'Upišite očitanja i dobijte točne doze', page: 'analysis' as const },
   { Icon: ShoppingCart, title: 'Webshop Mondo Acqua', desc: 'Kemija i oprema za bazen', page: 'products' as const },
   { Icon: MapPin, title: 'Prodajna mjesta', desc: 'Gdje kupiti Mondo Acqua proizvode', page: 'free-portal' as const },
-  { Icon: Sparkles, title: 'AI vizualizator bazena', desc: 'Vaš bazen na fotografiji dvorišta', page: 'visualizer' as const },
   { Icon: Droplets, title: 'Moj bazen', desc: 'Povijest analiza, podsjetnici i pogodnosti', page: 'member-register' as const, memberPage: 'member-portal' as const },
 ];
 
@@ -611,7 +610,6 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
 
               {/* Existing text links */}
               {[
-                { label: t.nav.visualizer, action: () => onNavigate('visualizer') },
                 { label: t.nav.analysis, action: () => onNavigate('analysis') },
                 { label: t.nav.products, action: () => onNavigate('products') },
                 {
@@ -1109,203 +1107,18 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
           </div>
         </section>
 
-        {/* ============================================================ */}
-        {/* AI VISUALIZER – real photo before/after slider               */}
-        {/* ============================================================ */}
+        {/* Fotografija: prekid između sekcija (AI vizualizator je premješten na glavnu stranicu Mondo Acque) */}
         <section className="max-w-7xl mx-auto px-4 md:px-8 pb-24">
-          {/* Text block */}
-          <div className="max-w-[1100px] mx-auto mb-8">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: CYAN }}>
-              AI vizualizator bazena
-            </p>
-            <h2
-              className="font-extrabold leading-tight mb-4 text-white"
-              style={{ fontSize: 'clamp(1.6rem, 4vw, 2.5rem)', letterSpacing: '-0.025em' }}
-            >
-              {t.visualizer.title}
-            </h2>
-            <p className="text-base mb-7" style={{ color: 'rgba(255,255,255,0.6)' }}>
-              {t.visualizer.desc}
-            </p>
-            <button
-              onClick={() => onNavigate('visualizer')}
-              className="px-6 py-3 text-sm font-semibold rounded-full transition-all hover:bg-cyan-400/10"
-              style={{ border: `1px solid ${CYAN}`, color: CYAN }}
-            >
-              {t.visualizer.cta}
-            </button>
-          </div>
-
-          {/* Slider card area */}
-          <div className="max-w-[1100px] mx-auto">
-            {/* Day / Night toggle – right-aligned */}
-            <div className="flex justify-end mb-3">
-              <div
-                className="flex items-center rounded-full p-[3px] gap-0.5"
-                style={{ background: 'rgba(4,24,32,0.7)', border: '1px solid rgba(255,255,255,0.15)' }}
-              >
-                <button
-                  onClick={() => setAfterMode('dan')}
-                  className="px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200"
-                  style={
-                    afterMode === 'dan'
-                      ? { background: CYAN, color: '#020D12' }
-                      : { color: 'rgba(255,255,255,0.55)', background: 'transparent' }
-                  }
-                >
-                  Dan
-                </button>
-                <button
-                  onClick={() => setAfterMode('noc')}
-                  className="px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200"
-                  style={
-                    afterMode === 'noc'
-                      ? { background: CYAN, color: '#020D12' }
-                      : { color: 'rgba(255,255,255,0.55)', background: 'transparent' }
-                  }
-                >
-                  Noć
-                </button>
-              </div>
-            </div>
-
-            {/* Before/After slider card */}
-            <div
-              ref={cardRef}
-              className="viz-card w-full rounded-3xl overflow-hidden relative select-none"
-              style={{
-                border: '1px solid rgba(120,220,255,0.12)',
-                cursor: isDragging ? 'grabbing' : 'ew-resize',
-                touchAction: 'pan-y',
-                userSelect: 'none',
-                background: '#041820',
-              }}
-              onPointerDown={handlePointerDown}
-              onPointerMove={handlePointerMove}
-              onPointerUp={handlePointerUp}
-              onPointerCancel={handlePointerUp}
-            >
-              {/* AFTER – day image (base layer) */}
-              <img
-                src={imgPoslijeDan}
-                alt="Dvorište s modernim bazenom – AI vizualizacija, dnevno"
-                className="absolute inset-0 w-full h-full viz-img pointer-events-none"
-                draggable={false}
-                loading="lazy"
-                decoding="async"
-                width={1450}
-                height={670}
-                style={{ opacity: afterMode === 'dan' ? 1 : 0, transition: 'opacity 400ms ease' }}
-              />
-
-              {/* AFTER – night image (stacked, crossfades in) */}
-              <img
-                src={imgPoslijeNoc}
-                alt="Dvorište s modernim bazenom – AI vizualizacija, noćno"
-                className="absolute inset-0 w-full h-full viz-img pointer-events-none"
-                draggable={false}
-                loading="lazy"
-                decoding="async"
-                width={1450}
-                height={670}
-                style={{ opacity: afterMode === 'noc' ? 1 : 0, transition: 'opacity 400ms ease' }}
-              />
-
-              {/* BEFORE image – top layer, clipped by slider */}
-              <img
-                src={imgPrije}
-                alt="Dvorište bez bazena – stvarna fotografija"
-                className="absolute inset-0 w-full h-full viz-img pointer-events-none"
-                draggable={false}
-                loading="lazy"
-                decoding="async"
-                width={1450}
-                height={670}
-                style={{
-                  clipPath: `inset(0 ${100 - sliderPos}% 0 0)`,
-                  transition: sliderClipTrans,
-                }}
-              />
-
-              {/* Cyan divider line */}
-              <div
-                className="absolute inset-y-0 pointer-events-none"
-                style={{
-                  left: `${sliderPos}%`,
-                  width: 2,
-                  transform: 'translateX(-50%)',
-                  background: CYAN,
-                  boxShadow: `0 0 12px ${CYAN}99`,
-                  transition: sliderPosTrans,
-                }}
-              />
-
-              {/* Drag handle */}
-              <div
-                className="absolute pointer-events-none flex items-center justify-center"
-                style={{
-                  left: `${sliderPos}%`,
-                  top: '50%',
-                  transform: 'translateX(-50%) translateY(-50%)',
-                  width: 38,
-                  height: 38,
-                  borderRadius: '50%',
-                  background: '#fff',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.45), 0 0 0 2.5px rgba(92,225,230,0.4)',
-                  transition: sliderPosTrans,
-                }}
-              >
-                <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
-                  <path
-                    d="M1 5H13M13 5L10 2M13 5L10 8M1 5L4 2M1 5L4 8"
-                    stroke="#041820"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-
-              {/* Labels */}
-              <div className="absolute bottom-3 left-3 pointer-events-none">
-                <span
-                  className="text-xs font-bold px-2.5 py-1 rounded-full"
-                  style={{ background: 'rgba(0,0,0,0.6)', color: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(4px)' }}
-                >
-                  {t.visualizer.beforeLabel}
-                </span>
-              </div>
-              <div className="absolute bottom-3 right-3 pointer-events-none">
-                <span
-                  className="text-xs font-bold px-2.5 py-1 rounded-full"
-                  style={{ background: 'rgba(0,0,0,0.6)', color: '#fff', backdropFilter: 'blur(4px)' }}
-                >
-                  {t.visualizer.afterLabel}
-                </span>
-              </div>
-
-              {/* Accessible range input (keyboard navigation) */}
-              <input
-                type="range"
-                min="0"
-                max="100"
-                step="1"
-                value={Math.round(sliderPos)}
-                onChange={(e) => {
-                  setAnimating(false);
-                  draggingRef.current = false;
-                  setIsDragging(false);
-                  setSliderPos(Number(e.target.value));
-                }}
-                className="sr-only"
-                aria-label="Pomicanje granice između slike Prije i Poslije"
-              />
-            </div>
-
-            {/* Caption */}
-            <p className="text-xs mt-3 text-center" style={{ color: 'rgba(255,255,255,0.3)' }}>
-              Stvarno dvorište i AI vizualizacija bazena – povucite klizač.
-            </p>
+          <div className="max-w-[1100px] mx-auto rounded-3xl overflow-hidden" style={{ border: '1px solid rgba(120,220,255,0.12)', background: '#041820' }}>
+            <img
+              src={imgPoslijeNoc}
+              alt="Bazen u večernjem svjetlu"
+              className="w-full h-auto block"
+              loading="lazy"
+              decoding="async"
+              width={1450}
+              height={670}
+            />
           </div>
         </section>
 

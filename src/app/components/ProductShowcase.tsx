@@ -65,17 +65,6 @@ export function ProductShowcase({ onClose, onNavigate }: ProductShowcaseProps) {
 
   const proFeatures = [
     {
-      icon: Droplets,
-      title: 'Pool Visualizer™',
-      subtitle: 'AR Vizualizacija',
-      description: 'Revolucionarna AR tehnologija za vizualizaciju bazena u stvarnom prostoru.',
-      image: '🏊',
-      gradient: true,
-      features: ['AR Tehnologija', 'Alat perspektive', 'Pregled uživo'],
-      action: () => onNavigate('visualizer'),
-      badge: 'GLAVNI PROIZVOD'
-    },
-    {
       icon: FileText,
       title: 'Radni Nalozi',
       subtitle: 'Upravljanje poslovima',

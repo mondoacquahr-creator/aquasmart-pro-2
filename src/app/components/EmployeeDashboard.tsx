@@ -726,7 +726,7 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
     }
     moreItems.push({ id: 'products', icon: Package, label: 'Proizvodi', desc: 'Katalog proizvoda', color: '#5CE1E6' });
     moreItems.push({ id: 'stores', icon: MapPin, label: 'Prodajna Mjesta', desc: 'Lokacije trgovina', color: '#FFB020' });
-    if (perms.visualizer) {
+    if (false && perms.visualizer) { // vizualizator je privremeno isključen u Pool Care aplikaciji
       moreItems.push({ id: 'visualizer', icon: Eye, label: 'Pool Visualizer', desc: 'AR vizualizacija bazena', color: '#5CE1E6' });
     }
     moreItems.push({ id: 'profile', icon: User, label: 'Profil', desc: 'Tvoje informacije', color: '#5CE1E6' });

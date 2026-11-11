@@ -22,6 +22,8 @@ import { WaterBackground } from './components/WaterBackground';
 import { MemberPortal } from './components/MemberPortal';
 import { T } from './lib/theme';
 
+const VISUALIZER_ENABLED = false;
+
 type Page = 'home' | 'visualizer' | 'promo' | 'analysis' | 'products' | 'login' | 'register' | 'member-register' | 'free-portal' | 'pro-portal' | 'member-portal' | 'water-analysis' | 'stores' | 'guest-analysis' | 'shop';
 
 // Main App Component - Updated with ProductShowcase
@@ -97,7 +99,12 @@ export default function App() {
     setCurrentPage('shop');
   };
 
+  useEffect(() => {
+    if (currentPage === 'visualizer' && !VISUALIZER_ENABLED) setCurrentPage('home');
+  }, [currentPage]);
+
   const handleNavigate = (page: Page) => {
+    if (page === 'visualizer' && !VISUALIZER_ENABLED) page = 'home';
     if (page === 'home') {
       setReturnPage(null);
     } else if (currentPage === 'pro-portal') {
@@ -218,7 +225,8 @@ export default function App() {
           {currentPage === 'member-register' && <RegisterPage initialType="member" onBack={() => setCurrentPage('home')} onRegisterSuccess={handleRegisterSuccess} onGoToLogin={() => setCurrentPage('login')} />}
           {currentPage === 'free-portal' && <FreePortal onBack={() => setCurrentPage('home')} onGuestAnalysis={() => setCurrentPage('guest-analysis')} onOpenShop={openShop} onMemberArea={() => setCurrentPage(localStorage.getItem('userRole') === 'member' ? 'member-portal' : 'member-register')} />}
           {currentPage === 'guest-analysis' && <GuestAnalysis onBack={() => setCurrentPage('free-portal')} onRegister={() => setCurrentPage('member-register')} onRegisterMember={() => setCurrentPage('member-register')} onLogin={() => setCurrentPage('login')} onOpenShop={openShop} />}
-          {currentPage === 'visualizer' && <VisualizerPage onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} />}
+          {/* AI vizualizator je privremeno isključen (prelazi na glavnu stranicu Mondo Acque) */}
+          {VISUALIZER_ENABLED && currentPage === 'visualizer' && <VisualizerPage onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} />}
           {currentPage === 'promo' && <ProductShowcase onClose={() => setCurrentPage('home')} onNavigate={(page) => handleNavigate(page)} />}
           {currentPage === 'analysis' && <WaterAnalysis onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} onRegisterMember={() => setCurrentPage('member-register')} onLogin={() => setCurrentPage('login')} />}
           {currentPage === 'water-analysis' && <WaterAnalysis onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} onRegisterMember={() => setCurrentPage('member-register')} onLogin={() => setCurrentPage('login')} />}
