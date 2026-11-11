@@ -4,6 +4,8 @@ import { MemberChip } from './MemberChip';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'motion/react';
 import imgPrije from '../../imports/mondo-prije.jpg';
+// Isti bazen prije čišćenja (AI obrada fotografije, Supabase javna pohrana)
+const IMG_PRIJE_CISCENJA = 'https://sryuogkaebeznmadchcr.supabase.co/storage/v1/object/public/pool-catalog/site/poolcare-prije-ciscenja.jpg';
 import imgPoslijeDan from '../../imports/mondo-poslije-dan.jpg';
 import imgPoslijeNoc from '../../imports/mondo-poslije-noc.jpg';
 import {
@@ -395,7 +397,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
   useEffect(() => {
     const preload = (src: string) => { const img = new Image(); img.src = src; };
     preload(imgPoslijeDan);
-    preload(imgPoslijeNoc);
+    preload(IMG_PRIJE_CISCENJA);
   }, []);
 
   // Slider pointer handlers
@@ -1107,18 +1109,128 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
           </div>
         </section>
 
-        {/* Fotografija: prekid između sekcija (AI vizualizator je premješten na glavnu stranicu Mondo Acque) */}
+        {/* Prije i poslije čišćenja (klizač) */}
         <section className="max-w-7xl mx-auto px-4 md:px-8 pb-24">
-          <div className="max-w-[1100px] mx-auto rounded-3xl overflow-hidden" style={{ border: '1px solid rgba(120,220,255,0.12)', background: '#041820' }}>
-            <img
-              src={imgPoslijeNoc}
-              alt="Bazen u večernjem svjetlu"
-              className="w-full h-auto block"
-              loading="lazy"
-              decoding="async"
-              width={1450}
-              height={670}
-            />
+          <div className="max-w-[1100px] mx-auto">
+            {/* Before/After slider card */}
+            <div
+              ref={cardRef}
+              className="viz-card w-full rounded-3xl overflow-hidden relative select-none"
+              style={{
+                border: '1px solid rgba(120,220,255,0.12)',
+                cursor: isDragging ? 'grabbing' : 'ew-resize',
+                touchAction: 'pan-y',
+                userSelect: 'none',
+                background: '#041820',
+              }}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+            >
+              {/* AFTER – day image (base layer) */}
+              <img
+                src={imgPoslijeDan}
+                alt="Bazen poslije čišćenja"
+                className="absolute inset-0 w-full h-full viz-img pointer-events-none"
+                draggable={false}
+                loading="lazy"
+                decoding="async"
+                width={1450}
+                height={670}
+                              />
+
+              {/* BEFORE image – top layer, clipped by slider */}
+              <img
+                src={IMG_PRIJE_CISCENJA}
+                alt="Bazen prije čišćenja"
+                className="absolute inset-0 w-full h-full viz-img pointer-events-none"
+                draggable={false}
+                loading="lazy"
+                decoding="async"
+                width={1450}
+                height={670}
+                style={{
+                  clipPath: `inset(0 ${100 - sliderPos}% 0 0)`,
+                  transition: sliderClipTrans,
+                }}
+              />
+
+              {/* Cyan divider line */}
+              <div
+                className="absolute inset-y-0 pointer-events-none"
+                style={{
+                  left: `${sliderPos}%`,
+                  width: 2,
+                  transform: 'translateX(-50%)',
+                  background: CYAN,
+                  boxShadow: `0 0 12px ${CYAN}99`,
+                  transition: sliderPosTrans,
+                }}
+              />
+
+              {/* Drag handle */}
+              <div
+                className="absolute pointer-events-none flex items-center justify-center"
+                style={{
+                  left: `${sliderPos}%`,
+                  top: '50%',
+                  transform: 'translateX(-50%) translateY(-50%)',
+                  width: 38,
+                  height: 38,
+                  borderRadius: '50%',
+                  background: '#fff',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.45), 0 0 0 2.5px rgba(92,225,230,0.4)',
+                  transition: sliderPosTrans,
+                }}
+              >
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                  <path
+                    d="M1 5H13M13 5L10 2M13 5L10 8M1 5L4 2M1 5L4 8"
+                    stroke="#041820"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+
+              {/* Labels */}
+              <div className="absolute bottom-3 left-3 pointer-events-none">
+                <span
+                  className="text-xs font-bold px-2.5 py-1 rounded-full"
+                  style={{ background: 'rgba(0,0,0,0.6)', color: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(4px)' }}
+                >
+                  Prije
+                </span>
+              </div>
+              <div className="absolute bottom-3 right-3 pointer-events-none">
+                <span
+                  className="text-xs font-bold px-2.5 py-1 rounded-full"
+                  style={{ background: 'rgba(0,0,0,0.6)', color: '#fff', backdropFilter: 'blur(4px)' }}
+                >
+                  Poslije
+                </span>
+              </div>
+
+              {/* Accessible range input (keyboard navigation) */}
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+                value={Math.round(sliderPos)}
+                onChange={(e) => {
+                  setAnimating(false);
+                  draggingRef.current = false;
+                  setIsDragging(false);
+                  setSliderPos(Number(e.target.value));
+                }}
+                className="sr-only"
+                aria-label="Pomicanje granice između slike Prije i Poslije"
+              />
+            </div>
+
           </div>
         </section>
 
