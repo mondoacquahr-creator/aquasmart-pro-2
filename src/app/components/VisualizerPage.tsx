@@ -7,9 +7,10 @@ import { WaterBackground } from './WaterBackground';
 
 interface VisualizerPageProps {
   onBack: () => void;
+  onOpenShop?: () => void;
 }
 
-export function VisualizerPage({ onBack }: VisualizerPageProps) {
+export function VisualizerPage({ onBack, onOpenShop }: VisualizerPageProps) {
   const [mode, setMode] = useState<'ai' | 'manual'>('ai');
 
   return (
@@ -59,7 +60,7 @@ export function VisualizerPage({ onBack }: VisualizerPageProps) {
       </div>
 
       {mode === 'ai' ? (
-        <AIVisualizer onManual={() => setMode('manual')} />
+        <AIVisualizer onManual={() => setMode('manual')} onOpenShop={onOpenShop} />
       ) : (
         <VisualizerApp />
       )}

@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Camera, Upload, ChevronLeft, RotateCcw, Download, Share2, Send, Loader2, Image as ImageIcon } from 'lucide-react';
 import { getCatalog, visualize, sendInquiry } from '../lib/vizApi';
 import type { Pool } from '../lib/vizApi';
+import { EquipmentSuggestionCard } from './EquipmentSuggestionCard';
 import { T } from '../lib/theme';
 
 interface Rect {
@@ -34,7 +35,7 @@ type Step = 1 | 2 | 3 | 4;
 const cardStyle = { background: T.cardBg, border: T.cardBorder };
 const errorStyle = { background: 'rgba(255,59,48,0.1)', border: '1px solid rgba(255,59,48,0.3)', color: '#FF3B30' };
 
-export function AIVisualizer({ onManual }: { onManual: () => void }) {
+export function AIVisualizer({ onManual, onOpenShop }: { onManual: () => void; onOpenShop?: () => void }) {
   const [step, setStep] = useState<Step>(1);
   useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [step]);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
@@ -586,6 +587,10 @@ export function AIVisualizer({ onManual }: { onManual: () => void }) {
               <p className="text-xs text-center" style={{ color: T.faint }}>
                 Preostalo danas: {result.remaining}
               </p>
+            )}
+
+            {selectedPool?.dimensions && (
+              <EquipmentSuggestionCard dimensions={selectedPool.dimensions} shape={selectedPool.shape} onOpenShop={onOpenShop} />
             )}
 
             {/* Action buttons */}

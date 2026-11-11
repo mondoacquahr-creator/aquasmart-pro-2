@@ -208,7 +208,7 @@ export default function App() {
           {currentPage === 'member-register' && <RegisterPage initialType="member" onBack={() => setCurrentPage('home')} onRegisterSuccess={handleRegisterSuccess} onGoToLogin={() => setCurrentPage('login')} />}
           {currentPage === 'free-portal' && <FreePortal onBack={() => setCurrentPage('home')} onGuestAnalysis={() => setCurrentPage('guest-analysis')} onOpenShop={openShop} onMemberArea={() => setCurrentPage(localStorage.getItem('userRole') === 'member' ? 'member-portal' : 'member-register')} />}
           {currentPage === 'guest-analysis' && <GuestAnalysis onBack={() => setCurrentPage('free-portal')} onRegister={() => setCurrentPage('member-register')} onRegisterMember={() => setCurrentPage('member-register')} onLogin={() => setCurrentPage('login')} onOpenShop={openShop} />}
-          {currentPage === 'visualizer' && <VisualizerPage onBack={() => setCurrentPage(returnPage || 'home')} />}
+          {currentPage === 'visualizer' && <VisualizerPage onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} />}
           {currentPage === 'promo' && <ProductShowcase onClose={() => setCurrentPage('home')} onNavigate={(page) => handleNavigate(page)} />}
           {currentPage === 'analysis' && <WaterAnalysis onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} onRegisterMember={() => setCurrentPage('member-register')} onLogin={() => setCurrentPage('login')} />}
           {currentPage === 'water-analysis' && <WaterAnalysis onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} onRegisterMember={() => setCurrentPage('member-register')} onLogin={() => setCurrentPage('login')} />}
