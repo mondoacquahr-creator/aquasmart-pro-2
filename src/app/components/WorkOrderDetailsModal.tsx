@@ -10,8 +10,9 @@ import { useEffect, useRef, useState } from 'react';
 import {
   X, Save, Printer, Camera, Wrench, Beaker, Droplets, Settings,
   CheckCircle, Plus, Trash2, DollarSign, FileText,
-  AlertTriangle, Package, Images, Loader2, ChevronLeft, ChevronRight
+  AlertTriangle, Package, Images, Loader2, ChevronLeft, ChevronRight, Clock, Play, Square
 } from 'lucide-react';
+import { fmtClock, itemDurations, itemTimeLabel, totalWorkLabel } from '../lib/workTime';
 
 interface WorkOrderDetailsModalProps {
   order: {
@@ -33,9 +34,13 @@ interface WorkOrderDetailsModalProps {
     photos?: Photo[];
     waterAnalysis?: WaterAnalysis;
     automationData?: AutomationData;
+    workStartedAt?: string;
+    workEndedAt?: string;
   };
   onClose: () => void;
   onSave: (updatedOrder: any) => void;
+  // Spremanje bez zatvaranja prozora (npr. pri pokretanju rada na terenu)
+  onPersist?: (updatedOrder: any) => void;
   clients?: { id: string; name: string; location: string }[];
   employees?: { id: number | string; name: string }[];
   hidePrices?: boolean;
@@ -48,6 +53,7 @@ interface MaintenanceTask {
   name: string;
   completed: boolean;
   cost: number;
+  completedAt?: string;
 }
 
 interface Service {
@@ -56,6 +62,7 @@ interface Service {
   description: string;
   cost: number;
   completed?: boolean;
+  completedAt?: string;
 }
 
 interface ProductUsed {
@@ -195,7 +202,7 @@ async function compressPhoto(file: File): Promise<Blob> {
 }
 
 export function WorkOrderDetailsModal({
-  order, onClose, onSave, clients, employees,
+  order, onClose, onSave, onPersist, clients, employees,
   hidePrices = false, readOnlyAssignee = false,
   warehouseProducts
 }: WorkOrderDetailsModalProps) {
@@ -374,17 +381,50 @@ export function WorkOrderDetailsModal({
     resetTaskForm();
   };
 
+  // Označavanje stavke bilježi vrijeme; poništavanje briše vrijeme.
+  const stamp = <I extends { completed?: boolean; completedAt?: string }>(item: I): I => {
+    if (item.completed) {
+      const { completedAt: _drop, ...rest } = item;
+      return { ...(rest as I), completed: false };
+    }
+    return { ...item, completed: true, completedAt: new Date().toISOString() };
+  };
+
   const toggleTask = (id: number) => {
-    setMaintenanceTasks(maintenanceTasks.map(task =>
-      task.id === id ? { ...task, completed: !task.completed } : task
-    ));
+    setMaintenanceTasks(maintenanceTasks.map(task => task.id === id ? stamp(task) : task));
   };
 
   const toggleService = (id: number) => {
-    setServices(services.map(service =>
-      service.id === id ? { ...service, completed: !service.completed } : service
-    ));
+    setServices(services.map(service => service.id === id ? stamp(service) : service));
   };
+
+  // Evidencija vremena rada
+  const [nowTick, setNowTick] = useState(Date.now());
+  const workRunning = !!editedOrder.workStartedAt && !editedOrder.workEndedAt;
+  useEffect(() => {
+    if (!workRunning) return;
+    const t = setInterval(() => setNowTick(Date.now()), 30000);
+    return () => clearInterval(t);
+  }, [workRunning]);
+  const durations = itemDurations([
+    { prefix: 's', items: services },
+    { prefix: 't', items: maintenanceTasks },
+  ], editedOrder.workStartedAt);
+
+  const startWork = () => {
+    const started = {
+      ...editedOrder,
+      workStartedAt: new Date().toISOString(),
+      workEndedAt: undefined,
+      status: editedOrder.status === 'completed' ? editedOrder.status : 'active' as const,
+    };
+    setEditedOrder(started);
+    setNowTick(Date.now());
+    // Početak se odmah sprema, da se ne izgubi ako se prozor zatvori bez „Spremi”.
+    onPersist?.({ ...order, workStartedAt: started.workStartedAt, workEndedAt: undefined, status: started.status });
+  };
+
+  const finishWork = () => handleSave({ workEndedAt: new Date().toISOString() });
 
   const submitProduct = () => {
     if (!newProductWarehouseId || !newProductQty || parseFloat(newProductQty) <= 0) {
@@ -597,7 +637,7 @@ export function WorkOrderDetailsModal({
 
   const totals = calculateTotals();
 
-  const handleSave = () => {
+  const handleSave = (extra: { workEndedAt?: string } = {}) => {
     if (Object.values(photoUploadStates).some(state => state === 'uploading')) return;
     if (Object.values(photoUploadStates).some(state => state === 'failed')) {
       setActiveTab('photos');
@@ -609,8 +649,10 @@ export function WorkOrderDetailsModal({
       return;
     }
     setSaveError('');
+    if (extra.workEndedAt) setEditedOrder({ ...editedOrder, ...extra });
     const updatedOrder = {
       ...editedOrder,
+      ...extra,
       maintenanceTasks,
       services,
       productsUsed,
@@ -871,7 +913,7 @@ export function WorkOrderDetailsModal({
 
               <div className="flex flex-col items-end gap-1">
                 <button
-                  onClick={handleSave}
+                  onClick={() => handleSave()}
                   disabled={isUploadingPhotos}
                   className="px-4 py-2 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2"
                   style={{ background: T.accent, color: '#000000', opacity: isUploadingPhotos ? 0.65 : 1 }}
@@ -915,6 +957,33 @@ export function WorkOrderDetailsModal({
               className="h-full"
               style={{ background: T.accent }}
             />
+          </div>
+
+          {/* Vrijeme rada */}
+          <div className="flex flex-wrap items-center justify-between gap-2 mt-3 text-sm">
+            {!editedOrder.workStartedAt ? (
+              <>
+                <span style={{ color: 'rgba(255,255,255,0.6)' }}>Vrijeme rada se mjeri od početka rada.</span>
+                <button onClick={startWork} className="min-h-[40px] px-4 py-2 rounded-xl font-bold flex items-center gap-2" style={{ background: '#2EFF88', color: '#000' }}>
+                  <Play className="w-4 h-4" /> Započni rad
+                </button>
+              </>
+            ) : workRunning ? (
+              <>
+                <span style={{ color: 'rgba(255,255,255,0.8)' }}>
+                  <Clock className="w-4 h-4 inline -mt-0.5 mr-1" style={{ color: '#2EFF88' }} />
+                  Rad u tijeku od {fmtClock(editedOrder.workStartedAt)} · <strong style={{ color: '#2EFF88' }}>{totalWorkLabel(editedOrder.workStartedAt, undefined, nowTick)}</strong>
+                </span>
+                <button onClick={finishWork} disabled={isUploadingPhotos} className="min-h-[40px] px-4 py-2 rounded-xl font-bold flex items-center gap-2" style={{ background: '#FFB020', color: '#000', opacity: isUploadingPhotos ? 0.65 : 1 }}>
+                  <Square className="w-4 h-4" /> Završi rad
+                </button>
+              </>
+            ) : (
+              <span style={{ color: 'rgba(255,255,255,0.8)' }}>
+                <Clock className="w-4 h-4 inline -mt-0.5 mr-1" style={{ color: '#5CE1E6' }} />
+                Rad: {fmtClock(editedOrder.workStartedAt)} – {fmtClock(editedOrder.workEndedAt)} · ukupno <strong style={{ color: '#5CE1E6' }}>{totalWorkLabel(editedOrder.workStartedAt, editedOrder.workEndedAt)}</strong>
+              </span>
+            )}
           </div>
         </div>
 
@@ -1062,6 +1131,9 @@ export function WorkOrderDetailsModal({
                         <div className="flex-1">
                           <h4 className="font-semibold">{service.name}</h4>
                           <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{service.description}</p>
+                          {service.completed && service.completedAt && (
+                            <p className="text-xs mt-1" style={{ color: '#2EFF88' }}>✓ {itemTimeLabel(service, `s${service.id}`, durations)}</p>
+                          )}
                         </div>
                       </div>
 
@@ -1185,8 +1257,11 @@ export function WorkOrderDetailsModal({
                           {task.completed && <CheckCircle className="w-4 h-4" style={{ color: '#000' }} />}
                         </button>
 
-                        <span className="flex-1" style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
-                          {task.name}
+                        <span className="flex-1">
+                          <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>{task.name}</span>
+                          {task.completed && task.completedAt && (
+                            <span className="block text-xs mt-1" style={{ color: '#2EFF88' }}>✓ {itemTimeLabel(task, `t${task.id}`, durations)}</span>
+                          )}
                         </span>
                       </div>
 

@@ -881,6 +881,16 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
               }
               setSelectedWorkOrder(null);
             }}
+            onPersist={async (updatedOrder) => {
+              const exists = workOrders.some(o => o.id === updatedOrder.id);
+              updateWorkOrders(exists
+                ? workOrders.map(o => o.id === updatedOrder.id ? updatedOrder : o)
+                : [...workOrders, updatedOrder]);
+              if (live) {
+                try { await api.post('work-orders', updatedOrder); }
+                catch { setSyncError('Početak rada nije spremljen na poslužitelj. Provjerite vezu i pritisnite Spremi.'); }
+              }
+            }}
           />
         )}
       </AnimatePresence>

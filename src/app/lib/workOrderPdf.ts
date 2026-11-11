@@ -1,16 +1,22 @@
+import { fmtClock, itemDurations, itemTimeLabel, totalWorkLabel } from "./workTime";
+
 type WorkOrderStatus = "active" | "pending" | "completed";
 
 interface PrintableService {
+  id?: number | string;
   name: string;
   description?: string;
   cost?: number;
   completed?: boolean;
+  completedAt?: string;
 }
 
 interface PrintableTask {
+  id?: number | string;
   name: string;
   cost?: number;
   completed: boolean;
+  completedAt?: string;
 }
 
 interface PrintableProduct {
@@ -64,6 +70,8 @@ export interface WorkOrderPrintData {
     assignee?: string;
     status: WorkOrderStatus;
     dueDate?: string;
+    workStartedAt?: string;
+    workEndedAt?: string;
   };
   companyName?: string;
   services: PrintableService[];
@@ -222,17 +230,30 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
     completed: "ZAVRŠENO",
   };
 
+  // Vrijeme rada (ne ispisuje se na ponudi za plaćanje)
+  const showTimes = !data.payment && [...completedServices, ...completedTasks].some((i) => i.completedAt);
+  const durations = itemDurations([
+    { prefix: "s", items: services.map((i, n) => ({ ...i, id: i.id ?? n })) },
+    { prefix: "t", items: maintenanceTasks.map((i, n) => ({ ...i, id: i.id ?? n })) },
+  ], order.workStartedAt);
+  const timeOf = (item: any, key: string) => escapeHtml(itemTimeLabel(item, key, durations) || "—");
+  const workTotal = !data.payment && order.workStartedAt
+    ? `${fmtClock(order.workStartedAt)} – ${order.workEndedAt ? fmtClock(order.workEndedAt) : "u tijeku"} · ${totalWorkLabel(order.workStartedAt, order.workEndedAt)}`
+    : "";
+
   const serviceRows = completedServices.map((item) => {
     const row = [
       escapeHtml(item.name),
       escapeHtml(item.description || "—"),
     ];
+    if (showTimes) row.push(timeOf(item, `s${item.id ?? services.indexOf(item)}`));
     if (!hidePrices) row.push(escapeHtml(formatMoney(item.cost)));
     return row;
   });
 
   const taskRows = completedTasks.map((item) => {
     const row = [escapeHtml(item.name)];
+    if (showTimes) row.push(timeOf(item, `t${item.id ?? maintenanceTasks.indexOf(item)}`));
     if (!hidePrices) row.push(escapeHtml(formatMoney(item.cost)));
     return row;
   });
@@ -495,18 +516,19 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
     <div><dt>Lokacija</dt><dd>${escapeHtml(order.location || "—")}</dd></div>
     <div><dt>Izvršitelj</dt><dd>${escapeHtml(order.assignee || "—")}</dd></div>
     <div><dt>Status</dt><dd>${escapeHtml(statusLabels[order.status] || order.status)}</dd></div>
+    ${workTotal ? `<div><dt>Vrijeme rada</dt><dd>${escapeHtml(workTotal)}</dd></div>` : ""}
   </dl>
 
   ${section("Izvršene usluge", table(
-    hidePrices ? ["Naziv", "Opis"] : ["Naziv", "Opis", "Iznos"],
+    ["Naziv", "Opis", ...(showTimes ? ["Vrijeme"] : []), ...(hidePrices ? [] : ["Iznos"])],
     serviceRows,
-    hidePrices ? [] : [2],
+    hidePrices ? [] : [showTimes ? 3 : 2],
   ))}
 
   ${section("Zadaci održavanja", table(
-    hidePrices ? ["Naziv"] : ["Naziv", "Iznos"],
+    ["Naziv", ...(showTimes ? ["Vrijeme"] : []), ...(hidePrices ? [] : ["Iznos"])],
     taskRows,
-    hidePrices ? [] : [1],
+    hidePrices ? [] : [showTimes ? 2 : 1],
   ))}
 
   ${section("Utrošena kemija", table(

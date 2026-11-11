@@ -1572,6 +1572,12 @@ export function EmployerDashboard({ onBack, onNavigate }: EmployerDashboardProps
               updateWorkOrders(updated);
               setSelectedWorkOrder(null);
             }}
+            onPersist={(updatedOrder) => {
+              const exists = workOrders.some(o => o.id === updatedOrder.id);
+              updateWorkOrders(exists
+                ? workOrders.map(o => o.id === updatedOrder.id ? updatedOrder : o)
+                : [...workOrders, updatedOrder]);
+            }}
           />
         )}
       </AnimatePresence>
