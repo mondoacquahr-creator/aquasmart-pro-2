@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { equipmentSpec } from '../lib/equipmentSpec';
 import { motion } from 'motion/react';
-import { Droplets, LogOut, RefreshCw, ChevronDown, ChevronUp, Trash2, Save, CheckCircle, AlertTriangle, XCircle, Phone, MapPin, Calendar, Wrench, BarChart2, User, Home, FlaskConical, Package, Star, MessageCircle, Mail } from 'lucide-react';
+import { Droplets, LogOut, RefreshCw, ChevronDown, ChevronUp, Trash2, Save, CheckCircle, AlertTriangle, XCircle, Phone, MapPin, Calendar, Wrench, BarChart2, User, Home, FlaskConical, Package, Star, MessageCircle, Mail, ShoppingCart } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { memberApi, MemberData, MemberPool, MemberProfile, MemberVisit } from '../lib/memberApi';
 import { MONDO_CONTACT } from '../lib/mondoShop';
@@ -199,6 +199,18 @@ function OverviewTab({ data, onRequestVisit, onNewAnalysis, onNavigate }: {
     <div className="space-y-4">
       <h2 className="text-xl font-bold">Dobro došli, {name.split(' ')[0]}!</h2>
 
+      {/* Webshop */}
+      <button
+        onClick={() => onNavigate('products')}
+        className="w-full py-4 rounded-2xl text-sm font-bold text-black flex items-center justify-center gap-2 transition-all hover:opacity-90"
+        style={{ background: T.accent, boxShadow: '0 6px 20px rgba(79,195,240,0.25)' }}
+      >
+        <ShoppingCart className="w-4 h-4" />
+        {(data as any).profile?.planActive
+          ? 'Webshop – 15 % popusta na kemiju i opremu'
+          : 'Webshop – 10 % popusta na kemiju i opremu'}
+      </button>
+
       {/* Latest analysis */}
       <Card>
         <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: T.faint }}>Zadnja analiza</p>
@@ -281,16 +293,6 @@ function OverviewTab({ data, onRequestVisit, onNewAnalysis, onNavigate }: {
         </ul>
       </Card>
 
-      {/* Webshop */}
-      <button
-        onClick={() => onNavigate('products')}
-        className="w-full py-4 rounded-2xl text-sm font-bold text-black transition-all hover:opacity-90"
-        style={{ background: T.accent, boxShadow: '0 6px 20px rgba(79,195,240,0.25)' }}
-      >
-        {(data as any).profile?.planActive
-          ? 'Webshop – 15 % popusta na kemiju i opremu (+5 % iznad 2.000 €)'
-          : 'Webshop – 10 % popusta na kemiju i opremu (+5 % iznad 2.000 €)'}
-      </button>
     </div>
   );
 }
@@ -928,6 +930,11 @@ export function MemberPortal({ onLogout, onNavigate }: MemberPortalProps) {
               </div>
             </div>
             <div className="flex items-center gap-2">
+            <button onClick={() => onNavigate('products')}
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
+              style={{ background: T.accent, color: '#000' }} aria-label="Webshop">
+              <ShoppingCart className="w-4 h-4" /> <span className="hidden sm:inline">Webshop</span>
+            </button>
             <button onClick={() => onNavigate('home')}
               className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:bg-white/10"
               style={{ border: '1px solid rgba(255,255,255,0.12)', color: T.muted }} aria-label="Početna">
