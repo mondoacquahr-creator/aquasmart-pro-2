@@ -183,26 +183,6 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
         {/* Form Card */}
         <div className="p-8 rounded-[32px] backdrop-blur-xl" style={{ background: T.cardBg, border: T.cardBorder, boxShadow: T.cardShadow }}>
 
-          {/* Quick Demo - pro only */}
-          {!isMember && (
-            <>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleDemoRegister}
-                disabled={isLoading}
-                className="w-full py-4 text-sm font-medium rounded-2xl transition-all mb-6 hover:bg-white/10"
-                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.85)' }}
-              >
-                {isLoading ? 'Izrada računa...' : '⚡ Brza demo registracija'}
-              </motion.button>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }}></div>
-                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>ILI PUNA REGISTRACIJA</span>
-                <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }}></div>
-              </div>
-            </>
-          )}
 
           {/* MEMBER FORM */}
           {isMember && (
