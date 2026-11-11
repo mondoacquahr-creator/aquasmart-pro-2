@@ -26,6 +26,8 @@ const ACCENT = 'linear-gradient(90deg, #7FDBFF 0%, #4FC3F0 45%, #1E88E5 100%)';
 const CARD_BG = 'rgba(10,40,52,0.55)';
 const CARD_BORDER = '1px solid rgba(120,220,255,0.12)';
 const CYAN = '#5CE1E6';
+// Glavna stranica Mondo Acqua (bazeni). Nakon selidbe na domenu promijeniti u 'https://www.mondo-acqua.hr/'.
+const MAIN_SITE = '/mondo-web/';
 
 const readingBars = [
   {
@@ -614,6 +616,13 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
               </div>
 
               {/* Existing text links */}
+              <a
+                href={MAIN_SITE + '#bazeni'}
+                className="px-4 py-2 text-sm rounded-xl transition-all hover:bg-white/8"
+                style={{ color: 'rgba(255,255,255,0.75)' }}
+              >
+                Bazeni
+              </a>
               {[
                 {
                   label: t.nav.odrzavanje,
@@ -791,6 +800,13 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                     ))}
                   </div>
 
+                  <a
+                    href={MAIN_SITE}
+                    className="block mx-1 mb-3 px-4 py-3 text-sm rounded-2xl"
+                    style={{ background: 'rgba(92,225,230,0.08)', color: 'rgba(255,255,255,0.85)' }}
+                  >
+                    Mondo Acqua bazeni →
+                  </a>
                   {/* Auth buttons */}
                   <div className="flex gap-2 px-1">
                     <button
@@ -1442,7 +1458,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                     <Phone className="w-3.5 h-3.5" />
                     +385 95 208 7321
                   </a>
-                  <a href="https://www.mondo-acqua.hr" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs transition-colors hover:text-white" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  <a href={MAIN_SITE} className="flex items-center gap-2 text-xs transition-colors hover:text-white" style={{ color: 'rgba(255,255,255,0.5)' }}>
                     <Building className="w-3.5 h-3.5" />
                     www.mondo-acqua.hr
                   </a>
