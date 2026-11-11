@@ -389,6 +389,14 @@ export interface TreatmentCost {
   totalHRK: number;
 }
 
+// Zamjenski proizvodi (npr. tekući pH Minus umjesto granula): ne ulaze u košaricu automatski, kupac ih može odabrati.
+export function calculateAlternativeCost(recommendations: any[]): TreatmentCost['items'] {
+  const alts = (recommendations || [])
+    .filter((r: any) => String(r?.productName || '').toLowerCase().includes('(alternativa)'))
+    .map((r: any) => ({ ...r, productName: String(r.productName).replace(/\s*\(alternativa\)/i, '') }));
+  return alts.length ? calculateTreatmentCost(alts).items : [];
+}
+
 export function calculateTreatmentCost(recommendations: any[]): TreatmentCost {
   const items: TreatmentCost['items'] = [];
   let totalEUR = 0;

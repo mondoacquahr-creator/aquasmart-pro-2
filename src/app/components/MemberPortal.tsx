@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { equipmentSpec } from '../lib/equipmentSpec';
 import { motion } from 'motion/react';
-import { Droplets, LogOut, RefreshCw, ChevronDown, ChevronUp, Trash2, Save, CheckCircle, AlertTriangle, XCircle, Phone, MapPin, Calendar, Wrench, BarChart2, User, Home, FlaskConical, Package, Star } from 'lucide-react';
+import { Droplets, LogOut, RefreshCw, ChevronDown, ChevronUp, Trash2, Save, CheckCircle, AlertTriangle, XCircle, Phone, MapPin, Calendar, Wrench, BarChart2, User, Home, FlaskConical, Package, Star, MessageCircle, Mail } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { memberApi, MemberData, MemberPool, MemberProfile, MemberVisit } from '../lib/memberApi';
 import { MONDO_CONTACT } from '../lib/mondoShop';
 import { authService } from '../lib/auth';
+import { supabase } from '../lib/supabase';
 import { T } from '../lib/theme';
 import { WaterBackground } from './WaterBackground';
 
@@ -154,20 +155,23 @@ function MondoCareCard({ profile, pool, planActive, planValidUntil }: { profile?
           </li>
         ))}
       </ul>
-      <div className="flex gap-2">
+      <p className="text-sm font-semibold text-white mb-2">Zatraži Mondo Care</p>
+      <div className="space-y-2">
         <button
           onClick={handleWhatsApp}
-          className="flex-1 py-3 rounded-xl text-sm font-bold text-black transition-all hover:opacity-90"
-          style={{ background: 'linear-gradient(90deg, #0ABFCF 0%, #5CE1E6 100%)' }}
+          className="w-full py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-all hover:opacity-90"
+          style={{ background: '#25D366', color: '#fff' }}
         >
-          Zatraži Mondo Care
+          <MessageCircle className="w-4 h-4" />
+          Pošalji zahtjev WhatsAppom
         </button>
         <button
           onClick={handleEmail}
-          className="px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-white/8"
+          className="w-full py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-all hover:bg-white/8"
           style={{ border: `1px solid rgba(92,225,230,0.3)`, color: T.cyan }}
         >
-          E-mailom
+          <Mail className="w-4 h-4" />
+          Pošalji zahtjev e-mailom
         </button>
       </div>
       <p className="text-xs mt-3 leading-relaxed" style={{ color: T.faint }}>
@@ -471,6 +475,10 @@ function PoolTab({ data, onSaved }: { data: MemberData; onSaved: () => void }) {
         {sel('poolType', ['Ukopani', 'Montažni', 'Keramički', 'Kompozitni', 'Betonski', 'Ostalo'])}
       </div>
       <div>
+        <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>Izvedba (cirkulacija)</label>
+        {sel('circulation', ['Skimer', 'Preljevni'])}
+      </div>
+      <div>
         <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>Filter</label>
         {sel('filterType', ['Pješčani', 'Stakleno punjenje', 'Uložak', 'Ostalo'])}
       </div>
@@ -600,6 +608,33 @@ function ProfileTab({ data, onSaved, onLogout, onDeleted }: {
   const [profileError, setProfileError] = useState('');
   const [confirmDeleteAccount, setConfirmDeleteAccount] = useState(false);
   const [deletingAccount, setDeletingAccount] = useState(false);
+  const [currentEmail, setCurrentEmail] = useState<string>(user?.email || (data.profile as any)?.email || '');
+  const [emailEdit, setEmailEdit] = useState(false);
+  const [newEmail, setNewEmail] = useState('');
+  const [emailPassword, setEmailPassword] = useState('');
+  const [emailSaving, setEmailSaving] = useState(false);
+  const [emailMsg, setEmailMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  const handleEmailChange = async () => {
+    setEmailMsg(null);
+    if (!newEmail.trim() || !emailPassword) { setEmailMsg({ ok: false, text: 'Upišite novu e-mail adresu i trenutnu lozinku.' }); return; }
+    setEmailSaving(true);
+    try {
+      const res = await memberApi.changeMemberEmail(newEmail.trim(), emailPassword);
+      const updated = res?.email || newEmail.trim().toLowerCase();
+      try {
+        const raw = localStorage.getItem('aquasmart_auth');
+        if (raw) localStorage.setItem('aquasmart_auth', JSON.stringify({ ...JSON.parse(raw), email: updated }));
+      } catch { /* ignore */ }
+      try { await supabase.auth.refreshSession(); } catch { /* ignore */ }
+      setCurrentEmail(updated);
+      setEmailEdit(false); setNewEmail(''); setEmailPassword('');
+      setEmailMsg({ ok: true, text: 'E-mail je promijenjen. Ubuduće se prijavljujete novom adresom.' });
+    } catch (err: any) {
+      setEmailMsg({ ok: false, text: err?.message || 'Promjena e-maila nije uspjela.' });
+    }
+    setEmailSaving(false);
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -625,6 +660,43 @@ function ProfileTab({ data, onSaved, onLogout, onDeleted }: {
 
   return (
     <form onSubmit={handleSave} className="space-y-4">
+      <div>
+        <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>E-mail (za prijavu)</label>
+        <div className="flex items-center gap-2">
+          <div className="flex-1 min-w-0 px-4 py-4 rounded-2xl text-white truncate" style={{ ...inputStyle, opacity: 0.85 }}>{currentEmail || '–'}</div>
+          {!emailEdit && (
+            <button type="button" onClick={() => { setEmailEdit(true); setEmailMsg(null); }}
+              className="shrink-0 px-4 py-4 rounded-2xl text-sm font-semibold transition-all hover:bg-white/5"
+              style={{ border: `1px solid rgba(92,225,230,0.3)`, color: T.cyan }}>
+              Promijeni
+            </button>
+          )}
+        </div>
+        {emailEdit && (
+          <div className="mt-3 p-4 rounded-2xl space-y-3" style={{ background: 'rgba(92,225,230,0.05)', border: '1px solid rgba(92,225,230,0.15)' }}>
+            <input type="email" value={newEmail} onChange={e => setNewEmail(e.target.value)} autoComplete="email"
+              className="w-full px-4 py-4 rounded-2xl text-white" placeholder="Nova e-mail adresa" style={{ ...inputStyle }} />
+            <input type="password" value={emailPassword} onChange={e => setEmailPassword(e.target.value)} autoComplete="current-password"
+              className="w-full px-4 py-4 rounded-2xl text-white" placeholder="Trenutna lozinka (radi sigurnosti)" style={{ ...inputStyle }} />
+            <div className="flex gap-2">
+              <button type="button" onClick={handleEmailChange} disabled={emailSaving}
+                className="flex-1 py-3 rounded-xl text-sm font-bold text-black transition-all hover:opacity-90"
+                style={{ background: 'linear-gradient(90deg, #0ABFCF 0%, #5CE1E6 100%)', opacity: emailSaving ? 0.7 : 1 }}>
+                {emailSaving ? 'Spremanje...' : 'Spremi novi e-mail'}
+              </button>
+              <button type="button" onClick={() => { setEmailEdit(false); setNewEmail(''); setEmailPassword(''); setEmailMsg(null); }}
+                className="px-4 py-3 rounded-xl text-sm font-semibold" style={{ background: 'rgba(255,255,255,0.06)', color: T.muted }}>
+                Odustani
+              </button>
+            </div>
+          </div>
+        )}
+        {emailMsg && (
+          <p className="mt-2 text-sm p-3 rounded-xl" style={emailMsg.ok
+            ? { background: 'rgba(46,230,166,0.1)', border: '1px solid rgba(46,230,166,0.3)', color: '#2EE6A6' }
+            : { background: 'rgba(255,59,48,0.1)', border: '1px solid rgba(255,59,48,0.3)', color: '#FF3B30' }}>{emailMsg.text}</p>
+        )}
+      </div>
       <div>
         <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: T.faint }}>Ime i prezime</label>
         <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}

@@ -26,12 +26,14 @@ import { ProductDetailSheet } from './ProductDetailSheet';
 interface MondoShopProps {
   onBack: () => void;
   onRegisterMember?: () => void;
+  // Nakon poslane narudžbe: član se vraća na Moj bazen, gost na početnu
+  onFinished?: () => void;
 }
 
 const CATEGORIES = ['Sve', 'pH regulacija', 'Dezinfekcija', 'Alge', 'Bistrenje', 'Održavanje', 'Testiranje', 'Pumpe', 'Filteri', 'Doziranje', 'Elektroliza', 'Ostalo'];
 const DIVIDER_AFTER = 'Testiranje';
 
-export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
+export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopProps) {
   const cart = useCart();
   const [member] = useState<boolean>(() => isMemberUser());
   const [care] = useState<boolean>(() => isCareUser());
@@ -178,16 +180,16 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="space-y-3">
             <button
-              onClick={() => { clearCart(); setView('shop'); }}
+              onClick={() => { clearCart(); if (onFinished) onFinished(); else setView('shop'); }}
               className="btn-primary w-full py-4 font-semibold"
             >
-              Isprazni košaricu
+              {member ? 'Gotovo – natrag na Moj bazen' : 'Gotovo – natrag na početnu'}
             </button>
             <button
-              onClick={() => setView('shop')}
+              onClick={() => { clearCart(); setView('shop'); }}
               className="btn-secondary w-full py-4 font-semibold"
             >
-              Natrag u trgovinu
+              Nova narudžba u trgovini
             </button>
           </motion.div>
         </div>
@@ -282,6 +284,15 @@ export function MondoShop({ onBack, onRegisterMember }: MondoShopProps) {
                 );
               })}
             </div>
+
+            <button
+              onClick={() => setView('shop')}
+              className="w-full mt-3 py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-all hover:bg-white/5"
+              style={{ border: `1px solid ${T.cyan}55`, color: T.cyan }}
+            >
+              <Plus className="w-4 h-4" />
+              Dodaj još proizvoda
+            </button>
 
             <div className="mt-4 pt-4 space-y-2" style={{ borderTop: T.cardBorder }}>
               <div className="flex items-center justify-between text-sm">

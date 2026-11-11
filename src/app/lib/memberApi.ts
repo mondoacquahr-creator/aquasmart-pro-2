@@ -14,6 +14,7 @@ export interface MemberPool {
   width?: number;
   depth?: number;
   poolType?: string;
+  circulation?: string;
   filterType?: string;
   filterMedia?: string;
   disinfection?: string;
@@ -94,6 +95,10 @@ export const memberApi = {
 
   async saveMemberProfile(p: MemberProfile): Promise<void> {
     return api.invoke('member/profile', { method: 'PUT', body: p });
+  },
+
+  async changeMemberEmail(email: string, password: string): Promise<{ email: string }> {
+    return api.invoke('member/email', { method: 'PUT', body: { email, password } });
   },
 
   async saveMemberPool(p: MemberPool): Promise<void> {

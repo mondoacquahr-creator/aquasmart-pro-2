@@ -212,7 +212,7 @@ export default function App() {
           {currentPage === 'promo' && <ProductShowcase onClose={() => setCurrentPage('home')} onNavigate={(page) => handleNavigate(page)} />}
           {currentPage === 'analysis' && <WaterAnalysis onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} onRegisterMember={() => setCurrentPage('member-register')} onLogin={() => setCurrentPage('login')} />}
           {currentPage === 'water-analysis' && <WaterAnalysis onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} onRegisterMember={() => setCurrentPage('member-register')} onLogin={() => setCurrentPage('login')} />}
-          {(currentPage === 'products' || currentPage === 'shop') && <MondoShop onBack={() => setCurrentPage(returnPage || prevPage || 'home')} onRegisterMember={() => setCurrentPage('member-register')} />}
+          {(currentPage === 'products' || currentPage === 'shop') && <MondoShop onBack={() => setCurrentPage(returnPage || prevPage || 'home')} onRegisterMember={() => setCurrentPage('member-register')} onFinished={() => { setReturnPage(null); setCurrentPage(localStorage.getItem('userRole') === 'member' ? 'member-portal' : 'home'); }} />}
           {currentPage === 'stores' && <StoreLocator onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} />}
           
           {/* Member Portal */}

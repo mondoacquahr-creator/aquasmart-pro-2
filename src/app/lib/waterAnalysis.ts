@@ -88,11 +88,12 @@ export function analyzeWater(
       const phMinusLiquid = Products.calculatePhMinusLiquid(params.pH, targetPh, poolVolume);
       const phMinusGranules = Products.calculatePhMinusGranules(params.pH, targetPh, poolVolume);
       
-      if (phMinusLiquid) recommendations.push(phMinusLiquid);
-      if (phMinusGranules) {
-        phMinusGranules.productName = phMinusGranules.productName + ' (alternativa)';
-        phMinusGranules.priority = 2;
-        recommendations.push(phMinusGranules);
+      // Granule su osnovni prijedlog; tekući pH Minus nudi se kao zamjena (doze prema uputama proizvođača)
+      if (phMinusGranules) recommendations.push(phMinusGranules);
+      if (phMinusLiquid) {
+        phMinusLiquid.productName = phMinusLiquid.productName + ' (alternativa)';
+        phMinusLiquid.priority = 2;
+        recommendations.push(phMinusLiquid);
       }
       
       insights.push('💡 Možete koristiti pH Minus tekući ili granule prema preferenciji.');

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, Droplet, AlertCircle, TrendingUp, Zap, Package, CheckCircle, ShoppingCart, Droplets } from 'lucide-react';
 import { analyzeWater, IDEAL_RANGES } from '../lib/waterAnalysis';
 import { ReadingCard } from './ReadingCard';
+import { AlternativeProducts } from './AlternativeProducts';
 import { calculateTreatmentCost } from '../lib/productPrices';
 import { motion } from 'motion/react';
 import { useLanguage } from '../lib/languageContext';
@@ -276,6 +277,8 @@ export function GuestAnalysis({ onBack, onRegister, onRegisterMember, onLogin, o
                   );
                 })}
               </div>
+
+              <AlternativeProducts recommendations={result.recommendations || []} />
 
               {result.treatmentCost && (
                 <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">

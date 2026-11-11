@@ -703,6 +703,7 @@ const POOL_FIELDS = {
   width: (v: any) => cleanNum(v, 0, 100),
   depth: (v: any) => cleanNum(v, 0, 10),
   poolType: (v: any) => cleanStr(v, 60),
+  circulation: (v: any) => (v === 'Skimer' || v === 'Preljevni' ? v : ''),
   filterType: (v: any) => cleanStr(v, 60),
   filterMedia: (v: any) => cleanStr(v, 60),
   filterLoad: (v: any) => cleanNum(v, 0, 5000),
@@ -793,7 +794,64 @@ registerRoute(app, 'put', '/member/profile', authMiddleware, memberOnly, async (
     updatedAt: new Date().toISOString(),
   };
   await kv.set(`member:${user.id}:profile`, profile);
+
+  // Obavijest Mondo Acqui o svakoj promjeni profila člana
+  const labels: Record<string, string> = { name: 'Ime', phone: 'Telefon', city: 'Mjesto', address: 'Adresa', marketing: 'Obavijesti e-mailom' };
+  const changes = Object.keys(labels)
+    .filter((k) => String(prev[k] ?? '') !== String((profile as any)[k] ?? ''))
+    .map((k) => `<tr><td style="padding:6px 10px 6px 0"><strong>${labels[k]}</strong></td><td style="padding:6px 10px">${escapeHtml(prev[k] ?? '–')}</td><td style="padding:6px 0">→ ${escapeHtml((profile as any)[k] ?? '–')}</td></tr>`);
+  if (changes.length) {
+    try {
+      await resend.emails.send({
+        from: 'Mondo Pool Care <orders@resend.dev>',
+        to: [MONDO_ACQUA_EMAIL],
+        subject: `PROMJENA PROFILA: ${profile.name || user.email}`,
+        html: `<div style="font-family:sans-serif;max-width:600px"><h2>Član je promijenio profil</h2>
+          <p><strong>E-mail računa:</strong> ${escapeHtml(user.email)}</p>
+          <table style="border-collapse:collapse">${changes.join('')}</table></div>`,
+      } as any);
+    } catch (err) { console.error('Profile change email failed:', err); }
+  }
   return c.json({ success: true, profile });
+});
+
+// Promjena e-mail adrese člana (ujedno i adrese za prijavu). Traži trenutnu lozinku.
+registerRoute(app, 'put', '/member/email', authMiddleware, memberOnly, async (c: any) => {
+  const user = c.get('user');
+  const body = await c.req.json().catch(() => ({}));
+  const email = cleanStr(body.email, 200).toLowerCase();
+  const password = String(body.password ?? '');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return c.json({ error: 'Neispravna e-mail adresa.' }, 400);
+  if (email === String(user.email || '').toLowerCase()) return c.json({ error: 'To je već vaša e-mail adresa.' }, 400);
+  if (!password) return c.json({ error: 'Upišite trenutnu lozinku.' }, 400);
+
+  // Provjera lozinke prijavom (bez spremanja sesije)
+  const check = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!, { auth: { persistSession: false, autoRefreshToken: false } });
+  const { error: pwErr } = await check.auth.signInWithPassword({ email: user.email, password });
+  if (pwErr) return c.json({ error: 'Lozinka nije točna.' }, 403);
+
+  const supabase = adminClient();
+  const { error } = await supabase.auth.admin.updateUserById(user.id, { email, email_confirm: true });
+  if (error) {
+    const msg = /already|exists|registered/i.test(error.message) ? 'Račun s tom e-mail adresom već postoji.' : 'Promjena e-maila nije uspjela.';
+    return c.json({ error: msg }, /already|exists|registered/i.test(error.message) ? 409 : 500);
+  }
+  const prev = (await kv.get(`member:${user.id}:profile`)) || { id: user.id, createdAt: new Date().toISOString() };
+  const profile = { ...prev, email, updatedAt: new Date().toISOString() };
+  await kv.set(`member:${user.id}:profile`, profile);
+
+  try {
+    await resend.emails.send({
+      from: 'Mondo Pool Care <orders@resend.dev>',
+      to: [MONDO_ACQUA_EMAIL],
+      subject: `PROMJENA E-MAILA: ${profile.name || email}`,
+      html: `<div style="font-family:sans-serif;max-width:600px"><h2>Član je promijenio e-mail adresu</h2>
+        <p><strong>Ime:</strong> ${escapeHtml(profile.name || '')}</p>
+        <p><strong>Stari e-mail:</strong> ${escapeHtml(user.email)}</p>
+        <p><strong>Novi e-mail:</strong> ${escapeHtml(email)}</p></div>`,
+    } as any);
+  } catch (err) { console.error('Email change notice failed:', err); }
+  return c.json({ success: true, email });
 });
 
 registerRoute(app, 'put', '/member/pool', authMiddleware, memberOnly, async (c: any) => {

@@ -7,6 +7,7 @@ import { MONDO_CONTACT, addRecommended } from '../lib/mondoShop';
 import { T } from '../lib/theme';
 import { WaterBackground } from './WaterBackground';
 import { ReadingCard } from './ReadingCard';
+import { AlternativeProducts } from './AlternativeProducts';
 import { memberApi, isMemberLoggedIn } from '../lib/memberApi';
 import { TesterScanButton } from './TesterScan';
 import { PoolPhotoCheck } from './PoolPhotoCheck';
@@ -559,6 +560,8 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
                       </div>
                     </div>
                   )}
+
+                  <AlternativeProducts recommendations={analysisResult.recommendations} />
 
                   {/* Order recommended button */}
                   <div className="mt-8">

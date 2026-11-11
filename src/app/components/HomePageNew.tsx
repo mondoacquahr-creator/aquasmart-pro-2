@@ -678,10 +678,12 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
               {/* Login */}
               <button
                 onClick={() => onNavigate('login')}
-                className="hidden sm:block px-4 py-2 text-sm rounded-xl transition-all hover:bg-white/8"
+                aria-label={t.nav.login}
+                className="px-3 sm:px-4 py-2 text-sm rounded-xl transition-all hover:bg-white/8"
                 style={{ color: 'rgba(255,255,255,0.8)' }}
               >
-                {t.nav.login}
+                <span className="hidden sm:inline">{t.nav.login}</span>
+                <LogIn className="w-4 h-4 sm:hidden" />
               </button>
 
               {/* Register pill */}
@@ -1048,6 +1050,14 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                     Pogledaj opremu i kemiju
                   </button>
                 </div>
+                {localStorage.getItem('userRole') !== 'member' && (
+                  <p className="text-sm mt-4" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                    Već imate Moj bazen?{' '}
+                    <button onClick={() => onNavigate('login')} className="font-semibold underline" style={{ color: '#2EFF88' }}>
+                      Prijavite se
+                    </button>
+                  </p>
+                )}
               </div>
 
               {/* Right big number – desktop only */}

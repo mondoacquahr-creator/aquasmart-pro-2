@@ -129,7 +129,7 @@ export function LoginPage({ onBack, onLoginSuccess, onGoToRegister }: LoginPageP
           </h1>
 
           <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-            Prijavite se u svoj profesionalni portal
+            Prijavite se u Moj bazen ili u portal tvrtke
           </p>
         </div>
 

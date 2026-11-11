@@ -10,8 +10,10 @@ const CYAN = '#5CE1E6';
 type ParamId = 'ph' | 'freeChlorine' | 'orp' | 'totalChlorine' | 'alkalinity' | 'hardness' | 'cyanuricAcid' | 'temperature';
 
 // Rasponi su isti kao u analizi (lib/waterAnalysis), da kartica i status vode uvijek govore isto.
-const PARAMS: { id: ParamId; label: string; unit: string; min: number; max: number }[] = [
-  { id: 'ph', label: 'pH', unit: '', min: IDEAL_RANGES.pH.min, max: IDEAL_RANGES.pH.max },
+// lo/hi: krajevi prikazne skale; warnLo/warnHi: do tih vrijednosti odstupanje je "malo" (npr. pH 6,8 je blizu cilja).
+type Param = { id: ParamId; label: string; unit: string; min: number; max: number; lo?: number; hi?: number; warnLo?: number; warnHi?: number };
+const PARAMS: Param[] = [
+  { id: 'ph', label: 'pH', unit: '', min: IDEAL_RANGES.pH.min, max: IDEAL_RANGES.pH.max, lo: 6.0, hi: 8.8, warnLo: IDEAL_RANGES.pH.critical.min, warnHi: IDEAL_RANGES.pH.critical.max },
   { id: 'freeChlorine', label: 'Slobodni klor', unit: 'mg/L', min: IDEAL_RANGES.freeChlorine.min, max: IDEAL_RANGES.freeChlorine.max },
   { id: 'orp', label: 'Redox (ORP)', unit: 'mV', min: IDEAL_RANGES.orp.min, max: IDEAL_RANGES.orp.max },
   { id: 'totalChlorine', label: 'Ukupni klor', unit: 'mg/L', min: 1.0, max: 3.0 },
@@ -27,14 +29,24 @@ const GRAD = {
   far: 'linear-gradient(90deg, #FFD60A 0%, #FF8A1F 55%, #FF2D55 100%)',
 };
 
-function assess(value: number, min: number, max: number) {
+function assess(value: number, p: Param) {
+  const { min, max } = p;
   const span = max - min;
-  // Prikazna skala: idealni raspon zauzima srednju trećinu trake.
-  const pct = Math.min(98, Math.max(2, ((value - (min - span)) / (3 * span)) * 100));
+  // Prikazna skala: idealni raspon zauzima srednju trećinu trake; ispod i iznad cilja skala ide do lo/hi.
+  const lo = p.lo ?? min - span;
+  const hi = p.hi ?? max + span;
+  const raw = value < min
+    ? ((value - lo) / (min - lo)) * 33.3
+    : value > max
+      ? 66.7 + ((value - max) / (hi - max)) * 33.3
+      : 33.3 + ((value - min) / (span || 1)) * 33.4;
+  const pct = Math.min(98, Math.max(2, raw));
   if (value >= min && value <= max) return { pct, status: 'U redu', color: '#2EE6A6', grad: GRAD.ok, off: false };
   const low = value < min;
   const dist = low ? min - value : value - max;
-  const slight = dist <= span * 0.5;
+  const slight = low
+    ? (p.warnLo !== undefined ? value >= p.warnLo : dist <= span * 0.5)
+    : (p.warnHi !== undefined ? value <= p.warnHi : dist <= span * 0.5);
   const status = slight ? (low ? 'Malo nisko' : 'Malo visoko') : (low ? 'Nisko' : 'Visoko');
   return { pct, status, color: slight ? '#FFD60A' : '#FF8A1F', grad: slight ? GRAD.slight : GRAD.far, off: true };
 }
@@ -70,7 +82,7 @@ export function ReadingCard({ values, volume, recommendations }: ReadingCardProp
     .filter((p) => values[p.id] !== undefined && values[p.id] !== '' && !isNaN(parseFloat(values[p.id])))
     .map((p) => {
       const v = parseFloat(values[p.id]);
-      return { ...p, value: v, ...assess(v, p.min, p.max) };
+      return { ...p, value: v, ...assess(v, p) };
     });
   const corrections = rows.filter((r) => r.off).length;
   const doses = recommendations.filter((r) => !/\(alternativa\)/i.test(r.productName)).slice(0, 5);
