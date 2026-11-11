@@ -28,7 +28,13 @@ type Page = 'home' | 'visualizer' | 'promo' | 'analysis' | 'products' | 'login' 
 
 // Main App Component - Updated with ProductShowcase
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('home');
+  // Ulaz s glavne stranice mondo-acqua.hr: ?stranica=webshop|analiza|prijava|registracija|clan
+  const [currentPage, setCurrentPage] = useState<Page>(() => {
+    try {
+      const map: Record<string, Page> = { webshop: 'products', analiza: 'analysis', prijava: 'login', registracija: 'register', clan: 'member-register' };
+      return map[new URLSearchParams(window.location.search).get('stranica') || ''] || 'home';
+    } catch { return 'home'; }
+  });
   const [prevPage, setPrevPage] = useState<Page | null>(null);
   const [returnPage, setReturnPage] = useState<Page | null>(null);
   const isPoppingState = useRef(false);

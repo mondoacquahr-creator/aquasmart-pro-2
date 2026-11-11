@@ -260,16 +260,27 @@ img{height:auto}
 .vol .small{color:var(--muted)}
 .hero{padding-block:clamp(28px,4vw,48px) 28px}
 .hero h1{font-size:clamp(2.1rem,4.4vw,3.3rem)}
-.choose .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-block:8px 40px}
-@media (max-width:860px){.choose .wrap{grid-template-columns:1fr}}
-.ch{position:relative;display:flex;flex-direction:column;gap:6px;min-height:260px;justify-content:flex-end;padding:22px;border-radius:22px;overflow:hidden;text-decoration:none;color:#fff;border:1px solid rgba(120,220,255,.14);background:var(--img) center/cover no-repeat;isolation:isolate;transition:transform .2s,box-shadow .2s,border-color .2s;min-width:0}
-.ch::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(2,13,18,.15) 0%,rgba(2,13,18,.55) 45%,rgba(2,13,18,.94) 100%);transition:background .2s}
+.hub .wrap{grid-template-columns:1.1fr 1fr;align-items:end}
+.hub h1{font-size:clamp(2.1rem,4.2vw,3.4rem)}
+@media (max-width:860px){.hub .wrap{grid-template-columns:1fr}}
+.choose .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-block:8px 44px}
+@media (max-width:1100px){.choose .wrap{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.choose .wrap{grid-template-columns:1fr}}
+.ch{position:relative;display:flex;flex-direction:column;gap:6px;min-height:430px;justify-content:flex-end;padding:22px;border-radius:24px;overflow:hidden;color:#fff;border:1px solid rgba(120,220,255,.14);background:var(--img) center/cover no-repeat;isolation:isolate;transition:transform .25s,box-shadow .25s,border-color .25s;min-width:0}
+.ch::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(2,13,18,.10) 0%,rgba(2,13,18,.45) 40%,rgba(2,13,18,.95) 78%)}
+.ch-app::before{background:linear-gradient(180deg,rgba(4,24,32,.55) 0%,rgba(2,13,18,.7) 45%,rgba(2,13,18,.97) 76%)}
 .ch:hover{transform:translateY(-4px);border-color:rgba(79,195,240,.55);box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 0 1px rgba(79,195,240,.25)}
-.ch-k{font:700 .72rem/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:#5CE1E6}
-.ch strong{font:800 1.45rem/1.15 var(--display);letter-spacing:-.02em;color:#fff}
-.ch p{margin:0;font-size:.92rem;color:rgba(255,255,255,.75)}
-.ch-go{margin-top:8px;align-self:flex-start;padding:9px 16px;border-radius:999px;background:#4FC3F0;color:#0a0a0a;font:700 .85rem/1 var(--display);box-shadow:0 6px 24px rgba(79,195,240,.3)}
-@media (max-width:860px){.ch{min-height:210px}}
+.ch-phone{position:absolute;z-index:-1;top:18px;right:-6%;width:52%;max-width:200px;transform:rotate(7deg);filter:drop-shadow(0 24px 40px rgba(0,0,0,.6));transition:transform .35s}
+.ch:hover .ch-phone{transform:rotate(3deg) translateY(-6px)}
+.ch-k{font:700 .7rem/1.2 var(--display);letter-spacing:.14em;text-transform:uppercase;color:#5CE1E6}
+.ch strong{font:800 1.4rem/1.15 var(--display);letter-spacing:-.02em;color:#fff}
+.ch p{margin:0;font-size:.9rem;color:rgba(255,255,255,.75)}
+.ch-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.ch-go,.ch-alt{padding:9px 15px;border-radius:999px;font:700 .84rem/1 var(--display);text-decoration:none}
+.ch-go{background:#4FC3F0;color:#0a0a0a;box-shadow:0 6px 24px rgba(79,195,240,.3)}
+.ch-alt{color:#fff;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06)}
+.ch-go:hover,.ch-alt:hover{transform:translateY(-1px)}
+@media (max-width:620px){.ch{min-height:340px}.ch-phone{width:40%;right:2%}}
 /* ===== Tema: kao Mondo Pool Care ===== */
 :root{--navy:#ffffff;--aqua:#4FC3F0;--aqua-ink:#5CE1E6;--bg:#041820;--bg-soft:rgba(92,225,230,.05);--line:rgba(120,220,255,.12);--ink:rgba(255,255,255,.78);--muted:rgba(255,255,255,.55);--display:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--grad:linear-gradient(90deg,#7FDBFF 0%,#4FC3F0 45%,#1E88E5 100%)}
 body{background:radial-gradient(ellipse at 80% 0%,#08303D 0%,#041820 55%,#020D12 100%) fixed;color:var(--ink)}
@@ -330,40 +341,40 @@ input:focus,textarea:focus{border-color:#4FC3F0;outline:none;box-shadow:0 0 0 3p
 <main>
 <!-- ============ POČETNA ============ -->
 <section class="page" id="p-pocetna">
-  <div class="hero"><div class="wrap">
-    <div class="stack" style="gap:22px">
+  <div class="hero hub"><div class="wrap">
+    <div class="stack" style="gap:14px">
       <p class="eyebrow">Mondo Acqua · bazeni, oprema i održavanje</p>
-      <h1>Bazen za vaše dvorište. <em>Montiran za dan, uz vas godinama.</em></h1>
-      <p class="lead">Montažni FP, CORAL kompozitni i COMPACT keramički bazeni s opremom za rad, ugradnja ključ u ruke i održavanje vode u cijeloj Hrvatskoj.</p>
-      <div class="btns">
-        <a class="btn btn-primary" href="#bazeni">Usporedite bazene →</a>
-        <a class="btn btn-ghost" href="#upit">Pošaljite upit za bazen</a>
-      </div>
+      <h1>Sve za vaš bazen. <em>Od gradnje do bistre vode.</em></h1>
+    </div>
+    <div class="stack" style="gap:16px">
+      <p class="lead">Gradimo i montiramo bazene, održavamo ih u cijeloj Hrvatskoj, a u aplikaciji Mondo Pool Care besplatno analizirate vodu i naručujete kemiju.</p>
       <div class="facts">
         <div><strong>34</strong>modela i dimenzija</div>
         <div><strong>1 dan</strong>montaža školjke</div>
         <div><strong>od 5.030 €</strong>FP bazen s montažom</div>
       </div>
     </div>
-    <div class="hero-img">
-      <img src="slike/bazen-pogled-ucka.jpg" alt="Bazen s pogledom na Učku, izveden ključ u ruke" width="1600" height="1200">
-      <span class="hero-tag">Naš rad · ključ u ruke</span>
-    </div>
   </div></div>
 
   <div class="choose"><div class="wrap">
-    <a class="ch" href="#bazeni" style="--img:url('slike/betonski-keramika-preljev.jpg')">
+    <div class="ch" style="--img:url('slike/betonski-keramika-preljev.jpg')">
       <span class="ch-k">Želim bazen</span><strong>Novi bazen</strong>
       <p>Montažni FP, CORAL, COMPACT i betonski bazeni po mjeri, s opremom i izvedbom ključ u ruke.</p>
-      <span class="ch-go">Pogledajte bazene →</span></a>
-    <a class="ch" href="#odrzavanje" style="--img:url('slike/odr-mjerenje-sol-klor.jpg')">
-      <span class="ch-k">Imam bazen</span><strong>Održavanje i analiza vode</strong>
-      <p>Redovno održavanje, otvaranje i zimovanje, spašavanje zelene vode i besplatna analiza u Mondo Pool Care.</p>
-      <span class="ch-go">Održavanje →</span></a>
-    <a class="ch" href="https://mondo-acqua.hr/products/results?id_category=1376" target="_blank" rel="noopener" style="--img:url('slike/odr-zimovanje-winterp.jpg')">
+      <div class="ch-btns"><a class="ch-go" href="#bazeni">Pogledajte bazene →</a><a class="ch-alt" href="#upit">Upit</a></div></div>
+    <div class="ch ch-app" style="--img:url('slike/odr-mreza-ciscenje.jpg')">
+      <img class="ch-phone" src="slike/app-analiza.png" alt="Mondo Pool Care – analiza vode na mobitelu" loading="lazy">
+      <span class="ch-k">Imam bazen · Pool Care</span><strong>Održavanje i analiza vode</strong>
+      <p>Besplatna analiza vode s točnim dozama u aplikaciji te održavanje bazena u cijeloj Hrvatskoj.</p>
+      <div class="ch-btns"><a class="ch-go" href="https://poolcare.mondo-acqua.hr/?stranica=analiza" target="_blank" rel="noopener">Analiza vode ↗</a><a class="ch-alt" href="#odrzavanje">Održavanje</a></div></div>
+    <div class="ch ch-app" style="--img:url('slike/odr-zimovanje-winterp.jpg')">
+      <img class="ch-phone" src="slike/app-webshop.png" alt="Mondo Pool Care – webshop na mobitelu" loading="lazy">
       <span class="ch-k">Webshop</span><strong>Kemija i oprema</strong>
-      <p>Sredstva za vodu, oprema i dijelovi za bazen u našem webshopu.</p>
-      <span class="ch-go">Otvorite webshop ↗</span></a>
+      <p>Webshop u Mondo Pool Care. Registrirani vlasnici bazena imaju −10 % na kemiju i opremu.</p>
+      <div class="ch-btns"><a class="ch-go" href="https://poolcare.mondo-acqua.hr/?stranica=webshop" target="_blank" rel="noopener">Otvorite webshop ↗</a></div></div>
+    <div class="ch" style="--img:url('slike/odr-zelena-ciscenje.jpg')">
+      <span class="ch-k">Za servisere · Pro</span><strong>Pro portal</strong>
+      <p>Radni nalozi, evidencija vremena i kemije, ponude i fakturiranje za vašu servisnu ekipu. 30 dana besplatno.</p>
+      <div class="ch-btns"><a class="ch-go" href="https://poolcare.mondo-acqua.hr/?stranica=prijava" target="_blank" rel="noopener">Prijava ↗</a><a class="ch-alt" href="https://poolcare.mondo-acqua.hr/?stranica=registracija" target="_blank" rel="noopener">Registracija</a></div></div>
   </div></div>
 
   <div class="band soft" id="bazeni-pregled"><div class="wrap">
@@ -663,7 +674,7 @@ input:focus,textarea:focus{border-color:#4FC3F0;outline:none;box-shadow:0 0 0 3p
 <footer><div class="wrap">
   <div><span class="flogo"><img src="logo.png" alt="Mondo Acqua" width="60" height="46"></span><p>Bazeni, bazenska oprema, tretman vode i održavanje.</p></div>
   <div><h4>Bazeni</h4><a href="#fp">Montažni FP</a><a href="#coral">CORAL kompozitni</a><a href="#compact">COMPACT keramički</a><a href="#po-mjeri">Betonski i po mjeri</a><a href="#swim-spa">Swim spa</a></div>
-  <div><h4>Usluge</h4><a href="#kljuc-u-ruke">Ključ u ruke</a><a href="#odrzavanje">Održavanje bazena</a><a href="https://poolcare.mondo-acqua.hr/" target="_blank" rel="noopener">Mondo Pool Care ↗</a><a href="https://mondo-acqua.hr/products/results?id_category=1376" target="_blank" rel="noopener">Webshop opreme ↗</a></div>
+  <div><h4>Usluge</h4><a href="#kljuc-u-ruke">Ključ u ruke</a><a href="#odrzavanje">Održavanje bazena</a><a href="https://poolcare.mondo-acqua.hr/" target="_blank" rel="noopener">Mondo Pool Care ↗</a><a href="https://poolcare.mondo-acqua.hr/?stranica=webshop" target="_blank" rel="noopener">Webshop opreme ↗</a></div>
   <div><h4>Kontakt</h4><a href="tel:+385952087321">+385 95 208 7321</a><a href="mailto:info@mondo-acqua.hr">info@mondo-acqua.hr</a><span>Lucinići 17, 51216 Viškovo</span><a href="https://www.facebook.com/people/Mondo-Acqua-HR/100064917164727/" target="_blank" rel="noopener">Facebook ↗</a><a href="https://www.instagram.com/mondoacquahr/" target="_blank" rel="noopener">Instagram ↗</a></div>
   <p class="copy">© 2026 Mondo Acqua d.o.o. · Sjedište: Lucinići 17, 51216 Viškovo</p>
 </div></footer>
