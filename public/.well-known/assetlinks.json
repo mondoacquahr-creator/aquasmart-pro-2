@@ -3,9 +3,9 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.aquasmart.pro",
+      "package_name": "hr.mondoacqua.poolcare",
       "sha256_cert_fingerprints": [
-        "PLACEHOLDER_SHA256_FINGERPRINT_FROM_YOUR_KEYSTORE"
+        "B9:9C:5A:D1:38:17:44:72:4D:3E:09:4D:CA:3D:2B:E3:02:2B:24:2F:46:65:35:97:7B:B7:54:57:78:AE:0A:5A"
       ]
     }
   }
