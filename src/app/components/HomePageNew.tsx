@@ -13,7 +13,7 @@ import {
   LogIn, UserPlus, Lock, BeakerIcon, ShoppingCart, MapPin, Menu, X,
   Phone, Mail, Building, Copyright, Globe, Sparkles,
   FlaskConical, Activity, Play, Warehouse, UserCog,
-  ChevronDown, BarChart3, Percent, BadgePercent, LineChart, Wrench,
+  ChevronDown, BarChart3, Percent, BadgePercent, LineChart, Wrench, CheckCircle2, MessageCircle,
 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { WaterBackground } from './WaterBackground';
@@ -103,6 +103,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         visualizer: 'Vizualizator',
         analysis: 'Analiza vode',
         products: 'Webshop',
+        odrzavanje: 'Održavanje bazena',
         servisere: 'Za servisere',
         login: 'Prijava',
         register: 'Isprobaj besplatno',
@@ -164,6 +165,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         visualizer: 'Visualizer',
         analysis: 'Water Analysis',
         products: 'Webshop',
+        odrzavanje: 'Pool maintenance',
         servisere: 'For Professionals',
         login: 'Login',
         register: 'Try for free',
@@ -225,6 +227,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         visualizer: 'Visualizzatore',
         analysis: 'Analisi Acqua',
         products: 'Webshop',
+        odrzavanje: 'Manutenzione piscine',
         servisere: 'Per Professionisti',
         login: 'Accedi',
         register: 'Prova Gratis',
@@ -286,6 +289,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         visualizer: 'Visualizer',
         analysis: 'Wasseranalyse',
         products: 'Webshop',
+        odrzavanje: 'Poolpflege',
         servisere: 'Für Profis',
         login: 'Anmelden',
         register: 'Kostenlos testen',
@@ -612,6 +616,10 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
 
               {/* Existing text links */}
               {[
+                {
+                  label: t.nav.odrzavanje,
+                  action: () => document.getElementById('odrzavanje')?.scrollIntoView({ behavior: 'smooth' }),
+                },
                 { label: t.nav.analysis, action: () => onNavigate('analysis') },
                 { label: t.nav.products, action: () => onNavigate('products') },
                 {
@@ -1231,6 +1239,70 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
               />
             </div>
 
+          </div>
+        </section>
+
+        {/* ============================================================ */}
+        {/* ODRŽAVANJE BAZENA – usluga Mondo Acque                        */}
+        {/* ============================================================ */}
+        <section id="odrzavanje" className="max-w-7xl mx-auto px-4 md:px-8 pb-24" style={{ scrollMarginTop: 90 }}>
+          <div className="max-w-[1100px] mx-auto rounded-3xl p-6 md:p-10" style={{ background: CARD_BG, border: CARD_BORDER }}>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: CYAN }}>Održavanje bazena · cijela Hrvatska</p>
+            <h2 className="font-extrabold text-white mb-8" style={{ fontSize: 'clamp(1.5rem, 3.8vw, 2.3rem)', letterSpacing: '-0.025em', lineHeight: 1.15 }}>
+              Vi uživate, mi brinemo o vodi.
+            </h2>
+
+            <div className="grid md:grid-cols-2 gap-x-10 gap-y-4 mb-8">
+              {[
+                ['Redovno održavanje', 'Tjedno ili po dogovoru: čišćenje, usisavanje, kontrola i doziranje kemije.'],
+                ['Otvaranje sezone', 'Priprema bazena i opreme za kupanje.'],
+                ['Zatvaranje sezone i zimovanje', 'Zaštita bazena i opreme preko zime.'],
+                ['Servis opreme', 'Filter i punjenje, pumpa, elektroliza, dozirne stanice.'],
+                ['Zelena ili mutna voda', 'Vraćamo bistru vodu i otklanjamo uzrok.'],
+              ].map(([title, desc]) => (
+                <div key={title} className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 mt-0.5 shrink-0" style={{ color: CYAN }} />
+                  <div>
+                    <p className="font-bold text-white text-sm sm:text-base">{title}</p>
+                    <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-2xl p-5 mb-8 flex flex-wrap items-center justify-between gap-3" style={{ background: 'rgba(92,225,230,0.07)', border: '1px solid rgba(92,225,230,0.25)' }}>
+              <div>
+                <p className="font-bold text-white">Mondo Care · godišnji paket</p>
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>Godišnji pregled opreme i popust na proizvode za bazen.</p>
+              </div>
+              <p className="font-extrabold text-lg" style={{ color: CYAN }}>199 € / godišnje</p>
+            </div>
+
+            <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.6)' }}>Cijene održavanja na upit.</p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={`https://wa.me/385952087321?text=${encodeURIComponent('Pozdrav, zanima me ponuda za održavanje bazena.\nMjesto: \nVeličina bazena: ')}`}
+                target="_blank" rel="noopener noreferrer"
+                className="px-6 py-3 rounded-full text-sm font-bold flex items-center gap-2"
+                style={{ background: CYAN, color: '#020D12' }}
+              >
+                <MessageCircle className="w-4 h-4" /> Zatražite ponudu za održavanje
+              </a>
+              <a
+                href={`mailto:info@mondo-acqua.hr?subject=${encodeURIComponent('Upit za održavanje bazena')}`}
+                className="px-6 py-3 rounded-full text-sm font-semibold flex items-center gap-2"
+                style={{ border: `1px solid ${CYAN}`, color: CYAN }}
+              >
+                <Mail className="w-4 h-4" /> E-mail
+              </a>
+              <a
+                href="tel:+385952087321"
+                className="px-6 py-3 rounded-full text-sm font-semibold flex items-center gap-2"
+                style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#fff' }}
+              >
+                <Phone className="w-4 h-4" /> +385 95 208 7321
+              </a>
+            </div>
           </div>
         </section>
 
