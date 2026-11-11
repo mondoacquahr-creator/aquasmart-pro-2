@@ -586,27 +586,21 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
 
   const renderWarehouseView = () => (
     <div className="max-w-7xl mx-auto px-6 py-8">
-      <h2 className="text-3xl font-semibold mb-6">Skladište ({warehouse.length})</h2>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {warehouse.map((item) => {
+      <h2 className="text-2xl sm:text-3xl font-semibold mb-6">Skladište ({warehouse.length})</h2>
+      <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(10,40,52,0.55)', border: '1px solid rgba(120,220,255,0.12)' }}>
+        {warehouse.map((item, i) => {
           const low = item.stock <= item.minStock;
           return (
-            <div key={String(item.id)} className="p-6 rounded-2xl" style={{
-              background: 'rgba(10,40,52,0.55)',
-              border: `1px solid ${low ? 'rgba(255,59,48,0.3)' : 'rgba(120,220,255,0.12)'}`,
-              boxShadow: '0 20px 60px rgba(0,0,0,0.35)'
-            }}>
-              <div className="mb-3">
-                <h3 className="font-semibold text-lg">{item.name}</h3>
-                <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{item.category}</p>
+            <div key={String(item.id)} className="flex items-center gap-3 px-4 py-3" style={{ borderTop: i ? '1px solid rgba(120,220,255,0.08)' : 'none' }}>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-sm truncate">{item.name}</p>
+                <p className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.5)' }}>{item.category}</p>
               </div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="text-2xl font-bold" style={{ color: low ? '#FF3B30' : '#2EFF88' }}>
-                    {item.stock}
-                  </span>
-                  <span className="text-sm ml-1" style={{ color: 'rgba(255,255,255,0.6)' }}>{item.unit}</span>
-                  <div className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.4)' }}>Min: {item.minStock}</div>
+              <div className="flex items-center gap-3 shrink-0">
+                <div className="text-right">
+                  <span className="font-bold text-sm" style={{ color: low ? '#FF3B30' : '#2EFF88' }}>{item.stock}</span>
+                  <span className="text-xs ml-1" style={{ color: 'rgba(255,255,255,0.6)' }}>{item.unit}</span>
+                  <div className="text-[11px]" style={{ color: 'rgba(255,255,255,0.4)' }}>min {item.minStock}</div>
                 </div>
                 {perms.warehouse === 'edit' && (
                   <div className="flex items-center gap-2">

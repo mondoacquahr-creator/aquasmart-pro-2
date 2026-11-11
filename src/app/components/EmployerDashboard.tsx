@@ -1234,9 +1234,9 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
         {currentView === 'warehouse' && (
           <motion.div key="warehouse" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className="max-w-7xl mx-auto px-6 py-8">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-3xl font-semibold">Skladište ({warehouse.length} artikala)</h2>
-                <div className="flex gap-2">
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+                <h2 className="text-2xl sm:text-3xl font-semibold">Skladište ({warehouse.length} artikala)</h2>
+                <div className="flex flex-wrap gap-2">
                   <button onClick={downloadWarehouseTemplate} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)' }}>
                     <Download className="w-4 h-4" />
                     <span>Predložak</span>
@@ -1259,36 +1259,32 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
                 </div>
               )}
 
-              <div className="grid md:grid-cols-3 gap-4">
-                {warehouse.map((item) => (
-                  <div key={item.id} className="p-6 rounded-2xl group" style={{ background: 'rgba(10,40,52,0.55)', border: '1px solid rgba(120,220,255,0.12)', boxShadow: '0 20px 60px rgba(0,0,0,0.35)' }}>
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <h3 className="font-semibold mb-1">{item.name}</h3>
-                        <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{item.category}</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {item.trend === 'up' && <TrendingUp className="w-5 h-5" style={{ color: '#2EFF88' }} />}
-                        {item.trend === 'down' && <TrendingDown className="w-5 h-5" style={{ color: '#FF3B30' }} />}
-                        <button onClick={() => deleteWarehouseItem(item.id)} className="opacity-0 group-hover:opacity-100 p-2 rounded-lg transition-all hover:bg-red-500/20">
-                          <Trash2 className="w-4 h-4 text-red-500" />
+              {warehouse.length > 0 && (
+                <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(10,40,52,0.55)', border: '1px solid rgba(120,220,255,0.12)' }}>
+                  {warehouse.map((item, i) => {
+                    const low = item.stock < item.minStock;
+                    return (
+                      <div key={item.id} className="flex items-center gap-3 px-4 py-3" style={{ borderTop: i ? '1px solid rgba(120,220,255,0.08)' : 'none' }}>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-sm truncate">{item.name}</p>
+                          <p className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                            {item.category}{item.price !== undefined ? ` · ${item.price.toFixed(2).replace('.', ',')} €` : ''}
+                          </p>
+                        </div>
+                        {item.trend === 'up' && <TrendingUp className="w-4 h-4 shrink-0" style={{ color: '#2EFF88' }} />}
+                        {item.trend === 'down' && <TrendingDown className="w-4 h-4 shrink-0" style={{ color: '#FF3B30' }} />}
+                        <div className="text-right shrink-0">
+                          <p className="font-bold text-sm" style={{ color: low ? '#FF3B30' : '#5CE1E6' }}>{item.stock} {item.unit}</p>
+                          <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.45)' }}>min {item.minStock}</p>
+                        </div>
+                        <button onClick={() => deleteWarehouseItem(item.id)} aria-label="Obriši artikl" className="p-2 rounded-lg shrink-0 transition-all hover:bg-red-500/20">
+                          <Trash2 className="w-4 h-4 text-red-500" style={{ opacity: 0.7 }} />
                         </button>
                       </div>
-                    </div>
-                    <div className="text-2xl font-bold" style={{ color: item.stock < item.minStock ? '#FF3B30' : '#5CE1E6' }}>
-                      {item.stock} {item.unit}
-                    </div>
-                    <div className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                      Min: {item.minStock} {item.unit}
-                    </div>
-                    {item.price !== undefined && (
-                      <div className="text-xs mt-1 font-medium" style={{ color: 'rgba(92,225,230,0.7)' }}>
-                        Cijena: {item.price.toFixed(2).replace('.', ',')} €
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </motion.div>
         )}
