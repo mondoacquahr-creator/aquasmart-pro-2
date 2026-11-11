@@ -5,6 +5,23 @@ import { useAuth } from '../contexts/AuthContext';
 import { T } from '../lib/theme';
 import { WaterBackground } from './WaterBackground';
 
+// Jasna poruka o grešci pri registraciji (poslužitelj vraća poruke na hrvatskom).
+function registerErrorMessage(err: any): string {
+  const msg = String(err?.message || '').trim();
+  const low = msg.toLowerCase();
+  if (err?.status === 409 || low.includes('već postoji') || low.includes('already') || low.includes('registered') || low.includes('email_exists')) {
+    return 'Račun s ovom e-mail adresom već postoji (možda kao djelatnik ili član). Prijavite se tom adresom ili upotrijebite „Zaboravljena lozinka”; za novi račun upišite drugu e-mail adresu.';
+  }
+  if (low.includes('invalid login') || low.includes('invalid credentials')) {
+    return 'Račun je kreiran, ali automatska prijava nije uspjela. Prijavite se ručno na stranici Prijava.';
+  }
+  if (low.includes('failed to fetch') || low.includes('network') || low.includes('load failed')) {
+    return 'Nema veze s poslužiteljem. Provjerite internetsku vezu i pokušajte ponovno.';
+  }
+  if (msg && /[čćšđž]|e-mail|lozink|privol|upišite|neispravan/i.test(msg)) return msg;
+  return msg ? `Registracija nije uspjela: ${msg}` : 'Registracija nije uspjela. Pokušajte ponovno.';
+}
+
 interface RegisterPageProps {
   onBack: () => void;
   onRegisterSuccess: () => void;
@@ -50,12 +67,7 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
       onRegisterSuccess();
     } catch (err: any) {
       setIsLoading(false);
-      const msg = err?.message || '';
-      if (msg.toLowerCase().includes('already') || msg.toLowerCase().includes('registered')) {
-        setError('Račun s tim e-mailom već postoji.');
-      } else {
-        setError('Registracija nije uspjela. Pokušajte ponovno.');
-      }
+      setError(registerErrorMessage(err));
     }
   };
 
@@ -85,12 +97,7 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
       onRegisterSuccess();
     } catch (err: any) {
       setIsLoading(false);
-      const msg = err?.message || '';
-      if (msg.toLowerCase().includes('already') || msg.toLowerCase().includes('registered')) {
-        setError('Račun s tim e-mailom već postoji.');
-      } else {
-        setError('Registracija nije uspjela. Pokušajte ponovno.');
-      }
+      setError(registerErrorMessage(err));
     }
   };
 
