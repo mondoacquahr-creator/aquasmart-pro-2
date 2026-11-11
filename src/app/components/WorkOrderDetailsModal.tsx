@@ -201,6 +201,34 @@ async function compressPhoto(file: File): Promise<Blob> {
   });
 }
 
+// Polje za broj (cijena, količina, popust) koje prihvaća i decimalni zarez.
+function NumberField({ value, onChange, width = 'w-24', suffix }: { value: number; onChange: (n: number) => void; width?: string; suffix?: string }) {
+  const [text, setText] = useState(String(value ?? 0).replace('.', ','));
+  useEffect(() => {
+    const n = parseFloat(text.replace(',', '.'));
+    if (!(Number.isFinite(n) && n === value)) setText(String(value ?? 0).replace('.', ','));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+  return (
+    <span className="inline-flex items-center gap-1">
+      <input
+        inputMode="decimal"
+        value={text}
+        onClick={(e) => e.stopPropagation()}
+        onChange={(e) => {
+          const t = e.target.value.replace(/[^\d.,]/g, '');
+          setText(t);
+          const n = parseFloat(t.replace(',', '.'));
+          onChange(Number.isFinite(n) && n >= 0 ? n : 0);
+        }}
+        className={`${width} px-2 py-1 rounded-lg text-right font-semibold`}
+        style={{ background: 'rgba(2,13,18,0.6)', border: '1px solid rgba(120,220,255,0.25)', color: '#5CE1E6', fontSize: '16px' }}
+      />
+      {suffix && <span className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>{suffix}</span>}
+    </span>
+  );
+}
+
 export function WorkOrderDetailsModal({
   order, onClose, onSave, onPersist, clients, employees,
   hidePrices = false, readOnlyAssignee = false,
@@ -397,6 +425,16 @@ export function WorkOrderDetailsModal({
   const toggleService = (id: number) => {
     setServices(services.map(service => service.id === id ? stamp(service) : service));
   };
+
+  // Uređivanje cijena i količina (vidljivo samo onima koji vide cijene)
+  const setServiceCost = (id: number, cost: number) => setServices(services.map(x => x.id === id ? { ...x, cost } : x));
+  const setTaskCost = (id: number, cost: number) => setMaintenanceTasks(maintenanceTasks.map(x => x.id === id ? { ...x, cost } : x));
+  const updateProduct = (id: number, patch: Partial<ProductUsed>) => setProductsUsed(productsUsed.map(p => {
+    if (p.id !== id) return p;
+    const next = { ...p, ...patch };
+    const disc = Math.min(Math.max(next.discount ?? 0, 0), 100);
+    return { ...next, discount: disc, totalCost: Math.round((next.quantity || 0) * (next.pricePerUnit || 0) * (1 - disc / 100) * 100) / 100 };
+  }));
 
   // Evidencija vremena rada
   const [nowTick, setNowTick] = useState(Date.now());
@@ -1159,8 +1197,8 @@ export function WorkOrderDetailsModal({
                       </div>
 
                       {!hidePrices && (
-                        <div className="text-right">
-                          <div className="font-bold" style={{ color: '#5CE1E6' }}>{(service.cost ?? 0).toFixed(2)} EUR</div>
+                        <div className="text-right shrink-0">
+                          <NumberField value={service.cost ?? 0} onChange={(n) => setServiceCost(service.id, n)} suffix="€" />
                         </div>
                       )}
                     </div>
@@ -1287,8 +1325,8 @@ export function WorkOrderDetailsModal({
                       </div>
 
                       {!hidePrices && (
-                        <div className="text-right">
-                          <div className="font-bold" style={{ color: '#5CE1E6' }}>{(task.cost ?? 0).toFixed(2)} EUR</div>
+                        <div className="text-right shrink-0">
+                          <NumberField value={task.cost ?? 0} onChange={(n) => setTaskCost(task.id, n)} suffix="€" />
                         </div>
                       )}
                     </div>
@@ -1438,23 +1476,23 @@ export function WorkOrderDetailsModal({
                         </button>
                       </div>
 
-                      <div className={`grid gap-4 text-sm ${hidePrices ? 'grid-cols-2' : 'grid-cols-4'}`}>
+                      <div className={`grid gap-4 text-sm ${hidePrices ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-4'}`}>
                         <div>
                           <div style={{ color: 'rgba(255,255,255,0.5)' }}>Količina</div>
-                          <div className="font-semibold">{product.quantity} {product.unit}</div>
+                          {hidePrices
+                            ? <div className="font-semibold">{product.quantity} {product.unit}</div>
+                            : <NumberField value={product.quantity} onChange={(n) => updateProduct(product.id, { quantity: n })} width="w-20" suffix={product.unit} />}
                         </div>
                         {!hidePrices && (
                           <>
                             <div>
                               <div style={{ color: 'rgba(255,255,255,0.5)' }}>Cijena/jed</div>
-                              <div className="font-semibold">{(product.pricePerUnit ?? 0).toFixed(2)} EUR</div>
+                              <NumberField value={product.pricePerUnit ?? 0} onChange={(n) => updateProduct(product.id, { pricePerUnit: n })} suffix="€" />
                             </div>
-                            {product.discount != null && product.discount > 0 && (
-                              <div>
-                                <div style={{ color: 'rgba(255,255,255,0.5)' }}>Popust</div>
-                                <div className="font-semibold" style={{ color: '#2EFF88' }}>{product.discount}%</div>
-                              </div>
-                            )}
+                            <div>
+                              <div style={{ color: 'rgba(255,255,255,0.5)' }}>Popust</div>
+                              <NumberField value={product.discount ?? 0} onChange={(n) => updateProduct(product.id, { discount: n })} width="w-16" suffix="%" />
+                            </div>
                             <div className="text-right">
                               <div style={{ color: 'rgba(255,255,255,0.5)' }}>Ukupno</div>
                               <div className="font-bold" style={{ color: '#5CE1E6' }}>{(product.totalCost ?? 0).toFixed(2)} EUR</div>

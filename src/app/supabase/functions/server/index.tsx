@@ -174,6 +174,38 @@ const activeCompanyOnly = async (c: any, next: any) => {
   await next();
 };
 
+// E-mail vlasniku tvrtke kad djelatnik zatvori radni nalog.
+const fmtHrTime = (iso?: string) => iso ? new Date(iso).toLocaleTimeString('hr-HR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Zagreb' }) : '';
+const fmtDur = (ms: number) => { const m = Math.round(ms / 60000); return m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? ` ${m % 60} min` : ''}`; };
+const notifyOrderCompleted = async (user: any, order: any) => {
+  const companyId = getCompanyId(user);
+  const { data } = await adminClient().auth.admin.getUserById(companyId);
+  const ownerEmail = data?.user?.email;
+  if (!ownerEmail || !isEmail(ownerEmail)) return;
+  const items = [...(order.services || []), ...(order.maintenanceTasks || [])];
+  const done = items.filter((i: any) => i.completed).length;
+  const s = Date.parse(order.workStartedAt || ''), e = Date.parse(order.workEndedAt || '');
+  const work = Number.isFinite(s) && Number.isFinite(e) && e >= s
+    ? `${fmtHrTime(order.workStartedAt)} – ${fmtHrTime(order.workEndedAt)} (${fmtDur(e - s)})` : '—';
+  const who = order.completedBy || order.assignee || user.email;
+  await resend.emails.send({
+    from: 'Mondo Pool Care <orders@resend.dev>',
+    to: [ownerEmail],
+    subject: `NALOG ZAVRŠEN: #${order.id} – ${order.client || ''}`.slice(0, 150),
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px;">
+        <h2>Radni nalog je završen</h2>
+        <p><strong>Nalog:</strong> #${escapeHtml(order.id)}</p>
+        <p><strong>Klijent:</strong> ${escapeHtml(order.client || '—')}</p>
+        <p><strong>Lokacija:</strong> ${escapeHtml(order.location || '—')}</p>
+        <p><strong>Izvršitelj:</strong> ${escapeHtml(who)}</p>
+        <p><strong>Vrijeme rada:</strong> ${escapeHtml(work)}</p>
+        <p><strong>Izvršeno stavki:</strong> ${done} / ${items.length}</p>
+        <p><a href="https://poolcare.mondo-acqua.hr/">Otvori Pro portal</a></p>
+      </div>`,
+  } as any);
+};
+
 const BASE_PATH = "/make-server-381f82bd";
 const FUNCTIONS_PATH = "/functions/v1/make-server-381f82bd";
 
@@ -515,7 +547,24 @@ const createCrudRoutes = (resourceName: string) => {
 
       if (resourceName === 'orders') item = { ...item, userId: user.id };
 
+      // Završetak naloga: vrijeme završetka, oznaka za pregled i obavijest vlasniku tvrtke.
+      let justCompleted = false;
+      if (resourceName === 'work-orders') {
+        const before = await kv.get(key);
+        if (item.status === 'completed' && before?.status !== 'completed') {
+          justCompleted = true;
+          item = { ...item, completedAt: new Date().toISOString(), completedBy: user.user_metadata?.name || user.email, reviewedAt: role === 'employee' ? null : new Date().toISOString() };
+        } else if (item.status === 'completed') {
+          item = { ...item, completedAt: before?.completedAt ?? item.completedAt ?? null, completedBy: before?.completedBy ?? item.completedBy ?? null, reviewedAt: item.reviewedAt ?? before?.reviewedAt ?? null };
+        } else {
+          item = { ...item, completedAt: null, completedBy: null, reviewedAt: null };
+        }
+      }
+
       await kv.set(key, item);
+      if (justCompleted && role === 'employee') {
+        notifyOrderCompleted(user, item).catch((err) => console.error('Order completed notify failed:', err));
+      }
       return c.json({ success: true, item });
     } catch (err: any) {
       return c.json({ error: err.message }, 500);
@@ -594,7 +643,30 @@ registerRoute(app, 'post', '/employees/create', authMiddleware, ownerOnly, activ
     createdAt: new Date().toISOString(),
   };
   await kv.set(`c:${companyId}:employees:${employee.id}`, employee);
-  return c.json({ success: true, employee });
+
+  // Pristupni podaci djelatniku e-mailom (privremenu lozinku mijenja pri prvoj prijavi).
+  let emailSent = false;
+  try {
+    const r: any = await resend.emails.send({
+      from: 'Mondo Pool Care <orders@resend.dev>',
+      to: [email],
+      subject: `Pristup aplikaciji Mondo Pool Care${companyName ? ' – ' + companyName : ''}`.slice(0, 150),
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px;">
+          <h2>Dobro došli, ${escapeHtml(name)}</h2>
+          <p>${escapeHtml(companyName || 'Vaša tvrtka')} vam je otvorila račun djelatnika u aplikaciji Mondo Pool Care, za radne naloge na terenu.</p>
+          <p><strong>E-mail za prijavu:</strong> ${escapeHtml(email)}<br>
+             <strong>Privremena lozinka:</strong> ${escapeHtml(password)}</p>
+          <p><a href="https://poolcare.mondo-acqua.hr/" style="display:inline-block;background:#1E88E5;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold">Otvori stranicu za prijavu</a></p>
+          <p>Na stranici odaberite <strong>Prijava</strong> i upišite gornje podatke. Nakon prijave promijenite lozinku.</p>
+          <p style="color:#666;font-size:13px">Aplikaciju možete dodati na početni zaslon mobitela (u pregledniku: Dodaj na početni zaslon).</p>
+        </div>`,
+    } as any);
+    emailSent = !r?.error;
+    if (r?.error) console.error('Employee welcome email error:', JSON.stringify(r.error));
+  } catch (err) { console.error('Employee welcome email failed:', err); }
+
+  return c.json({ success: true, employee, emailSent });
 });
 
 const loadCompanyEmployee = async (c: any) => {

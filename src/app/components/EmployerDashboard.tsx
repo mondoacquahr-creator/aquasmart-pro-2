@@ -14,6 +14,7 @@ import { isLiveMode, isDemoMode, generatePassword, Permissions, DEFAULT_EMPLOYEE
 import { api } from '../lib/supabase';
 import { EmployeePermissionsEditor } from './EmployeePermissionsEditor';
 import { loadCompanyData, saveChanges } from '../lib/companyData';
+import { totalWorkLabel } from '../lib/workTime';
 import { authService } from '../lib/auth';
 
 interface EmployerDashboardProps {
@@ -55,6 +56,11 @@ interface WorkOrder {
   services?: Service[];
   productsUsed?: ProductUsed[];
   totalCost?: number;
+  workStartedAt?: string;
+  workEndedAt?: string;
+  completedAt?: string | null;
+  completedBy?: string | null;
+  reviewedAt?: string | null;
 }
 
 interface MaintenanceTask {
@@ -136,6 +142,7 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
   const [addEmpError, setAddEmpError] = useState('');
   const [addEmpSaving, setAddEmpSaving] = useState(false);
   const [addEmpSuccess, setAddEmpSuccess] = useState(false);
+  const [addEmpMailed, setAddEmpMailed] = useState(false);
   const [addEmpWasLive, setAddEmpWasLive] = useState(false);
   const [addEmpCopied, setAddEmpCopied] = useState(false);
 
@@ -636,6 +643,7 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
           permissions: addEmpPerms,
         });
         updateEmployees([...employees, res.employee]);
+        setAddEmpMailed(res.emailSent === true);
         setAddEmpSaving(false);
         setAddEmpSuccess(true);
       } catch (err: any) {
@@ -818,6 +826,14 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
   };
 
   // Main Dashboard Home View
+  // Nalozi koje je djelatnik zatvorio, a vlasnik još nije pregledao
+  const toReview = workOrders
+    .filter(o => o.status === 'completed' && o.completedAt && !o.reviewedAt)
+    .sort((a, b) => String(b.completedAt).localeCompare(String(a.completedAt)));
+  const markReviewed = (id: number | string) => {
+    updateWorkOrders(workOrders.map(o => o.id === id ? { ...o, reviewedAt: new Date().toISOString() } : o));
+  };
+
   const renderHomeView = () => {
     const activeOrPendingCount = workOrders.filter(o => o.status === 'active' || o.status === 'pending').length;
     const belowMinCount = warehouse.filter(w => w.stock <= w.minStock).length;
@@ -828,6 +844,32 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
           Pregled <span className="gradient-gold">Poslodavac</span>
         </h1>
         {loading && <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.45)' }}>Učitavanje…</p>}
+
+        {/* Završeni nalozi za pregled */}
+        {toReview.length > 0 && (
+          <div className="rounded-2xl mb-6 overflow-hidden" style={{ background: 'rgba(46,255,136,0.06)', border: '1px solid rgba(46,255,136,0.3)' }}>
+            <p className="px-4 pt-4 pb-2 font-semibold flex items-center gap-2" style={{ color: '#2EFF88' }}>
+              <CheckCircle className="w-5 h-5" /> Završeni nalozi za pregled ({toReview.length})
+            </p>
+            {toReview.map((o) => (
+              <div key={o.id} className="flex flex-wrap items-center gap-3 px-4 py-3" style={{ borderTop: '1px solid rgba(46,255,136,0.15)' }}>
+                <div className="flex-1 min-w-[180px]">
+                  <p className="font-semibold text-sm">#{o.id} · {o.client}</p>
+                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                    {o.completedBy || o.assignee}{o.completedAt ? ` · ${new Date(o.completedAt).toLocaleString('hr-HR', { day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}` : ''}
+                    {o.workStartedAt && o.workEndedAt ? ` · rad ${totalWorkLabel(o.workStartedAt, o.workEndedAt)}` : ''}
+                  </p>
+                </div>
+                <button onClick={() => setSelectedWorkOrder(o)} className="px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-1.5" style={{ background: 'rgba(92,225,230,0.1)', color: '#5CE1E6', border: '1px solid rgba(92,225,230,0.25)' }}>
+                  <Eye className="w-4 h-4" /> Otvori
+                </button>
+                <button onClick={() => markReviewed(o.id)} className="px-3 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5" style={{ background: '#2EFF88', color: '#000' }}>
+                  <CheckCircle className="w-4 h-4" /> Pregledano
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Summary strip */}
         <div
@@ -1617,7 +1659,9 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
                 {addEmpSuccess ? (
                   <div>
                     <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                      Djelatnik je dodan. Pošaljite mu podatke za prvu prijavu:
+                      {addEmpMailed
+                        ? 'Djelatnik je dodan. Pristupni podaci i poveznica za prijavu poslani su mu e-mailom. Za svaki slučaj ih možete i kopirati:'
+                        : 'Djelatnik je dodan. E-mail djelatniku nije poslan, pa mu pošaljite podatke za prvu prijavu:'}
                     </p>
                     <div className="p-4 rounded-xl font-mono text-sm mb-4" style={{ background: 'rgba(2,13,18,0.6)', border: '1px solid rgba(120,220,255,0.18)' }}>
                       <div>E-mail: <span style={{ color: '#5CE1E6' }}>{addEmpEmail}</span></div>
