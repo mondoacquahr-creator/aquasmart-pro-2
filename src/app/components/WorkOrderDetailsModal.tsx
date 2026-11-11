@@ -752,7 +752,7 @@ export function WorkOrderDetailsModal({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4"
       style={{ background: 'rgba(0,0,0,0.85)' }}
       onClick={onClose}
     >
@@ -761,7 +761,7 @@ export function WorkOrderDetailsModal({
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-6xl max-h-[90vh] overflow-hidden rounded-3xl"
+        className="w-full max-w-6xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto overscroll-contain sm:overflow-hidden rounded-3xl"
         style={{
           background: 'rgba(4,24,32,0.96)',
           border: '1px solid rgba(120,220,255,0.12)',
@@ -770,10 +770,10 @@ export function WorkOrderDetailsModal({
         }}
       >
         {/* Header */}
-        <div className="p-6" style={{ borderBottom: '1px solid rgba(120,220,255,0.12)' }}>
-          <div className="flex items-start justify-between gap-4">
+        <div className="p-4 sm:p-6" style={{ borderBottom: '1px solid rgba(120,220,255,0.12)' }}>
+          <div className="flex flex-col-reverse sm:flex-row sm:items-start sm:justify-between gap-4">
             <div className="flex-1 min-w-0">
-              <h2 className="text-2xl font-bold mb-1">Radni Nalog #{order.id}</h2>
+              <h2 className="text-xl sm:text-2xl font-bold mb-1 break-words">Radni Nalog #{order.id}</h2>
               <p className="text-sm mb-3" style={{ color: 'rgba(255,255,255,0.6)' }}>
                 {editedOrder.client} • {editedOrder.location} • {editedOrder.assignee}
               </p>
@@ -854,8 +854,8 @@ export function WorkOrderDetailsModal({
               )}
             </div>
 
-            <div className="flex items-center gap-3 shrink-0">
-              <div className="text-right mr-4">
+            <div className="flex flex-wrap items-center gap-3 sm:shrink-0">
+              <div className="sm:text-right mr-auto sm:mr-4">
                 <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>Napredak</div>
                 <div className="text-xl font-bold" style={{ color: '#5CE1E6' }}>{Math.round(progress)}%</div>
               </div>
@@ -938,7 +938,7 @@ export function WorkOrderDetailsModal({
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 320px)' }}>
+        <div className="p-4 sm:p-6 sm:overflow-y-auto sm:max-h-[calc(90vh-320px)]">
           <AnimatePresence mode="wait">
             {/* SERVICES TAB */}
             {activeTab === 'services' && (
