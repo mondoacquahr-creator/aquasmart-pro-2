@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   X, Save, Printer, Camera, Wrench, Beaker, Droplets, Settings,
   CheckCircle, Plus, Trash2, DollarSign, FileText,
-  AlertTriangle, Package, Images, Loader2, ChevronLeft, ChevronRight, Clock, Play, Square
+  AlertTriangle, Package, Images, Loader2, ChevronLeft, ChevronRight, Clock, Play, Square, RotateCcw
 } from 'lucide-react';
 import { fmtClock, itemDurations, itemTimeLabel, totalWorkLabel } from '../lib/workTime';
 
@@ -426,6 +426,16 @@ export function WorkOrderDetailsModal({
 
   const finishWork = () => handleSave({ workEndedAt: new Date().toISOString() });
 
+  // Ponovno otvaranje zatvorenog naloga (npr. ako je greškom zatvoren)
+  const [reopened, setReopened] = useState(false);
+  const reopenOrder = () => {
+    const { workEndedAt: _e, ...rest } = editedOrder as any;
+    const next = { ...rest, status: 'active' as const };
+    setEditedOrder(next);
+    setReopened(true);
+    onPersist?.({ ...(order as any), workEndedAt: undefined, status: 'active' });
+  };
+
   const submitProduct = () => {
     if (!newProductWarehouseId || !newProductQty || parseFloat(newProductQty) <= 0) {
       setAddProductError('Odaberite proizvod i upišite količinu.');
@@ -660,7 +670,8 @@ export function WorkOrderDetailsModal({
       automationData,
       photos,
       totalCost: totals.grandTotal,
-      status: (maintenanceTasks.every(t => t.completed) && services.every(s => s.completed)) ? 'completed' as const : editedOrder.status
+      // Nakon ponovnog otvaranja nalog se zatvara tek pritiskom na „Završi rad”.
+      status: ((!reopened || extra.workEndedAt) && maintenanceTasks.every(t => t.completed) && services.every(s => s.completed)) ? 'completed' as const : editedOrder.status
     };
     onSave(updatedOrder);
     onClose();
@@ -961,7 +972,17 @@ export function WorkOrderDetailsModal({
 
           {/* Vrijeme rada */}
           <div className="flex flex-wrap items-center justify-between gap-2 mt-3 text-sm">
-            {!editedOrder.workStartedAt ? (
+            {editedOrder.status === 'completed' ? (
+              <>
+                <span style={{ color: 'rgba(255,255,255,0.8)' }}>
+                  <CheckCircle className="w-4 h-4 inline -mt-0.5 mr-1" style={{ color: '#2EFF88' }} />
+                  Nalog je zatvoren{editedOrder.workStartedAt && editedOrder.workEndedAt ? ` · rad ${fmtClock(editedOrder.workStartedAt)} – ${fmtClock(editedOrder.workEndedAt)}, ukupno ${totalWorkLabel(editedOrder.workStartedAt, editedOrder.workEndedAt)}` : ''}
+                </span>
+                <button onClick={reopenOrder} className="min-h-[40px] px-4 py-2 rounded-xl font-bold flex items-center gap-2" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.25)', color: '#fff' }}>
+                  <RotateCcw className="w-4 h-4" /> Ponovno otvori
+                </button>
+              </>
+            ) : !editedOrder.workStartedAt ? (
               <>
                 <span style={{ color: 'rgba(255,255,255,0.6)' }}>Vrijeme rada se mjeri od početka rada.</span>
                 <button onClick={startWork} className="min-h-[40px] px-4 py-2 rounded-xl font-bold flex items-center gap-2" style={{ background: '#2EFF88', color: '#000' }}>

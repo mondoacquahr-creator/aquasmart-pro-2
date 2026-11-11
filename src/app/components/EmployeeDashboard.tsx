@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   FileText, Droplets, Calendar, CheckCircle, AlertCircle,
   MapPin, UserCog, Package, Settings, Home, MoreHorizontal,
-  Eye, User, Phone, Mail, Plus, X, ArrowLeft
+  Eye, User, Phone, Mail, Plus, X, ArrowLeft, RotateCcw
 } from 'lucide-react';
 import { useLanguage } from '../lib/languageContext';
 import { AquaSmartProLogo } from './AquaSmartProLogo';
@@ -224,6 +224,18 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
     updateWorkOrders(updated);
     if (live && order) {
       try { await api.post('work-orders', { ...order, status: 'completed' }); }
+      catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
+    }
+  };
+
+  const reopenOrderInList = async (id: number | string) => {
+    const order = workOrders.find(o => o.id === id);
+    if (!order) return;
+    const { workEndedAt: _e, ...rest } = order as any;
+    const reopened = { ...rest, status: 'active' as const };
+    updateWorkOrders(workOrders.map(o => o.id === id ? reopened : o));
+    if (live) {
+      try { await api.post('work-orders', reopened); }
       catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
     }
   };
@@ -499,6 +511,15 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
                   >
                     <Eye className="w-4 h-4" /><span>Detalji</span>
                   </button>
+                  {order.status === 'completed' && (
+                    <button
+                      onClick={() => reopenOrderInList(order.id)}
+                      className="px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 flex items-center gap-2"
+                      style={{ background: 'rgba(255,255,255,0.06)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}
+                    >
+                      <RotateCcw className="w-4 h-4" /><span>Ponovno otvori</span>
+                    </button>
+                  )}
                   {order.status !== 'completed' && (
                     <button
                       onClick={() => markOrderComplete(order.id)}
