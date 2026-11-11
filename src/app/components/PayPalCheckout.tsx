@@ -10,7 +10,7 @@ function loadPayPal(): Promise<any> {
   if (!sdkPromise) {
     sdkPromise = new Promise((resolve, reject) => {
       const s = document.createElement('script');
-      s.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=EUR&intent=capture&components=buttons&locale=hr_HR`;
+      s.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=EUR&intent=capture&components=buttons`;
       s.async = true;
       s.onload = () => ((window as any).paypal ? resolve((window as any).paypal) : reject(new Error('PayPal nije učitan')));
       s.onerror = () => { sdkPromise = null; reject(new Error('PayPal nije dostupan')); };
