@@ -222,12 +222,68 @@ footer .copy{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);padding
 img{height:auto}
 .page{display:none}.page.active{display:block}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.pairs{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+@media (max-width:760px){.pairs{grid-template-columns:1fr}}
+.pair{margin:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--bg-soft)}
+.pair .ph{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.pair .ph.three{grid-template-columns:1fr 1fr 1fr}
+.pair .ph div{position:relative;min-width:0}
+.pair img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.pair .ph span{position:absolute;left:8px;top:8px;font:700 .68rem/1 var(--display);letter-spacing:.1em;text-transform:uppercase;background:rgba(6,8,32,.78);color:#fff;padding:6px 8px;border-radius:999px}
+.pair figcaption{padding:12px 16px;font-size:.9rem;color:var(--muted)}
+.pair figcaption b{color:var(--navy)}
+[hidden]{display:none!important}
+.wiz-head{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.wiz-steps{display:flex;align-items:center;gap:6px}
+.wiz-steps span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:800 .8rem var(--display);border:1.5px solid var(--line);color:var(--muted);transition:all .25s}
+.wiz-steps span.on{background:var(--aqua);border-color:var(--aqua);color:#0a0a0a;box-shadow:0 0 0 4px rgba(79,195,240,.18)}
+.wiz-steps span.done{border-color:var(--aqua);color:var(--aqua)}
+.wiz-steps i{flex:1;height:2px;background:var(--line);border-radius:2px}
+.wiz-steps i.done{background:var(--aqua)}
+.wiz-title{font:800 1.35rem/1.2 var(--display);color:var(--navy);margin:0;letter-spacing:-.02em}
+.wstep{animation:wIn .35s ease}
+@keyframes wIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.tiles input{position:absolute;opacity:0;pointer-events:none}
+.tiles label{position:relative;display:flex;align-items:flex-end;min-height:104px;border-radius:16px;overflow:hidden;cursor:pointer;border:1.5px solid var(--line);background:rgba(255,255,255,.04) center/cover no-repeat;padding:12px;font:700 .95rem/1.2 var(--display);color:#fff;transition:transform .15s,border-color .15s,box-shadow .15s}
+.tiles label::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,13,18,.05) 30%,rgba(2,13,18,.85))}
+.tiles label b{position:relative;font-weight:700}
+.tiles label small{position:relative;display:block;font:500 .74rem var(--body);opacity:.75;margin-top:2px}
+.tiles label:hover{transform:translateY(-2px);border-color:rgba(79,195,240,.5)}
+.tiles input:checked + label{border-color:var(--aqua);box-shadow:0 0 0 3px rgba(79,195,240,.35)}
+.tiles input:focus-visible + label{outline:3px solid var(--aqua);outline-offset:2px}
+.wiz-nav{display:flex;gap:10px;justify-content:space-between;margin-top:18px}
+.wiz-nav [data-next],.wiz-nav [data-send]{margin-left:auto}
+.sum{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.sum span{font-size:.8rem;padding:6px 10px;border-radius:999px;background:rgba(79,195,240,.12);color:#bfefff}
+.vol .small{color:var(--muted)}
+/* ===== Tema: kao Mondo Pool Care ===== */
+:root{--navy:#ffffff;--aqua:#4FC3F0;--aqua-ink:#5CE1E6;--bg:#041820;--bg-soft:rgba(92,225,230,.05);--line:rgba(120,220,255,.12);--ink:rgba(255,255,255,.78);--muted:rgba(255,255,255,.55);--display:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--grad:linear-gradient(90deg,#7FDBFF 0%,#4FC3F0 45%,#1E88E5 100%)}
+body{background:radial-gradient(ellipse at 80% 0%,#08303D 0%,#041820 55%,#020D12 100%) fixed;color:var(--ink)}
+h1,h2,h3{letter-spacing:-.03em;font-weight:800}
+.hero h1 em,h1 em{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dark,.top,footer,.vol{background:rgba(2,13,18,.85)!important}
+.top{border-bottom:1px solid var(--line)}
+header.site{background:rgba(4,24,32,.75);border-bottom-color:rgba(120,220,255,.08)}
+.soft,.phero{background:rgba(92,225,230,.03)}
+.btn-primary{background:#4FC3F0;color:#0a0a0a;box-shadow:0 6px 28px rgba(79,195,240,.35)}
+.btn-primary:hover{transform:translateY(-1px) scale(1.02)}
+.btn-dark,.chips input:checked + label{background:#4FC3F0!important;color:#0a0a0a!important;border-color:#4FC3F0!important}
+.btn-ghost{color:#fff!important;border-color:rgba(255,255,255,.25)!important;background:rgba(255,255,255,.04)}
+.tcard,.model,.form-card,.tbl-wrap,.drop-panel,.care,nav.main.open,.pair{background:rgba(6,30,42,.6)!important;border:1px solid rgba(120,220,255,.12)!important;backdrop-filter:blur(12px)}
+.tcard:hover,.model:hover{box-shadow:0 20px 50px rgba(0,0,0,.45),0 0 0 1px rgba(92,225,230,.25)}
+input[type=text],input[type=tel],input[type=email],input[type=number],textarea{background:rgba(255,255,255,.05);color:#fff;border-color:rgba(120,220,255,.15)}
+input:focus,textarea:focus{border-color:#4FC3F0;outline:none;box-shadow:0 0 0 3px rgba(79,195,240,.2)}
+.form-msg.ok{color:#2EE6A6}.form-msg.err{color:#FF8A80}
+.cta,[class*="cta-band"]{background:var(--grad)!important}
+.flogo,.logo img,header.site img{background:#fff;border-radius:12px;padding:4px}
 </style>
 </head>
 <body>
 
 <div class="top"><div class="wrap">
-  <span>Mondo Acqua d.o.o. · Kastav · radimo u cijeloj Hrvatskoj</span>
+  <span>Mondo Acqua d.o.o. · Viškovo · radimo u cijeloj Hrvatskoj</span>
   <span><a href="tel:+385952087321">+385 95 208 7321</a> · <a href="mailto:info@mondo-acqua.hr">info@mondo-acqua.hr</a></span>
 </div></div>
 
@@ -360,7 +416,7 @@ img{height:auto}
       <h1>FP bazeni: ovalni i pravokutni, s opremom za rad.</h1>
       <p class="lead">Čelična konstrukcija s folijom 0,8 mm, ukopana u teren. Cijena uključuje bazen, osnovnu opremu, montažu i montažni materijal.</p>
       <div class="btns"><a class="btn btn-primary" href="#upit">Zatražite ponudu →</a></div></div>
-    <img src="slike/bazen-pravokutni-vrt.jpg" alt="Pravokutni bazen s folijom u vrtu" loading="lazy">
+    <img src="slike/fp-ovalni-terasa.jpg" alt="Montažni ovalni FP bazen na terasi" loading="lazy">
   </div></div>
   <div class="band"><div class="wrap cols2">
     <div class="stack"><h2>Što je uključeno</h2>
@@ -450,6 +506,10 @@ img{height:auto}
     <div class="stack"><h2>Za upit pripremite</h2><p class="lead">Okvirne dimenzije i dubinu, mjesto gradnje, fotografiju terena, želite li skimer ili preljev te radite li s vlastitim izvođačem.</p>
     <a class="btn btn-dark" href="#upit" style="align-self:flex-start">Pošaljite upit →</a></div>
   </div></div>
+  <div class="band soft"><div class="wrap">
+    <p class="eyebrow">Naši radovi</p><h2 style="margin-bottom:24px">Betonski bazeni koje smo izveli i održavamo.</h2>
+    <div class="gallery" id="galleryBeton"></div>
+  </div></div>
 </section>
 
 <!-- ============ SWIM SPA ============ -->
@@ -507,6 +567,14 @@ img{height:auto}
       <div class="care" style="background:#fff;border-color:var(--line)"><div><p class="eyebrow" style="margin-bottom:6px">Besplatno</p><strong>Mondo Pool Care</strong><p class="small">Analiza vode s točnim dozama, povijest analiza i webshop.</p></div><a class="btn btn-dark" href="https://poolcare.mondo-acqua.hr/" target="_blank" rel="noopener">Otvori ↗</a></div>
     </div>
   </div></div>
+  <div class="band soft"><div class="wrap">
+    <p class="eyebrow">Prije i poslije</p><h2 style="margin-bottom:24px">Zelena voda, mulj i zapuštene obloge – vraćamo bazen u red.</h2>
+    <div class="pairs" id="pairsMaint"></div>
+  </div></div>
+  <div class="band"><div class="wrap">
+    <p class="eyebrow">Kroz sezonu</p><h2 style="margin-bottom:24px">Mjerenje, čišćenje, otvaranje i zimovanje.</h2>
+    <div class="gallery" id="galleryMaint"></div>
+  </div></div>
 </section>
 
 <!-- ============ GALERIJA ============ -->
@@ -535,7 +603,6 @@ img{height:auto}
     <div class="form-card stack" style="gap:10px">
       <h3>Kontakt podaci</h3>
       <p><b>Sjedište:</b> Lucinići 17, 51216 Viškovo</p>
-      <p><b>Adresa:</b> Spinčići 158C, 51215 Kastav</p>
       <p><b>Telefon / WhatsApp:</b> <a href="tel:+385952087321">+385 95 208 7321</a></p>
       <p><b>E-mail:</b> <a href="mailto:info@mondo-acqua.hr">info@mondo-acqua.hr</a></p>
       <a class="btn btn-dark" href="#upit" style="align-self:flex-start;margin-top:6px">Pošaljite upit →</a>
@@ -553,7 +620,6 @@ img{height:auto}
       <div class="form-card stack" style="gap:8px;box-shadow:none">
         <p><b>Telefon / WhatsApp</b><br><a href="tel:+385952087321">+385 95 208 7321</a> · <a href="https://wa.me/385952087321" target="_blank" rel="noopener">WhatsApp ↗</a></p>
         <p><b>E-mail</b><br><a href="mailto:info@mondo-acqua.hr">info@mondo-acqua.hr</a></p>
-        <p><b>Adresa</b><br>Spinčići 158C, 51215 Kastav</p>
         <p class="small">Za upit pripremite vrstu bazena, okvirne dimenzije, mjesto, željeni rok i fotografiju prostora.</p>
       </div>
     </div>
@@ -571,33 +637,50 @@ img{height:auto}
   <div><span class="flogo"><img src="logo.png" alt="Mondo Acqua" width="60" height="46"></span><p>Bazeni, bazenska oprema, tretman vode i održavanje.</p></div>
   <div><h4>Bazeni</h4><a href="#fp">Montažni FP</a><a href="#coral">CORAL kompozitni</a><a href="#compact">COMPACT keramički</a><a href="#po-mjeri">Betonski i po mjeri</a><a href="#swim-spa">Swim spa</a></div>
   <div><h4>Usluge</h4><a href="#kljuc-u-ruke">Ključ u ruke</a><a href="#odrzavanje">Održavanje bazena</a><a href="https://poolcare.mondo-acqua.hr/" target="_blank" rel="noopener">Mondo Pool Care ↗</a><a href="https://mondo-acqua.hr/products/results?id_category=1376" target="_blank" rel="noopener">Webshop opreme ↗</a></div>
-  <div><h4>Kontakt</h4><a href="tel:+385952087321">+385 95 208 7321</a><a href="mailto:info@mondo-acqua.hr">info@mondo-acqua.hr</a><span>Spinčići 158C, 51215 Kastav</span><a href="https://www.facebook.com/people/Mondo-Acqua-HR/100064917164727/" target="_blank" rel="noopener">Facebook ↗</a><a href="https://www.instagram.com/mondoacquahr/" target="_blank" rel="noopener">Instagram ↗</a></div>
+  <div><h4>Kontakt</h4><a href="tel:+385952087321">+385 95 208 7321</a><a href="mailto:info@mondo-acqua.hr">info@mondo-acqua.hr</a><span>Lucinići 17, 51216 Viškovo</span><a href="https://www.facebook.com/people/Mondo-Acqua-HR/100064917164727/" target="_blank" rel="noopener">Facebook ↗</a><a href="https://www.instagram.com/mondoacquahr/" target="_blank" rel="noopener">Instagram ↗</a></div>
   <p class="copy">© 2026 Mondo Acqua d.o.o. · Sjedište: Lucinići 17, 51216 Viškovo</p>
 </div></footer>
 
 <template id="formTpl">
-<form class="form-card" novalidate>
-  <div class="vol"><span class="small" style="color:#b9c1dc">Vaš bazen</span><strong data-vol>– × – × – m</strong><span class="small" style="color:#b9c1dc" data-vol2>Upišite dužinu i širinu</span></div>
-  <div class="fgroup"><span class="flabel">Dimenzije bazena (m)</span>
-    <div class="grid3">
-      <label class="field"><span>Dužina</span><input type="number" step="0.1" min="0" name="len" inputmode="decimal" placeholder="8"></label>
-      <label class="field"><span>Širina</span><input type="number" step="0.1" min="0" name="wid" inputmode="decimal" placeholder="4"></label>
-      <label class="field"><span>Dubina</span><input type="number" step="0.1" min="0" name="dep" inputmode="decimal" placeholder="1,5"></label>
-    </div></div>
-  <div class="fgroup"><span class="flabel">Što vas zanima *</span><div class="chips" data-chips="type"></div></div>
-  <div class="fgroup"><span class="flabel">Sustav filtracije</span><div class="chips" data-chips="filt"></div></div>
-  <div class="fgroup"><span class="flabel">Okvirni budžet</span><div class="chips" data-chips="budget"></div></div>
-  <div class="fgroup"><span class="flabel">Način izvedbe</span><div class="chips" data-chips="mode"></div></div>
-  <div class="grid2">
-    <label class="field"><span>Mjesto / regija</span><input type="text" name="loc" placeholder="npr. Kastav"></label>
-    <label class="field"><span>Ime i prezime *</span><input type="text" name="name" autocomplete="name"></label>
-    <label class="field"><span>Telefon</span><input type="tel" name="phone" autocomplete="tel"></label>
-    <label class="field"><span>E-mail</span><input type="email" name="email" autocomplete="email"></label>
+<form class="form-card wiz" novalidate>
+  <div class="wiz-head">
+    <div class="wiz-steps"><span class="on">1</span><i></i><span>2</span><i></i><span>3</span><i></i><span>4</span></div>
+    <p class="wiz-title" data-wtitle>Što vas zanima?</p>
   </div>
-  <label class="field" style="margin-top:12px"><span>Napomena</span><textarea name="note" placeholder="Teren, pristup, željeni rok…"></textarea></label>
-  <p class="small" style="margin:12px 0">* Obavezno: što vas zanima, ime te telefon ili e-mail.</p>
-  <button class="btn btn-primary" type="submit">Pošaljite upit →</button>
+  <div class="wstep" data-step="1">
+    <div class="tiles" data-tiles="type"></div>
+  </div>
+  <div class="wstep" data-step="2" hidden>
+    <div class="vol"><span class="small">Vaš bazen</span><strong data-vol>– × – × – m</strong><span class="small" data-vol2>Upišite dužinu i širinu</span></div>
+    <div class="fgroup"><span class="flabel">Dimenzije bazena (m)</span>
+      <div class="grid3">
+        <label class="field"><span>Dužina</span><input type="number" step="0.1" min="0" name="len" inputmode="decimal" placeholder="8"></label>
+        <label class="field"><span>Širina</span><input type="number" step="0.1" min="0" name="wid" inputmode="decimal" placeholder="4"></label>
+        <label class="field"><span>Dubina</span><input type="number" step="0.1" min="0" name="dep" inputmode="decimal" placeholder="1,5"></label>
+      </div></div>
+    <div class="fgroup"><span class="flabel">Sustav filtracije</span><div class="chips" data-chips="filt"></div></div>
+  </div>
+  <div class="wstep" data-step="3" hidden>
+    <div class="fgroup"><span class="flabel">Okvirni budžet</span><div class="chips" data-chips="budget"></div></div>
+    <div class="fgroup"><span class="flabel">Način izvedbe</span><div class="chips" data-chips="mode"></div></div>
+    <label class="field"><span>Mjesto / regija</span><input type="text" name="loc" placeholder="npr. Rijeka"></label>
+  </div>
+  <div class="wstep" data-step="4" hidden>
+    <div class="sum" data-sum></div>
+    <div class="grid2">
+      <label class="field"><span>Ime i prezime *</span><input type="text" name="name" autocomplete="name"></label>
+      <label class="field"><span>Telefon</span><input type="tel" name="phone" autocomplete="tel"></label>
+      <label class="field" style="grid-column:1/-1"><span>E-mail</span><input type="email" name="email" autocomplete="email"></label>
+    </div>
+    <label class="field" style="margin-top:12px"><span>Napomena</span><textarea name="note" placeholder="Teren, pristup, željeni rok…"></textarea></label>
+    <p class="small" style="margin:10px 0 0">* Upišite ime te telefon ili e-mail.</p>
+  </div>
   <p class="form-msg" role="status" aria-live="polite"></p>
+  <div class="wiz-nav">
+    <button class="btn btn-ghost" type="button" data-back hidden>← Natrag</button>
+    <button class="btn btn-primary" type="button" data-next>Dalje →</button>
+    <button class="btn btn-primary" type="submit" data-send hidden>Pošaljite upit →</button>
+  </div>
 </form>
 </template>
 
@@ -610,7 +693,7 @@ const TYPES = [
   {href:'#fp', kicker:'Montažni', title:'FP bazeni', text:'Ovalni i pravokutni, čelična konstrukcija s folijom. Najpovoljniji ulaz u vlastiti bazen.', img:'slike/fp-ovalni-vrt.jpg', from:'5.030 €', note:'s montažom'},
   {href:'#coral', kicker:'Kompozitni', title:'CORAL', text:'Monolitna GLASSROCK školjka s izolacijom i integriranim stepenicama.', img:IMG('gemini-2'), from:'10.768 €', note:'s opremom'},
   {href:'#compact', kicker:'Keramički', title:'COMPACT', text:'Keramička školjka od 12 slojeva, 3D izgled kamena, montaža u jednom danu.', img:IMG('ruby-1'), from:'14.979 €', note:'s opremom'},
-  {href:'#po-mjeri', kicker:'Po projektu', title:'Betonski i po mjeri', text:'Skimer ili preljev, cjelovita strojarnica, izvedba ključ u ruke.', img:'slike/bazen-pogled-ucka.jpg', from:'na upit', note:''},
+  {href:'#po-mjeri', kicker:'Po projektu', title:'Betonski i po mjeri', text:'Skimer ili preljev, cjelovita strojarnica, izvedba ključ u ruke.', img:'slike/betonski-keramika-preljev.jpg', from:'na upit', note:''},
 ];
 const typeCard = t => `<a class="tcard" href="${t.href}"><img src="${t.img}" alt="${t.title}" loading="lazy"><div class="tb"><span class="kicker">${t.kicker}</span><h3>${t.title}</h3><p>${t.text}</p><p class="price">${t.from === 'na upit' ? 'Cijena na upit' : `od ${t.from} <span>${t.note}</span>`}</p></div></a>`;
 document.getElementById('typeCards').innerHTML = TYPES.map(typeCard).join('');
@@ -634,11 +717,23 @@ document.getElementById('maintList1').innerHTML = mHtml;
 document.getElementById('maintList2').innerHTML = mHtml;
 
 const S = f => 'slike/' + f + '.jpg';
-const GALLERY = [[S('bazen-pogled-ucka'),'Ključ u ruke'],[S('fp-ovalni-vrt'),'Ovalni bazen'],[S('bazen-pravokutni-vrt'),'Pravokutni bazen'],[S('bazen-tamni-drvena-terasa'),'Betonski bazen'],[S('bazen-zaobljeni-kuca'),'Zaobljeni kutovi'],[S('bazen-plocice-lezaljke'),'Keramička obloga'],[S('fp-ovalni-voda'),'Bistra voda'],[S('bazen-osmerokutni-punjenje'),'Punjenje bazena'],[S('bazen-isporuka-opreme'),'Isporuka opreme'],[S('bazen-pravokutni-otvaranje'),'Otvaranje sezone'],[S('bazen-zimski-pokrivac'),'Zimovanje'],[S('bazen-sigurnosni-pokrivac'),'Sigurnosni pokrivač'],[GAL('1672835881_future-pravougaoni-2.jpg'),'Ugradnja FP bazena'],[GAL('1673432317_viber-slika-2020-02-29-08-00-51.jpg'),'Iskop za bazen'],[GAL('1673432305_gre-ukopni-10.jpg'),'FP ovalni, ugradnja']];
+const BETON = [[S('betonski-keramika-preljev'),'Preljevni bazen, keramika'],[S('betonski-pogled-more'),'Pogled na more'],[S('bazen-tamni-drvena-terasa'),'Tamna obloga, drvena terasa'],[S('betonski-more-pergola'),'Bazen uz more'],[S('betonski-tamni-mozaik'),'Tamni mozaik'],[S('bazen-tamni-crkva'),'Tamna obloga'],[S('betonski-mozaik-stepenice'),'Mozaik i stepenice'],[S('betonski-rijeka-ljeto'),'Pogled na Kvarner'],[S('bazen-keramika-robot'),'Keramička obloga'],[S('bazen-pravokutni-vrt'),'Betonski bazen u vrtu'],[S('betonski-preljev-kvarner'),'Preljevni rub'],[S('bazen-pogled-more-terasa'),'Terasa s pogledom']];
+const FPG = [[S('fp-ovalni-vrt'),'Ovalni FP'],[S('fp-ovalni-terasa'),'Ovalni FP na terasi'],[S('fp-ovalni-sunce'),'Ovalni FP'],[S('fp-ovalni-voda'),'Bistra voda'],[S('bazen-zaobljeni-kuca'),'Pravokutni FP'],[S('bazen-osmerokutni-punjenje'),'Punjenje bazena']];
+const GALLERY = [[S('bazen-pogled-ucka'),'Ključ u ruke'],[S('fp-ovalni-vrt'),'Ovalni bazen'],[S('bazen-pravokutni-vrt'),'Betonski bazen'],[S('bazen-tamni-drvena-terasa'),'Betonski bazen'],[S('bazen-zaobljeni-kuca'),'Zaobljeni kutovi'],[S('bazen-plocice-lezaljke'),'Keramička obloga'],[S('fp-ovalni-voda'),'Bistra voda'],[S('bazen-osmerokutni-punjenje'),'Punjenje bazena'],[S('bazen-isporuka-opreme'),'Isporuka opreme'],[S('bazen-pravokutni-otvaranje'),'Otvaranje sezone'],[S('bazen-zimski-pokrivac'),'Zimovanje'],[S('bazen-sigurnosni-pokrivac'),'Sigurnosni pokrivač'],[GAL('1672835881_future-pravougaoni-2.jpg'),'Ugradnja FP bazena'],[GAL('1673432317_viber-slika-2020-02-29-08-00-51.jpg'),'Iskop za bazen'],[GAL('1673432305_gre-ukopni-10.jpg'),'FP ovalni, ugradnja']];
 const gHtml = list => list.map(([u,c]) => `<figure><img src="${u}" alt="${c}" loading="lazy"><figcaption>${c}</figcaption></figure>`).join('');
 document.getElementById('galleryHome').innerHTML = gHtml(GALLERY.slice(0,6));
-document.getElementById('galleryAll').innerHTML = gHtml(GALLERY);
-document.getElementById('galleryFp').innerHTML = gHtml([GALLERY[1],GALLERY[2],GALLERY[4],GALLERY[6],GALLERY[12],GALLERY[14]]);
+document.getElementById('galleryFp').innerHTML = gHtml(FPG);
+document.getElementById('galleryBeton').innerHTML = gHtml(BETON);
+const PAIRS = [
+  [['odr-zelena-ciscenje','Prije'],['odr-zelena-poslije','Poslije'],'Pravokutni bazen','Pražnjenje, uklanjanje mulja i čišćenje obloge.'],
+  [['odr-more-zelena','Prije'],['odr-more-ocisceno','Poslije'],'Bazen s pogledom na more','Zelena voda – ispražnjen, očišćen mozaik i pripremljen za punjenje.'],
+  [['odr-terasa-zelena','Prije'],['odr-terasa-cisto','Poslije'],'Bazen na drvenoj terasi','Otvaranje sezone nakon zime.'],
+  [['ciscenje-prije-ovalni','Prije'],['fp-ovalni-voda','Poslije'],'Ovalni FP bazen','Čišćenje i dovođenje vode u ravnotežu.'],
+  [['folija-stara','Stara folija'],['folija-filc','Podloga'],'Izmjena folije','Skidanje stare folije, nova podloga od filca i nova folija.',['folija-nova','Nova folija']],
+];
+document.getElementById('pairsMaint').innerHTML = PAIRS.map(([a,b,t,d,c]) => `<figure class="pair"><div class="ph${c?' three':''}">${[a,b,c].filter(Boolean).map(([f,l]) => `<div><img src="${S(f)}" alt="${t} – ${l}" loading="lazy"><span>${l}</span></div>`).join('')}</div><figcaption><b>${t}.</b> ${d}</figcaption></figure>`).join('');
+document.getElementById('galleryMaint').innerHTML = gHtml([[S('odr-mjerenje-sol-klor'),'Mjerenje soli i klora'],[S('odr-mreza-ciscenje'),'Čišćenje površine'],[S('odrzavanje-usisavanje'),'Usisavanje dna'],[S('bazen-pravokutni-otvaranje'),'Otvaranje sezone'],[S('odr-zimovanje-winterp'),'Zimovanje uz Winter P'],[S('odr-zimski-pokrivac'),'Zimski pokrivač']]);
+document.getElementById('galleryAll').innerHTML = gHtml([...GALLERY, ...BETON.filter(b => !GALLERY.some(g => g[0] === b[0]))]);
 
 const PROC = [['Razgovor i plan','Prostor, želje, tip bazena i način korištenja.'],['Ponuda','Bazen, oprema, montaža i građevinski radovi kao zasebne stavke.'],['Montaža ili izvedba','Montaža školjke najčešće u jednom danu.'],['Pokretanje i održavanje','Priprema vode, upute i održavanje kroz sezonu.']];
 document.getElementById('procHome').innerHTML = PROC.map(([t,p],i) => `<div><span>KORAK ${i+1}</span><h3>${t}</h3><p>${p}</p></div>`).join('');
@@ -655,6 +750,32 @@ let formN = 0;
 function mountForm(slot){
   const f = document.getElementById('formTpl').content.firstElementChild.cloneNode(true);
   const n = ++formN;
+  const TILE = {'Montažni FP':['slike/fp-ovalni-vrt.jpg','od 5.030 €'],'CORAL kompozitni':[IMG('gemini-2'),'od 10.768 €'],'COMPACT keramički':[IMG('ruby-1'),'od 14.979 €'],'Betonski / po mjeri':['slike/betonski-keramika-preljev.jpg','na upit'],'Swim spa':[IMG('hit-1'),'plivanje i masaža'],'Održavanje bazena':['slike/odr-zelena-poslije.jpg','cijela Hrvatska'],'Još nisam siguran':['','savjetujemo vas']};
+  f.querySelector('[data-tiles]').innerHTML = CHIPS.type.map((v,i) => `<input type="radio" id="f${n}-type-${i}" name="type" value="${v}"><label for="f${n}-type-${i}" style="${TILE[v][0] ? `background-image:url('${TILE[v][0]}')` : 'background-image:var(--grad)'}"><span><b>${v}</b><small>${TILE[v][1]}</small></span></label>`).join('');
+  const TITLES_W = ['Što vas zanima?','Dimenzije i filtracija','Budžet i izvedba','Kome se javljamo?'];
+  let step = 1;
+  const go = k => {
+    step = k;
+    f.querySelectorAll('.wstep').forEach(el => el.hidden = +el.dataset.step !== k);
+    f.querySelectorAll('.wiz-steps span').forEach((el,i) => { el.className = i+1 === k ? 'on' : (i+1 < k ? 'done' : ''); });
+    f.querySelectorAll('.wiz-steps i').forEach((el,i) => el.className = i+1 < k ? 'done' : '');
+    f.querySelector('[data-wtitle]').textContent = TITLES_W[k-1];
+    f.querySelector('[data-back]').hidden = k === 1;
+    f.querySelector('[data-next]').hidden = k === 4;
+    f.querySelector('[data-send]').hidden = k !== 4;
+    f.querySelector('.form-msg').textContent = '';
+    if (k === 4) {
+      const v = q => (f.querySelector(`input[name=${q}]:checked`) || {}).value;
+      const L = f.len.value, W = f.wid.value;
+      f.querySelector('[data-sum]').innerHTML = [v('type'), L && W ? `${L} × ${W}${f.dep.value ? ' × ' + f.dep.value : ''} m` : '', v('filt'), v('budget'), v('mode'), f.loc.value.trim()].filter(Boolean).map(x => `<span>${x}</span>`).join('');
+    }
+  };
+  f.querySelector('[data-next]').addEventListener('click', () => {
+    if (step === 1 && !f.querySelector('input[name=type]:checked')) { const m = f.querySelector('.form-msg'); m.className = 'form-msg err'; m.textContent = 'Odaberite što vas zanima.'; return; }
+    go(step + 1);
+  });
+  f.querySelector('[data-back]').addEventListener('click', () => go(step - 1));
+  f.querySelector('[data-tiles]').addEventListener('change', () => setTimeout(() => go(2), 220));
   f.querySelectorAll('[data-chips]').forEach(box => {
     const key = box.dataset.chips;
     box.innerHTML = CHIPS[key].map((v,i) => `<input type="radio" id="f${n}-${key}-${i}" name="${key}" value="${v}"><label for="f${n}-${key}-${i}">${v}</label>`).join('');
@@ -670,10 +791,11 @@ function mountForm(slot){
   f.addEventListener('input', upd);
   f.addEventListener('submit', async e => {
     e.preventDefault();
+    if (step < 4) { f.querySelector('[data-next]').click(); return; }
     const msg = f.querySelector('.form-msg'); msg.className = 'form-msg';
     const val = k => (f.querySelector(`input[name=${k}]:checked`) || {}).value || '';
     const name = f.name.value.trim(), phone = f.phone.value.trim(), email = f.email.value.trim();
-    if (!val('type')) { msg.textContent = 'Odaberite što vas zanima.'; msg.classList.add('err'); return; }
+    if (!val('type')) { go(1); msg.textContent = 'Odaberite što vas zanima.'; msg.classList.add('err'); return; }
     if (!name || (!phone && !email)) { msg.textContent = 'Upišite ime te telefon ili e-mail.'; msg.classList.add('err'); return; }
     const note = [
       `Zanima: ${val('type')}`,
@@ -681,7 +803,7 @@ function mountForm(slot){
       val('filt') && `Filtracija: ${val('filt')}`, val('budget') && `Budžet: ${val('budget')}`, val('mode') && `Izvedba: ${val('mode')}`,
       f.note.value.trim() && `Napomena: ${f.note.value.trim()}`, 'Izvor: nova stranica mondo-acqua.hr',
     ].filter(Boolean).join('\n');
-    const btn = f.querySelector('button[type=submit]'); btn.disabled = true; btn.textContent = 'Šaljem…';
+    const btn = f.querySelector('[data-send]'); btn.disabled = true; btn.textContent = 'Šaljem…';
     try {
       const r = await fetch('https://sryuogkaebeznmadchcr.supabase.co/functions/v1/aquasmart-viz/visualize/inquiry', {
         method:'POST', headers:{'Content-Type':'application/json', Authorization:'Bearer '+ANON, apikey:ANON},
@@ -689,8 +811,8 @@ function mountForm(slot){
       });
       const j = await r.json().catch(() => ({}));
       if (!r.ok || !j.success) throw new Error(j.error || 'greška');
-      f.reset(); upd();
-      msg.textContent = 'Hvala! Upit je zaprimljen, javit ćemo se uskoro.'; msg.classList.add('ok');
+      f.reset(); upd(); go(1);
+      msg.className = 'form-msg ok'; msg.textContent = 'Hvala! Upit je zaprimljen, javit ćemo se uskoro.'; msg.classList.add('ok');
     } catch (err) {
       msg.innerHTML = 'Slanje nije uspjelo. Pošaljite upit na <a href="mailto:info@mondo-acqua.hr">info@mondo-acqua.hr</a> ili nazovite +385 95 208 7321.'; msg.classList.add('err');
     }
