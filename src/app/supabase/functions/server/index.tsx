@@ -869,14 +869,16 @@ const MAX_MEMBER_ANALYSES = 200;
 const byDateDesc = (a: any, b: any) => String(b.createdAt || '').localeCompare(String(a.createdAt || ''));
 
 const loadMember = async (id: string) => {
-  const [profile, pool, analyses, visits, equipment] = await Promise.all([
+  const [profile, pool, analyses, visits, equipment, orders] = await Promise.all([
     kv.get(`member:${id}:profile`),
     kv.get(`member:${id}:pool`),
     kv.getByPrefix(`member:${id}:analyses:`),
     kv.getByPrefix(`member:${id}:visits:`),
     kv.getByPrefix(`member:${id}:equipment:`),
+    kv.getByPrefix(`member:${id}:orders:`),
   ]);
   return {
+    orders: (orders || []).sort(byDateDesc),
     profile: profile ? withPlanStatus(profile) : null,
     pool: pool || null,
     analyses: (analyses || []).sort(byDateDesc),
@@ -998,6 +1000,34 @@ registerRoute(app, 'post', '/member/analyses', authMiddleware, memberOnly, async
     await kv.mdel(all.slice(MAX_MEMBER_ANALYSES).map((x: any) => `member:${user.id}:analyses:${x.id}`));
   }
   return c.json({ success: true, analysis: item });
+});
+
+// Moje narudžbe: član sprema svaku narudžbu iz webshopa (WhatsApp, e-mail ili PayPal).
+const ORDER_CHANNELS = ['whatsapp', 'email', 'paypal'];
+registerRoute(app, 'post', '/member/orders', authMiddleware, memberOnly, async (c: any) => {
+  const user = c.get('user');
+  const body = await c.req.json().catch(() => ({}));
+  const items = Array.isArray(body.items) ? body.items.slice(0, 60).map((i: any) => ({
+    productId: cleanStr(i?.productId, 80),
+    name: cleanStr(i?.name, 160),
+    size: cleanStr(i?.size, 40),
+    quantity: cleanNum(i?.quantity, 0, 10000) ?? 0,
+    price: cleanNum(i?.price, 0, 100000) ?? 0,
+  })).filter((i: any) => i.quantity > 0) : [];
+  if (!items.length) return c.json({ error: 'Narudžba je prazna.' }, 400);
+  const id = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}`;
+  const order = {
+    id, items,
+    channel: ORDER_CHANNELS.includes(body.channel) ? body.channel : 'email',
+    total: cleanNum(body.total, 0, 1000000) ?? 0,
+    delivery: cleanStr(body.delivery, 40),
+    address: cleanStr(body.address, 200),
+    note: cleanStr(body.note, 1000),
+    paypalOrderId: cleanStr(body.paypalOrderId, 40),
+    createdAt: new Date().toISOString(),
+  };
+  await kv.set(`member:${user.id}:orders:${id}`, order);
+  return c.json({ success: true, order });
 });
 
 registerRoute(app, 'delete', '/member/analyses/:id', authMiddleware, memberOnly, async (c: any) => {

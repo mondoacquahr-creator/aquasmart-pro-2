@@ -80,7 +80,21 @@ export interface MemberEquipment {
   inspectedAt?: string;
 }
 
+export interface MemberOrderItem { productId: string; name: string; size?: string; quantity: number; price: number }
+export interface MemberOrder {
+  id: string;
+  createdAt: string;
+  channel: 'whatsapp' | 'email' | 'paypal';
+  items: MemberOrderItem[];
+  total: number;
+  delivery?: string;
+  address?: string;
+  note?: string;
+  paypalOrderId?: string;
+}
+
 export interface MemberData {
+  orders?: MemberOrder[];
   profile: MemberProfile;
   pool: MemberPool;
   analyses: MemberAnalysis[];
@@ -95,6 +109,10 @@ export const memberApi = {
 
   async saveMemberProfile(p: MemberProfile): Promise<void> {
     return api.invoke('member/profile', { method: 'PUT', body: p });
+  },
+
+  async saveMemberOrder(o: Omit<MemberOrder, 'id' | 'createdAt'>): Promise<void> {
+    return api.invoke('member/orders', { method: 'POST', body: o });
   },
 
   async changeMemberEmail(email: string, password: string): Promise<{ email: string }> {

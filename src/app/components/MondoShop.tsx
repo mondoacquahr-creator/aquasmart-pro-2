@@ -142,8 +142,19 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
     return true;
   };
 
+  // Registrirani član: narudžba se sprema u Moj bazen → Narudžbe
+  const saveForMember = (channel: 'whatsapp' | 'email' | 'paypal', paypalOrderId?: string) => {
+    if (!member || !isMemberLoggedIn()) return;
+    const items = cart.items.map((i) => {
+      const p = findProduct(i.productId);
+      return { productId: i.productId, name: p?.name || i.productId, size: p?.size || '', quantity: i.quantity, price: p?.priceEUR || 0 };
+    });
+    memberApi.saveMemberOrder({ channel, items, total: totals.total, delivery, address: delivery === 'Dostava' ? address : '', note, paypalOrderId }).catch(() => {});
+  };
+
   const handleWhatsApp = () => {
     if (!validate()) return;
+    saveForMember('whatsapp');
     window.open(`https://wa.me/${MONDO_CONTACT.whatsapp}?text=${encodeURIComponent(buildOrderText())}`, '_blank');
     setConfirmedVia('whatsapp');
     setView('confirmed');
@@ -151,6 +162,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
 
   const handleEmail = () => {
     if (!validate()) return;
+    saveForMember('email');
     window.open(
       `mailto:${MONDO_CONTACT.email}?subject=${encodeURIComponent('Narudžba – Mondo Pool Care')}&body=${encodeURIComponent(buildOrderText())}`,
       '_blank'
@@ -168,6 +180,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
         name, phone, email, delivery, address, note, orderText: text,
       });
     } catch { /* uplata je prošla; Mondo vidi transakciju u PayPalu */ }
+    saveForMember('paypal', info.paypalOrderId);
     setConfirmedVia('paypal');
     setView('confirmed');
   };

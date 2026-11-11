@@ -15,7 +15,7 @@ interface MemberPortalProps {
   onNavigate: (page: string) => void;
 }
 
-type Tab = 'overview' | 'analyses' | 'pool' | 'equipment' | 'profile';
+type Tab = 'overview' | 'analyses' | 'orders' | 'pool' | 'equipment' | 'profile';
 
 const inputStyle = {
   background: T.inputBg,
@@ -293,6 +293,59 @@ function OverviewTab({ data, onRequestVisit, onNewAnalysis, onNavigate }: {
         </ul>
       </Card>
 
+    </div>
+  );
+}
+
+// ─── ORDERS TAB ───────────────────────────────────────────────────────────────
+function OrdersTab({ data, onShop }: { data: MemberData; onShop: () => void }) {
+  const orders = data.orders || [];
+  const [open, setOpen] = useState<string | null>(null);
+  const eur = (n: number) => n.toFixed(2).replace('.', ',') + ' €';
+  const channelLabel = (c: string) => c === 'paypal' ? 'Plaćeno PayPalom' : c === 'whatsapp' ? 'Poslano WhatsAppom' : 'Poslano e-mailom';
+
+  if (orders.length === 0) {
+    return (
+      <div className="text-center py-8 space-y-4">
+        <ShoppingCart className="w-12 h-12 mx-auto" style={{ color: T.faint }} />
+        <p className="text-sm" style={{ color: T.muted }}>Ovdje će biti vaše narudžbe iz webshopa.</p>
+        <button onClick={onShop} className="px-6 py-3 rounded-xl text-sm font-bold text-black" style={{ background: T.accent }}>Otvori webshop</button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      {orders.map((o) => (
+        <Card key={o.id}>
+          <button className="w-full text-left" onClick={() => setOpen(open === o.id ? null : o.id)}>
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="font-semibold text-white">{formatDateTime(o.createdAt)}</p>
+                <p className="text-xs mt-0.5" style={{ color: o.channel === 'paypal' ? '#2EE6A6' : T.muted }}>{channelLabel(o.channel)} · {o.items.length} {o.items.length === 1 ? 'proizvod' : 'proizvoda'}</p>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="font-bold text-white">{eur(o.total)}</span>
+                {open === o.id ? <ChevronUp className="w-4 h-4" style={{ color: T.faint }} /> : <ChevronDown className="w-4 h-4" style={{ color: T.faint }} />}
+              </div>
+            </div>
+          </button>
+          {open === o.id && (
+            <div className="mt-3 pt-3 space-y-1.5 text-sm" style={{ borderTop: '1px solid rgba(120,220,255,0.08)' }}>
+              {o.items.map((i, idx) => (
+                <div key={idx} className="flex justify-between gap-3">
+                  <span style={{ color: T.muted }}>{i.quantity}× {i.name}{i.size ? ` (${i.size})` : ''}</span>
+                  <span className="text-white shrink-0">{eur(i.price * i.quantity)}</span>
+                </div>
+              ))}
+              {o.delivery && <p className="text-xs pt-2" style={{ color: T.faint }}>{o.delivery}{o.address ? `: ${o.address}` : ''}</p>}
+              {o.note && <p className="text-xs" style={{ color: T.faint }}>Napomena: {o.note}</p>}
+              {o.paypalOrderId && <p className="text-xs" style={{ color: T.faint }}>PayPal: {o.paypalOrderId}</p>}
+            </div>
+          )}
+        </Card>
+      ))}
+      <p className="text-xs text-center" style={{ color: T.faint }}>Iznosi su s popustom za članove. Mondo Acqua potvrđuje dostupnost i dostavu.</p>
     </div>
   );
 }
@@ -902,6 +955,7 @@ export function MemberPortal({ onLogout, onNavigate }: MemberPortalProps) {
   const tabs: { id: Tab; label: string; icon: React.ElementType }[] = [
     { id: 'overview', label: 'Pregled', icon: Home },
     { id: 'analyses', label: 'Analize', icon: FlaskConical },
+    { id: 'orders', label: 'Narudžbe', icon: ShoppingCart },
     { id: 'pool', label: 'Moj bazen', icon: Droplets },
     { id: 'equipment', label: 'Oprema', icon: Wrench },
     { id: 'profile', label: 'Profil', icon: User },
@@ -998,6 +1052,7 @@ export function MemberPortal({ onLogout, onNavigate }: MemberPortalProps) {
               {tab === 'analyses' && <AnalysesTab data={data} onDeleted={load} />}
               {tab === 'pool' && <PoolTab data={data} onSaved={load} />}
               {tab === 'equipment' && <EquipmentTab data={data} onRequestVisit={() => setShowVisitModal(true)} />}
+              {tab === 'orders' && <OrdersTab data={data} onShop={() => onNavigate('products')} />}
               {tab === 'profile' && <ProfileTab data={data} onSaved={load} onLogout={onLogout} onDeleted={load} />}
             </>
           )}
