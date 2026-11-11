@@ -976,6 +976,70 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         </section>
 
         {/* ============================================================ */}
+        {/* BESPLATNO ZA VLASNIKE: testiraj, analiziraj, doziraj + alati  */}
+        {/* ============================================================ */}
+        <section className="max-w-7xl mx-auto px-4 md:px-8 pb-24">
+          <h2
+            className="font-extrabold text-white mb-8"
+            style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2rem)', letterSpacing: '-0.02em' }}
+          >
+            {t.free.sectionTitle}
+          </h2>
+          <div
+            className="rounded-3xl overflow-hidden mb-5"
+            style={{ background: CARD_BG, border: CARD_BORDER }}
+          >
+            <div
+              className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x"
+              style={{ '--tw-divide-opacity': '1' } as React.CSSProperties}
+            >
+              {[
+                { Icon: FlaskConical, title: t.steps.title1, desc: t.steps.desc1 },
+                { Icon: Activity, title: t.steps.title2, desc: t.steps.desc2 },
+                { Icon: BeakerIcon, title: t.steps.title3, desc: t.steps.desc3 },
+              ].map(({ Icon, title, desc }, idx) => (
+                <div
+                  key={idx}
+                  className="px-8 py-8 flex flex-col gap-4"
+                  style={{ borderColor: 'rgba(120,220,255,0.1)' }}
+                >
+                  <AppIcon icon={Icon} size={52} />
+                  <div>
+                    <p className="font-bold text-base text-white mb-1">{title}</p>
+                    <p className="text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { Icon: BeakerIcon, ...t.free.analysis, page: 'analysis' as const },
+              { Icon: ShoppingCart, ...t.free.products, page: 'products' as const },
+              { Icon: MapPin, ...t.free.portal, page: 'free-portal' as const },
+            ].map(({ Icon, title, desc, page }) => (
+              <motion.button
+                key={page}
+                whileHover={{ y: -4 }}
+                onClick={() => onNavigate(page)}
+                className="p-6 text-left rounded-3xl transition-all group"
+                style={{ background: CARD_BG, border: CARD_BORDER }}
+              >
+                <div className="mb-4 transition-transform group-hover:scale-110 w-fit"><AppIcon icon={Icon} size={52} /></div>
+                <h3 className="font-bold text-base text-white mb-1.5">{title}</h3>
+                <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.55)' }}>{desc}</p>
+                <span
+                  className="text-xs font-bold px-3 py-1 rounded-full"
+                  style={{ background: 'rgba(92,225,230,0.15)', color: CYAN }}
+                >
+                  BESPLATNO
+                </span>
+              </motion.button>
+            ))}
+          </div>
+        </section>
+
+        {/* ============================================================ */}
         {/* POOL OWNER TEASER BANNER                                      */}
         {/* ============================================================ */}
         <section className="max-w-7xl mx-auto px-4 md:px-8 pb-12">
@@ -1084,38 +1148,6 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
           </motion.div>
         </section>
 
-        {/* ============================================================ */}
-        {/* THREE STEPS                                                   */}
-        {/* ============================================================ */}
-        <section className="max-w-7xl mx-auto px-4 md:px-8 pb-24">
-          <div
-            className="rounded-3xl overflow-hidden"
-            style={{ background: CARD_BG, border: CARD_BORDER }}
-          >
-            <div
-              className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x"
-              style={{ '--tw-divide-opacity': '1' } as React.CSSProperties}
-            >
-              {[
-                { Icon: FlaskConical, title: t.steps.title1, desc: t.steps.desc1 },
-                { Icon: Activity, title: t.steps.title2, desc: t.steps.desc2 },
-                { Icon: BeakerIcon, title: t.steps.title3, desc: t.steps.desc3 },
-              ].map(({ Icon, title, desc }, idx) => (
-                <div
-                  key={idx}
-                  className="px-8 py-8 flex flex-col gap-4"
-                  style={{ borderColor: 'rgba(120,220,255,0.1)' }}
-                >
-                  <AppIcon icon={Icon} size={52} />
-                  <div>
-                    <p className="font-bold text-base text-white mb-1">{title}</p>
-                    <p className="text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Prije i poslije čišćenja (klizač) */}
         <section className="max-w-7xl mx-auto px-4 md:px-8 pb-24">
@@ -1306,42 +1338,6 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
           </div>
         </section>
 
-        {/* ============================================================ */}
-        {/* FREE FEATURES                                                 */}
-        {/* ============================================================ */}
-        <section className="max-w-7xl mx-auto px-4 md:px-8 pb-24">
-          <h2
-            className="font-extrabold text-white mb-8"
-            style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2rem)', letterSpacing: '-0.02em' }}
-          >
-            {t.free.sectionTitle}
-          </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              { Icon: BeakerIcon, ...t.free.analysis, page: 'analysis' as const },
-              { Icon: ShoppingCart, ...t.free.products, page: 'products' as const },
-              { Icon: MapPin, ...t.free.portal, page: 'free-portal' as const },
-            ].map(({ Icon, title, desc, page }) => (
-              <motion.button
-                key={page}
-                whileHover={{ y: -4 }}
-                onClick={() => onNavigate(page)}
-                className="p-6 text-left rounded-3xl transition-all group"
-                style={{ background: CARD_BG, border: CARD_BORDER }}
-              >
-                <div className="mb-4 transition-transform group-hover:scale-110 w-fit"><AppIcon icon={Icon} size={52} /></div>
-                <h3 className="font-bold text-base text-white mb-1.5">{title}</h3>
-                <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.55)' }}>{desc}</p>
-                <span
-                  className="text-xs font-bold px-3 py-1 rounded-full"
-                  style={{ background: 'rgba(92,225,230,0.15)', color: CYAN }}
-                >
-                  BESPLATNO
-                </span>
-              </motion.button>
-            ))}
-          </div>
-        </section>
 
         {/* ============================================================ */}
         {/* SERVISERE                                                     */}
