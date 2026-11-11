@@ -161,7 +161,7 @@ export function Contact() {
             className="mt-8 grid grid-cols-2 gap-4"
           >
             <a 
-              href="https://www.facebook.com/mondoacquabazeni" 
+              href="https://www.facebook.com/people/Mondo-Acqua-HR/100064917164727/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-[#1877F2]/10 border border-[#1877F2]/20 rounded-2xl p-6 flex flex-col items-center justify-center gap-3 hover:bg-[#1877F2] hover:text-white group transition-all"
@@ -171,7 +171,7 @@ export function Contact() {
             </a>
             
             <a 
-              href="https://www.instagram.com/mondo_acqua" 
+              href="https://www.instagram.com/mondoacquahr/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-pink-500/10 border border-pink-500/20 rounded-2xl p-6 flex flex-col items-center justify-center gap-3 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white group transition-all"

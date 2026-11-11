@@ -115,7 +115,7 @@ export function MondoFooter({ variant = 'full' }: MondoFooterProps) {
 
             <div className="flex gap-4 mt-6">
               <a 
-                href="https://www.facebook.com/mondoacquabazeni" 
+                href="https://www.facebook.com/people/Mondo-Acqua-HR/100064917164727/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center hover:bg-[#1877F2] transition-colors group"
@@ -124,7 +124,7 @@ export function MondoFooter({ variant = 'full' }: MondoFooterProps) {
                 <Facebook className="w-5 h-5 text-gray-300 group-hover:text-white" />
               </a>
               <a 
-                href="https://www.instagram.com/mondo_acqua" 
+                href="https://www.instagram.com/mondoacquahr/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors group"

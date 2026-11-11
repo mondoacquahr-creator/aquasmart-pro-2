@@ -129,7 +129,7 @@ export function LandingFooter() {
             </h3>
             <div className="space-y-3">
               <a
-                href="https://www.facebook.com/mondoacqua"
+                href="https://www.facebook.com/people/Mondo-Acqua-HR/100064917164727/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-sm text-gray-400 hover:text-[#D4AF37] transition-colors group"
@@ -141,7 +141,7 @@ export function LandingFooter() {
               </a>
 
               <a
-                href="https://www.instagram.com/mondoacqua"
+                href="https://www.instagram.com/mondoacquahr/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-sm text-gray-400 hover:text-[#D4AF37] transition-colors group"
