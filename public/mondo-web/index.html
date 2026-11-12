@@ -372,6 +372,7 @@ img{height:auto}
 .ai-img img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
 .ai-img span{position:absolute;top:10px;padding:5px 10px;border-radius:999px;background:rgba(2,13,18,.8);color:#fff;font:700 .7rem var(--display);letter-spacing:.1em;text-transform:uppercase}
 .ai-img span:nth-of-type(1){left:10px}.ai-img span:nth-of-type(2){left:calc(50% + 10px);background:#4FC3F0;color:#0a0a0a}
+#gallerySpa img{background:#fff;object-fit:contain}
 /* ===== Tema: kao Mondo Pool Care ===== */
 :root{--navy:#ffffff;--aqua:#4FC3F0;--aqua-ink:#5CE1E6;--bg:#041820;--bg-soft:rgba(92,225,230,.05);--line:rgba(120,220,255,.12);--ink:rgba(255,255,255,.78);--muted:rgba(255,255,255,.55);--display:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--grad:linear-gradient(90deg,#7FDBFF 0%,#4FC3F0 45%,#1E88E5 100%)}
 body{background:radial-gradient(ellipse at 80% 0%,#08303D 0%,#041820 55%,#020D12 100%) fixed;color:var(--ink)}
@@ -706,7 +707,7 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
       <h1>Swim spa: plivanje protiv struje i hidromasaža u jednom.</h1>
       <p class="lead">Kompaktan bazen s podesivom protustrujom i hidromasažnom kadom sa šest ergonomskih položaja i do 40 mlaznica. Školjka od Lucite akrila u čeličnom okviru, proizvedeno u EU.</p>
       <div class="btns"><a class="btn btn-primary" href="#upit">Zatražite ponudu →</a></div></div>
-    <img src="https://mondo-acqua.hr/sites/315/upload/userfiles/1674844273_5_5.jpg" alt="Swim spa s protustrujom i hidromasažom u vrtu" loading="lazy">
+    <img src="https://cdn.myshoptet.com/usr/www.mountfield-export.com/user/shop/big/9418_001-3van0281.jpg" alt="Aquas Swimspa s protustrujom i hidromasažom" loading="lazy" style="background:#fff;object-fit:contain;padding:12px">
   </div></div>
   <div class="band"><div class="wrap cols2">
     <ul class="checks">
@@ -1145,7 +1146,7 @@ invShow(1);
   auto();
 })();
 document.querySelectorAll('.drop').forEach(d => { d.querySelectorAll('.drop-panel a').forEach(a => a.addEventListener('click', () => { if (matchMedia('(max-width:1180px)').matches) return; d.classList.add('shut'); document.activeElement && document.activeElement.blur(); })); d.addEventListener('mouseleave', () => d.classList.remove('shut')); });
-$set('gallerySpa', gHtml([['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844273_5_5.jpg','Swim spa u vrtu'],['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844405_8.jpg','Rasvjeta navečer'],['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844475_3.jpg','Protustruja'],['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844898_akrylatovevyrivky.jpg','Akrilna hidromasažna kada']]));
+$set('gallerySpa', gHtml([['https://cdn.myshoptet.com/usr/www.mountfield-export.com/user/shop/big/9418_001-3van0281.jpg','Aquas Swimspa'],['https://cdn.myshoptet.com/usr/www.mountfield-export.com/user/shop/big/9418-2_003-3van0281.jpg','Pogled odozgo s LED rasvjetom'],['https://cdn.myshoptet.com/usr/www.mountfield-export.com/user/shop/big/9418-6_007-3van0281.jpg','Protustruja za plivanje'],['https://cdn.myshoptet.com/usr/www.mountfield-export.com/user/shop/big/9418-8_009-3van0281.jpg','Hidromasažne mlaznice'],['https://cdn.myshoptet.com/usr/www.mountfield-export.com/user/shop/big/9418-4_005-3van0281.jpg','Ergonomska sjedala'],['https://cdn.myshoptet.com/usr/www.mountfield-export.com/user/shop/big/9418-5_006-3van0281.jpg','Masažni dio']]));
 // Pool Care je na istom poslužitelju dok je stranica na poolcare domeni ili u probnoj verziji: koristi isti host.
 (() => { const h = location.hostname; if (/poolcare\.|netlify\.app$/.test(h)) document.querySelectorAll('a[href^="https://poolcare.mondo-acqua.hr/"]').forEach(a => a.href = a.getAttribute('href').replace('https://poolcare.mondo-acqua.hr/', location.origin + '/')); })();
 
