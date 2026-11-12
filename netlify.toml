@@ -18,6 +18,189 @@
     Content-Type = "application/json"
     Access-Control-Allow-Origin = "*"
 
+# --- Glavna stranica Mondo Acqua (dok je na /mondo-web/) ---
+[[redirects]]
+  from = "/mondo-web/*"
+  to = "/mondo-web/index.html"
+  status = 200
+
+# --- Nakon što se www.mondo-acqua.hr usmjeri na ovaj Netlify projekt (do tada se ne aktivira) ---
+# Stare adrese starog weba -> nove stranice (301)
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni-i-spa/bazeni-i-spa/fp-bazeni"
+  to = "/bazeni/fp"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni-i-spa/bazeni-i-spa/kompaktni-bazeni"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni-i-spa/bazeni-i-spa/keramicki-bazeni"
+  to = "/bazeni/compact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni-i-spa/bazeni-i-spa/swim-spa-bazeni"
+  to = "/bazeni/swim-spa"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni-i-spa/bazeni-i-spa/hidromasazni-bazeni"
+  to = "/bazeni/swim-spa"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni-i-spa/bazeni-i-spa"
+  to = "/bazeni"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni-i-spa/*"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni-i-spa"
+  to = "/bazeni"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/products/*"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/pools-and-spa/*"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/piscine-e-spa/*"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/gemini"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/orion"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/hit"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/pegasus-s"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/perseus"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/icarus"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/phoenix"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/smart"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/olympus"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/ruby"
+  to = "/bazeni/compact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/onyx"
+  to = "/bazeni/compact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/topaz"
+  to = "/bazeni/compact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/diamond"
+  to = "/bazeni/compact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/amethyst"
+  to = "/bazeni/compact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/agate"
+  to = "/bazeni/compact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/emerald"
+  to = "/bazeni/compact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/sapphire"
+  to = "/bazeni/compact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/opal"
+  to = "/bazeni/compact"
+  status = 301
+  force = true
+# Posluživanje glavne stranice na domeni
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/slike/*"
+  to = "/mondo-web/slike/:splat"
+  status = 200
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/logo.png"
+  to = "/mondo-web/logo.png"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/robots.txt"
+  to = "/mondo-web/robots.txt"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/sitemap.xml"
+  to = "/mondo-web/sitemap.xml"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/*"
+  to = "/mondo-web/index.html"
+  status = 200
+# --- Pool Care (SPA) ---
 [[redirects]]
   from = "/*"
   to = "/index.html"

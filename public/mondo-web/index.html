@@ -2,10 +2,20 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
+<script>window.MW_BASE=location.pathname.indexOf('/mondo-web')===0?'/mondo-web/':'/';document.write('<base href="'+window.MW_BASE+'">');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mondo Acqua – bazeni, oprema i održavanje</title>
 <meta name="description" content="Montažni FP, CORAL kompozitni i COMPACT keramički bazeni, gradnja ključ u ruke i održavanje bazena u cijeloj Hrvatskoj.">
 <link rel="icon" href="logo.png">
+<link rel="canonical" href="https://www.mondo-acqua.hr/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mondo Acqua">
+<meta property="og:locale" content="hr_HR">
+<meta property="og:title" content="Mondo Acqua – bazeni, oprema i održavanje">
+<meta property="og:description" content="Montažni FP, CORAL i COMPACT bazeni, betonski bazeni po mjeri, gradnja ključ u ruke i održavanje u cijeloj Hrvatskoj.">
+<meta property="og:image" content="https://www.mondo-acqua.hr/slike/bazen-pogled-ucka.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"Mondo Acqua d.o.o.","url":"https://www.mondo-acqua.hr/","logo":"https://www.mondo-acqua.hr/logo.png","image":"https://www.mondo-acqua.hr/slike/bazen-pogled-ucka.jpg","telephone":"+385952087321","email":"info@mondo-acqua.hr","address":{"@type":"PostalAddress","streetAddress":"Lucinići 17","postalCode":"51216","addressLocality":"Viškovo","addressCountry":"HR"},"areaServed":"HR","sameAs":["https://www.facebook.com/people/Mondo-Acqua-HR/100064917164727/","https://www.instagram.com/mondoacquahr/"],"description":"Bazeni, bazenska oprema, tretman vode i održavanje bazena u cijeloj Hrvatskoj."}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1053,8 +1063,42 @@ const PAGES = ['privatnost','pocetna','bazeni','fp','coral','compact','po-mjeri'
 const TITLES = {privatnost:'Privatnost i kolačići',pocetna:'Mondo Acqua – bazeni, oprema i održavanje',bazeni:'Bazeni',fp:'Montažni FP bazeni',coral:'CORAL kompozitni bazeni',compact:'COMPACT keramički bazeni','po-mjeri':'Betonski bazeni po mjeri','swim-spa':'Swim spa i hidromasaža','kljuc-u-ruke':'Bazen ključ u ruke',odrzavanje:'Održavanje bazena',galerija:'Galerija',['o-nama']:'O nama',kontakt:'Kontakt'};
 let pendingModel = '';
 document.addEventListener('click', e => { const a = e.target.closest('[data-model]'); if (a) pendingModel = a.dataset.model; });
+const SLUG = {pocetna:'',bazeni:'bazeni',fp:'bazeni/fp',coral:'bazeni/coral',compact:'bazeni/compact','po-mjeri':'bazeni/betonski','swim-spa':'bazeni/swim-spa','kljuc-u-ruke':'kljuc-u-ruke',odrzavanje:'odrzavanje',galerija:'galerija','o-nama':'o-nama',kontakt:'kontakt',privatnost:'privatnost',upit:'upit'};
+const BYPATH = Object.fromEntries(Object.entries(SLUG).map(([k,v]) => [v,k]));
+const BASE = window.MW_BASE || '/';
+const DESC = {
+  pocetna:'Montažni FP, CORAL kompozitni i COMPACT keramički bazeni, betonski bazeni po mjeri, gradnja ključ u ruke i održavanje bazena u cijeloj Hrvatskoj.',
+  bazeni:'Usporedite FP, CORAL, COMPACT i betonske bazene: cijene s PDV-om, što je uključeno i od čega se sastoji investicija.',
+  fp:'Montažni FP bazeni, ovalni i pravokutni, s opremom i montažom. Cijene od 5.030 € s PDV-om i okvirni građevinski radovi.',
+  coral:'CORAL bazeni od GLASSROCK kompozita s integriranim stepenicama i izolacijom. Modeli i cijene od 10.768 € s PDV-om.',
+  compact:'COMPACT keramički bazeni s ugrađenim stepenicama, montaža u jednom danu. Modeli i cijene od 14.979 € s PDV-om.',
+  'po-mjeri':'Betonski bazeni po mjeri sa skimerom ili preljevom, strojarnicom i izvedbom ključ u ruke.',
+  'swim-spa':'Swim spa bazeni s protustrujom i hidromasažom te akrilne hidromasažne kade.',
+  'kljuc-u-ruke':'Gradnja bazena ključ u ruke: projekt, iskop, ugradnja, strojarnica, rub i puštanje u rad. Jedan ugovor, jedan kontakt.',
+  odrzavanje:'Održavanje bazena u cijeloj Hrvatskoj, Mondo Care paket i besplatna analiza vode u Mondo Pool Care.',
+  galerija:'Galerija bazena koje je Mondo Acqua izgradila i održava.',
+  'o-nama':'Mondo Acqua d.o.o. iz Viškova: bazeni, oprema, tretman vode i održavanje na jednom mjestu.',
+  kontakt:'Pošaljite upit za bazen ili održavanje: +385 95 208 7321, info@mondo-acqua.hr.',
+  privatnost:'Pravila privatnosti i kolačića stranice Mondo Acqua.'
+};
+const pageFromUrl = () => {
+  const legacy = location.hash.replace('#','');
+  if (legacy && (SLUG[legacy] !== undefined)) { history.replaceState(null, '', BASE + SLUG[legacy]); return legacy; }
+  let p = location.pathname; if (p.indexOf(BASE) === 0) p = p.slice(BASE.length); p = p.replace(/\/+$/,'');
+  return BYPATH[p] !== undefined ? BYPATH[p] : (p ? '404' : 'pocetna');
+};
+const go = key => { history.pushState(null, '', BASE + SLUG[key]); route(); };
+document.addEventListener('click', e => {
+  const a = e.target.closest('a'); if (!a || a.target || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  const raw = a.getAttribute('href') || '';
+  if (raw.startsWith('#') && SLUG[raw.slice(1)] !== undefined) { e.preventDefault(); go(raw.slice(1)); return; }
+  if (a.origin === location.origin && a.pathname.indexOf(BASE) === 0 && !/\.[a-z0-9]+$/i.test(a.pathname)) {
+    const k = BYPATH[a.pathname.slice(BASE.length).replace(/\/+$/,'')]; if (k !== undefined) { e.preventDefault(); go(k); }
+  }
+});
+addEventListener('popstate', route);
 function route(){
-  let h = location.hash.replace('#','') || 'pocetna';
+  let h = pageFromUrl();
   let toForm = false;
   if (h === 'upit') { h = 'kontakt'; toForm = true; }
   if (!PAGES.includes(h)) h = 'pocetna';
@@ -1063,6 +1107,8 @@ function route(){
   document.querySelectorAll('nav.main [aria-current]').forEach(a => a.setAttribute('aria-current','page'));
   document.body.classList.toggle('pc', h === 'odrzavanje');
   document.title = h === 'pocetna' ? TITLES.pocetna : `${TITLES[h]} – Mondo Acqua`;
+  const md = document.querySelector('meta[name=description]'); if (md) md.content = DESC[h] || DESC.pocetna;
+  const cn = document.querySelector('link[rel=canonical]'); if (cn) cn.href = 'https://www.mondo-acqua.hr/' + (SLUG[h] || '');
   nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded','false');
   if (toForm) {
     const slot = document.getElementById('upit-slot');
@@ -1073,7 +1119,7 @@ function route(){
 }
 const nav = document.getElementById('nav'), menuBtn = document.getElementById('menuBtn');
 menuBtn.addEventListener('click', () => { const o = nav.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', String(o)); });
-window.addEventListener('hashchange', route);
+window.addEventListener('hashchange', () => { if (SLUG[location.hash.slice(1)] !== undefined) route(); });
 (() => { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; const w = document.querySelector('.mw-ringA'), g = document.querySelector('.mw-ringB'); let t = false; addEventListener('scroll', () => { if (t) return; t = true; requestAnimationFrame(() => { const y = Math.min(scrollY, 3000); w.style.translate = `0 ${y * -0.10}px`; g.style.translate = `0 ${y * -0.04}px`; g.style.rotate = `${y * 0.002}deg`; t = false; }); }, { passive: true }); })();
 
 const INV = [
@@ -1117,6 +1163,7 @@ $set('gallerySpa', gHtml([['https://mondo-acqua.hr/sites/315/upload/userfiles/16
 document.querySelectorAll('[data-tohome]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); document.getElementById('upit-home').scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
 document.querySelectorAll('[data-need]').forEach(b => b.addEventListener('click', () => { const slot = document.getElementById('upit-home-slot'); const f = slot.querySelector('form'); if (f && f._pick) f._pick(b.dataset.need); document.getElementById('upit-home').scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
 document.querySelectorAll('[data-noroute]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+document.querySelectorAll('a[href^="#"]').forEach(a => { const k = a.getAttribute('href').slice(1); if (SLUG[k] !== undefined) a.setAttribute('href', BASE + SLUG[k]); });
 route();
 </script>
 </body>

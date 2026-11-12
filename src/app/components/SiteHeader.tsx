@@ -33,8 +33,8 @@ export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
     </div>
   );
 
-  const bazeni: [string, string][] = [['#bazeni', 'Svi bazeni i usporedba'], ['#fp', 'Montažni FP bazeni'], ['#coral', 'CORAL kompozitni'], ['#compact', 'COMPACT keramički'], ['#po-mjeri', 'Betonski i po mjeri'], ['#swim-spa', 'Swim spa i hidromasaža']];
-  const onama: [string, string][] = [['#o-nama', 'O nama'], ['#galerija', 'Galerija radova'], ['#kontakt', 'Kontakt']];
+  const bazeni: [string, string][] = [['bazeni', 'Svi bazeni i usporedba'], ['bazeni/fp', 'Montažni FP bazeni'], ['bazeni/coral', 'CORAL kompozitni'], ['bazeni/compact', 'COMPACT keramički'], ['bazeni/betonski', 'Betonski i po mjeri'], ['bazeni/swim-spa', 'Swim spa i hidromasaža']];
+  const onama: [string, string][] = [['o-nama', 'O nama'], ['galerija', 'Galerija radova'], ['kontakt', 'Kontakt']];
 
   const prijava = (
     <>
@@ -54,8 +54,8 @@ export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
 
         <nav className="hidden xl:flex items-center gap-[22px]">
           <Drop id="bazeni" label="Bazeni">{bazeni.map(([h, t]) => <a key={h} className={item} href={MAIN + h}>{t}</a>)}</Drop>
-          <a className={link} href={MAIN + '#kljuc-u-ruke'}>Ključ u ruke</a>
-          <a className={link} href={MAIN + '#odrzavanje'}>Održavanje</a>
+          <a className={link} href={MAIN + 'kljuc-u-ruke'}>Ključ u ruke</a>
+          <a className={link} href={MAIN + 'odrzavanje'}>Održavanje</a>
           <button className={link} onClick={() => go('visualizer')}>AI vizualizator</button>
           <button className={link} onClick={() => go('products')}>Webshop</button>
           <Drop id="onama" label="O nama">{onama.map(([h, t]) => <a key={h} className={item} href={MAIN + h}>{t}</a>)}</Drop>
@@ -70,7 +70,7 @@ export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
                 style={language === l ? { background: 'rgba(92,225,230,0.18)', color: '#5CE1E6' } : { color: 'rgba(255,255,255,0.6)' }}>{l}</button>
             ))}
           </div>
-          <a href={MAIN + '#upit'} className="px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap" style={{ background: '#4FC3F0', color: '#0a0a0a', boxShadow: '0 6px 24px rgba(79,195,240,0.3)' }}>Zatražite ponudu</a>
+          <a href={MAIN + 'upit'} className="px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap" style={{ background: '#4FC3F0', color: '#0a0a0a', boxShadow: '0 6px 24px rgba(79,195,240,0.3)' }}>Zatražite ponudu</a>
           <button className="xl:hidden w-11 h-11 rounded-xl grid place-items-center text-white" style={{ background: 'rgba(255,255,255,0.06)' }} onClick={() => setOpen(!open)} aria-label="Izbornik" aria-expanded={open}>
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -81,8 +81,8 @@ export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
         <div className="xl:hidden px-4 pb-5 max-h-[calc(100vh-80px)] overflow-y-auto" style={{ background: '#041820', borderBottom: '1px solid rgba(120,220,255,0.12)' }}>
           <p className={head}>Bazeni</p>
           {bazeni.map(([h, t]) => <a key={h} className={item} href={MAIN + h}>{t}</a>)}
-          <a className={item} href={MAIN + '#kljuc-u-ruke'}>Ključ u ruke</a>
-          <a className={item} href={MAIN + '#odrzavanje'}>Održavanje</a>
+          <a className={item} href={MAIN + 'kljuc-u-ruke'}>Ključ u ruke</a>
+          <a className={item} href={MAIN + 'odrzavanje'}>Održavanje</a>
           <button className={item} onClick={() => go('visualizer')}>AI vizualizator</button>
           <button className={item} onClick={() => go('products')}>Webshop</button>
           {onama.map(([h, t]) => <a key={h} className={item} href={MAIN + h}>{t}</a>)}

@@ -621,7 +621,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
 
               {/* Existing text links */}
               <a
-                href={MAIN_SITE + '#bazeni'}
+                href={MAIN_SITE + 'bazeni'}
                 className="px-4 py-2 text-sm rounded-xl transition-all hover:bg-white/8"
                 style={{ color: 'rgba(255,255,255,0.75)' }}
               >
