@@ -1,3 +1,4 @@
+import { SiteHeader } from './components/SiteHeader';
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from './lib/supabase';
 import { HomePageNew } from './components/HomePageNew';
@@ -225,6 +226,7 @@ export default function App() {
     <div className="min-h-screen relative overflow-hidden" style={{ background: T.pageBg }}>
       <LanguageProvider>
         <AuthProvider>
+          {['home','login','register','member-register','free-portal','guest-analysis','visualizer','analysis','water-analysis','products','shop','stores'].includes(currentPage) && <SiteHeader onNavigate={(p) => handleNavigate(p)} />}
           {currentPage === 'home' && <HomePageNew onNavigate={(page) => handleNavigate(page)} />}
           {currentPage === 'login' && <LoginPage onBack={() => setCurrentPage('home')} onLoginSuccess={handleLoginSuccess} onGoToRegister={() => setCurrentPage('register')} />}
           {currentPage === 'register' && <RegisterPage onBack={() => setCurrentPage('home')} onRegisterSuccess={handleRegisterSuccess} onGoToLogin={() => setCurrentPage('login')} />}

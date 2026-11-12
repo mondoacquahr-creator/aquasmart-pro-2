@@ -483,7 +483,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         {/* HEADER                                                        */}
         {/* ============================================================ */}
         <header
-          className="sticky top-0 z-50 backdrop-blur-xl"
+          className="hidden"
           style={{ background: 'rgba(4,24,32,0.75)', borderBottom: '1px solid rgba(120,220,255,0.08)' }}
         >
           <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between gap-4">
