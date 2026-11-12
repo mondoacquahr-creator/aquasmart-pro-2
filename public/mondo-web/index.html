@@ -491,7 +491,7 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
 <main>
 <!-- ============ POČETNA ============ -->
 <section class="page" id="p-pocetna">
-  <div class="zhero" style="--img:url('slike/r/112.jpg')"><div class="wrap zhero-in">
+  <div class="zhero" style="--img:url('slike/naslovna-opatija.jpg')"><div class="wrap zhero-in">
     <div class="stack" style="gap:18px">
       <p class="eyebrow">Mondo Acqua · bazeni, izvedba i održavanje</p>
       <h1>Sve za vaš bazen.<br><em>Od gradnje do bistre vode.</em></h1>
@@ -788,12 +788,8 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     <p class="eyebrow">Projekt ključ u ruke · Opatijska rivijera</p><h2 style="margin-bottom:24px">Od betonske školjke do bazena s pogledom na more.</h2>
     <div class="gallery" id="pairsKur"></div>
   </div></div>
-  <div class="band soft"><div class="wrap">
-    <p class="eyebrow">Faze gradnje</p><h2 style="margin-bottom:24px">Iskop, oplata, školjka, strojarnica.</h2>
-    <div class="gallery" id="galleryKur"></div>
-  </div></div>
   <div class="band"><div class="wrap">
-    <p class="eyebrow">Projekt u izvedbi</p><h2 style="margin-bottom:24px">Bazen s mostom, stepenicama i hidromasažom.</h2>
+    <p class="eyebrow">Projekt od oplate do završetka</p><h2 style="margin-bottom:24px">Bazen s mostom, stepenicama i hidromasažom.</h2>
     <div class="gallery" id="galleryKurMost"></div>
   </div></div>
   <div class="band soft"><div class="wrap">
@@ -1025,8 +1021,8 @@ const PAIRS = [
 ];
 const pairHtml = list => list.map(([a,b,t,d,c]) => `<figure class="pair"><div class="ph${c?' three':''}">${[a,b,c].filter(Boolean).map(([f,l]) => `<div><img src="${S(f)}" alt="${t} – ${l}" loading="lazy"><span>${l}</span></div>`).join('')}</div><figcaption><b>${t}.</b> ${d}</figcaption></figure>`).join('');
 $set('pairsKur', gHtml([[S('kur-more-rasvjeta'),'Završeni bazen'],[S('kur-more-keramika'),'Keramika i rubni kamen'],[S('kur-more-noc'),'Rasvjeta navečer']]));
-$set('galleryKur', gHtml([[S('kur-iskop-temelj'),'Iskop i temelj'],[S('kur-armatura-cijevi'),'Armatura i cijevi dna'],[S('kur-l-skoljka-planine'),'Oplata školjke'],[S('kur-l-oplata-stepenica'),'Oplata stepenica i šaht'],[S('kur-l-stepenice-strojarnica'),'Stepenice i strojarnica'],[S('kur-l-skoljka-pogled'),'Školjka uz kuću'],[S('kur-l-zidovi'),'Betonski zidovi'],[S('kur-l-zidovi-kuca'),'Ugradbeni dijelovi u zidu']]));
-$set('galleryKurMost', gHtml([["slike/r/70.jpg", "Iskop i zidovi"],["slike/r/272.jpg", "Stepenice i zidovi"],["slike/r/243.jpg", "Gotov bazen"],[S('kur-most-pregled'),'Pregled projekta'],[S('kur-most-kuca'),'Most i stepenice'],[S('kur-most-hidromasaza'),'Hidromasaža s klupama'],[S('kur-most-stepenice'),'Ulazne stepenice'],[S('kur-most-dno'),'Dno i mlaznice'],[S('kur-most-strojarnica'),'Šaht strojarnice']]));
+
+$set('galleryKurMost', gHtml([[S('kur-l-skoljka-planine'),'Oplata školjke'],[S('kur-l-oplata-stepenica'),'Oplata stepenica i šaht'],[S('kur-l-stepenice-strojarnica'),'Stepenice i strojarnica'],[S('kur-l-skoljka-pogled'),'Školjka uz kuću'],[S('kur-l-zidovi'),'Betonski zidovi'],[S('kur-l-zidovi-kuca'),'Ugradbeni dijelovi u zidu'],["slike/r/70.jpg", "Iskop i zidovi"],["slike/r/272.jpg", "Stepenice i zidovi"],["slike/r/243.jpg", "Gotov bazen"],[S('kur-most-pregled'),'Pregled projekta'],[S('kur-most-kuca'),'Most i stepenice'],[S('kur-most-hidromasaza'),'Hidromasaža s klupama'],[S('kur-most-stepenice'),'Ulazne stepenice'],[S('kur-most-dno'),'Dno i mlaznice'],[S('kur-most-strojarnica'),'Šaht strojarnice']]));
 $set('galleryKurObloge', gHtml([[S('kur-obloga-tamna-stepenice'),'Tamna folija sa stepenicama'],[S('kur-keramika-svijetla'),'Svijetla keramika'],[S('kur-plocice-plave-more'),'Plave pločice, pogled na more'],[S('kur-zbuka-skoljka'),'Žbukana školjka'],[S('kur-zbuka-skimeri'),'Skimeri prije obloge']]));
 $set('galleryKurFp', gHtml([[S('kur-fp-zidovi'),'Zidovi i podloga'],[S('kur-fp-ovalni-stijena'),'Montaža ovalnog FP']]));
 document.getElementById('pairsMaint').innerHTML = PAIRS.map(([a,b,t,d,c]) => `<figure class="pair"><div class="ph${c?' three':''}">${[a,b,c].filter(Boolean).map(([f,l]) => `<div><img src="${S(f)}" alt="${t} – ${l}" loading="lazy"><span>${l}</span></div>`).join('')}</div><figcaption><b>${t}.</b> ${d}</figcaption></figure>`).join('');
