@@ -569,7 +569,7 @@ input:focus,textarea:focus{border-color:#4FC3F0;outline:none;box-shadow:0 0 0 3p
   </div><p class="small" style="margin-top:22px">Opseg radova i cijena potvrđuju se ponudom za svaki projekt. Možete raditi i s vlastitim izvođačima.</p></div></div>
   <div class="band"><div class="wrap">
     <p class="eyebrow">Projekt ključ u ruke · Opatijska rivijera</p><h2 style="margin-bottom:24px">Od betonske školjke do bazena s pogledom na more.</h2>
-    <div class="pairs" id="pairsKur"></div>
+    <div class="gallery" id="pairsKur"></div>
   </div></div>
   <div class="band soft"><div class="wrap">
     <p class="eyebrow">Faze gradnje</p><h2 style="margin-bottom:24px">Iskop, oplata, školjka, strojarnica.</h2>
@@ -772,14 +772,11 @@ const PAIRS = [
   [['folija-stara','Stara folija'],['folija-filc','Podloga'],'Izmjena folije','Skidanje stare folije, nova podloga od filca i nova folija.',['folija-nova','Nova folija']],
 ];
 const pairHtml = list => list.map(([a,b,t,d,c]) => `<figure class="pair"><div class="ph${c?' three':''}">${[a,b,c].filter(Boolean).map(([f,l]) => `<div><img src="${S(f)}" alt="${t} – ${l}" loading="lazy"><span>${l}</span></div>`).join('')}</div><figcaption><b>${t}.</b> ${d}</figcaption></figure>`).join('');
-$set('pairsKur', pairHtml([
-  [['kur-more-skoljka','Školjka'],['kur-more-keramika','Završeno'],'Betonski bazen s keramikom','Školjka sa strojarnicom, keramička obloga, rubni kamen i terasa.'],
-  [['kur-more-rasvjeta','Rasvjeta'],['kur-more-noc','Navečer'],'Isti bazen','Podvodna rasvjeta i rasvjeta okoliša.'],
-]));
-$set('galleryKur', gHtml([[S('kur-iskop-temelj'),'Iskop i temeljna ploča'],[S('kur-oplata-skimeri'),'Oplata i skimeri'],[S('kur-l-oplata-stepenica'),'Oplata stepenica'],[S('kur-l-stepenice-strojarnica'),'Školjka i strojarnica'],[S('kur-l-skoljka-planine'),'Betonska školjka'],[S('kur-l-zidovi'),'Zidovi s ugradbenim dijelovima'],[S('kur-l-zidovi-kuca'),'L-oblik uz kuću'],[S('kur-l-skoljka-pogled'),'Školjka prije obloge']]));
+$set('pairsKur', gHtml([[S('kur-more-rasvjeta'),'Završeni bazen'],[S('kur-more-keramika'),'Keramika i rubni kamen'],[S('kur-more-noc'),'Rasvjeta navečer']]));
+$set('galleryKur', gHtml([[S('kur-iskop-temelj'),'Iskop i temelj'],[S('kur-armatura-cijevi'),'Armatura i cijevi dna'],[S('kur-l-skoljka-planine'),'Oplata školjke'],[S('kur-l-oplata-stepenica'),'Oplata stepenica i šaht'],[S('kur-l-stepenice-strojarnica'),'Stepenice i strojarnica'],[S('kur-l-skoljka-pogled'),'Školjka uz kuću'],[S('kur-l-zidovi'),'Betonski zidovi'],[S('kur-l-zidovi-kuca'),'Ugradbeni dijelovi u zidu']]));
 $set('galleryKurMost', gHtml([[S('kur-most-pregled'),'Pregled projekta'],[S('kur-most-kuca'),'Most i stepenice'],[S('kur-most-hidromasaza'),'Hidromasaža s klupama'],[S('kur-most-stepenice'),'Ulazne stepenice'],[S('kur-most-dno'),'Dno i mlaznice'],[S('kur-most-strojarnica'),'Šaht strojarnice']]));
-$set('galleryKurObloge', gHtml([[S('kur-obloga-tamna-stepenice'),'Tamna folija sa stepenicama'],[S('kur-keramika-svijetla'),'Svijetla keramika'],[S('kur-plocice-plave-more'),'Plave pločice, pogled na more'],[S('kur-zbuka-skoljka'),'Žbukana školjka'],[S('kur-zbuka-skimeri'),'Skimeri prije obloge'],[S('kur-armatura-cijevi'),'Armatura i cijevi dna']]));
-$set('galleryKurFp', gHtml([[S('kur-fp-zidovi'),'Zidovi i podloga'],[S('kur-fp-pravokutni-montaza'),'Montaža pravokutnog FP'],[S('kur-fp-ovalni-stijena'),'Montaža ovalnog FP']]));
+$set('galleryKurObloge', gHtml([[S('kur-obloga-tamna-stepenice'),'Tamna folija sa stepenicama'],[S('kur-keramika-svijetla'),'Svijetla keramika'],[S('kur-plocice-plave-more'),'Plave pločice, pogled na more'],[S('kur-zbuka-skoljka'),'Žbukana školjka'],[S('kur-zbuka-skimeri'),'Skimeri prije obloge']]));
+$set('galleryKurFp', gHtml([[S('kur-fp-zidovi'),'Zidovi i podloga'],[S('kur-fp-ovalni-stijena'),'Montaža ovalnog FP']]));
 document.getElementById('pairsMaint').innerHTML = PAIRS.map(([a,b,t,d,c]) => `<figure class="pair"><div class="ph${c?' three':''}">${[a,b,c].filter(Boolean).map(([f,l]) => `<div><img src="${S(f)}" alt="${t} – ${l}" loading="lazy"><span>${l}</span></div>`).join('')}</div><figcaption><b>${t}.</b> ${d}</figcaption></figure>`).join('');
 document.getElementById('galleryMaint').innerHTML = gHtml([[S('odr-mjerenje-sol-klor'),'Mjerenje soli i klora'],[S('odr-mreza-ciscenje'),'Čišćenje površine'],[S('odrzavanje-usisavanje'),'Usisavanje dna'],[S('bazen-pravokutni-otvaranje'),'Otvaranje sezone'],[S('odr-zimovanje-winterp'),'Zimovanje uz Winter P'],[S('odr-zimski-pokrivac'),'Zimski pokrivač']]);
 document.getElementById('galleryAll').innerHTML = gHtml([...GALLERY, ...BETON.filter(b => !GALLERY.some(g => g[0] === b[0]))]);
