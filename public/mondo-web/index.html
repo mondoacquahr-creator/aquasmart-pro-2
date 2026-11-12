@@ -65,7 +65,7 @@ p{margin:0}
 header.site{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:10px}
 .logo img{height:66px;width:auto}
-nav.main{display:flex;gap:24px;align-items:center}
+nav.main{display:flex;gap:22px;align-items:center}
 nav.main a{font:600 .92rem var(--display);text-decoration:none;color:var(--navy)}
 nav.main a[aria-current="page"]{color:var(--aqua-ink)}
 .head-cta{display:flex;gap:14px;align-items:center}
@@ -74,9 +74,10 @@ nav.main a[aria-current="page"]{color:var(--aqua-ink)}
 .drop{position:relative}
 .drop-panel{position:absolute;top:calc(100% + 12px);left:-16px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 40px rgba(19,22,61,.12);padding:8px;min-width:240px;display:none}
 .drop:hover .drop-panel,.drop:focus-within .drop-panel{display:block}
+.drop.shut .drop-panel{display:none!important}
 .drop-panel a{display:block;padding:9px 12px;border-radius:9px}
 .drop-panel a:hover{background:var(--bg-soft)}
-@media (max-width:920px){
+@media (max-width:1180px){
   nav.main,.pc-link{display:none}
   .menu-btn{display:inline-flex;align-items:center;justify-content:center}
   nav.main.open{display:flex;flex-direction:column;align-items:flex-start;position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:16px max(20px,env(safe-area-inset-left,0px)) 20px;gap:14px}
@@ -281,15 +282,16 @@ img{height:auto}
 .ch-alt{color:#fff;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06)}
 .ch-go:hover,.ch-alt:hover{transform:translateY(-1px)}
 @media (max-width:620px){.ch{min-height:340px}.ch-phone{width:40%;right:2%}}
+.drop-r .drop-panel{left:auto;right:-16px;}
 .login-drop .drop-panel{left:auto;right:0;top:calc(100% + 10px);min-width:250px;background:rgba(6,30,42,.98)!important}
 .lp-h{margin:8px 12px 2px;font:700 .72rem/1.2 var(--display);letter-spacing:.12em;text-transform:uppercase;color:#5CE1E6}
 .lp-h small{display:block;font:500 .74rem var(--body);letter-spacing:0;text-transform:none;color:var(--muted);margin-top:2px}
 .login-panel a{color:#fff;text-decoration:none}
-@media (max-width:920px){nav.main.open{background:#041820!important;z-index:60;min-height:calc(100vh - 110px);border-bottom:1px solid rgba(120,220,255,.12);backdrop-filter:none;max-height:calc(100vh - 120px);overflow-y:auto;box-shadow:0 30px 60px rgba(0,0,0,.6)}nav.main.open .drop-panel{background:transparent!important;border:0!important}}
+@media (max-width:1180px){nav.main.open{background:#041820!important;z-index:60;min-height:calc(100vh - 110px);border-bottom:1px solid rgba(120,220,255,.12);backdrop-filter:none;max-height:calc(100vh - 120px);overflow-y:auto;box-shadow:0 30px 60px rgba(0,0,0,.6)}nav.main.open .drop-panel{background:transparent!important;border:0!important}}
 .mob-only{display:none}
 @media (max-width:920px){.mob-only{display:block}.desk-only{display:none}}
 .zhero{position:relative;background:linear-gradient(180deg,rgba(2,13,18,.55),rgba(2,13,18,.82) 70%,rgba(4,24,32,1)),var(--img) center/cover no-repeat;padding-block:clamp(48px,7vw,96px) clamp(40px,5vw,64px)}
-.zhero-in{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(24px,4vw,56px);align-items:center}
+.zhero-in{display:grid;grid-template-columns:minmax(0,760px);gap:clamp(24px,4vw,56px);align-items:center}
 .zhero-in>*{min-width:0}.zhero h1{font-size:clamp(2.2rem,4.6vw,3.6rem)}
 @media (max-width:900px){.zhero-in{grid-template-columns:1fr}}
 .need{background:rgba(6,30,42,.78);border:1px solid rgba(120,220,255,.16);border-radius:22px;padding:clamp(16px,2.4vw,24px);backdrop-filter:blur(14px)}
@@ -330,6 +332,19 @@ img{height:auto}
 .inv strong{display:block;font:800 1.35rem var(--display);color:#fff;margin:6px 0}.inv small{color:var(--muted)}.inv b{font:700 .95rem var(--display);color:#5CE1E6}
 .cookie{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:80;max-width:720px;margin:0 auto;display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:14px 18px;border-radius:16px;background:rgba(6,30,42,.97);border:1px solid rgba(120,220,255,.2);box-shadow:0 20px 50px rgba(0,0,0,.5)}
 .cookie p{margin:0;flex:1 1 260px;font-size:.88rem;color:rgba(255,255,255,.8)}.cookie a{color:#5CE1E6}
+.slides{position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;border:1px solid rgba(120,220,255,.16);background:#020D12;max-width:100%}
+.slides figure{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .9s ease}
+.slides figure.on{opacity:1}
+.slides img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.04);transition:transform 6s ease}
+.slides figure.on img{transform:scale(1)}
+.slides figcaption{position:absolute;left:14px;bottom:14px;padding:7px 12px;border-radius:999px;background:rgba(2,13,18,.8);color:#fff;font:600 .82rem var(--display)}
+.slides .sl-nav{position:absolute;right:12px;bottom:12px;display:flex;gap:6px}
+.slides .sl-nav button{all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(2,13,18,.75);color:#fff;font-size:1rem}
+.slides .sl-nav button:hover{background:#4FC3F0;color:#0a0a0a}
+.slides .sl-dots{position:absolute;left:50%;top:12px;transform:translateX(-50%);display:flex;gap:5px}
+.slides .sl-dots i{width:18px;height:3px;border-radius:2px;background:rgba(255,255,255,.35)}.slides .sl-dots i.on{background:#4FC3F0}
+.zsteps{grid-template-columns:repeat(3,1fr)}.zsteps div{padding:10px 12px;font-size:.84rem}
+@media (max-width:640px){.zsteps{grid-template-columns:1fr 1fr}}
 /* ===== Tema: kao Mondo Pool Care ===== */
 :root{--navy:#ffffff;--aqua:#4FC3F0;--aqua-ink:#5CE1E6;--bg:#041820;--bg-soft:rgba(92,225,230,.05);--line:rgba(120,220,255,.12);--ink:rgba(255,255,255,.78);--muted:rgba(255,255,255,.55);--display:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--grad:linear-gradient(90deg,#7FDBFF 0%,#4FC3F0 45%,#1E88E5 100%)}
 body{background:radial-gradient(ellipse at 80% 0%,#08303D 0%,#041820 55%,#020D12 100%) fixed;color:var(--ink)}
@@ -383,8 +398,9 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
   <a class="logo" href="#pocetna" aria-label="Mondo Acqua, početna"><svg width="41" height="44" viewBox="0 0 160 170" aria-hidden="true"><defs><clipPath id="lg1"><circle cx="80" cy="108" r="56"/></clipPath></defs><g clip-path="url(#lg1)"><path d="M14 118 C 36 108, 58 128, 80 118 S 124 108, 146 118 V170 H14 Z" fill="#4FC3F0"/><path d="M14 136 C 36 127, 58 145, 80 136 S 124 127, 146 136 V170 H14 Z" fill="#1E88E5"/></g><circle cx="80" cy="108" r="56" fill="none" stroke="#FFFFFF" stroke-width="7"/><svg x="22" y="-4" width="116" height="84" viewBox="52 8 148 118" overflow="visible"><path fill="#FFFFFF" stroke="#06202A" stroke-width="10" stroke-linejoin="round" paint-order="stroke" d="M58.0 14.4C55.2 14.2 61.8 22.6 64.8 25.8C67.8 29.0 74.5 31.9 76.0 33.4C77.5 34.9 76.0 35.5 73.8 35.0C71.6 34.5 65.2 31.0 62.8 30.4C60.4 29.8 59.5 30.3 59.4 31.2C59.3 32.1 58.8 33.4 62.0 35.8C65.2 38.2 77.0 43.2 78.6 45.4C80.2 47.6 72.3 47.6 71.8 49.0C71.3 50.4 74.9 52.3 75.8 54.0C76.7 55.7 76.0 57.6 77.0 59.2C78.0 60.8 79.7 62.4 81.6 63.4C83.5 64.4 86.9 64.0 88.4 65.2C89.9 66.4 89.0 69.2 90.4 70.6C91.8 72.0 94.8 72.4 96.6 73.8C98.4 75.2 99.2 77.3 101.4 79.0C103.6 80.7 107.2 82.7 110.0 83.8C112.8 84.9 117.4 84.4 118.2 85.6C119.0 86.8 118.9 88.4 114.6 90.8C110.3 93.2 96.4 98.2 92.6 100.2C88.8 102.2 90.2 101.7 91.8 103.0C93.4 104.3 98.8 107.2 102.2 108.0C105.6 108.8 109.7 108.2 112.4 107.8C115.1 107.4 115.4 103.6 118.6 105.4C121.8 107.2 128.3 116.3 131.4 118.8C134.5 121.3 134.9 120.5 137.4 120.6C139.9 120.7 144.8 120.5 146.4 119.6C148.0 118.7 147.9 117.0 146.8 115.4C145.7 113.8 141.0 113.6 140.0 110.0C139.0 106.4 139.3 97.3 140.6 93.8C141.9 90.3 145.4 90.0 147.8 88.8C150.2 87.6 152.8 87.1 154.8 86.8C156.8 86.5 157.9 86.5 159.8 87.2C161.7 87.9 164.6 91.1 166.0 91.0C167.4 90.9 168.8 87.9 168.2 86.4C167.6 84.9 163.4 83.4 162.6 82.0C161.8 80.6 163.4 79.1 163.2 78.0C163.0 76.9 162.9 76.4 161.4 75.4C159.9 74.4 157.6 72.7 154.4 72.0C151.2 71.3 144.7 72.0 142.0 71.4C139.3 70.8 138.9 69.4 138.0 68.2C137.1 67.0 135.0 64.0 136.6 64.0C138.2 64.0 144.5 67.7 147.4 68.2C150.3 68.7 149.4 70.1 153.8 67.0C158.2 63.9 168.3 53.5 173.6 49.6C178.9 45.7 182.5 46.7 185.8 43.6C189.1 40.5 197.7 30.6 193.4 31.2C189.1 31.8 166.6 44.3 159.8 47.2C153.0 50.1 156.0 47.1 152.8 48.8C149.6 50.5 143.4 55.1 140.6 57.6C137.8 60.1 137.9 63.5 136.0 63.8C134.1 64.1 131.4 62.9 129.2 59.2C127.0 55.5 125.7 46.0 123.0 41.4C120.3 36.8 120.0 36.0 113.0 31.4C106.0 26.8 86.9 16.7 81.2 13.8C75.5 10.9 79.2 13.5 78.8 13.8C78.4 14.1 77.2 13.6 78.6 15.4C80.0 17.2 85.8 22.8 87.0 24.8C88.2 26.8 86.7 27.0 85.8 27.4C84.9 27.8 86.2 29.4 81.6 27.2C77.0 25.0 60.8 14.6 58.0 14.4Z"/></svg></svg><span class="wm" style="font-size:16px"><b>MONDO </b><i>ACQUA</i></span></a>
   <nav class="main" id="nav">
     <div class="drop">
-      <a href="#bazeni" data-nav="bazeni">Bazeni ▾</a>
+      <a href="#bazeni" data-nav="bazeni">Bazeni</a>
       <div class="drop-panel">
+        <a href="#bazeni">Svi bazeni i usporedba</a>
         <a href="#fp">Montažni FP bazeni</a>
         <a href="#coral">CORAL kompozitni</a>
         <a href="#compact">COMPACT keramički</a>
@@ -394,12 +410,18 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     </div>
     <a href="#kljuc-u-ruke" data-nav="kljuc-u-ruke">Ključ u ruke</a>
     <a href="#odrzavanje" data-nav="odrzavanje">Održavanje</a>
-    <a href="#galerija" data-nav="galerija">Galerija</a>
-    <a href="#o-nama" data-nav="o-nama">O nama</a>
-    <a href="#kontakt" data-nav="kontakt">Kontakt</a>
-    <a href="https://poolcare.mondo-acqua.hr/?stranica=webshop" target="_blank" rel="noopener">Webshop ↗</a>
-    <div class="drop mob-only">
-      <a href="#" data-noroute>Prijava ▾</a>
+    <a href="https://poolcare.mondo-acqua.hr/?stranica=vizualizator" target="_blank" rel="noopener">AI vizualizator</a>
+    <a href="https://poolcare.mondo-acqua.hr/?stranica=webshop" target="_blank" rel="noopener">Webshop</a>
+    <div class="drop">
+      <a href="#o-nama" data-nav="o-nama">O nama</a>
+      <div class="drop-panel">
+        <a href="#o-nama">O nama</a>
+        <a href="#galerija">Galerija radova</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+    </div>
+    <div class="drop drop-r">
+      <a href="#" data-noroute>Prijava</a>
       <div class="drop-panel login-panel">
         <p class="lp-h">Moj bazen <small>vlasnici bazena</small></p>
         <a href="https://poolcare.mondo-acqua.hr/?stranica=prijava" target="_blank" rel="noopener">Prijava</a>
@@ -411,17 +433,6 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     </div>
   </nav>
   <div class="head-cta">
-    <div class="drop desk-only login-drop">
-      <a class="btn btn-ghost" href="#" data-noroute>Prijava ▾</a>
-      <div class="drop-panel login-panel">
-        <p class="lp-h">Moj bazen <small>vlasnici bazena</small></p>
-        <a href="https://poolcare.mondo-acqua.hr/?stranica=prijava" target="_blank" rel="noopener">Prijava</a>
-        <a href="https://poolcare.mondo-acqua.hr/?stranica=clan" target="_blank" rel="noopener">Besplatna registracija</a>
-        <p class="lp-h">Pro portal <small>serviseri</small></p>
-        <a href="https://poolcare.mondo-acqua.hr/?stranica=prijava" target="_blank" rel="noopener">Prijava</a>
-        <a href="https://poolcare.mondo-acqua.hr/?stranica=registracija" target="_blank" rel="noopener">30 dana besplatno</a>
-      </div>
-    </div>
     <a class="btn btn-dark" href="#upit">Zatražite ponudu</a>
     <button class="menu-btn" id="menuBtn" aria-label="Izbornik" aria-expanded="false" aria-controls="nav">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -437,17 +448,7 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
       <p class="eyebrow">Mondo Acqua · bazeni, izvedba i održavanje</p>
       <h1>Sve za vaš bazen.<br><em>Od gradnje do bistre vode.</em></h1>
       <p class="lead">Montažni FP, CORAL kompozitni, COMPACT keramički i betonski bazeni po mjeri. Gradimo, montiramo i održavamo u cijeloj Hrvatskoj.</p>
-    </div>
-    <div class="need">
-      <p class="need-h">Što trebate?</p>
-      <div class="need-grid">
-        <button type="button" data-need="Montažni FP"><b>Montažni FP bazen</b><span>najpovoljniji ulaz</span><em>od 5.030 €</em></button>
-        <button type="button" data-need="CORAL kompozitni"><b>CORAL kompozitni</b><span>školjka s opremom</span><em>od 10.768 €</em></button>
-        <button type="button" data-need="COMPACT keramički"><b>COMPACT keramički</b><span>školjka s opremom</span><em>od 14.979 €</em></button>
-        <button type="button" data-need="Betonski / po mjeri"><b>Betonski po mjeri</b><span>skimer ili preljev</span><em>po projektu</em></button>
-        <button type="button" data-need="Održavanje bazena" class="need-wide"><b>Već imam bazen</b><span>održavanje, servis i analiza vode</span><em>Mondo Care 199 € / god.</em></button>
-      </div>
-      <p class="need-note">Cijene s PDV-om. Odabir otvara upit, a mi se javljamo s ponudom.</p>
+      <div class="btns"><a class="btn btn-primary" href="#bazeni">Usporedite bazene →</a><a class="btn btn-ghost" href="#upit-home" data-tohome>Pošaljite upit</a></div>
     </div>
   </div></div>
 
@@ -462,6 +463,11 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     <div class="shead"><div><p class="eyebrow">Odabir bazena</p><h2>Koje rješenje odgovara vašem prostoru?</h2></div><a class="btn btn-ghost" href="#bazeni">Usporedba i cijene →</a></div>
     <div class="types" id="typeCards"></div>
   </div></div>
+  <div class="band soft" id="upit-home"><div class="wrap split">
+    <div class="stack"><p class="eyebrow">Upit za bazen · 2 minute</p><h2>Opišite bazen. Mi pripremamo ponudu.</h2><p class="lead">Što više znamo unaprijed, to je prva ponuda točnija. Upit stiže izravno nama, javljamo se s konkretnim sljedećim korakom.</p>
+      <p><b>+385 95 208 7321</b> · info@mondo-acqua.hr</p></div>
+    <div data-form-slot id="upit-home-slot"></div>
+  </div></div>
 
   <div class="zturn"><div class="wrap zturn-in">
     <div class="stack" style="gap:16px">
@@ -470,10 +476,12 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
       <p class="lead">Jedan ugovor, jedan kontakt i jasan rok. Možete raditi i s vlastitim izvođačima.</p>
       <div class="btns"><a class="btn btn-primary" href="#kljuc-u-ruke">Kako gradimo →</a><a class="btn btn-ghost" href="#upit">Zatražite ponudu</a></div>
     </div>
+    <div class="stack" style="gap:14px">
+    <div class="slides" id="kurSlides" aria-roledescription="prezentacija"></div>
     <div class="zsteps">
       <div><span>1</span>Projekt i dozvole</div><div><span>2</span>Iskop i ploča</div><div><span>3</span>Ugradnja bazena</div>
       <div><span>4</span>Strojarnica i oprema</div><div><span>5</span>Rub, popločenje i okoliš</div><div><span>6</span>Punjenje i prvo kupanje</div>
-    </div>
+    </div></div>
   </div></div>
 
   <div class="band"><div class="wrap">
@@ -505,11 +513,6 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     </div>
   </div></div>
 
-  <div class="band soft" id="upit-home"><div class="wrap split">
-    <div class="stack"><p class="eyebrow">Upit za bazen · 2 minute</p><h2>Opišite bazen. Mi pripremamo ponudu.</h2><p class="lead">Što više znamo unaprijed, to je prva ponuda točnija. Upit stiže izravno nama, javljamo se s konkretnim sljedećim korakom.</p>
-      <p><b>+385 95 208 7321</b> · info@mondo-acqua.hr</p></div>
-    <div data-form-slot id="upit-home-slot"></div>
-  </div></div>
 </section>
 
 <!-- ============ BAZENI (pregled) ============ -->
@@ -655,7 +658,7 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
       <h1>Swim spa: plivanje protiv struje i hidromasaža u jednom.</h1>
       <p class="lead">Kompaktan bazen s podesivom protustrujom i hidromasažnom kadom sa šest ergonomskih položaja i do 40 mlaznica. Školjka od Lucite akrila u čeličnom okviru, proizvedeno u EU.</p>
       <div class="btns"><a class="btn btn-primary" href="#upit">Zatražite ponudu →</a></div></div>
-    <img src="https://sryuogkaebeznmadchcr.supabase.co/storage/v1/object/public/pool-catalog/mondo/mondo-hit-1.jpg" alt="Kupanje u bazenu" loading="lazy">
+    <img src="https://mondo-acqua.hr/sites/315/upload/userfiles/1674844273_5_5.jpg" alt="Swim spa s protustrujom i hidromasažom u vrtu" loading="lazy">
   </div></div>
   <div class="band"><div class="wrap cols2">
     <ul class="checks">
@@ -665,6 +668,10 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
       <li><span><b>Gecko upravljanje</b> svim funkcijama bazena i kade</span></li>
     </ul>
     <div class="stack"><h3>Akrilne hidromasažne kade</h3><p class="lead">Topla kupka s mjehurićima opušta mišiće i pomaže kvalitetnom snu. Ergonomski oblici i provjerena tehnologija. Modele i cijene šaljemo na upit.</p></div>
+  </div></div>
+  <div class="band soft"><div class="wrap">
+    <p class="eyebrow">Swim spa i hidromasaža</p><h2 style="margin-bottom:24px">Plivanje, trening i opuštanje cijele godine.</h2>
+    <div class="gallery" id="gallerySpa"></div>
   </div></div>
 </section>
 
@@ -1040,6 +1047,21 @@ const invShow = k => { $set('invRows', INV[k].map(([t,v,d]) => `<div><b>${t}</b>
 document.querySelectorAll('[data-inv]').forEach(b => b.addEventListener('click', () => invShow(+b.dataset.inv)));
 invShow(1);
 (() => { const c = document.getElementById('cookie'); let seen = false; try { seen = localStorage.getItem('mw_cookie') === '1'; } catch {} if (!seen) c.hidden = false; document.getElementById('cookieOk').addEventListener('click', () => { c.hidden = true; try { localStorage.setItem('mw_cookie','1'); } catch {} }); })();
+
+(() => {
+  const L = [['kur-iskop-temelj','1 · Iskop i temelj'],['kur-armatura-cijevi','2 · Armatura i cijevi dna'],['kur-l-oplata-stepenica','3 · Oplata školjke i stepenica'],['kur-l-zidovi','4 · Betonska školjka'],['kur-most-strojarnica','5 · Strojarnica'],['kur-zbuka-skoljka','6 · Priprema za oblogu'],['kur-plocice-plave-more','7 · Obloga pločicama'],['kur-more-keramika','8 · Rub i terasa'],['kur-more-rasvjeta','9 · Gotov bazen'],['kur-more-noc','10 · Prvo kupanje navečer']];
+  const box = document.getElementById('kurSlides'); if (!box) return;
+  box.innerHTML = L.map(([f,c],i) => `<figure class="${i?'':'on'}"><img src="${S(f)}" alt="${c}" ${i>1?'loading="lazy"':''}><figcaption>${c}</figcaption></figure>`).join('') + `<div class="sl-dots">${L.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div><div class="sl-nav"><button type="button" aria-label="Prethodna">‹</button><button type="button" aria-label="Sljedeća">›</button></div>`;
+  const figs = box.querySelectorAll('figure'), dots = box.querySelectorAll('.sl-dots i'); let k = 0, t;
+  const show = n => { figs[k].classList.remove('on'); dots[k].classList.remove('on'); k = (n + figs.length) % figs.length; figs[k].classList.add('on'); dots[k].classList.add('on'); };
+  const auto = () => { clearInterval(t); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) t = setInterval(() => show(k + 1), 4500); };
+  const [prev, next] = box.querySelectorAll('.sl-nav button');
+  prev.addEventListener('click', () => { show(k - 1); auto(); }); next.addEventListener('click', () => { show(k + 1); auto(); });
+  auto();
+})();
+document.querySelectorAll('.drop').forEach(d => { d.querySelectorAll('.drop-panel a').forEach(a => a.addEventListener('click', () => { if (matchMedia('(max-width:1180px)').matches) return; d.classList.add('shut'); document.activeElement && document.activeElement.blur(); })); d.addEventListener('mouseleave', () => d.classList.remove('shut')); });
+$set('gallerySpa', gHtml([['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844273_5_5.jpg','Swim spa u vrtu'],['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844405_8.jpg','Rasvjeta navečer'],['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844475_3.jpg','Protustruja'],['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844898_akrylatovevyrivky.jpg','Akrilna hidromasažna kada']]));
+document.querySelectorAll('[data-tohome]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); document.getElementById('upit-home').scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
 document.querySelectorAll('[data-need]').forEach(b => b.addEventListener('click', () => { const slot = document.getElementById('upit-home-slot'); const f = slot.querySelector('form'); if (f && f._pick) f._pick(b.dataset.need); document.getElementById('upit-home').scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
 document.querySelectorAll('[data-noroute]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
 route();
