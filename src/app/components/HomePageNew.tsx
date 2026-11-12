@@ -29,7 +29,7 @@ const CARD_BG = 'rgba(10,40,52,0.55)';
 const CARD_BORDER = '1px solid rgba(120,220,255,0.12)';
 const CYAN = '#5CE1E6';
 // Glavna stranica Mondo Acqua (bazeni). Nakon selidbe na domenu promijeniti u 'https://www.mondo-acqua.hr/'.
-const MAIN_SITE = '/mondo-web/';
+const MAIN_SITE = 'https://www.mondo-acqua.hr/';
 
 const readingBars = [
   {

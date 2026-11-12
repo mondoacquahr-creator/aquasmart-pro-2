@@ -116,7 +116,7 @@ export default function App() {
   useEffect(() => {
     if (firstPage.current) { firstPage.current = false; return; }
     const standalone = window.matchMedia?.('(display-mode: standalone)').matches || (navigator as any).standalone;
-    if (currentPage === 'home' && !standalone) window.location.href = '/mondo-web/';
+    if (currentPage === 'home' && !standalone) window.location.href = 'https://www.mondo-acqua.hr/';
   }, [currentPage]);
 
   const handleNavigate = (page: Page) => {

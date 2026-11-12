@@ -5,7 +5,7 @@ import { useLanguage } from '../lib/languageContext';
 
 // Zajedničko zaglavlje s glavnom stranicom Mondo Acqua (isti izbornik), za javne stranice Pool Care-a.
 // Glavna stranica je na /mondo-web/ dok ne prijeđe na domenu mondo-acqua.hr.
-const MAIN = '/mondo-web/';
+const MAIN = 'https://www.mondo-acqua.hr/';
 
 type Nav = (page: any) => void;
 
