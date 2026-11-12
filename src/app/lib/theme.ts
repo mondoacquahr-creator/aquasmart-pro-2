@@ -1,5 +1,5 @@
 export const T = {
-  pageBg: 'radial-gradient(ellipse at 80% 0%, #08303D 0%, #041820 45%, #020D12 100%)',
+  pageBg: 'radial-gradient(ellipse at 20% -10%, #0A3550 0%, #05203A 45%, #020C18 100%)',
   accent: 'linear-gradient(90deg, #7FDBFF 0%, #4FC3F0 45%, #1E88E5 100%)',
   cyan: '#5CE1E6',
   yellow: '#FFD60A',

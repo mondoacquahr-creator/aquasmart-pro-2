@@ -443,7 +443,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
       <div
         className="fixed inset-0 -z-20"
         style={{
-          background: 'radial-gradient(ellipse at 80% 0%, #08303D 0%, #041820 55%, #020D12 100%)',
+          background: 'radial-gradient(ellipse at 20% -10%, #0A3550 0%, #05203A 45%, #020C18 100%)',
         }}
       />
 

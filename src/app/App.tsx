@@ -110,6 +110,15 @@ export default function App() {
     if (currentPage === 'visualizer' && !VISUALIZER_ENABLED) setCurrentPage('home');
   }, [currentPage]);
 
+  // Mondo Acqua glavna stranica je početna: povratak na 'home' unutar weba vodi na nju.
+  // Instalirana aplikacija (Google Play / dodano na početni zaslon) i dalje ostaje na Pool Care početnoj.
+  const firstPage = useRef(true);
+  useEffect(() => {
+    if (firstPage.current) { firstPage.current = false; return; }
+    const standalone = window.matchMedia?.('(display-mode: standalone)').matches || (navigator as any).standalone;
+    if (currentPage === 'home' && !standalone) window.location.href = '/mondo-web/';
+  }, [currentPage]);
+
   const handleNavigate = (page: Page) => {
     if (page === 'visualizer' && !VISUALIZER_ENABLED) page = 'home';
     if (page === 'home') {

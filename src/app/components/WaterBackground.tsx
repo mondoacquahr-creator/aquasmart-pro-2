@@ -63,7 +63,7 @@ export function WaterBackground() {
               bottom: '-60%',
               left: '-60%',
               backgroundImage:
-                'repeating-radial-gradient(circle at 80% 10%, transparent 0px, transparent 47px, rgba(120,220,255,0.06) 47px, rgba(120,220,255,0.06) 48px)',
+                'repeating-radial-gradient(circle at 63% 39%, transparent 0px, transparent 55px, rgba(120,220,255,0.09) 55px, rgba(120,220,255,0.09) 56.5px)',
               willChange: 'transform',
             }}
           />
@@ -76,7 +76,7 @@ export function WaterBackground() {
               bottom: '-60%',
               left: '-60%',
               backgroundImage:
-                'repeating-radial-gradient(circle at 15% 85%, transparent 0px, transparent 71px, rgba(120,220,255,0.04) 71px, rgba(120,220,255,0.04) 72px)',
+                'repeating-radial-gradient(circle at 39% 62%, transparent 0px, transparent 83px, rgba(79,195,240,0.07) 83px, rgba(79,195,240,0.07) 84.5px)',
               willChange: 'transform',
             }}
           />
