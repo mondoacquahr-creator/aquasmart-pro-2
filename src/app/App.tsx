@@ -22,7 +22,7 @@ import { WaterBackground } from './components/WaterBackground';
 import { MemberPortal } from './components/MemberPortal';
 import { T } from './lib/theme';
 
-const VISUALIZER_ENABLED = false;
+const VISUALIZER_ENABLED = true;
 
 type Page = 'home' | 'visualizer' | 'promo' | 'analysis' | 'products' | 'login' | 'register' | 'member-register' | 'free-portal' | 'pro-portal' | 'member-portal' | 'water-analysis' | 'stores' | 'guest-analysis' | 'shop';
 
@@ -31,7 +31,7 @@ export default function App() {
   // Ulaz s glavne stranice mondo-acqua.hr: ?stranica=webshop|analiza|prijava|registracija|clan
   const [currentPage, setCurrentPage] = useState<Page>(() => {
     try {
-      const map: Record<string, Page> = { webshop: 'products', analiza: 'analysis', prijava: 'login', registracija: 'register', clan: 'member-register' };
+      const map: Record<string, Page> = { webshop: 'products', analiza: 'analysis', prijava: 'login', registracija: 'register', clan: 'member-register', vizualizator: 'visualizer' };
       return map[new URLSearchParams(window.location.search).get('stranica') || ''] || 'home';
     } catch { return 'home'; }
   });
