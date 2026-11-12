@@ -314,6 +314,17 @@ input:focus,textarea:focus{border-color:#4FC3F0;outline:none;box-shadow:0 0 0 3p
 .flogo2{margin-bottom:12px}
 .head-cta .btn{white-space:nowrap}
 @media (max-width:560px){.top .wrap>span:first-child{display:none}.head-cta .btn{padding:11px 14px;font-size:.84rem}.wm{font-size:13px!important}.logo{gap:8px}.logo svg{width:34px;height:36px}.head-cta{gap:8px}.pc-link{display:none}}
+
+/* ===== Podloga: Mondo voda (srodna Pool Care valovima) ===== */
+body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C18 100%) fixed}
+.mw-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.mw-bg i{position:absolute;inset:-30%;display:block;will-change:transform}
+.mw-caust{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='turbulence' baseFrequency='.012 .02' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .47 0 0 0 0 .86 0 0 0 0 1 0 0 0 -9 1.15'/%3E%3C/filter%3E%3Crect width='600' height='600' filter='url(%23c)'/%3E%3C/svg%3E");background-size:600px 600px;opacity:.075;animation:mwDrift 60s linear infinite}
+.mw-waves{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='56'%3E%3Cpath d='M0 28 Q30 14 60 28 T120 28 T180 28 T240 28' fill='none' stroke='rgba(120,220,255,0.07)' stroke-width='1'/%3E%3C/svg%3E");background-size:240px 56px;animation:mwSway 18s ease-in-out infinite alternate}
+.mw-glow{background:radial-gradient(circle at 85% 20%,rgba(79,195,240,.14),transparent 40%),radial-gradient(circle at 10% 80%,rgba(30,136,229,.12),transparent 45%)}
+@keyframes mwDrift{to{transform:translate(-600px,-300px)}}
+@keyframes mwSway{from{transform:translateX(0) skewY(-1deg)}to{transform:translateX(-60px) skewY(1deg)}}
+@media (prefers-reduced-motion:reduce){.mw-bg i{animation:none}}
 </style>
 </head>
 <body>
@@ -323,6 +334,7 @@ input:focus,textarea:focus{border-color:#4FC3F0;outline:none;box-shadow:0 0 0 3p
   <span><a href="tel:+385952087321">+385 95 208 7321</a> · <a href="mailto:info@mondo-acqua.hr">info@mondo-acqua.hr</a></span>
 </div></div>
 
+<div class="mw-bg" aria-hidden="true"><i class="mw-glow"></i><i class="mw-caust"></i><i class="mw-waves"></i></div>
 <header class="site"><div class="wrap">
   <a class="logo" href="#pocetna" aria-label="Mondo Acqua, početna"><svg width="41" height="44" viewBox="0 0 160 170" aria-hidden="true"><defs><clipPath id="lg1"><circle cx="80" cy="108" r="56"/></clipPath></defs><g clip-path="url(#lg1)"><path d="M14 118 C 36 108, 58 128, 80 118 S 124 108, 146 118 V170 H14 Z" fill="#4FC3F0"/><path d="M14 136 C 36 127, 58 145, 80 136 S 124 127, 146 136 V170 H14 Z" fill="#1E88E5"/></g><circle cx="80" cy="108" r="56" fill="none" stroke="#FFFFFF" stroke-width="7"/><svg x="22" y="-4" width="116" height="84" viewBox="52 8 148 118" overflow="visible"><path fill="#FFFFFF" stroke="#06202A" stroke-width="10" stroke-linejoin="round" paint-order="stroke" d="M58.0 14.4C55.2 14.2 61.8 22.6 64.8 25.8C67.8 29.0 74.5 31.9 76.0 33.4C77.5 34.9 76.0 35.5 73.8 35.0C71.6 34.5 65.2 31.0 62.8 30.4C60.4 29.8 59.5 30.3 59.4 31.2C59.3 32.1 58.8 33.4 62.0 35.8C65.2 38.2 77.0 43.2 78.6 45.4C80.2 47.6 72.3 47.6 71.8 49.0C71.3 50.4 74.9 52.3 75.8 54.0C76.7 55.7 76.0 57.6 77.0 59.2C78.0 60.8 79.7 62.4 81.6 63.4C83.5 64.4 86.9 64.0 88.4 65.2C89.9 66.4 89.0 69.2 90.4 70.6C91.8 72.0 94.8 72.4 96.6 73.8C98.4 75.2 99.2 77.3 101.4 79.0C103.6 80.7 107.2 82.7 110.0 83.8C112.8 84.9 117.4 84.4 118.2 85.6C119.0 86.8 118.9 88.4 114.6 90.8C110.3 93.2 96.4 98.2 92.6 100.2C88.8 102.2 90.2 101.7 91.8 103.0C93.4 104.3 98.8 107.2 102.2 108.0C105.6 108.8 109.7 108.2 112.4 107.8C115.1 107.4 115.4 103.6 118.6 105.4C121.8 107.2 128.3 116.3 131.4 118.8C134.5 121.3 134.9 120.5 137.4 120.6C139.9 120.7 144.8 120.5 146.4 119.6C148.0 118.7 147.9 117.0 146.8 115.4C145.7 113.8 141.0 113.6 140.0 110.0C139.0 106.4 139.3 97.3 140.6 93.8C141.9 90.3 145.4 90.0 147.8 88.8C150.2 87.6 152.8 87.1 154.8 86.8C156.8 86.5 157.9 86.5 159.8 87.2C161.7 87.9 164.6 91.1 166.0 91.0C167.4 90.9 168.8 87.9 168.2 86.4C167.6 84.9 163.4 83.4 162.6 82.0C161.8 80.6 163.4 79.1 163.2 78.0C163.0 76.9 162.9 76.4 161.4 75.4C159.9 74.4 157.6 72.7 154.4 72.0C151.2 71.3 144.7 72.0 142.0 71.4C139.3 70.8 138.9 69.4 138.0 68.2C137.1 67.0 135.0 64.0 136.6 64.0C138.2 64.0 144.5 67.7 147.4 68.2C150.3 68.7 149.4 70.1 153.8 67.0C158.2 63.9 168.3 53.5 173.6 49.6C178.9 45.7 182.5 46.7 185.8 43.6C189.1 40.5 197.7 30.6 193.4 31.2C189.1 31.8 166.6 44.3 159.8 47.2C153.0 50.1 156.0 47.1 152.8 48.8C149.6 50.5 143.4 55.1 140.6 57.6C137.8 60.1 137.9 63.5 136.0 63.8C134.1 64.1 131.4 62.9 129.2 59.2C127.0 55.5 125.7 46.0 123.0 41.4C120.3 36.8 120.0 36.0 113.0 31.4C106.0 26.8 86.9 16.7 81.2 13.8C75.5 10.9 79.2 13.5 78.8 13.8C78.4 14.1 77.2 13.6 78.6 15.4C80.0 17.2 85.8 22.8 87.0 24.8C88.2 26.8 86.7 27.0 85.8 27.4C84.9 27.8 86.2 29.4 81.6 27.2C77.0 25.0 60.8 14.6 58.0 14.4Z"/></svg></svg><span class="wm" style="font-size:16px"><b>MONDO </b><i>ACQUA</i></span></a>
   <nav class="main" id="nav">
@@ -894,6 +906,7 @@ function route(){
 const nav = document.getElementById('nav'), menuBtn = document.getElementById('menuBtn');
 menuBtn.addEventListener('click', () => { const o = nav.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', String(o)); });
 window.addEventListener('hashchange', route);
+(() => { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; const w = document.querySelector('.mw-waves'), g = document.querySelector('.mw-glow'); let t = false; addEventListener('scroll', () => { if (t) return; t = true; requestAnimationFrame(() => { const y = Math.min(scrollY, 3000); w.style.translate = `0 ${y * -0.08}px`; g.style.translate = `0 ${y * -0.03}px`; t = false; }); }, { passive: true }); })();
 document.querySelectorAll('[data-noroute]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
 route();
 </script>
