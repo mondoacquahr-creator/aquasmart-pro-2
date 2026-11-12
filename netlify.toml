@@ -25,6 +25,11 @@
   status = 200
 
 # --- Nakon što se www.mondo-acqua.hr usmjeri na ovaj Netlify projekt (do tada se ne aktivira) ---
+[[redirects]]
+  from = "https://mondo-acqua.hr/*"
+  to = "https://www.mondo-acqua.hr/:splat"
+  status = 301
+  force = true
 # Stare adrese starog weba -> nove stranice (301)
 [[redirects]]
   from = "https://www.mondo-acqua.hr/bazeni-i-spa/bazeni-i-spa/fp-bazeni"
