@@ -284,7 +284,7 @@ img{height:auto}
 @media (max-width:620px){.ch{min-height:340px}.ch-phone{width:40%;right:2%}}
 .drop-r .drop-panel{left:auto;right:-16px;}
 .login-drop .drop-panel{left:auto;right:0;top:calc(100% + 10px);min-width:250px;background:rgba(6,30,42,.98)!important}
-.lp-h{margin:8px 12px 2px;font:700 .72rem/1.2 var(--display);letter-spacing:.12em;text-transform:uppercase;color:#5CE1E6}
+.lp-h{display:block;text-decoration:none;margin:8px 12px 2px;font:700 .72rem/1.2 var(--display);letter-spacing:.12em;text-transform:uppercase;color:#5CE1E6}
 .lp-h small{display:block;font:500 .74rem var(--body);letter-spacing:0;text-transform:none;color:var(--muted);margin-top:2px}
 .login-panel a{color:#fff;text-decoration:none}
 @media (max-width:1180px){nav.main.open{background:#041820!important;z-index:60;min-height:calc(100vh - 110px);border-bottom:1px solid rgba(120,220,255,.12);backdrop-filter:none;max-height:calc(100vh - 120px);overflow-y:auto;box-shadow:0 30px 60px rgba(0,0,0,.6)}nav.main.open .drop-panel{background:transparent!important;border:0!important}}
@@ -345,6 +345,14 @@ img{height:auto}
 .slides .sl-dots i{width:18px;height:3px;border-radius:2px;background:rgba(255,255,255,.35)}.slides .sl-dots i.on{background:#4FC3F0}
 .zsteps{grid-template-columns:repeat(3,1fr)}.zsteps div{padding:10px 12px;font-size:.84rem}
 @media (max-width:640px){.zsteps{grid-template-columns:1fr 1fr}}
+.phm{padding:clamp(20px,3vw,28px);border-radius:24px;background:rgba(6,30,42,.7);border:1px solid rgba(120,220,255,.16);display:flex;flex-direction:column;gap:12px;min-width:0}
+.phm-top{display:flex;align-items:baseline;gap:14px}.phm-top strong{font:800 3rem/1 var(--display);color:#fff}
+.phm-top span{font:700 .95rem var(--display);padding:5px 12px;border-radius:999px;background:rgba(255,214,10,.15);color:#FFD60A}
+#phRange{-webkit-appearance:none;appearance:none;width:100%;height:12px;border-radius:999px;outline:none;background:linear-gradient(90deg,#FF2D55 0%,#FF8A1F 18%,#FFD60A 30%,#2EE6A6 38%,#2EE6A6 56%,#FFD60A 64%,#FF8A1F 80%,#FF2D55 100%);cursor:pointer}
+#phRange::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;border:4px solid #041820;box-shadow:0 0 0 2px #fff,0 6px 18px rgba(0,0,0,.5)}
+#phRange::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid #041820}
+.phm-scale{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted)}
+.phm-tip{margin:0;color:rgba(255,255,255,.85)}.phm-note{margin:0;font-size:.78rem;color:var(--muted)}
 /* ===== Tema: kao Mondo Pool Care ===== */
 :root{--navy:#ffffff;--aqua:#4FC3F0;--aqua-ink:#5CE1E6;--bg:#041820;--bg-soft:rgba(92,225,230,.05);--line:rgba(120,220,255,.12);--ink:rgba(255,255,255,.78);--muted:rgba(255,255,255,.55);--display:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;--grad:linear-gradient(90deg,#7FDBFF 0%,#4FC3F0 45%,#1E88E5 100%)}
 body{background:radial-gradient(ellipse at 80% 0%,#08303D 0%,#041820 55%,#020D12 100%) fixed;color:var(--ink)}
@@ -367,6 +375,8 @@ input:focus,textarea:focus{border-color:#4FC3F0;outline:none;box-shadow:0 0 0 3p
 .logo{display:inline-flex;align-items:center;gap:12px;text-decoration:none}
 .logo svg{flex:none}
 .wm{font:700 1rem/1 Montserrat,var(--display);letter-spacing:.06em;white-space:nowrap}
+.wm-pc{display:none;font:600 .62em/1 Montserrat,var(--display);letter-spacing:.34em;color:rgba(255,255,255,.85);margin-top:5px}
+body.pc .wm{display:inline-block;line-height:1}body.pc .wm-pc{display:block}
 .wm b{color:#fff;font-weight:700}.wm i{font-style:normal;color:#4FC3F0}
 .flogo2{margin-bottom:12px}
 .head-cta .btn{white-space:nowrap}
@@ -395,7 +405,7 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
 
 <div class="mw-bg" aria-hidden="true"><i class="mw-glow"></i><i class="mw-ringA"></i><i class="mw-ringB"></i><i class="mw-drop"></i></div>
 <header class="site"><div class="wrap">
-  <a class="logo" href="#pocetna" aria-label="Mondo Acqua, početna"><svg width="41" height="44" viewBox="0 0 160 170" aria-hidden="true"><defs><clipPath id="lg1"><circle cx="80" cy="108" r="56"/></clipPath></defs><g clip-path="url(#lg1)"><path d="M14 118 C 36 108, 58 128, 80 118 S 124 108, 146 118 V170 H14 Z" fill="#4FC3F0"/><path d="M14 136 C 36 127, 58 145, 80 136 S 124 127, 146 136 V170 H14 Z" fill="#1E88E5"/></g><circle cx="80" cy="108" r="56" fill="none" stroke="#FFFFFF" stroke-width="7"/><svg x="22" y="-4" width="116" height="84" viewBox="52 8 148 118" overflow="visible"><path fill="#FFFFFF" stroke="#06202A" stroke-width="10" stroke-linejoin="round" paint-order="stroke" d="M58.0 14.4C55.2 14.2 61.8 22.6 64.8 25.8C67.8 29.0 74.5 31.9 76.0 33.4C77.5 34.9 76.0 35.5 73.8 35.0C71.6 34.5 65.2 31.0 62.8 30.4C60.4 29.8 59.5 30.3 59.4 31.2C59.3 32.1 58.8 33.4 62.0 35.8C65.2 38.2 77.0 43.2 78.6 45.4C80.2 47.6 72.3 47.6 71.8 49.0C71.3 50.4 74.9 52.3 75.8 54.0C76.7 55.7 76.0 57.6 77.0 59.2C78.0 60.8 79.7 62.4 81.6 63.4C83.5 64.4 86.9 64.0 88.4 65.2C89.9 66.4 89.0 69.2 90.4 70.6C91.8 72.0 94.8 72.4 96.6 73.8C98.4 75.2 99.2 77.3 101.4 79.0C103.6 80.7 107.2 82.7 110.0 83.8C112.8 84.9 117.4 84.4 118.2 85.6C119.0 86.8 118.9 88.4 114.6 90.8C110.3 93.2 96.4 98.2 92.6 100.2C88.8 102.2 90.2 101.7 91.8 103.0C93.4 104.3 98.8 107.2 102.2 108.0C105.6 108.8 109.7 108.2 112.4 107.8C115.1 107.4 115.4 103.6 118.6 105.4C121.8 107.2 128.3 116.3 131.4 118.8C134.5 121.3 134.9 120.5 137.4 120.6C139.9 120.7 144.8 120.5 146.4 119.6C148.0 118.7 147.9 117.0 146.8 115.4C145.7 113.8 141.0 113.6 140.0 110.0C139.0 106.4 139.3 97.3 140.6 93.8C141.9 90.3 145.4 90.0 147.8 88.8C150.2 87.6 152.8 87.1 154.8 86.8C156.8 86.5 157.9 86.5 159.8 87.2C161.7 87.9 164.6 91.1 166.0 91.0C167.4 90.9 168.8 87.9 168.2 86.4C167.6 84.9 163.4 83.4 162.6 82.0C161.8 80.6 163.4 79.1 163.2 78.0C163.0 76.9 162.9 76.4 161.4 75.4C159.9 74.4 157.6 72.7 154.4 72.0C151.2 71.3 144.7 72.0 142.0 71.4C139.3 70.8 138.9 69.4 138.0 68.2C137.1 67.0 135.0 64.0 136.6 64.0C138.2 64.0 144.5 67.7 147.4 68.2C150.3 68.7 149.4 70.1 153.8 67.0C158.2 63.9 168.3 53.5 173.6 49.6C178.9 45.7 182.5 46.7 185.8 43.6C189.1 40.5 197.7 30.6 193.4 31.2C189.1 31.8 166.6 44.3 159.8 47.2C153.0 50.1 156.0 47.1 152.8 48.8C149.6 50.5 143.4 55.1 140.6 57.6C137.8 60.1 137.9 63.5 136.0 63.8C134.1 64.1 131.4 62.9 129.2 59.2C127.0 55.5 125.7 46.0 123.0 41.4C120.3 36.8 120.0 36.0 113.0 31.4C106.0 26.8 86.9 16.7 81.2 13.8C75.5 10.9 79.2 13.5 78.8 13.8C78.4 14.1 77.2 13.6 78.6 15.4C80.0 17.2 85.8 22.8 87.0 24.8C88.2 26.8 86.7 27.0 85.8 27.4C84.9 27.8 86.2 29.4 81.6 27.2C77.0 25.0 60.8 14.6 58.0 14.4Z"/></svg></svg><span class="wm" style="font-size:16px"><b>MONDO </b><i>ACQUA</i></span></a>
+  <a class="logo" href="#pocetna" aria-label="Mondo Acqua, početna"><svg width="41" height="44" viewBox="0 0 160 170" aria-hidden="true"><defs><clipPath id="lg1"><circle cx="80" cy="108" r="56"/></clipPath></defs><g clip-path="url(#lg1)"><path d="M14 118 C 36 108, 58 128, 80 118 S 124 108, 146 118 V170 H14 Z" fill="#4FC3F0"/><path d="M14 136 C 36 127, 58 145, 80 136 S 124 127, 146 136 V170 H14 Z" fill="#1E88E5"/></g><circle cx="80" cy="108" r="56" fill="none" stroke="#FFFFFF" stroke-width="7"/><svg x="22" y="-4" width="116" height="84" viewBox="52 8 148 118" overflow="visible"><path fill="#FFFFFF" stroke="#06202A" stroke-width="10" stroke-linejoin="round" paint-order="stroke" d="M58.0 14.4C55.2 14.2 61.8 22.6 64.8 25.8C67.8 29.0 74.5 31.9 76.0 33.4C77.5 34.9 76.0 35.5 73.8 35.0C71.6 34.5 65.2 31.0 62.8 30.4C60.4 29.8 59.5 30.3 59.4 31.2C59.3 32.1 58.8 33.4 62.0 35.8C65.2 38.2 77.0 43.2 78.6 45.4C80.2 47.6 72.3 47.6 71.8 49.0C71.3 50.4 74.9 52.3 75.8 54.0C76.7 55.7 76.0 57.6 77.0 59.2C78.0 60.8 79.7 62.4 81.6 63.4C83.5 64.4 86.9 64.0 88.4 65.2C89.9 66.4 89.0 69.2 90.4 70.6C91.8 72.0 94.8 72.4 96.6 73.8C98.4 75.2 99.2 77.3 101.4 79.0C103.6 80.7 107.2 82.7 110.0 83.8C112.8 84.9 117.4 84.4 118.2 85.6C119.0 86.8 118.9 88.4 114.6 90.8C110.3 93.2 96.4 98.2 92.6 100.2C88.8 102.2 90.2 101.7 91.8 103.0C93.4 104.3 98.8 107.2 102.2 108.0C105.6 108.8 109.7 108.2 112.4 107.8C115.1 107.4 115.4 103.6 118.6 105.4C121.8 107.2 128.3 116.3 131.4 118.8C134.5 121.3 134.9 120.5 137.4 120.6C139.9 120.7 144.8 120.5 146.4 119.6C148.0 118.7 147.9 117.0 146.8 115.4C145.7 113.8 141.0 113.6 140.0 110.0C139.0 106.4 139.3 97.3 140.6 93.8C141.9 90.3 145.4 90.0 147.8 88.8C150.2 87.6 152.8 87.1 154.8 86.8C156.8 86.5 157.9 86.5 159.8 87.2C161.7 87.9 164.6 91.1 166.0 91.0C167.4 90.9 168.8 87.9 168.2 86.4C167.6 84.9 163.4 83.4 162.6 82.0C161.8 80.6 163.4 79.1 163.2 78.0C163.0 76.9 162.9 76.4 161.4 75.4C159.9 74.4 157.6 72.7 154.4 72.0C151.2 71.3 144.7 72.0 142.0 71.4C139.3 70.8 138.9 69.4 138.0 68.2C137.1 67.0 135.0 64.0 136.6 64.0C138.2 64.0 144.5 67.7 147.4 68.2C150.3 68.7 149.4 70.1 153.8 67.0C158.2 63.9 168.3 53.5 173.6 49.6C178.9 45.7 182.5 46.7 185.8 43.6C189.1 40.5 197.7 30.6 193.4 31.2C189.1 31.8 166.6 44.3 159.8 47.2C153.0 50.1 156.0 47.1 152.8 48.8C149.6 50.5 143.4 55.1 140.6 57.6C137.8 60.1 137.9 63.5 136.0 63.8C134.1 64.1 131.4 62.9 129.2 59.2C127.0 55.5 125.7 46.0 123.0 41.4C120.3 36.8 120.0 36.0 113.0 31.4C106.0 26.8 86.9 16.7 81.2 13.8C75.5 10.9 79.2 13.5 78.8 13.8C78.4 14.1 77.2 13.6 78.6 15.4C80.0 17.2 85.8 22.8 87.0 24.8C88.2 26.8 86.7 27.0 85.8 27.4C84.9 27.8 86.2 29.4 81.6 27.2C77.0 25.0 60.8 14.6 58.0 14.4Z"/></svg></svg><span class="wm" style="font-size:16px"><b>MONDO </b><i>ACQUA</i><small class="wm-pc">POOL CARE</small></span></a>
   <nav class="main" id="nav">
     <div class="drop">
       <a href="#bazeni" data-nav="bazeni">Bazeni</a>
@@ -423,10 +433,10 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     <div class="drop drop-r">
       <a href="#" data-noroute>Prijava</a>
       <div class="drop-panel login-panel">
-        <p class="lp-h">Moj bazen <small>vlasnici bazena</small></p>
+        <a class="lp-h" href="https://poolcare.mondo-acqua.hr/?stranica=prijava" target="_blank" rel="noopener">Moj bazen <small>vlasnici bazena</small></a>
         <a href="https://poolcare.mondo-acqua.hr/?stranica=prijava" target="_blank" rel="noopener">Prijava</a>
         <a href="https://poolcare.mondo-acqua.hr/?stranica=clan" target="_blank" rel="noopener">Besplatna registracija</a>
-        <p class="lp-h">Pro portal <small>serviseri</small></p>
+        <a class="lp-h" href="https://poolcare.mondo-acqua.hr/?stranica=prijava" target="_blank" rel="noopener">Pro portal <small>serviseri</small></a>
         <a href="https://poolcare.mondo-acqua.hr/?stranica=prijava" target="_blank" rel="noopener">Prijava</a>
         <a href="https://poolcare.mondo-acqua.hr/?stranica=registracija" target="_blank" rel="noopener">30 dana besplatno</a>
       </div>
@@ -499,7 +509,15 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
   </div></div>
 
   <div class="band"><div class="wrap zcare">
-    <div class="ch ch-app zcare-card" style="--img:url('slike/odr-mreza-ciscenje.jpg')"><img class="ch-phone" src="slike/app-analiza.png" alt="Mondo Pool Care – analiza vode" loading="lazy"><span class="ch-k">Već imate bazen?</span><strong>Besplatna analiza vode</strong><p>Upišite očitanja i dobijte točne doze prema deklaraciji proizvoda.</p><div class="ch-btns"><a class="ch-go" href="https://poolcare.mondo-acqua.hr/?stranica=analiza" target="_blank" rel="noopener">Analiza vode ↗</a></div></div>
+    <div class="phm">
+      <p class="ch-k">Već imate bazen? Provjerite pH</p>
+      <div class="phm-top"><strong id="phVal">7.8</strong><span id="phStat">Malo visoko</span></div>
+      <input type="range" id="phRange" min="6.6" max="8.4" step="0.1" value="7.8" aria-label="pH vrijednost vode">
+      <div class="phm-scale"><span>6.6</span><span>cilj 7.2 – 7.6</span><span>8.4</span></div>
+      <p class="phm-tip" id="phTip"></p>
+      <div class="ch-btns"><a class="ch-go" href="https://poolcare.mondo-acqua.hr/?stranica=analiza" target="_blank" rel="noopener">Besplatna analiza vode ↗</a></div>
+      <p class="phm-note">Točnu dozu prema volumenu bazena i deklaraciji proizvoda izračuna analiza u Mondo Pool Care.</p>
+    </div>
     <div class="stack" style="gap:14px">
       <p class="eyebrow">Održavanje · cijela Hrvatska</p>
       <h2>Mondo Care <span class="price-l">199 € / godišnje</span></h2>
@@ -1024,6 +1042,7 @@ function route(){
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'p-' + h));
   document.querySelectorAll('nav.main [data-nav]').forEach(a => a.toggleAttribute('aria-current', a.dataset.nav === h || (a.dataset.nav === 'bazeni' && ['fp','coral','compact','po-mjeri','swim-spa'].includes(h))));
   document.querySelectorAll('nav.main [aria-current]').forEach(a => a.setAttribute('aria-current','page'));
+  document.body.classList.toggle('pc', h === 'odrzavanje');
   document.title = h === 'pocetna' ? TITLES.pocetna : `${TITLES[h]} – Mondo Acqua`;
   nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded','false');
   if (toForm) {
@@ -1063,6 +1082,19 @@ document.querySelectorAll('.drop').forEach(d => { d.querySelectorAll('.drop-pane
 $set('gallerySpa', gHtml([['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844273_5_5.jpg','Swim spa u vrtu'],['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844405_8.jpg','Rasvjeta navečer'],['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844475_3.jpg','Protustruja'],['https://mondo-acqua.hr/sites/315/upload/userfiles/1674844898_akrylatovevyrivky.jpg','Akrilna hidromasažna kada']]));
 // Pool Care je na istom poslužitelju dok je stranica na poolcare domeni ili u probnoj verziji: koristi isti host.
 (() => { const h = location.hostname; if (/poolcare\.|netlify\.app$/.test(h)) document.querySelectorAll('a[href^="https://poolcare.mondo-acqua.hr/"]').forEach(a => a.href = a.getAttribute('href').replace('https://poolcare.mondo-acqua.hr/', location.origin + '/')); })();
+
+(() => {
+  const r = document.getElementById('phRange'); if (!r) return;
+  const v = document.getElementById('phVal'), st = document.getElementById('phStat'), tip = document.getElementById('phTip');
+  const upd = () => { const x = +r.value; v.textContent = x.toFixed(1);
+    const [t, c, bg, m] = x < 7.0 ? ['Prenisko', '#FF2D55', 'rgba(255,45,85,.15)', 'Voda je kisela: nadražuje oči i kožu i nagriza opremu. Treba podići pH (pH plus).']
+      : x < 7.2 ? ['Malo nisko', '#FFD60A', 'rgba(255,214,10,.15)', 'Blago podignite pH (pH plus) i ponovno izmjerite nakon filtracije.']
+      : x <= 7.6 ? ['U redu', '#2EE6A6', 'rgba(46,230,166,.15)', 'Idealno. Klor u ovom rasponu djeluje najbolje.']
+      : x <= 7.9 ? ['Malo visoko', '#FFD60A', 'rgba(255,214,10,.15)', 'Klor slabije djeluje i voda se brže muti. Spustite pH (pH minus).']
+      : ['Previsoko', '#FF2D55', 'rgba(255,45,85,.15)', 'Klor gotovo ne djeluje, rizik od kamenca i mutne vode. Hitno spustite pH (pH minus).'];
+    st.textContent = t; st.style.color = c; st.style.background = bg; tip.textContent = m; };
+  r.addEventListener('input', upd); upd();
+})();
 document.querySelectorAll('[data-tohome]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); document.getElementById('upit-home').scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
 document.querySelectorAll('[data-need]').forEach(b => b.addEventListener('click', () => { const slot = document.getElementById('upit-home-slot'); const f = slot.querySelector('form'); if (f && f._pick) f._pick(b.dataset.need); document.getElementById('upit-home').scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
 document.querySelectorAll('[data-noroute]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
