@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { MondoLogo } from './MondoLogo';
+import { useLanguage } from '../lib/languageContext';
 
 // Zajedničko zaglavlje s glavnom stranicom Mondo Acqua (isti izbornik), za javne stranice Pool Care-a.
 // Glavna stranica je na /mondo-web/ dok ne prijeđe na domenu mondo-acqua.hr.
@@ -9,6 +10,7 @@ const MAIN = '/mondo-web/';
 type Nav = (page: any) => void;
 
 export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
+  const { language, setLanguage } = useLanguage();
   const [open, setOpen] = useState(false);
   const [drop, setDrop] = useState<string | null>(null);
   const go = (p: string) => { setOpen(false); setDrop(null); onNavigate(p); window.scrollTo(0, 0); };
@@ -61,6 +63,13 @@ export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <div className="flex rounded-full p-0.5" style={{ border: '1px solid rgba(120,220,255,0.18)' }} role="group" aria-label="Jezik">
+            {(['hr', 'en'] as const).map(l => (
+              <button key={l} onClick={() => setLanguage(l)} aria-pressed={language === l}
+                className="px-2.5 py-1 rounded-full text-xs font-bold uppercase"
+                style={language === l ? { background: 'rgba(92,225,230,0.18)', color: '#5CE1E6' } : { color: 'rgba(255,255,255,0.6)' }}>{l}</button>
+            ))}
+          </div>
           <a href={MAIN + '#upit'} className="px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap" style={{ background: '#4FC3F0', color: '#0a0a0a', boxShadow: '0 6px 24px rgba(79,195,240,0.3)' }}>Zatražite ponudu</a>
           <button className="xl:hidden w-11 h-11 rounded-xl grid place-items-center text-white" style={{ background: 'rgba(255,255,255,0.06)' }} onClick={() => setOpen(!open)} aria-label="Izbornik" aria-expanded={open}>
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

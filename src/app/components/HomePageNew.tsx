@@ -1,4 +1,5 @@
 import { MondoLogo } from './MondoLogo';
+import { useLanguage } from '../lib/languageContext';
 import { MaintenanceInquiry } from './MaintenanceInquiry';
 import { AppIcon } from './AppIcon';
 import { MemberChip } from './MemberChip';
@@ -81,6 +82,8 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
   const [showQuickMenu, setShowQuickMenu] = useState(false);
   const [showDropMenu, setShowDropMenu] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('hr');
+  const { language: ctxLang } = useLanguage();
+  useEffect(() => { setSelectedLanguage(ctxLang === 'en' ? 'en' : 'hr'); }, [ctxLang]);
 
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
