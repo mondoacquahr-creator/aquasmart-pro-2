@@ -1,4 +1,5 @@
 import { MondoLogo } from './MondoLogo';
+import { MaintenanceInquiry } from './MaintenanceInquiry';
 import { AppIcon } from './AppIcon';
 import { MemberChip } from './MemberChip';
 import { useAuth } from '../contexts/AuthContext';
@@ -1332,30 +1333,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
             </div>
 
             <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.6)' }}>Cijene održavanja na upit.</p>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href={`https://wa.me/385952087321?text=${encodeURIComponent('Pozdrav, zanima me ponuda za održavanje bazena.\nMjesto: \nVeličina bazena: ')}`}
-                target="_blank" rel="noopener noreferrer"
-                className="px-6 py-3 rounded-full text-sm font-bold flex items-center gap-2"
-                style={{ background: CYAN, color: '#020D12' }}
-              >
-                <MessageCircle className="w-4 h-4" /> Zatražite ponudu za održavanje
-              </a>
-              <a
-                href={`mailto:info@mondo-acqua.hr?subject=${encodeURIComponent('Upit za održavanje bazena')}`}
-                className="px-6 py-3 rounded-full text-sm font-semibold flex items-center gap-2"
-                style={{ border: `1px solid ${CYAN}`, color: CYAN }}
-              >
-                <Mail className="w-4 h-4" /> E-mail
-              </a>
-              <a
-                href="tel:+385952087321"
-                className="px-6 py-3 rounded-full text-sm font-semibold flex items-center gap-2"
-                style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#fff' }}
-              >
-                <Phone className="w-4 h-4" /> +385 95 208 7321
-              </a>
-            </div>
+            <MaintenanceInquiry />
           </div>
         </section>
 
