@@ -1,4 +1,6 @@
 import { MondoLogo } from './MondoLogo';
+import { useLanguage } from '../lib/languageContext';
+import { MaintenanceInquiry } from './MaintenanceInquiry';
 import { AppIcon } from './AppIcon';
 import { MemberChip } from './MemberChip';
 import { useAuth } from '../contexts/AuthContext';
@@ -12,7 +14,7 @@ import {
   Droplets, Users, FileText,
   LogIn, UserPlus, Lock, BeakerIcon, ShoppingCart, MapPin, Menu, X,
   Phone, Mail, Building, Copyright, Globe, Sparkles,
-  FlaskConical, Activity, Play, Warehouse, UserCog,
+  Play, Warehouse, UserCog,
   ChevronDown, BarChart3, Percent, BadgePercent, LineChart, Wrench, CheckCircle2, MessageCircle,
 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
@@ -26,6 +28,8 @@ const ACCENT = 'linear-gradient(90deg, #7FDBFF 0%, #4FC3F0 45%, #1E88E5 100%)';
 const CARD_BG = 'rgba(10,40,52,0.55)';
 const CARD_BORDER = '1px solid rgba(120,220,255,0.12)';
 const CYAN = '#5CE1E6';
+// Glavna stranica Mondo Acqua (bazeni). Nakon selidbe na domenu promijeniti u 'https://www.mondo-acqua.hr/'.
+const MAIN_SITE = '/mondo-web/';
 
 const readingBars = [
   {
@@ -78,6 +82,8 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
   const [showQuickMenu, setShowQuickMenu] = useState(false);
   const [showDropMenu, setShowDropMenu] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('hr');
+  const { language: ctxLang } = useLanguage();
+  useEffect(() => { setSelectedLanguage(ctxLang === 'en' ? 'en' : 'hr'); }, [ctxLang]);
 
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -437,7 +443,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
       <div
         className="fixed inset-0 -z-20"
         style={{
-          background: 'radial-gradient(ellipse at 80% 0%, #08303D 0%, #041820 55%, #020D12 100%)',
+          background: 'radial-gradient(ellipse at 20% -10%, #0A3550 0%, #05203A 45%, #020C18 100%)',
         }}
       />
 
@@ -480,7 +486,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
         {/* HEADER                                                        */}
         {/* ============================================================ */}
         <header
-          className="sticky top-0 z-50 backdrop-blur-xl"
+          className="hidden"
           style={{ background: 'rgba(4,24,32,0.75)', borderBottom: '1px solid rgba(120,220,255,0.08)' }}
         >
           <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between gap-4">
@@ -614,6 +620,13 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
               </div>
 
               {/* Existing text links */}
+              <a
+                href={MAIN_SITE + '#bazeni'}
+                className="px-4 py-2 text-sm rounded-xl transition-all hover:bg-white/8"
+                style={{ color: 'rgba(255,255,255,0.75)' }}
+              >
+                Bazeni
+              </a>
               {[
                 {
                   label: t.nav.odrzavanje,
@@ -791,6 +804,13 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                     ))}
                   </div>
 
+                  <a
+                    href={MAIN_SITE}
+                    className="block mx-1 mb-3 px-4 py-3 text-sm rounded-2xl"
+                    style={{ background: 'rgba(92,225,230,0.08)', color: 'rgba(255,255,255,0.85)' }}
+                  >
+                    Mondo Acqua bazeni →
+                  </a>
                   {/* Auth buttons */}
                   <div className="flex gap-2 px-1">
                     <button
@@ -993,16 +1013,22 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
               style={{ '--tw-divide-opacity': '1' } as React.CSSProperties}
             >
               {[
-                { Icon: FlaskConical, title: t.steps.title1, desc: t.steps.desc1 },
-                { Icon: Activity, title: t.steps.title2, desc: t.steps.desc2 },
-                { Icon: BeakerIcon, title: t.steps.title3, desc: t.steps.desc3 },
-              ].map(({ Icon, title, desc }, idx) => (
+                { img: '/koraci/testiraj.jpg', title: t.steps.title1, desc: t.steps.desc1 },
+                { img: '/koraci/analiziraj.jpg', title: t.steps.title2, desc: t.steps.desc2 },
+                { img: '/koraci/doziraj.jpg', title: t.steps.title3, desc: t.steps.desc3 },
+              ].map(({ img, title, desc }, idx) => (
                 <div
                   key={idx}
-                  className="px-8 py-8 flex flex-col gap-4"
+                  className="p-5 md:p-6 flex flex-col gap-4"
                   style={{ borderColor: 'rgba(120,220,255,0.1)' }}
                 >
-                  <AppIcon icon={Icon} size={52} />
+                  <img
+                    src={img}
+                    alt={title}
+                    loading="lazy"
+                    className="w-full rounded-2xl object-cover"
+                    style={{ aspectRatio: '4 / 3', border: '1px solid rgba(120,220,255,0.12)' }}
+                  />
                   <div>
                     <p className="font-bold text-base text-white mb-1">{title}</p>
                     <p className="text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>{desc}</p>
@@ -1310,30 +1336,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
             </div>
 
             <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.6)' }}>Cijene održavanja na upit.</p>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href={`https://wa.me/385952087321?text=${encodeURIComponent('Pozdrav, zanima me ponuda za održavanje bazena.\nMjesto: \nVeličina bazena: ')}`}
-                target="_blank" rel="noopener noreferrer"
-                className="px-6 py-3 rounded-full text-sm font-bold flex items-center gap-2"
-                style={{ background: CYAN, color: '#020D12' }}
-              >
-                <MessageCircle className="w-4 h-4" /> Zatražite ponudu za održavanje
-              </a>
-              <a
-                href={`mailto:info@mondo-acqua.hr?subject=${encodeURIComponent('Upit za održavanje bazena')}`}
-                className="px-6 py-3 rounded-full text-sm font-semibold flex items-center gap-2"
-                style={{ border: `1px solid ${CYAN}`, color: CYAN }}
-              >
-                <Mail className="w-4 h-4" /> E-mail
-              </a>
-              <a
-                href="tel:+385952087321"
-                className="px-6 py-3 rounded-full text-sm font-semibold flex items-center gap-2"
-                style={{ border: '1px solid rgba(255,255,255,0.25)', color: '#fff' }}
-              >
-                <Phone className="w-4 h-4" /> +385 95 208 7321
-              </a>
-            </div>
+            <MaintenanceInquiry />
           </div>
         </section>
 
@@ -1442,7 +1445,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                     <Phone className="w-3.5 h-3.5" />
                     +385 95 208 7321
                   </a>
-                  <a href="https://www.mondo-acqua.hr" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs transition-colors hover:text-white" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  <a href={MAIN_SITE} className="flex items-center gap-2 text-xs transition-colors hover:text-white" style={{ color: 'rgba(255,255,255,0.5)' }}>
                     <Building className="w-3.5 h-3.5" />
                     www.mondo-acqua.hr
                   </a>

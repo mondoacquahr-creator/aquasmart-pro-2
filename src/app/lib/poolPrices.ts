@@ -1,0 +1,41 @@
+// Cjenik bazena (s PDV-om) – isti kao na glavnoj stranici Mondo Acqua.
+// FP: bazen + osnovna oprema + montaža i montažni materijal. CORAL/COMPACT: školjka s opremom i dostavom.
+export interface PoolPrice { price: number; includes: string; works?: number }
+export const POOL_PRICES: Record<string, PoolPrice> = {
+  'FP pravokutni 6,00 x 3,00': { price: 6370.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 2300.0 },
+  'FP pravokutni 7,00 x 3,50': { price: 6970.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 2750.0 },
+  'FP pravokutni 8,00 x 4,00': { price: 7750.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 2900.0 },
+  'FP pravokutni 9,00 x 4,50': { price: 9310.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 2900.0 },
+  'FP pravokutni 10,00 x 5,00': { price: 10840.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 3100.0 },
+  'FP ovalni 4,50 x 3,00': { price: 5030.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 1500.0 },
+  'FP ovalni 5,30 x 3,20': { price: 5190.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 1700.0 },
+  'FP ovalni 6,00 x 3,00': { price: 5300.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 1700.0 },
+  'FP ovalni 6,00 x 3,20': { price: 5440.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 1800.0 },
+  'FP ovalni 6,23 x 3,60': { price: 5730.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 1800.0 },
+  'FP ovalni 7,00 x 3,50': { price: 6120.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 1950.0 },
+  'FP ovalni 7,37 x 3,60': { price: 6370.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 1950.0 },
+  'FP ovalni 8,00 x 4,00': { price: 7060.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 2200.0 },
+  'FP ovalni 8,40 x 4,00': { price: 7410.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 2350.0 },
+  'FP ovalni 9,16 x 4,60': { price: 8320.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 2800.0 },
+  'FP ovalni 11,00 x 5,50': { price: 9810.0, includes: 'bazen, osnovna oprema, montaža i montažni materijal', works: 3800.0 },
+  'Gemini': { price: 17100.0, includes: 'školjka s opremom i dostava' },
+  'Orion': { price: 15526.88, includes: 'školjka s opremom i dostava' },
+  'Hit': { price: 13582.5, includes: 'školjka s opremom i dostava' },
+  'Pegasus S': { price: 13582.5, includes: 'školjka s opremom i dostava' },
+  'Perseus': { price: 13638.75, includes: 'školjka s opremom i dostava' },
+  'Icarus': { price: 12954.38, includes: 'školjka s opremom i dostava' },
+  'Phoenix': { price: 12991.88, includes: 'školjka s opremom i dostava' },
+  'Smart': { price: 11670.0, includes: 'školjka s opremom i dostava' },
+  'Olympus': { price: 10768.13, includes: 'školjka s opremom i dostava' },
+  'Ruby': { price: 24075.55, includes: 'školjka s opremom i dostava' },
+  'Onyx': { price: 24320.63, includes: 'školjka s opremom i dostava' },
+  'Topaz': { price: 21545.63, includes: 'školjka s opremom i dostava' },
+  'Diamond': { price: 22143.75, includes: 'školjka s opremom i dostava' },
+  'Amethyst': { price: 18223.13, includes: 'školjka s opremom i dostava' },
+  'Agate': { price: 18223.13, includes: 'školjka s opremom i dostava' },
+  'Emerald': { price: 18307.5, includes: 'školjka s opremom i dostava' },
+  'Sapphire': { price: 17313.75, includes: 'školjka s opremom i dostava' },
+  'Opal': { price: 14979.38, includes: 'školjka s opremom i dostava' },
+};
+export const priceFor = (name?: string): PoolPrice | null => (name && POOL_PRICES[name.trim()]) || null;
+export const fmtPrice = (n: number) => n.toLocaleString('hr-HR', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + ' €';

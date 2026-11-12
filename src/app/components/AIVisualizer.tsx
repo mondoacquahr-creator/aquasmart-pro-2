@@ -3,6 +3,7 @@ import { Camera, Upload, ChevronLeft, RotateCcw, Download, Share2, Send, Loader2
 import { getCatalog, visualize, sendInquiry } from '../lib/vizApi';
 import type { Pool } from '../lib/vizApi';
 import { EquipmentSuggestionCard } from './EquipmentSuggestionCard';
+import { priceFor, fmtPrice } from '../lib/poolPrices';
 import { T } from '../lib/theme';
 
 interface Rect {
@@ -375,6 +376,7 @@ export function AIVisualizer({ onManual, onOpenShop }: { onManual: () => void; o
                     <div className="p-3">
                       <p className="font-semibold text-sm leading-tight">{pool.name}</p>
                       <p className="text-xs mt-0.5" style={{ color: T.faint }}>{pool.dimensions}</p>
+                      {priceFor(pool.name) && <p className="text-xs mt-0.5 font-semibold" style={{ color: T.cyan }}>{fmtPrice(priceFor(pool.name)!.price)}</p>}
                       <p className="text-xs mt-0.5" style={{ color: T.faint }}>{pool.shape}</p>
                     </div>
                   </button>
@@ -588,6 +590,17 @@ export function AIVisualizer({ onManual, onOpenShop }: { onManual: () => void; o
                 Preostalo danas: {result.remaining}
               </p>
             )}
+
+            {priceFor(selectedPool?.name) && (() => { const pp = priceFor(selectedPool?.name)!; return (
+              <div className="rounded-2xl p-4" style={{ background: T.cardBg, border: T.cardBorder }}>
+                <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: T.cyan }}>Cijena odabranog bazena</p>
+                <p className="font-bold">{selectedPool?.name} <span className="font-normal" style={{ color: T.faint }}>· {selectedPool?.dimensions}</span></p>
+                <p className="text-2xl font-extrabold mt-1">{fmtPrice(pp.price)} <span className="text-sm font-semibold" style={{ color: T.muted }}>s PDV-om</span></p>
+                <p className="text-sm" style={{ color: T.muted }}>Uključeno: {pp.includes}.</p>
+                {pp.works ? <p className="text-sm mt-1" style={{ color: T.muted }}>Građevinski radovi (iskop, ploča, zatrpavanje) okvirno: <b className="text-white">{fmtPrice(pp.works)}</b></p> : <p className="text-sm mt-1" style={{ color: T.muted }}>Montaža i građevinski radovi po ponudi.</p>}
+                <p className="text-xs mt-2" style={{ color: T.faint }}>Dodatna oprema u nastavku je po izboru. Točan iznos dobivate ponudom.</p>
+              </div>
+            ); })()}
 
             {selectedPool?.dimensions && (
               <EquipmentSuggestionCard dimensions={selectedPool.dimensions} shape={selectedPool.shape} onOpenShop={onOpenShop} />

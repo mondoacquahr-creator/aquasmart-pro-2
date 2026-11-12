@@ -1,3 +1,4 @@
+import { SiteHeader } from './components/SiteHeader';
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from './lib/supabase';
 import { HomePageNew } from './components/HomePageNew';
@@ -22,13 +23,19 @@ import { WaterBackground } from './components/WaterBackground';
 import { MemberPortal } from './components/MemberPortal';
 import { T } from './lib/theme';
 
-const VISUALIZER_ENABLED = false;
+const VISUALIZER_ENABLED = true;
 
 type Page = 'home' | 'visualizer' | 'promo' | 'analysis' | 'products' | 'login' | 'register' | 'member-register' | 'free-portal' | 'pro-portal' | 'member-portal' | 'water-analysis' | 'stores' | 'guest-analysis' | 'shop';
 
 // Main App Component - Updated with ProductShowcase
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('home');
+  // Ulaz s glavne stranice mondo-acqua.hr: ?stranica=webshop|analiza|prijava|registracija|clan
+  const [currentPage, setCurrentPage] = useState<Page>(() => {
+    try {
+      const map: Record<string, Page> = { webshop: 'products', analiza: 'analysis', prijava: 'login', registracija: 'register', clan: 'member-register', vizualizator: 'visualizer' };
+      return map[new URLSearchParams(window.location.search).get('stranica') || ''] || 'home';
+    } catch { return 'home'; }
+  });
   const [prevPage, setPrevPage] = useState<Page | null>(null);
   const [returnPage, setReturnPage] = useState<Page | null>(null);
   const isPoppingState = useRef(false);
@@ -101,6 +108,15 @@ export default function App() {
 
   useEffect(() => {
     if (currentPage === 'visualizer' && !VISUALIZER_ENABLED) setCurrentPage('home');
+  }, [currentPage]);
+
+  // Mondo Acqua glavna stranica je početna: povratak na 'home' unutar weba vodi na nju.
+  // Instalirana aplikacija (Google Play / dodano na početni zaslon) i dalje ostaje na Pool Care početnoj.
+  const firstPage = useRef(true);
+  useEffect(() => {
+    if (firstPage.current) { firstPage.current = false; return; }
+    const standalone = window.matchMedia?.('(display-mode: standalone)').matches || (navigator as any).standalone;
+    if (currentPage === 'home' && !standalone) window.location.href = '/mondo-web/';
   }, [currentPage]);
 
   const handleNavigate = (page: Page) => {
@@ -219,6 +235,7 @@ export default function App() {
     <div className="min-h-screen relative overflow-hidden" style={{ background: T.pageBg }}>
       <LanguageProvider>
         <AuthProvider>
+          {['home','login','register','member-register','free-portal','guest-analysis','visualizer','analysis','water-analysis','products','shop','stores'].includes(currentPage) && <SiteHeader onNavigate={(p) => handleNavigate(p)} />}
           {currentPage === 'home' && <HomePageNew onNavigate={(page) => handleNavigate(page)} />}
           {currentPage === 'login' && <LoginPage onBack={() => setCurrentPage('home')} onLoginSuccess={handleLoginSuccess} onGoToRegister={() => setCurrentPage('register')} />}
           {currentPage === 'register' && <RegisterPage onBack={() => setCurrentPage('home')} onRegisterSuccess={handleRegisterSuccess} onGoToLogin={() => setCurrentPage('login')} />}
