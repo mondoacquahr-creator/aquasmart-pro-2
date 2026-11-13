@@ -381,6 +381,7 @@ img{height:auto}
 .aicard{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(20px,4vw,48px);align-items:center;padding:clamp(16px,2.5vw,24px);border-radius:26px;text-decoration:none;color:inherit;background:linear-gradient(135deg,rgba(79,195,240,.12),rgba(6,30,42,.7));border:1px solid rgba(120,220,255,.2);transition:border-color .2s,transform .2s}
 .aicard:hover{border-color:rgba(79,195,240,.6);transform:translateY(-3px)}.aicard>*{min-width:0}
 @media (max-width:860px){.aicard{grid-template-columns:1fr}}
+.ba-wrap{display:flex;flex-direction:column;gap:10px;min-width:0}.ba{position:relative;aspect-ratio:1450/670;border-radius:18px;overflow:hidden;touch-action:pan-y;user-select:none}.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ba-after{opacity:0;transition:opacity .4s}.ba-after.on{opacity:1}.ba-before{clip-path:inset(0 calc(100% - var(--p)) 0 0)}.ba-l,.ba-r{position:absolute;top:10px;padding:5px 10px;border-radius:999px;font:700 .7rem var(--display);letter-spacing:.1em;text-transform:uppercase;z-index:2}.ba-l{left:10px;background:rgba(2,13,18,.8);color:#fff}.ba-r{right:10px;background:#4FC3F0;color:#0a0a0a}.ba-line{position:absolute;top:0;bottom:0;left:var(--p);width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 12px rgba(0,0,0,.5);z-index:2;pointer-events:none}.ba-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:#fff;color:#04202b;display:grid;place-items:center;font:800 1rem var(--display);box-shadow:0 6px 20px rgba(0,0,0,.45)}.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0;z-index:3}.ba-mode{display:flex;gap:6px;align-self:flex-start;padding:4px;border-radius:999px;border:1px solid rgba(120,220,255,.2)}.ba-mode button{border:0;background:transparent;color:rgba(255,255,255,.7);font:700 .85rem var(--display);padding:7px 16px;border-radius:999px;cursor:pointer}.ba-mode button[aria-pressed=true]{background:#4FC3F0;color:#04202b}
 .ai-img{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:4px;border-radius:18px;overflow:hidden}
 .ai-img img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:62% 50%;display:block}
 .ai-img span{position:absolute;top:10px;padding:5px 10px;border-radius:999px;background:rgba(2,13,18,.8);color:#fff;font:700 .7rem var(--display);letter-spacing:.1em;text-transform:uppercase}
@@ -511,16 +512,26 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     <div><strong>1 kontakt</strong><span>od iskopa do prvog kupanja</span></div>
   </div></div>
   <div class="band aiband"><div class="wrap">
-    <a class="aicard" href="https://poolcare.mondo-acqua.hr/?stranica=vizualizator">
-      <div class="ai-img"><img src="slike/ai-prije.jpg" alt="Dvorište prije gradnje bazena" loading="lazy"><img src="slike/ai-poslije-noc.jpg" alt="AI vizualizacija bazena s večernjom rasvjetom" loading="lazy"><span>vaš prostor</span><span>AI vizualizacija</span></div>
+    <div class="aicard">
+      <div class="ba-wrap">
+        <div class="ba" id="ba" style="--p:50%">
+          <img class="ba-after on" data-m="dan" src="slike/ai-poslije-dan.jpg" alt="AI vizualizacija bazena, dan" loading="lazy">
+          <img class="ba-after" data-m="noc" src="slike/ai-poslije-noc.jpg" alt="AI vizualizacija bazena, noć" loading="lazy">
+          <img class="ba-before" src="slike/ai-prije.jpg" alt="Dvorište prije gradnje bazena" loading="lazy">
+          <span class="ba-l">Prije</span><span class="ba-r">AI vizualizacija</span>
+          <div class="ba-line"><span class="ba-knob" aria-hidden="true">‹ ›</span></div>
+          <input type="range" id="baRange" min="0" max="100" value="50" aria-label="Usporedba prije i poslije">
+        </div>
+        <div class="ba-mode" role="group" aria-label="Doba dana"><button type="button" data-m="dan" aria-pressed="true">Dan</button><button type="button" data-m="noc" aria-pressed="false">Noć</button></div>
+      </div>
       <div class="stack" style="gap:12px">
         <p class="eyebrow">Novo · AI vizualizator</p>
         <h2>Pogledajte bazen u svom dvorištu prije gradnje.</h2>
         <p class="lead">Slikajte prostor, označite gdje želite bazen i odaberite model iz našeg kataloga. AI ga ugradi u vašu fotografiju za par sekundi.</p>
-        <span class="btn btn-primary" style="align-self:flex-start">Isprobajte besplatno</span>
-        <p class="small" style="margin:0;color:var(--muted)">Primjer: fotografija prostora i AI vizualizacija. Vizualizacija je informativni prijedlog, ne projekt.</p>
+        <a class="btn btn-primary" style="align-self:flex-start" href="https://poolcare.mondo-acqua.hr/?stranica=vizualizator">Isprobajte besplatno</a>
+        <p class="small" style="margin:0;color:var(--muted)">Stvarno dvorište i AI vizualizacija bazena. Povucite klizač. Vizualizacija je informativni prijedlog, ne projekt.</p>
       </div>
-    </a>
+    </div>
   </div></div>
 
   <div class="band"><div class="wrap">
@@ -1273,6 +1284,11 @@ const slUpd = sl => { const g = sl.querySelector('.seq'); sl.querySelector('.sl-
 document.querySelectorAll('.sl').forEach(sl => { const g = sl.querySelector('.seq'); g.addEventListener('scroll', () => slUpd(sl), { passive: true }); if (window.ResizeObserver) new ResizeObserver(() => slUpd(sl)).observe(g); g.querySelectorAll('img').forEach(i => i.addEventListener('load', () => slUpd(sl))); slUpd(sl); });
 addEventListener('resize', () => document.querySelectorAll('.sl').forEach(slUpd));
 document.addEventListener('click', e => { const b = e.target.closest('.sl-b'); if (!b) return; const g = b.parentElement.querySelector('.seq'); const w = g.querySelector('figure').getBoundingClientRect().width + 12; g.scrollBy({ left: b.classList.contains('sl-n') ? w : -w }); });
+(() => { const ba = document.getElementById('ba'); if (!ba) return; const r = document.getElementById('baRange');
+  r.addEventListener('input', () => ba.style.setProperty('--p', r.value + '%'));
+  document.querySelectorAll('.ba-mode button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.ba-mode button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    ba.querySelectorAll('.ba-after').forEach(i => i.classList.toggle('on', i.dataset.m === b.dataset.m)); })); })();
 route();
 </script>
 </body>
