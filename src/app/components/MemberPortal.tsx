@@ -103,10 +103,10 @@ function MondoCareCard({ profile, pool, planActive, planValidUntil }: { profile?
   };
 
   const benefits = [
-    'Otvaranje i zatvaranje sezone (2 dolaska)',
-    'Pregled opreme i upis stanja u Moj bazen',
-    '15 % popusta na kemiju i opremu',
-    'Prednost kod dogovaranja termina',
+    'Godišnji pregled opreme i upis stanja u Moj bazen',
+    '15 % popusta u webshopu (dodatnih 5 % iznad 2.000 €)',
+    'Prednost kod termina i brži dolazak kod kvara ili zelene vode',
+    'Otvaranje sezone ili zimovanje: jedna sezonska usluga uključena',
     'Savjet po svakoj analizi vode',
   ];
 
