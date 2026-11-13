@@ -167,7 +167,7 @@ Deno.serve(async (req: Request) => {
     while (contents.length && contents[0].role !== "user") contents.shift();
     if (!contents.length || contents[contents.length - 1].role !== "user") return json({ error: "Napišite pitanje." }, 400);
 
-    // Dnevna ograničenja: po IP adresi i ukupno. Spremaju se samo brojači, ne i sadržaj razgovora.
+    // Dnevna ograničenja: po IP adresi i ukupno.
     const day = new Date().toISOString().slice(0, 10);
     const ip = (req.headers.get("x-forwarded-for") || "unknown").split(",")[0].trim();
     const ipKey = `asistent:count:${day}:ip:${ip}`;
