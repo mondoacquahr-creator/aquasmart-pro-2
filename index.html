@@ -35,6 +35,22 @@
         }
       </script>
       
+<script>
+/* Brojač posjeta bez kolačića (ne sprema IP). Vlastite posjete isključujete adresom ?nebroji=1, vraćate s ?nebroji=0. */
+(function(){try{
+  var h=location.hostname; if(!/^(www|poolcare)\.mondo-acqua\.hr$/.test(h)) return;
+  var q=new URLSearchParams(location.search);
+  try{ if(q.get('nebroji')==='1') localStorage.setItem('ma-nebroji','1'); if(q.get('nebroji')==='0') localStorage.removeItem('ma-nebroji'); if(localStorage.getItem('ma-nebroji')) return; }catch(e){}
+  if(navigator.doNotTrack==='1'||navigator.webdriver) return;
+  var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyeXVvZ2thZWJlem5tYWRjaGNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1OTQzNDEsImV4cCI6MjA4NzE3MDM0MX0.9_zvV8do-yDJ8wBbZZ6_O9yiKP-5-9zGOOytJZ0sry0', last='';
+  function hit(){
+    var p=location.pathname+(q.get('stranica')?'?stranica='+String(q.get('stranica')).slice(0,30):''); if(p===last) return; last=p;
+    var r=''; try{ r=document.referrer?new URL(document.referrer).hostname:''; if(/mondo-acqua\.hr$/.test(r)) r=''; }catch(e){}
+    fetch('https://sryuogkaebeznmadchcr.supabase.co/functions/v1/mondo-stat/hit',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json',Authorization:'Bearer '+K,apikey:K},body:JSON.stringify({s:h,p:p,r:r,w:innerWidth<760?'m':'d'})}).catch(function(){});
+  }
+  hit(); var ps=history.pushState; history.pushState=function(){ps.apply(this,arguments); setTimeout(hit,0);}; addEventListener('popstate',function(){setTimeout(hit,0);});
+}catch(e){}})();
+</script>
     </body>
   </html>
   
