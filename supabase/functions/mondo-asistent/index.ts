@@ -5,8 +5,8 @@ import { createClient } from "jsr:@supabase/supabase-js@2.49.8";
 
 // Znanje je tekst stranice, objavljen uz stranicu. Čita se s prve dostupne adrese i drži 10 minuta u predmemoriji.
 const ZNANJE_URLS = [
-  "https://www.mondo-acqua.hr/znanje.txt",
   "https://raw.githubusercontent.com/mondoacquahr-creator/aquasmart-pro-2/asistent-proba/public/mondo-web/znanje.txt",
+  "https://www.mondo-acqua.hr/znanje.txt",
 ];
 let znanjeCache = { text: "", at: 0 };
 async function ucitajZnanje(): Promise<string> {
@@ -85,22 +85,27 @@ const SCHEMA = {
   required: ["answer", "actions", "unknown"],
 };
 
-const MODELS = [
-  { name: "gemini-2.5-flash", thinking: true },
-  { name: "gemini-2.5-flash", thinking: false },
-  { name: "gemini-flash-latest", thinking: false },
+// Redoslijed pokušaja: najbrža postavka prva. Postavka koja je zadnja uspjela pamti se i sljedeći put ide prva.
+const MODELS: { name: string; thinking?: Record<string, unknown> }[] = [
+  { name: "gemini-3.8-flash", thinking: { thinkingBudget: 0 } },
+  { name: "gemini-3.8-flash", thinking: { thinkingLevel: "low" } },
+  { name: "gemini-3.8-flash" },
+  { name: "gemini-flash-latest" },
 ];
+let lastGood = 0;
 
 async function askGemini(apiKey: string, contents: unknown[], page: string, ZNANJE: string) {
   const system = `${PRAVILA}\n\nPosjetitelj je trenutno na stranici: ${page || "/"}\n\n===== ZNANJE (tekst stranice www.mondo-acqua.hr) =====\n${ZNANJE}`;
-  for (const m of MODELS) {
+  const order = [lastGood, ...MODELS.map((_, i) => i).filter((i) => i !== lastGood)];
+  for (const idx of order) {
+    const m = MODELS[idx];
     const generationConfig: Record<string, unknown> = {
       temperature: 0.3,
-      maxOutputTokens: m.thinking ? 700 : 2000,
+      maxOutputTokens: 2000,
       responseMimeType: "application/json",
       responseSchema: SCHEMA,
     };
-    if (m.thinking) generationConfig.thinkingConfig = { thinkingBudget: 0 };
+    if (m.thinking) generationConfig.thinkingConfig = m.thinking;
     try {
       const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m.name}:generateContent`, {
         method: "POST",
@@ -108,7 +113,7 @@ async function askGemini(apiKey: string, contents: unknown[], page: string, ZNAN
         body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents, generationConfig }),
       });
       if (!r.ok) {
-        console.error("Gemini error", m.name, m.thinking, r.status, (await r.text().catch(() => "")).slice(0, 400));
+        console.error("Gemini error", m.name, JSON.stringify(m.thinking || null), r.status, (await r.text().catch(() => "")).slice(0, 400));
         continue;
       }
       const j = await r.json();
@@ -122,6 +127,7 @@ async function askGemini(apiKey: string, contents: unknown[], page: string, ZNAN
       const answer = String(out.answer || "").replace(/\*\*/g, "").trim().slice(0, 1500);
       if (!answer) continue;
       const actions = (Array.isArray(out.actions) ? out.actions : []).filter((a: any) => ACTIONS.includes(a)).slice(0, 3);
+      if (lastGood !== idx) { lastGood = idx; console.log("Gemini postavka", m.name, JSON.stringify(m.thinking || null)); }
       return { answer, actions, unknown: out.unknown === true };
     } catch (err) {
       console.error("Gemini call failed", m.name, String(err));
