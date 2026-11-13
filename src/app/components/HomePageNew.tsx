@@ -1332,7 +1332,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                 <p className="font-bold text-white">Mondo Care · godišnji paket</p>
                 <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>Godišnji pregled opreme, 10 % popusta u webshopu (+10 % iznad 1.000 €), prednost kod intervencija i jedna sezonska usluga (otvaranje ili zimovanje).</p>
               </div>
-              <p className="font-extrabold text-lg" style={{ color: CYAN }}>199 € / godišnje</p>
+              <div className="text-right"><p className="font-extrabold text-lg" style={{ color: CYAN }}>199 € / godišnje</p><p className="text-sm font-black" style={{ color: '#2EE6A6' }}>do −20 % u webshopu</p></div>
             </div>
 
             <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.6)' }}>Cijene održavanja na upit.</p>

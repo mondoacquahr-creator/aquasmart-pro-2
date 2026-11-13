@@ -144,6 +144,7 @@ function MondoCareCard({ profile, pool, planActive, planValidUntil }: { profile?
         <h3 className="text-base font-bold text-white">Mondo Care</h3>
         <div className="text-right shrink-0">
           <p className="text-xl font-extrabold" style={{ color: T.cyan }}>199 € / godišnje</p>
+          <p className="text-sm font-black" style={{ color: '#2EE6A6' }}>do −20 % u webshopu</p>
           <p className="text-xs" style={{ color: T.faint }}>cijena s PDV-om</p>
         </div>
       </div>
