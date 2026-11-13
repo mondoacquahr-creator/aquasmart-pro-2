@@ -49,7 +49,7 @@ export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
 
   return (
     <header className="relative z-[60]" style={{ background: 'rgba(4,24,32,0.92)', borderBottom: '1px solid rgba(120,220,255,0.10)' }}>
-      <div className="max-w-[1140px] mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div className="max-w-[1180px] mx-auto px-5 py-3 flex items-center justify-between gap-4">
         <a href={MAIN} aria-label="Mondo Acqua, početna"><MondoLogo size={40} /></a>
 
         <nav className="hidden xl:flex items-center gap-[22px]">
