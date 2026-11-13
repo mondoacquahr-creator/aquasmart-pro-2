@@ -929,6 +929,8 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
       <p><b>Pravna osnova:</b> vaš zahtjev za ponudom (radnje prije sklapanja ugovora). Podatke ne prodajemo i ne dijelimo s trećima za oglašavanje.</p>
       <p><b>Koliko dugo:</b> upite čuvamo dok traje komunikacija i najviše 2 godine, osim ako sklopimo ugovor, kada vrijede zakonski rokovi čuvanja.</p>
       <p><b>Vaša prava:</b> pristup, ispravak, brisanje, ograničenje obrade i prigovor. Zahtjev pošaljite na info@mondo-acqua.hr. Pritužbu možete podnijeti Agenciji za zaštitu osobnih podataka (AZOP).</p>
+      <p><b>AI asistent:</b> pitanja koja postavite asistentu i njegove odgovore spremamo do 6 mjeseci kako bismo poboljšali odgovore. Uz razgovor ne spremamo ime ni IP adresu. U razgovor ne upisujte osobne podatke; za ponudu koristite obrazac. Odgovore izrađuje AI servis Google Gemini.</p>
+      <p><b>Statistika posjeta:</b> brojimo otvaranja stranica bez kolačića i bez spremanja IP adrese. Bilježimo samo otvorenu stranicu, vrstu uređaja, državu i stranicu s koje ste došli.</p>
       <p><b>Kolačići:</b> stranica ne koristi kolačiće za praćenje ni oglašavanje. U pregledniku se pamti samo da ste zatvorili obavijest o kolačićima. Fontovi se učitavaju s Google Fonts.</p>
     </div>
   </div></div>
@@ -1201,7 +1203,8 @@ const pageFromUrl = () => {
   const legacy = location.hash.replace('#','');
   if (legacy && (SLUG[legacy] !== undefined)) { history.replaceState(null, '', BASE + SLUG[legacy]); return legacy; }
   let p = location.pathname; if (p.indexOf(BASE) === 0) p = p.slice(BASE.length); p = p.replace(/\/+$/,'');
-  return BYPATH[p] !== undefined ? BYPATH[p] : (p ? '404' : 'pocetna');
+  if (BYPATH[p] === undefined && p) { history.replaceState(null, '', BASE); return 'pocetna'; }   // nepoznata (stara) adresa: prikaži naslovnicu i ispravi adresu
+  return BYPATH[p] !== undefined ? BYPATH[p] : 'pocetna';
 };
 const go = key => { history.pushState(null, '', BASE + SLUG[key]); route(); };
 document.addEventListener('click', e => {
@@ -1350,6 +1353,22 @@ document.addEventListener('click', e => { const b = e.target.closest('.sl-b'); i
     document.querySelectorAll('.ba-mode button').forEach(x => x.setAttribute('aria-pressed', x === b));
     ba.querySelectorAll('.ba-after').forEach(i => i.classList.toggle('on', i.dataset.m === b.dataset.m)); })); })();
 route();
+</script>
+<script>
+/* Brojač posjeta bez kolačića (ne sprema IP). Vlastite posjete isključujete adresom ?nebroji=1, vraćate s ?nebroji=0. */
+(function(){try{
+  var h=location.hostname; if(!/^(www|poolcare)\.mondo-acqua\.hr$/.test(h)) return;
+  var q=new URLSearchParams(location.search);
+  try{ if(q.get('nebroji')==='1') localStorage.setItem('ma-nebroji','1'); if(q.get('nebroji')==='0') localStorage.removeItem('ma-nebroji'); if(localStorage.getItem('ma-nebroji')) return; }catch(e){}
+  if(navigator.doNotTrack==='1'||navigator.webdriver) return;
+  var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyeXVvZ2thZWJlem5tYWRjaGNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1OTQzNDEsImV4cCI6MjA4NzE3MDM0MX0.9_zvV8do-yDJ8wBbZZ6_O9yiKP-5-9zGOOytJZ0sry0', last='';
+  function hit(){
+    var p=location.pathname+(q.get('stranica')?'?stranica='+String(q.get('stranica')).slice(0,30):''); if(p===last) return; last=p;
+    var r=''; try{ r=document.referrer?new URL(document.referrer).hostname:''; if(/mondo-acqua\.hr$/.test(r)) r=''; }catch(e){}
+    fetch('https://sryuogkaebeznmadchcr.supabase.co/functions/v1/mondo-stat/hit',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json',Authorization:'Bearer '+K,apikey:K},body:JSON.stringify({s:h,p:p,r:r,w:innerWidth<760?'m':'d'})}).catch(function(){});
+  }
+  hit(); var ps=history.pushState; history.pushState=function(){ps.apply(this,arguments); setTimeout(hit,0);}; addEventListener('popstate',function(){setTimeout(hit,0);});
+}catch(e){}})();
 </script>
 <script src="asistent.js" defer></script>
 </body>

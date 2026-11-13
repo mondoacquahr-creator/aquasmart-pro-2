@@ -1,5 +1,5 @@
 /* Mondo asistent – AI asistent za www.mondo-acqua.hr (probna verzija).
-   Jedna datoteka: stilovi, robotić i prozor za razgovor. Razgovor se ne sprema nigdje. */
+   Jedna datoteka: stilovi, robotić i prozor za razgovor. Razgovor se sprema na poslužitelju (vidi Privatnost). */
 (() => {
   if (window.__mondoAsistent) return; window.__mondoAsistent = true;
 
@@ -122,6 +122,7 @@
   // ---------- prozor za razgovor ----------
   let panel = null, dim = null, body = null, input = null, sendBtn = null, headAv = null, busy = false;
   const history = [];   // {role:'user'|'assistant', text}
+  const sid = Array.from(crypto.getRandomValues(new Uint8Array(12)), b => (b % 36).toString(36)).join('');   // oznaka razgovora, ne osobe
   const SEND_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06202A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
   const scrollDown = () => { body.scrollTop = body.scrollHeight; };
   const addMsg = (who, text) => { const m = el('div', 'ma-m ' + who); m.textContent = text; body.appendChild(m); scrollDown(); return m; };
@@ -171,7 +172,7 @@
       const r = await fetch(API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + anon(), apikey: anon() },
-        body: JSON.stringify({ messages: history.slice(-12), page: location.pathname }),
+        body: JSON.stringify({ messages: history.slice(-12), page: location.pathname, sid }),
       });
       out = await r.json();
       if (!out || !out.answer) throw new Error('bez odgovora');
@@ -226,10 +227,10 @@
     if (panel) return; opened = true; closeHi();
     dim = el('div', 'ma-dim'); dim.onclick = close;
     panel = el('section', 'ma-panel'); panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-label', 'Mondo asistent');
-    panel.innerHTML = `<header class="ma-head"><span class="ma-av"><span>${ROBOT}</span></span><div><b>Mondo asistent</b><small>AI asistent · odgovara odmah</small></div><button type="button" class="ma-x" aria-label="Zatvorite razgovor">✕</button></header>
+    panel.innerHTML = `<header class="ma-head"><span class="ma-av"><span>${ROBOT}</span></span><div><b>Mondo asistent</b><small>AI asistent Mondo Acque</small></div><button type="button" class="ma-x" aria-label="Zatvorite razgovor">✕</button></header>
       <div class="ma-body" aria-live="polite"></div>
       <form class="ma-in"><textarea rows="1" maxlength="600" placeholder="Napišite pitanje…" aria-label="Vaše pitanje"></textarea><button type="submit" class="ma-send" aria-label="Pošaljite pitanje">${SEND_SVG}</button></form>
-      <div class="ma-note">Odgovara AI. Ponudu i cijene po mjeri potvrđuje naš tim.</div>`;
+      <div class="ma-note">Odgovara AI, a razgovor se sprema radi boljih odgovora. Ponudu potvrđuje naš tim.</div>`;
     root.append(dim, panel); launch.style.display = 'none';
     body = panel.querySelector('.ma-body'); input = panel.querySelector('textarea'); sendBtn = panel.querySelector('.ma-send'); headAv = panel.querySelector('.ma-head .ma-av');
     panel.querySelector('.ma-x').onclick = close;

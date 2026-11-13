@@ -176,6 +176,63 @@
   to = "/bazeni/compact"
   status = 301
   force = true
+# Stare adrese sa starog weba koje ljudi i tražilice još otvaraju (dodano 13. 11. 2026.)
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/contact"
+  to = "/kontakt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/contact-us"
+  to = "/kontakt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/kontakt-us"
+  to = "/kontakt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/home"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/pages"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/pages/*"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/phoenix1"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/services-products/*"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/smartwater1/*"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/large-chlorine-float-for-200g-tablets"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+# Stare datoteke (slike, PDF) više ne postoje: prava 404 umjesto naslovnice
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/sites/*"
+  to = "/mondo-web/index.html"
+  status = 404
+  force = true
 # Posluživanje glavne stranice na domeni
 [[redirects]]
   from = "https://www.mondo-acqua.hr/"
