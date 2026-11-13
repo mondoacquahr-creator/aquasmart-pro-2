@@ -1109,7 +1109,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                 <div className="flex flex-wrap gap-2 mb-7">
                   {[
                     { Icon: Percent, label: '−10 % na kemiju i opremu' },
-                    { Icon: BadgePercent, label: 'dodatnih −5 % iznad 2.000 €' },
+                    { Icon: BadgePercent, label: 'dodatnih −5 % iznad 1.000 €' },
                     { Icon: LineChart, label: 'povijest analiza i podsjetnici' },
                     { Icon: Wrench, label: 'pregled opreme na vašem bazenu' },
                   ].map(({ Icon, label }) => (
@@ -1166,7 +1166,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                   −15 %
                 </span>
                 <span className="text-xs mt-2 text-center" style={{ color: 'rgba(255,255,255,0.45)', maxWidth: 110 }}>
-                  za narudžbe iznad 2.000 €
+                  za narudžbe iznad 1.000 €
                 </span>
               </div>
             </div>
@@ -1330,7 +1330,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
             <div className="rounded-2xl p-5 mb-8 flex flex-wrap items-center justify-between gap-3" style={{ background: 'rgba(92,225,230,0.07)', border: '1px solid rgba(92,225,230,0.25)' }}>
               <div>
                 <p className="font-bold text-white">Mondo Care · godišnji paket</p>
-                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>Godišnji pregled opreme, 15 % popusta u webshopu, prednost kod intervencija i jedna sezonska usluga (otvaranje ili zimovanje).</p>
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>Godišnji pregled opreme, 10 % popusta u webshopu (+10 % iznad 1.000 €), prednost kod intervencija i jedna sezonska usluga (otvaranje ili zimovanje).</p>
               </div>
               <p className="font-extrabold text-lg" style={{ color: CYAN }}>199 € / godišnje</p>
             </div>

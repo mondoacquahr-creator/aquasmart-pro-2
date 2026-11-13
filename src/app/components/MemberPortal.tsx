@@ -104,7 +104,7 @@ function MondoCareCard({ profile, pool, planActive, planValidUntil }: { profile?
 
   const benefits = [
     'Godišnji pregled opreme i upis stanja u Moj bazen',
-    '15 % popusta u webshopu (dodatnih 5 % iznad 2.000 €)',
+    '10 % popusta u webshopu i dodatnih 10 % iznad 1.000 €',
     'Prednost kod termina i brži dolazak kod kvara ili zelene vode',
     'Otvaranje sezone ili zimovanje: jedna sezonska usluga uključena',
     'Savjet po svakoj analizi vode',
@@ -175,7 +175,7 @@ function MondoCareCard({ profile, pool, planActive, planValidUntil }: { profile?
         </button>
       </div>
       <p className="text-xs mt-3 leading-relaxed" style={{ color: T.faint }}>
-        Paket aktivira Mondo Acqua nakon dogovora; popust od 15 % tada vrijedi umjesto 10 %.
+        Paket aktivira Mondo Acqua nakon dogovora; dodatni popust iznad 1.000 € tada je 10 % umjesto 5 %.
       </p>
     </Card>
   );
@@ -207,8 +207,8 @@ function OverviewTab({ data, onRequestVisit, onNewAnalysis, onNavigate }: {
       >
         <ShoppingCart className="w-4 h-4" />
         {(data as any).profile?.planActive
-          ? 'Webshop – 15 % popusta na kemiju i opremu'
-          : 'Webshop – 10 % popusta na kemiju i opremu'}
+          ? 'Webshop – 10 % popusta, dodatnih 10 % iznad 1.000 €'
+          : 'Webshop – 10 % popusta, dodatnih 5 % iznad 1.000 €'}
       </button>
 
       {/* Latest analysis */}
@@ -281,8 +281,8 @@ function OverviewTab({ data, onRequestVisit, onNewAnalysis, onNavigate }: {
             'Povijest svih analiza vode',
             'Moj bazen s podsjetnicima',
             (data as any).profile?.planActive
-              ? '15 % popusta na kemiju i opremu (+5 % iznad 2.000 €)'
-              : '10 % popusta na kemiju i opremu (+5 % iznad 2.000 €)',
+              ? '10 % popusta na kemiju i opremu (+10 % iznad 1.000 €)'
+              : '10 % popusta na kemiju i opremu (+5 % iznad 1.000 €)',
             'Pregled opreme na vašem bazenu (besplatan uz kupnju od 150 €)',
           ].map(b => (
             <li key={b} className="flex items-start gap-2">

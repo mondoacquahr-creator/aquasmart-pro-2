@@ -126,9 +126,10 @@ export function loadProductDetails(): Promise<Record<string, ProductDetails>> {
 export const isEquipment = (id: string): boolean => id.startsWith('vg-');
 
 export const MEMBER_DISCOUNT = 0.10;
-export const CARE_DISCOUNT = 0.15;
+export const CARE_DISCOUNT = 0.10;
 export const EXTRA_DISCOUNT = 0.05;
-export const EXTRA_THRESHOLD = 2000;
+export const CARE_EXTRA_DISCOUNT = 0.10;
+export const EXTRA_THRESHOLD = 1000;
 
 export const isMemberUser = (): boolean => {
   try {
@@ -164,7 +165,7 @@ export function calcCartTotals(
   ) / 100;
   const activeDiscount = care ? CARE_DISCOUNT : MEMBER_DISCOUNT;
   const memberDiscount = member ? Math.round(subtotal * activeDiscount * 100) / 100 : 0;
-  const extraDiscount = member && subtotal >= EXTRA_THRESHOLD ? Math.round(subtotal * EXTRA_DISCOUNT * 100) / 100 : 0;
+  const extraDiscount = member && subtotal >= EXTRA_THRESHOLD ? Math.round(subtotal * (care ? CARE_EXTRA_DISCOUNT : EXTRA_DISCOUNT) * 100) / 100 : 0;
   const total = Math.round((subtotal - memberDiscount - extraDiscount) * 100) / 100;
   const toExtra = member && subtotal < EXTRA_THRESHOLD ? Math.round((EXTRA_THRESHOLD - subtotal) * 100) / 100 : 0;
   return { subtotal, memberDiscount, extraDiscount, total, toExtra };

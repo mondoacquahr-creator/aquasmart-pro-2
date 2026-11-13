@@ -587,7 +587,7 @@ export function WaterAnalysis({ onBack, onOpenShop, onRegisterMember, onLogin }:
                         <h3 className="font-bold text-lg">Spremite ovu analizu</h3>
                       </div>
                       <p className="text-sm mb-4 leading-relaxed" style={{ color: T.muted }}>
-                        Besplatnom registracijom čuvate povijest svih analiza, dobivate podsjetnike, 10&nbsp;% popusta na kemiju i opremu (+5&nbsp;% iznad 2.000&nbsp;€) i pregled opreme na vašem bazenu (besplatan uz kupnju od 150 €).
+                        Besplatnom registracijom čuvate povijest svih analiza, dobivate podsjetnike, 10&nbsp;% popusta na kemiju i opremu (+5&nbsp;% iznad 1.000&nbsp;€) i pregled opreme na vašem bazenu (besplatan uz kupnju od 150 €).
                       </p>
                       <button
                         onClick={() => onRegisterMember?.()}

@@ -175,7 +175,7 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
           <div className="mb-6 p-4 rounded-2xl" style={{ background: 'rgba(92,225,230,0.06)', border: '1px solid rgba(92,225,230,0.18)' }}>
             <p className="text-xs font-semibold mb-2" style={{ color: T.cyan }}>BESPLATNO:</p>
             <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>
-              Povijest svih analiza · Moj bazen s podsjetnicima · 10 % popusta na kemiju i opremu (+5 % iznad 2.000 €) · pregled opreme na vašem bazenu (besplatan uz kupnju od 150 €)
+              Povijest svih analiza · Moj bazen s podsjetnicima · 10 % popusta na kemiju i opremu (+5 % iznad 1.000 €) · pregled opreme na vašem bazenu (besplatan uz kupnju od 150 €)
             </p>
           </div>
         )}
