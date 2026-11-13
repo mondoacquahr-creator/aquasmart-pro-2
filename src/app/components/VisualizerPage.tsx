@@ -22,7 +22,7 @@ export function VisualizerPage({ onBack, onOpenShop }: VisualizerPageProps) {
         className="sticky top-0 z-20"
         style={{ background: T.cardBg, backdropFilter: 'blur(20px)', borderBottom: T.cardBorder }}
       >
-        <div className="max-w-2xl mx-auto px-4 py-4 flex items-center gap-4">
+        <div className="max-w-[1180px] mx-auto px-5 py-4 flex items-center gap-4">
           <button onClick={onBack} className="p-2 rounded-xl hover:bg-white/5 transition-colors flex-shrink-0">
             <ArrowLeft className="w-5 h-5" style={{ color: T.cyan }} />
           </button>

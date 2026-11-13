@@ -9,7 +9,7 @@ const MAIN = 'https://www.mondo-acqua.hr/';
 
 type Nav = (page: any) => void;
 
-export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
+export function SiteHeader({ onNavigate, app = false }: { onNavigate: Nav; app?: boolean }) {
   const { language, setLanguage } = useLanguage();
   const [open, setOpen] = useState(false);
   const [drop, setDrop] = useState<string | null>(null);
@@ -50,8 +50,16 @@ export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
   return (
     <header className="relative z-[60]" style={{ background: 'rgba(4,24,32,0.92)', borderBottom: '1px solid rgba(120,220,255,0.10)' }}>
       <div className="max-w-[1180px] mx-auto px-5 py-3 flex items-center justify-between gap-4">
-        <a href={MAIN} aria-label="Mondo Acqua, početna"><MondoLogo size={40} /></a>
+        {app ? <button onClick={() => go('home')} aria-label="Početna"><MondoLogo size={40} /></button> : <a href={MAIN} aria-label="Mondo Acqua, početna"><MondoLogo size={40} /></a>}
 
+        {app ? (
+        <nav className="hidden md:flex items-center gap-[22px]">
+          <button className={link} onClick={() => go('products')}>Webshop</button>
+          <button className={link} onClick={() => go('analysis')}>Analiza vode</button>
+          <button className={link} onClick={() => go('login')}>Moj bazen</button>
+          <button className={link} onClick={() => go('login')}>PRO</button>
+        </nav>
+        ) : (
         <nav className="hidden xl:flex items-center gap-[22px]">
           <Drop id="bazeni" label="Bazeni">{bazeni.map(([h, t]) => <a key={h} className={item} href={MAIN + h}>{t}</a>)}</Drop>
           <a className={link} href={MAIN + 'kljuc-u-ruke'}>Ključ u ruke</a>
@@ -61,6 +69,7 @@ export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
           <Drop id="onama" label="O nama">{onama.map(([h, t]) => <a key={h} className={item} href={MAIN + h}>{t}</a>)}</Drop>
           <Drop id="prijava" label="Prijava" right>{prijava}</Drop>
         </nav>
+        )}
 
         <div className="flex items-center gap-2">
           <div className="flex rounded-full p-0.5" style={{ border: '1px solid rgba(120,220,255,0.18)' }} role="group" aria-label="Jezik">
@@ -70,14 +79,22 @@ export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
                 style={language === l ? { background: 'rgba(92,225,230,0.18)', color: '#5CE1E6' } : { color: 'rgba(255,255,255,0.6)' }}>{l}</button>
             ))}
           </div>
-          <a href={MAIN + 'upit'} className="px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap" style={{ background: '#4FC3F0', color: '#0a0a0a', boxShadow: '0 6px 24px rgba(79,195,240,0.3)' }}>Zatražite ponudu</a>
-          <button className="xl:hidden w-11 h-11 rounded-xl grid place-items-center text-white" style={{ background: 'rgba(255,255,255,0.06)' }} onClick={() => setOpen(!open)} aria-label="Izbornik" aria-expanded={open}>
+          {!app && <a href={MAIN + 'upit'} className="px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap" style={{ background: '#4FC3F0', color: '#0a0a0a', boxShadow: '0 6px 24px rgba(79,195,240,0.3)' }}>Zatražite ponudu</a>}
+          <button className={`${app ? 'md:hidden' : 'xl:hidden'} w-11 h-11 rounded-xl grid place-items-center text-white`} style={{ background: 'rgba(255,255,255,0.06)' }} onClick={() => setOpen(!open)} aria-label="Izbornik" aria-expanded={open}>
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {open && (
+      {open && app && (
+        <div className="md:hidden px-4 pb-5" style={{ background: '#041820', borderBottom: '1px solid rgba(120,220,255,0.12)' }}>
+          <button className={item} onClick={() => go('products')}>Webshop</button>
+          <button className={item} onClick={() => go('analysis')}>Analiza vode</button>
+          <button className={item} onClick={() => go('login')}>Moj bazen</button>
+          <button className={item} onClick={() => go('login')}>Pool Care PRO</button>
+        </div>
+      )}
+      {open && !app && (
         <div className="xl:hidden px-4 pb-5 max-h-[calc(100vh-80px)] overflow-y-auto" style={{ background: '#041820', borderBottom: '1px solid rgba(120,220,255,0.12)' }}>
           <p className={head}>Bazeni</p>
           {bazeni.map(([h, t]) => <a key={h} className={item} href={MAIN + h}>{t}</a>)}

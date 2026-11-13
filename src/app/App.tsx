@@ -1,4 +1,5 @@
 import { SiteHeader } from './components/SiteHeader';
+import { AppHome, isStandalone } from './components/AppHome';
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from './lib/supabase';
 import { HomePageNew } from './components/HomePageNew';
@@ -107,7 +108,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (currentPage === 'visualizer' && !VISUALIZER_ENABLED) setCurrentPage('home');
+    if (currentPage === 'visualizer' && (!VISUALIZER_ENABLED || isStandalone())) setCurrentPage('home');
   }, [currentPage]);
 
   // Mondo Acqua glavna stranica je početna: povratak na 'home' unutar weba vodi na nju.
@@ -235,8 +236,8 @@ export default function App() {
     <div className="min-h-screen relative overflow-hidden" style={{ background: T.pageBg }}>
       <LanguageProvider>
         <AuthProvider>
-          {['home','login','register','member-register','free-portal','guest-analysis','visualizer','analysis','water-analysis','products','shop','stores'].includes(currentPage) && <SiteHeader onNavigate={(p) => handleNavigate(p)} />}
-          {currentPage === 'home' && <HomePageNew onNavigate={(page) => handleNavigate(page)} />}
+          {['home','login','register','member-register','free-portal','guest-analysis','visualizer','analysis','water-analysis','products','shop','stores'].includes(currentPage) && <SiteHeader app={isStandalone()} onNavigate={(p) => handleNavigate(p)} />}
+          {currentPage === 'home' && (isStandalone() ? <AppHome onNavigate={(page) => handleNavigate(page)} /> : <HomePageNew onNavigate={(page) => handleNavigate(page)} />)}
           {currentPage === 'login' && <LoginPage onBack={() => setCurrentPage('home')} onLoginSuccess={handleLoginSuccess} onGoToRegister={() => setCurrentPage('register')} />}
           {currentPage === 'register' && <RegisterPage onBack={() => setCurrentPage('home')} onRegisterSuccess={handleRegisterSuccess} onGoToLogin={() => setCurrentPage('login')} />}
           {currentPage === 'member-register' && <RegisterPage initialType="member" onBack={() => setCurrentPage('home')} onRegisterSuccess={handleRegisterSuccess} onGoToLogin={() => setCurrentPage('login')} />}

@@ -234,7 +234,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
 
         {/* Header */}
         <div className="relative z-10" style={{ background: T.cardBg, backdropFilter: 'blur(20px)', borderBottom: T.cardBorder }}>
-          <div className="max-w-3xl mx-auto px-6 py-4 flex items-center gap-4">
+          <div className="max-w-[1180px] mx-auto px-6 py-4 flex items-center gap-4">
             <button onClick={() => setView('shop')} className="glass-card w-10 h-10 flex items-center justify-center hover:bg-white/5 transition-all">
               <ArrowLeft className="w-5 h-5" style={{ color: T.cyan }} />
             </button>
@@ -245,7 +245,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
           </div>
         </div>
 
-        <div className="relative z-10 max-w-3xl mx-auto px-6 py-8 space-y-6">
+        <div className="relative z-10 max-w-[1180px] mx-auto px-6 py-8 space-y-6">
           {/* Cart items */}
           <div className="glass-card p-6">
             <h2 className="font-semibold text-lg mb-4">Vaša košarica</h2>
@@ -511,7 +511,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
           borderBottom: T.cardBorder,
         }}
       >
-        <div className="max-w-[760px] mx-auto px-4 py-3 flex items-center justify-between gap-3">
+        <div className="max-w-[1180px] mx-auto px-4 py-3 flex items-center justify-between gap-3">
           {/* Left */}
           <div className="flex items-center gap-3 min-w-0">
             <button
@@ -567,7 +567,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
       </div>
 
       {/* ── INTRO ────────────────────────────────────────────────────────── */}
-      <div className="relative z-10 max-w-[760px] mx-auto px-4 pt-8 pb-6">
+      <div className="relative z-10 max-w-[1180px] mx-auto px-4 pt-8 pb-6">
         {/* Title + Search: two-col on desktop, stacked on mobile */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-4">
           {/* Title block */}
@@ -671,9 +671,9 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
       </div>
 
       {/* ── PRODUCT LIST ─────────────────────────────────────────────────── */}
-      <div ref={productListRef} className="relative z-10 max-w-[760px] mx-auto px-4 pb-8 flex flex-col gap-3">
+      <div ref={productListRef} className="relative z-10 max-w-[1180px] mx-auto px-4 pb-8 grid gap-3 lg:grid-cols-2">
         {filteredProducts.length === 0 ? (
-          <p className="text-center py-12" style={{ color: T.muted }}>
+          <p className="text-center py-12 lg:col-span-2" style={{ color: T.muted }}>
             Nema proizvoda za zadani pojam.
           </p>
         ) : (
@@ -922,7 +922,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
             className="fixed bottom-0 left-0 right-0 z-30 p-4"
             style={{ background: 'rgba(2,13,18,0.96)', backdropFilter: 'blur(12px)', borderTop: T.cardBorder }}
           >
-            <div className="max-w-[760px] mx-auto">
+            <div className="max-w-[1180px] mx-auto">
               <button
                 onClick={() => setView('checkout')}
                 className="btn-primary w-full py-4 text-base font-semibold flex items-center justify-between px-6"

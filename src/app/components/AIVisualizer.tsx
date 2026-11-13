@@ -264,7 +264,7 @@ export function AIVisualizer({ onManual, onOpenShop }: { onManual: () => void; o
 
   return (
     <div className="min-h-screen" style={{ color: '#ffffff' }}>
-      <div className="max-w-2xl mx-auto px-4 py-8">
+      <div className="max-w-[1180px] mx-auto px-5 py-8">
         {/* Step indicator */}
         <div className="flex items-center gap-2 mb-8 justify-center flex-wrap">
           {['1 Fotografija', '2 Model bazena', '3 Mjesto', '4 Rezultat'].map((label, i) => {
