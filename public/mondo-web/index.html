@@ -337,7 +337,7 @@ img{height:auto}
 .tool:hover{transform:translateY(-4px);border-color:rgba(79,195,240,.55)}
 .tool strong{font:800 1.3rem var(--display);color:#fff}.tool p{margin:0;font-size:.9rem;color:rgba(255,255,255,.75)}.tool .ch-go{margin-top:8px}
 .tool .ch-phone{width:40%;top:14px;right:-2%}
-.zcare{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(24px,4vw,56px);align-items:center}.zcare>*{min-width:0}
+.zcare{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center}.zcare>.stack{padding-inline:clamp(8px,2vw,22px)}.zcare>*{min-width:0}
 @media (max-width:900px){.zcare{grid-template-columns:1fr}}
 .zcare-card{min-height:380px}.price-l{color:#5CE1E6;white-space:nowrap}
 .cmp table{min-width:720px}.cmp th small{display:block;font:500 .74rem var(--body);letter-spacing:0;text-transform:none;color:var(--muted);margin-top:3px}
@@ -382,7 +382,7 @@ img{height:auto}
 .aicard:hover{border-color:rgba(79,195,240,.6);transform:translateY(-3px)}.aicard>*{min-width:0}
 @media (max-width:860px){.aicard{grid-template-columns:1fr}}
 .ai-img{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:4px;border-radius:18px;overflow:hidden}
-.ai-img img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.ai-img img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:62% 50%;display:block}
 .ai-img span{position:absolute;top:10px;padding:5px 10px;border-radius:999px;background:rgba(2,13,18,.8);color:#fff;font:700 .7rem var(--display);letter-spacing:.1em;text-transform:uppercase}
 .ai-img span:nth-of-type(1){left:10px}.ai-img span:nth-of-type(2){left:calc(50% + 10px);background:#4FC3F0;color:#0a0a0a}
 #gallerySpa img{background:#fff;object-fit:contain}
@@ -512,13 +512,13 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
   </div></div>
   <div class="band aiband"><div class="wrap">
     <a class="aicard" href="https://poolcare.mondo-acqua.hr/?stranica=vizualizator">
-      <div class="ai-img"><img src="slike/kur-l-skoljka-pogled.jpg" alt="Dvorište prije gradnje bazena" loading="lazy"><img src="slike/bazen-pogled-ucka.jpg" alt="Gotov bazen" loading="lazy"><span>vaš prostor</span><span>ideja za bazen</span></div>
+      <div class="ai-img"><img src="slike/ai-prije.jpg" alt="Dvorište prije gradnje bazena" loading="lazy"><img src="slike/ai-poslije-noc.jpg" alt="AI vizualizacija bazena s večernjom rasvjetom" loading="lazy"><span>vaš prostor</span><span>AI vizualizacija</span></div>
       <div class="stack" style="gap:12px">
         <p class="eyebrow">Novo · AI vizualizator</p>
         <h2>Pogledajte bazen u svom dvorištu prije gradnje.</h2>
         <p class="lead">Slikajte prostor, označite gdje želite bazen i odaberite model iz našeg kataloga. AI ga ugradi u vašu fotografiju za par sekundi.</p>
         <span class="btn btn-primary" style="align-self:flex-start">Isprobajte besplatno</span>
-        <p class="small" style="margin:0;color:var(--muted)">Ilustracija s fotografijama naših projekata. Vizualizacija je informativni prijedlog, ne projekt.</p>
+        <p class="small" style="margin:0;color:var(--muted)">Primjer: fotografija prostora i AI vizualizacija. Vizualizacija je informativni prijedlog, ne projekt.</p>
       </div>
     </a>
   </div></div>
