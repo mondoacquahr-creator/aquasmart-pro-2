@@ -33,7 +33,7 @@ export function SiteHeader({ onNavigate }: { onNavigate: Nav }) {
     </div>
   );
 
-  const bazeni: [string, string][] = [['bazeni', 'Svi bazeni i usporedba'], ['bazeni/fp', 'Montažni FP bazeni'], ['bazeni/coral', 'CORAL kompozitni'], ['bazeni/compact', 'COMPACT keramički'], ['bazeni/betonski', 'Betonski i po mjeri'], ['bazeni/swim-spa', 'Swim spa i hidromasaža']];
+  const bazeni: [string, string][] = [['bazeni', 'Svi bazeni i usporedba'], ['bazeni/fp', 'Montažni FP bazeni'], ['bazeni/coral', 'CORAL kompozitni'], ['bazeni/compact', 'COMPACT keramički'], ['bazeni/betonski', 'Betonski i po mjeri'], ['bazeni/swim-spa', 'Swim spa i hidromasaža'], ['bazeni/rekonstrukcija', 'Rekonstrukcija i izmjena folije']];
   const onama: [string, string][] = [['o-nama', 'O nama'], ['galerija', 'Galerija radova'], ['kontakt', 'Kontakt']];
 
   const prijava = (
