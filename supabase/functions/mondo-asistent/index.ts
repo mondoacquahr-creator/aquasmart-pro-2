@@ -1,13 +1,14 @@
 import { createClient } from "jsr:@supabase/supabase-js@2.49.8";
 
-// Mondo asistent – AI asistent za glavnu stranicu www.mondo-acqua.hr (zasebna funkcija, probna verzija).
-// Odgovara samo iz teksta stranice i odgovora koje je vlasnik odobrio (datoteka znanje.txt) te općih pravila održavanja vode.
+// Mondo asistent – AI asistent za glavnu stranicu www.mondo-acqua.hr (zasebna funkcija).
+// Odgovara samo iz teksta stranice, cijena iz webshopa i odgovora koje je vlasnik odobrio (datoteka znanje.txt) te općih pravila održavanja vode.
+// Cijene u znanje upisuje: node scripts/asistent-cijene.mjs
 // Razgovori se spremaju (odluka vlasnika, navedeno u pravilima privatnosti): ključ asistent:razgovor:<dan>:<sid>.
 
 // Znanje je tekst stranice, objavljen uz stranicu. Čita se s prve dostupne adrese i drži 10 minuta u predmemoriji.
 const ZNANJE_URLS = [
-  "https://raw.githubusercontent.com/mondoacquahr-creator/aquasmart-pro-2/asistent-proba/public/mondo-web/znanje.txt",
   "https://www.mondo-acqua.hr/znanje.txt",
+  "https://raw.githubusercontent.com/mondoacquahr-creator/aquasmart-pro-2/figma-izvoz/public/mondo-web/znanje.txt",
 ];
 let znanjeCache = { text: "", at: 0 };
 async function ucitajZnanje(): Promise<string> {
@@ -56,6 +57,7 @@ ODAKLE ZNAŠ
 - ZNANJE završava odjeljkom ODOBRENI ODGOVORI VLASNIKA. Kad se pitanje odnosi na neki od njih, odgovori u skladu s njim. Ako se razlikuje od teksta stranice, vrijedi odobreni odgovor.
 - Ako podatka nema u ZNANJU (npr. cijena po mjeri, rok za konkretan projekt, zaliha, dostava na određeno mjesto, jamstvo), NE nagađaš. Kažeš da to potvrđuje naš tim i postaviš "unknown": true te ponudiš radnje "ponuda", "nazovi" i "whatsapp".
 - Cijenu betonskog bazena, bazena po mjeri, rekonstrukcije i održavanja nikad ne procjenjuješ: ona je na upit.
+- Cijene kemije i opreme iz webshopa smiješ navesti točno kako pišu u odjeljku WEBSHOP CIJENE (redovna cijena s PDV-om) i ponuditi radnju "webshop". Ne preračunavaj popuste u iznose; samo reci da registrirani vlasnici imaju popust u košarici. Kad pitanje odgovara više pakiranja, navedi ih kratko.
 
 VODA I ODRŽAVANJE
 - Smiješ dati opće, provjerene savjete o održavanju bazenske vode (redoslijed koraka, što izmjeriti, pH 7,2–7,6, filtracija, četkanje, pranje filtera, zimovanje).
