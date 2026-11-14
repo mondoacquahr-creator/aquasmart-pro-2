@@ -243,6 +243,12 @@
   from = "https://www.mondo-acqua.hr/slike/*"
   to = "/mondo-web/slike/:splat"
   status = 200
+# Kratka adresa za naljepnice s QR kodom: Android na Google Play, ostali u Pool Care
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/app"
+  to = "/mondo-web/app.html"
+  status = 200
+  force = true
 # AI asistent: skripta i znanje s kojim odgovara
 [[redirects]]
   from = "https://www.mondo-acqua.hr/asistent.js"
