@@ -243,6 +243,17 @@
   from = "https://www.mondo-acqua.hr/slike/*"
   to = "/mondo-web/slike/:splat"
   status = 200
+# AI asistent: skripta i znanje s kojim odgovara
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/asistent.js"
+  to = "/mondo-web/asistent.js"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/znanje.txt"
+  to = "/mondo-web/znanje.txt"
+  status = 200
+  force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/logo.png"
   to = "/mondo-web/logo.png"
