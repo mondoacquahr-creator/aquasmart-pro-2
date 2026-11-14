@@ -58,6 +58,7 @@ export function SiteHeader({ onNavigate, app = false }: { onNavigate: Nav; app?:
           <button className={link} onClick={() => go('analysis')}>Analiza vode</button>
           <button className={link} onClick={() => go('login')}>Moj bazen</button>
           <button className={link} onClick={() => go('login')}>PRO</button>
+          <a className={`${link} text-white/60`} href={MAIN} target="_blank" rel="noopener">Mondo Acqua – bazeni ↗</a>
         </nav>
         ) : (
         <nav className="hidden xl:flex items-center gap-[22px]">
@@ -92,6 +93,9 @@ export function SiteHeader({ onNavigate, app = false }: { onNavigate: Nav; app?:
           <button className={item} onClick={() => go('analysis')}>Analiza vode</button>
           <button className={item} onClick={() => go('login')}>Moj bazen</button>
           <button className={item} onClick={() => go('login')}>Pool Care PRO</button>
+          <div className="mt-2 pt-2" style={{ borderTop: '1px solid rgba(120,220,255,0.12)' }}>
+            <a className={`${item} text-white/70`} href={MAIN} target="_blank" rel="noopener" onClick={() => setOpen(false)}>Mondo Acqua – bazeni i izgradnja ↗</a>
+          </div>
         </div>
       )}
       {open && !app && (
