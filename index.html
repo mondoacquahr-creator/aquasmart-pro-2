@@ -46,7 +46,7 @@
   function hit(){
     var p=location.pathname+(q.get('stranica')?'?stranica='+String(q.get('stranica')).slice(0,30):''); if(p===last) return; last=p;
     var r=''; try{ r=document.referrer?new URL(document.referrer).hostname:''; if(/mondo-acqua\.hr$/.test(r)) r=''; }catch(e){}
-    fetch('https://sryuogkaebeznmadchcr.supabase.co/functions/v1/mondo-stat/hit',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json',Authorization:'Bearer '+K,apikey:K},body:JSON.stringify({s:h,p:p,r:r,w:innerWidth<760?'m':'d'})}).catch(function(){});
+    fetch('https://sryuogkaebeznmadchcr.supabase.co/functions/v1/mondo-stat/hit',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+K,apikey:K},body:JSON.stringify({s:h,p:p,r:r,w:innerWidth<760?'m':'d'})}).catch(function(){});
   }
   hit(); var ps=history.pushState; history.pushState=function(){ps.apply(this,arguments); setTimeout(hit,0);}; addEventListener('popstate',function(){setTimeout(hit,0);});
 }catch(e){}})();
