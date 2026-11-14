@@ -23,6 +23,7 @@ import { GuestAnalysis } from './components/GuestAnalysis';
 import { WaterBackground } from './components/WaterBackground';
 import { MemberPortal } from './components/MemberPortal';
 import { T } from './lib/theme';
+import { countVisit } from './lib/stat';
 
 const VISUALIZER_ENABLED = true;
 
@@ -110,6 +111,9 @@ export default function App() {
   useEffect(() => {
     if (currentPage === 'visualizer' && (!VISUALIZER_ENABLED || isStandalone())) setCurrentPage('home');
   }, [currentPage]);
+
+  // Brojač posjeta (bez kolačića): jedna bilješka po otvorenoj stranici aplikacije.
+  useEffect(() => { countVisit(currentPage); }, [currentPage]);
 
   // Mondo Acqua glavna stranica je početna: povratak na 'home' unutar weba vodi na nju.
   // Instalirana aplikacija (Google Play / dodano na početni zaslon) i dalje ostaje na Pool Care početnoj.
