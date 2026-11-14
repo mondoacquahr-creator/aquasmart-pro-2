@@ -50,6 +50,7 @@
 .ma-hi{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:80;max-width:240px;background:#fff;color:#06202A;font:600 15px/1.35 Inter,system-ui,sans-serif;padding:12px 16px;border-radius:18px 18px 4px 18px;box-shadow:0 12px 30px rgba(0,0,0,.4);cursor:pointer;animation:ma-pop .3s cubic-bezier(.2,1.2,.3,1) both;transform-origin:100% 100%}
 @media (max-width:760px){.ma-launch{bottom:calc(80px + env(safe-area-inset-bottom,0px))}.ma-hi{bottom:calc(150px + env(safe-area-inset-bottom,0px))}.ma-on-page .totop{bottom:calc(150px + env(safe-area-inset-bottom,0px))}}
 @media (min-width:761px){.ma-on-page .totop{bottom:calc(96px + env(safe-area-inset-bottom,0px))}}
+@media (min-width:761px){.ma-nl .ma-launch{bottom:66px}.ma-nl .ma-hi{bottom:136px}.ma-nl.ma-on-page .totop{bottom:140px}}
 
 .ma-dim{position:fixed;inset:0;background:rgba(2,10,16,.55);z-index:99}
 .ma-panel{position:fixed;z-index:100;left:0;right:0;bottom:0;height:min(86dvh,720px);background:#071f2b;border:1px solid rgba(120,220,255,.16);border-bottom:0;border-radius:26px 26px 0 0;box-shadow:0 -20px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;color:#fff;overflow:hidden;animation:ma-up .28s cubic-bezier(.2,.8,.2,1) both}
@@ -94,6 +95,8 @@
   const style = el('style'); style.textContent = CSS; document.head.appendChild(style);
   document.documentElement.classList.add('ma-on-page');
   const root = el('div', 'ma-root'); document.body.appendChild(root);
+  // Netlify u donji desni kut zna ubaciti svoju oznaku; ako je tu, gumb se pomakne iznad nje.
+  [800, 2500, 6000].forEach(ms => setTimeout(() => { if (document.getElementById('nl-badge-frame')) document.documentElement.classList.add('ma-nl'); }, ms));
 
   // ---------- gumb s robotićem ----------
   const launch = el('button', 'ma-launch', `<span class="ma-av"><span>${ROBOT}</span></span><span class="ma-lbl">Pitajte asistenta</span>`);
