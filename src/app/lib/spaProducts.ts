@@ -1,5 +1,6 @@
 // Spa i hidromasažne kade – AstralPool SPA Collection (dobavljač Flusso grupa).
 // Prodajna cijena = veleprodajna cijena dobavljača (V.P.C., bez PDV-a) s 25 % PDV-a, kao i ostatak webshopa.
+// pH minus: prodajna cijena usklađena s tržištem (12,68 € s PDV-om), V.P.C. dobavljača je 7,46 €.
 // Fotografije: astralpool.com (AstralPool SPA Collection).
 export interface SpaProduct { id: string; name: string; size: string; priceEUR: number; category: string; description: string; imageUrl: string; }
 
@@ -10,7 +11,7 @@ const IMG = 'https://asset.productmarketingcloud.com/api/assetstorage/3096_';
 const ROWS: [string, string, string, number, string, string][] = [
   ['spa-klor-granulat', 'Astral Spa klor granulat', '1 kg', 12.01, '717c95b0-1f8e-482d-896b-62748169f82d', 'Dezinfekcija vode u spa i hidromasažnim kadama'],
   ['spa-brom-tablete', 'Astral Spa brom tablete', '1 kg', 34.40, '9f9ad926-2383-49ee-9204-3c19afd89242', 'Dezinfekcija bromom – stabilan i pri visokoj temperaturi vode'],
-  ['spa-ph-minus', 'Astral Spa pH minus', '1 kom', 7.46, '50f6be13-2dc3-4051-99cd-63a011aaf581', 'Snižava pH kad je iznad 7,6'],
+  ['spa-ph-minus', 'Astral Spa pH minus', '1 kom', 10.144, '50f6be13-2dc3-4051-99cd-63a011aaf581', 'Snižava pH kad je iznad 7,6'],
   ['spa-stabilizator-tvrdoce', 'Astral Spa stabilizator tvrdoće', '1 kg', 10.43, 'c62fb359-bb2a-4989-9331-7ddf518e10a3', 'Sprječava kamenac na stijenkama i u instalaciji'],
   ['spa-bistrilo', 'Astral Spa bistrilo', '1 L', 9.52, 'd38fb15d-4275-4b5a-bf71-d03f4c9e8f84', 'Uklanja zamućenje, voda ostaje kristalno bistra'],
   ['spa-anti-foam', 'Astral Spa anti foam', '1 L', 16.07, '3ac841bf-8312-4062-8bb3-0b953e5764ac', 'Brzo uklanja i sprječava pjenu'],
