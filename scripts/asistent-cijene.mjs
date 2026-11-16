@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
 const out = await build({
   stdin: {
-    contents: "export { IVERO_PRICES } from './src/app/lib/productPrices'; export { VAGNER_EQUIPMENT } from './src/app/lib/vagnerEquipment';",
+    contents: "export { IVERO_PRICES } from './src/app/lib/productPrices'; export { VAGNER_EQUIPMENT } from './src/app/lib/vagnerEquipment'; export { SPA_PRODUCTS } from './src/app/lib/spaProducts';",
     resolveDir: process.cwd(), loader: 'ts',
   },
   bundle: true, write: false, format: 'esm', platform: 'node',
@@ -24,6 +24,7 @@ const kat = (id) => {   // isto kao deriveCategory u src/app/lib/mondoShop.ts
 const eur = (n) => n.toLocaleString('hr-HR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 const rows = [
   ...Object.values(mod.IVERO_PRICES).map((p) => ({ k: 'Kemija – ' + kat(p.id), n: p.name, s: p.size, c: p.priceEUR })),
+  ...mod.SPA_PRODUCTS.map((p) => ({ k: 'Kemija – ' + p.category, n: p.name, s: p.size, c: p.priceEUR })),
   ...mod.VAGNER_EQUIPMENT.map((p) => ({ k: 'Oprema – ' + p.category, n: p.name, s: p.size, c: p.priceEUR })),
 ];
 const groups = new Map();

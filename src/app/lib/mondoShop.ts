@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { IVERO_PRICES } from './productPrices';
 import { VAGNER_EQUIPMENT } from './vagnerEquipment';
+import { SPA_PRODUCTS } from './spaProducts';
 import { api } from './supabase';
 
 export const MONDO_CONTACT = {
@@ -98,7 +99,7 @@ const equipmentProducts: ShopProduct[] = VAGNER_EQUIPMENT.map((p) => ({
   description: p.description,
 }));
 
-export const SHOP_PRODUCTS: ShopProduct[] = [...chemProducts, ...equipmentProducts];
+export const SHOP_PRODUCTS: ShopProduct[] = [...chemProducts, ...SPA_PRODUCTS, ...equipmentProducts];
 
 export const findProduct = (id: string): ShopProduct | undefined => SHOP_PRODUCTS.find((p) => p.id === id);
 

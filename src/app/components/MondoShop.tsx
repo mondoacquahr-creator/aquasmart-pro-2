@@ -32,7 +32,7 @@ interface MondoShopProps {
   onFinished?: () => void;
 }
 
-const CATEGORIES = ['Sve', 'pH regulacija', 'Dezinfekcija', 'Alge', 'Bistrenje', 'Održavanje', 'Testiranje', 'Pumpe', 'Filteri', 'Doziranje', 'Elektroliza', 'Ostalo'];
+const CATEGORIES = ['Sve', 'pH regulacija', 'Dezinfekcija', 'Alge', 'Bistrenje', 'Održavanje', 'Testiranje', 'Spa i hidromasažne kade', 'Pumpe', 'Filteri', 'Doziranje', 'Elektroliza', 'Ostalo'];
 const DIVIDER_AFTER = 'Testiranje';
 
 export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopProps) {
