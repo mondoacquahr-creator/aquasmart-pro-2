@@ -23,6 +23,7 @@ import { memberApi, isMemberLoggedIn } from '../lib/memberApi';
 import { WaterBackground } from './WaterBackground';
 import { ProductDetailSheet } from './ProductDetailSheet';
 import { PayPalCheckout } from './PayPalCheckout';
+import { ReturnPolicy } from './ReturnPolicy';
 import { api } from '../lib/supabase';
 
 interface MondoShopProps {
@@ -477,6 +478,8 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
               </div>
             )}
           </div>
+
+          <ReturnPolicy id="povrat-narudzba" />
         </div>
       </div>
     );
@@ -895,6 +898,10 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
             Odaberi proizvod za nastavak ›
           </p>
         )}
+
+        <div className="pt-6">
+          <ReturnPolicy />
+        </div>
       </div>
 
       {/* ── KARTICA PROIZVODA ────────────────────────────────────────────── */}
