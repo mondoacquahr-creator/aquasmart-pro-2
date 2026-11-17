@@ -11,7 +11,11 @@ import * as kv from "./kv_store.tsx";
 
 const app = new Hono();
 const resend = new Resend(Deno.env.get('resend'));
-const MONDO_ACQUA_EMAIL = "info@mondo-acqua.hr";
+// Primatelj obavijesti (registracije, narudžbe, pregledi). Dok domena mondo-acqua.hr nije potvrđena u Resendu,
+// pošiljatelj resend.dev smije slati samo na adresu Resend računa (mondo.acquahr@gmail.com).
+// Nakon potvrde domene: tajne INQUIRY_EMAIL=info@mondo-acqua.hr i MAIL_FROM='Mondo Pool Care <noreply@mondo-acqua.hr>'.
+const MONDO_ACQUA_EMAIL = Deno.env.get('INQUIRY_EMAIL') || "mondo.acquahr@gmail.com";
+const MAIL_FROM = Deno.env.get('MAIL_FROM') || 'Mondo Pool Care <orders@resend.dev>';
 
 app.use('*', logger(console.log));
 app.use(
@@ -189,7 +193,7 @@ const notifyOrderCompleted = async (user: any, order: any) => {
     ? `${fmtHrTime(order.workStartedAt)} – ${fmtHrTime(order.workEndedAt)} (${fmtDur(e - s)})` : '—';
   const who = order.completedBy || order.assignee || user.email;
   await resend.emails.send({
-    from: 'Mondo Pool Care <orders@resend.dev>',
+    from: MAIL_FROM,
     to: [ownerEmail],
     subject: `NALOG ZAVRŠEN: #${order.id} – ${order.client || ''}`.slice(0, 150),
     html: `
@@ -253,7 +257,7 @@ registerRoute(app, 'post', '/shop/paypal-order', async (c: any) => {
   await kv.set(key, order);
   try {
     await resend.emails.send({
-      from: 'Mondo Pool Care <orders@resend.dev>',
+      from: MAIL_FROM,
       to: [MONDO_ACQUA_EMAIL],
       subject: `PLAĆENA NARUDŽBA (PayPal ${order.amount.toFixed(2)} €): ${order.name || order.payerName}`,
       html: `<div style="font-family:sans-serif;max-width:600px">
@@ -648,7 +652,7 @@ registerRoute(app, 'post', '/employees/create', authMiddleware, ownerOnly, activ
   let emailSent = false;
   try {
     const r: any = await resend.emails.send({
-      from: 'Mondo Pool Care <orders@resend.dev>',
+      from: MAIL_FROM,
       to: [email],
       subject: `Pristup aplikaciji Mondo Pool Care${companyName ? ' – ' + companyName : ''}`.slice(0, 150),
       html: `
@@ -796,7 +800,7 @@ registerRoute(app, 'post', '/orders/submit', authMiddleware, async (c: any) => {
     const companyName = user.app_metadata?.companyName || user.user_metadata?.companyName || 'Nije navedeno';
 
     await resend.emails.send({
-      from: 'Mondo Pool Care <orders@resend.dev>',
+      from: MAIL_FROM,
       to: [MONDO_ACQUA_EMAIL],
       subject: `NOVA NARUDŽBA: ${order.userName}`,
       html: `
@@ -992,7 +996,7 @@ registerRoute(app, 'put', '/member/profile', authMiddleware, memberOnly, async (
   if (changes.length) {
     try {
       await resend.emails.send({
-        from: 'Mondo Pool Care <orders@resend.dev>',
+        from: MAIL_FROM,
         to: [MONDO_ACQUA_EMAIL],
         subject: `PROMJENA PROFILA: ${profile.name || user.email}`,
         html: `<div style="font-family:sans-serif;max-width:600px"><h2>Član je promijenio profil</h2>
@@ -1031,7 +1035,7 @@ registerRoute(app, 'put', '/member/email', authMiddleware, memberOnly, async (c:
 
   try {
     await resend.emails.send({
-      from: 'Mondo Pool Care <orders@resend.dev>',
+      from: MAIL_FROM,
       to: [MONDO_ACQUA_EMAIL],
       subject: `PROMJENA E-MAILA: ${profile.name || email}`,
       html: `<div style="font-family:sans-serif;max-width:600px"><h2>Član je promijenio e-mail adresu</h2>
@@ -1224,7 +1228,7 @@ registerRoute(app, 'post', '/member/visit-request', authMiddleware, memberOnly, 
 
   try {
     await resend.emails.send({
-      from: 'Mondo Pool Care <orders@resend.dev>',
+      from: MAIL_FROM,
       to: [MONDO_ACQUA_EMAIL],
       subject: `PREGLED OPREME${profile.plan === 'care' ? ' (Mondo Care)' : ''}: ${visit.name || visit.email}${city ? ' – ' + city : ''}`,
       html: `
@@ -1509,7 +1513,7 @@ const signupHandler = async (c: any) => {
       const row = (label: string, value: string) => value
         ? `<p style="margin: 6px 0;"><strong>${label}:</strong> ${escapeHtml(value)}</p>` : '';
       await resend.emails.send({
-        from: 'Mondo Pool Care <orders@resend.dev>',
+        from: MAIL_FROM,
         to: [MONDO_ACQUA_EMAIL],
         subject: `${kind}: ${subjectName}${city ? ' – ' + city : ''}`,
         html: `
