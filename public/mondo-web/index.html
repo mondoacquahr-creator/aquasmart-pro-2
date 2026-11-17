@@ -2,6 +2,97 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8">
+      <!-- Google measurement: loaded only after the visitor opts in. -->
+      <script>
+        (function () {
+          var KEY = 'mondo_measurement_v1';
+          var AGE = 180 * 24 * 60 * 60 * 1000;
+          var loaded = false;
+          var allowed = false;
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () { window.dataLayer.push(arguments); };
+          window.gtag('consent', 'default', {
+            analytics_storage: 'denied', ad_storage: 'denied',
+            ad_user_data: 'denied', ad_personalization: 'denied'
+          });
+          function readChoice() {
+            try {
+              var value = JSON.parse(localStorage.getItem(KEY));
+              return value && value.version === 1 && typeof value.allowed === 'boolean' &&
+                value.at <= Date.now() && Date.now() - value.at < AGE ? value : null;
+            } catch (_) { return null; }
+          }
+          function apply(value) {
+            allowed = value === true;
+            window.gtag('consent', 'update', {
+              analytics_storage: allowed ? 'granted' : 'denied',
+              ad_storage: allowed ? 'granted' : 'denied',
+              ad_user_data: 'denied', ad_personalization: 'denied'
+            });
+            if (allowed && !loaded) {
+              loaded = true;
+              window.gtag('js', new Date());
+              var tag = document.createElement('script');
+              tag.async = true;
+              tag.id = 'mondo-google-tag';
+              tag.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-5V4SG6WC';
+              document.head.appendChild(tag);
+            }
+          }
+          var saved = readChoice();
+          if (saved) apply(saved.allowed);
+          document.addEventListener('DOMContentLoaded', function () {
+            var panel = document.getElementById('measurement-choice');
+            var settings = document.getElementById('measurement-settings');
+            var status = document.getElementById('measurement-status');
+            function refresh() {
+              status.textContent = allowed ? 'Mjerenje je dopušteno.' : 'Mjerenje nije dopušteno.';
+            }
+            function choose(value) {
+              apply(value);
+              try { localStorage.setItem(KEY, JSON.stringify({ version: 1, allowed: value, at: Date.now() })); } catch (_) {}
+              // Stop writing Google measurement cookies after withdrawal.
+              if (!value) {
+                document.cookie.split(';').forEach(function (item) {
+                  var name = item.split('=')[0].trim();
+                  if (!/^(_ga($|_)|_gid$|_gat($|_)|_gcl_)/.test(name)) return;
+                  var domains = ['', location.hostname, '.' + location.hostname];
+                  domains.forEach(function (domain) {
+                    document.cookie = name + '=; Max-Age=0; path=/' + (domain ? '; domain=' + domain : '') + '; SameSite=Lax; Secure';
+                  });
+                });
+              }
+              refresh(); panel.hidden = true; settings.hidden = false;
+              settings.setAttribute('aria-expanded', 'false'); settings.focus();
+            }
+            document.getElementById('measurement-allow').onclick = function () { choose(true); };
+            document.getElementById('measurement-deny').onclick = function () { choose(false); };
+            document.getElementById('measurement-close').onclick = function () {
+              panel.hidden = true; settings.hidden = false;
+              settings.setAttribute('aria-expanded', 'false'); settings.focus();
+            };
+            settings.onclick = function () {
+              panel.hidden = false; settings.hidden = true;
+              document.getElementById('measurement-close').hidden = !readChoice();
+              settings.setAttribute('aria-expanded', 'true');
+              document.getElementById('measurement-deny').focus();
+            };
+            panel.hidden = !!saved; settings.hidden = !saved;
+            refresh();
+          });
+        })();
+      </script>
+      <style>
+        #measurement-choice[hidden], #measurement-settings[hidden], #measurement-close[hidden] { display:none!important; }
+        #measurement-choice { position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:680px;margin:auto;padding:18px;border:1px solid #526670;border-radius:14px;background:#10212b;color:#fff;box-shadow:0 6px 30px #0006;font:14px/1.5 system-ui,sans-serif;max-height:70dvh;overflow:auto; }
+        #measurement-choice p { margin:0 0 12px; }
+        #measurement-choice strong { display:block;margin-bottom:8px;font-size:16px; }
+        #measurement-choice .measurement-actions { display:flex;flex-wrap:wrap;gap:10px; }
+        #measurement-choice button, #measurement-settings { padding:10px 14px;border:1px solid #91a6b2;border-radius:8px;background:#18333f;color:white;font:inherit;cursor:pointer;min-height:44px; }
+        #measurement-choice button:focus-visible, #measurement-settings:focus-visible { outline:3px solid #5ce1e6;outline-offset:3px; }
+        #measurement-settings { position:fixed;left:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:80;font:12px system-ui,sans-serif; }
+        @media(max-width:760px){#measurement-choice,#measurement-settings{bottom:calc(80px + env(safe-area-inset-bottom,0px));}}
+      </style>
 <script>window.MW_BASE=location.pathname.indexOf('/mondo-web')===0?'/mondo-web/':'/';document.write('<base href="'+window.MW_BASE+'">');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mondo Acqua – bazeni, oprema i održavanje</title>
@@ -931,7 +1022,7 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
       <p><b>Vaša prava:</b> pristup, ispravak, brisanje, ograničenje obrade i prigovor. Zahtjev pošaljite na info@mondo-acqua.hr. Pritužbu možete podnijeti Agenciji za zaštitu osobnih podataka (AZOP).</p>
       <p><b>AI asistent:</b> pitanja koja postavite asistentu i njegove odgovore spremamo do 6 mjeseci kako bismo poboljšali odgovore. Uz razgovor ne spremamo ime ni IP adresu. U razgovor ne upisujte osobne podatke; za ponudu koristite obrazac. Odgovore izrađuje AI servis Google Gemini.</p>
       <p><b>Statistika posjeta:</b> brojimo otvaranja stranica bez kolačića i bez spremanja IP adrese. Bilježimo samo otvorenu stranicu, vrstu uređaja i stranicu s koje ste došli.</p>
-      <p><b>Kolačići:</b> stranica ne koristi kolačiće za praćenje ni oglašavanje. U pregledniku se pamti samo da ste zatvorili obavijest o kolačićima. Fontovi se učitavaju s Google Fonts.</p>
+      <p><b>Googleovo mjerenje i kolačići:</b> uz vaše dopuštenje učitavamo Googleove oznake radi mjerenja posjeta i učinkovitosti oglasa. Google može obrađivati podatke o uređaju i korištenju stranice te koristiti kolačiće. Personalizacija oglasa ostaje isključena. Odabir se pamti do 180 dana i možete ga promijeniti tipkom „Postavke mjerenja”. Bez dopuštenja Googleova oznaka se ne učitava. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleova pravila privatnosti</a>. Fontovi se učitavaju s Google Fonts.</p>
     </div>
   </div></div>
 </section>
@@ -967,7 +1058,18 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
 </div></footer>
 <nav class="mbar" aria-label="Brzi kontakt"><a href="tel:+385952087321">Nazovite</a><a href="https://wa.me/385952087321" target="_blank" rel="noopener">WhatsApp</a><a class="on" href="#upit">Zatražite ponudu</a></nav>
 <button type="button" class="totop" id="toTop" aria-label="Na vrh stranice" hidden>↑</button>
-<div class="cookie" id="cookie" hidden><p>Ne koristimo kolačiće za praćenje ni oglašavanje. Podatke iz obrasca koristimo samo za odgovor na upit. <a href="#privatnost">Više</a></p><button type="button" class="btn btn-primary" id="cookieOk">U redu</button></div>
+      <section id="measurement-choice" hidden role="region" aria-labelledby="measurement-title">
+        <strong id="measurement-title">Postavke mjerenja</strong>
+        <p>Uz tvoje dopuštenje koristimo Googleove oznake i kolačiće za mjerenje posjeta i učinkovitosti oglasa. Google može obrađivati podatke o uređaju i korištenju stranice. Personalizacija oglasa ostaje isključena. Stranicu možeš koristiti i bez ovog mjerenja. Odabir možeš promijeniti tipkom „Postavke mjerenja”. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:#5ce1e6;text-decoration:underline">Googleova privatnost</a>.</p>
+        <p id="measurement-status" role="status"></p>
+        <div class="measurement-actions">
+          <button type="button" id="measurement-deny">Ne dopuštam</button>
+          <button type="button" id="measurement-allow">Dopuštam mjerenje</button>
+          <button type="button" id="measurement-close" hidden>Zatvori</button>
+        </div>
+      </section>
+      <button type="button" id="measurement-settings" hidden aria-controls="measurement-choice" aria-expanded="false">Postavke mjerenja</button>
+
 
 <template id="formTpl">
 <form class="form-card wiz" novalidate>
@@ -1258,7 +1360,7 @@ const INV = [
 const invShow = k => { $set('invRows', INV[k].map(([t,v,d]) => `<div><b>${t}</b><strong>${v}</strong><small>${d}</small></div>`).join('')); document.querySelectorAll('[data-inv]').forEach(b => b.classList.toggle('on', +b.dataset.inv === k)); };
 document.querySelectorAll('[data-inv]').forEach(b => b.addEventListener('click', () => invShow(+b.dataset.inv)));
 invShow(1);
-(() => { const c = document.getElementById('cookie'); let seen = false; try { seen = localStorage.getItem('mw_cookie') === '1'; } catch {} if (!seen) c.hidden = false; document.getElementById('cookieOk').addEventListener('click', () => { c.hidden = true; try { localStorage.setItem('mw_cookie','1'); } catch {} }); })();
+
 
 (() => {
   const L = [['kur-iskop-temelj','1 · Iskop i temelj'],['kur-armatura-cijevi','2 · Armatura i cijevi dna'],['kur-l-oplata-stepenica','3 · Oplata školjke i stepenica'],['kur-l-zidovi','4 · Betonska školjka'],['kur-most-strojarnica','5 · Strojarnica'],['kur-zbuka-skoljka','6 · Priprema za oblogu'],['kur-plocice-plave-more','7 · Obloga pločicama'],['kur-more-keramika','8 · Rub i terasa'],['kur-more-rasvjeta','9 · Gotov bazen'],['kur-more-noc','10 · Prvo kupanje navečer']];
