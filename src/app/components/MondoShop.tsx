@@ -45,7 +45,10 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('Sve');
   const [confirmedVia, setConfirmedVia] = useState<'whatsapp' | 'email' | 'paypal' | null>(null);
-  const [detailId, setDetailId] = useState<string | null>(null);
+  const [detailId, setDetailId] = useState<string | null>(() => {
+    const id = new URLSearchParams(window.location.search).get('proizvod');
+    return id && findProduct(id) ? id : null;
+  });
 
   // Form state
   const [name, setName] = useState('');
