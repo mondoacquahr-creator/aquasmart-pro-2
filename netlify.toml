@@ -285,9 +285,9 @@
   to = "/index.html"
   status = 200
 
-# Merchant product photos: convert supplier AVIFs to a supported JPEG format.
+# Merchant product photos: normalize remote chemical and spa photos to JPEG.
 [images]
-  remote_images = ['https://shop\.ivero\.hr/wp-content/uploads/.*', 'https://www\.vagnerpool\.(com|hr)/static/1/produkty/.*', 'https://asset\.productmarketingcloud\.com/api/assetstorage/.*']
+  remote_images = ['https://shop\.ivero\.hr/wp-content/uploads/.*', 'https://asset\.productmarketingcloud\.com/api/assetstorage/.*']
 
 [[headers]]
   for = "/google-products.xml"
