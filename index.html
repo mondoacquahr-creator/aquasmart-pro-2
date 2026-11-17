@@ -2,8 +2,99 @@
   <!DOCTYPE html>
   <html lang="en">
     <head>
-      
       <meta charset="UTF-8" />
+      <!-- Google measurement: loaded only after the visitor opts in. -->
+      <script>
+        (function () {
+          var KEY = 'poolcare_measurement_v1';
+          var AGE = 180 * 24 * 60 * 60 * 1000;
+          var loaded = false;
+          var allowed = false;
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () { window.dataLayer.push(arguments); };
+          window.gtag('consent', 'default', {
+            analytics_storage: 'denied', ad_storage: 'denied',
+            ad_user_data: 'denied', ad_personalization: 'denied'
+          });
+          function readChoice() {
+            try {
+              var value = JSON.parse(localStorage.getItem(KEY));
+              return value && value.version === 1 && typeof value.allowed === 'boolean' &&
+                value.at <= Date.now() && Date.now() - value.at < AGE ? value : null;
+            } catch (_) { return null; }
+          }
+          function apply(value) {
+            allowed = value === true;
+            window.gtag('consent', 'update', {
+              analytics_storage: allowed ? 'granted' : 'denied',
+              ad_storage: allowed ? 'granted' : 'denied',
+              ad_user_data: 'denied', ad_personalization: 'denied'
+            });
+            if (allowed && !loaded) {
+              loaded = true;
+              window.gtag('js', new Date());
+              var tag = document.createElement('script');
+              tag.async = true;
+              tag.id = 'poolcare-google-tag';
+              tag.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-5V4SG6WC';
+              document.head.appendChild(tag);
+            }
+          }
+          var saved = readChoice();
+          if (saved) apply(saved.allowed);
+          document.addEventListener('DOMContentLoaded', function () {
+            var panel = document.getElementById('measurement-choice');
+            var settings = document.getElementById('measurement-settings');
+            var status = document.getElementById('measurement-status');
+            function refresh() {
+              status.textContent = allowed ? 'Mjerenje je dopušteno.' : 'Mjerenje nije dopušteno.';
+            }
+            function choose(value) {
+              apply(value);
+              try { localStorage.setItem(KEY, JSON.stringify({ version: 1, allowed: value, at: Date.now() })); } catch (_) {}
+              // Stop writing Google measurement cookies after withdrawal.
+              if (!value) {
+                document.cookie.split(';').forEach(function (item) {
+                  var name = item.split('=')[0].trim();
+                  if (!/^(_ga($|_)|_gid$|_gat($|_)|_gcl_)/.test(name)) return;
+                  var domains = ['', location.hostname, '.' + location.hostname];
+                  domains.forEach(function (domain) {
+                    document.cookie = name + '=; Max-Age=0; path=/' + (domain ? '; domain=' + domain : '') + '; SameSite=Lax; Secure';
+                  });
+                });
+              }
+              refresh(); panel.hidden = true; settings.hidden = false;
+              settings.setAttribute('aria-expanded', 'false'); settings.focus();
+            }
+            document.getElementById('measurement-allow').onclick = function () { choose(true); };
+            document.getElementById('measurement-deny').onclick = function () { choose(false); };
+            document.getElementById('measurement-close').onclick = function () {
+              panel.hidden = true; settings.hidden = false;
+              settings.setAttribute('aria-expanded', 'false'); settings.focus();
+            };
+            settings.onclick = function () {
+              panel.hidden = false; settings.hidden = true;
+              document.getElementById('measurement-close').hidden = !readChoice();
+              settings.setAttribute('aria-expanded', 'true');
+              document.getElementById('measurement-deny').focus();
+            };
+            panel.hidden = !!saved; settings.hidden = !saved;
+            refresh();
+          });
+        })();
+      </script>
+      <style>
+        #measurement-choice[hidden], #measurement-settings[hidden], #measurement-close[hidden] { display:none!important; }
+        #measurement-choice { position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:680px;margin:auto;padding:18px;border:1px solid #526670;border-radius:14px;background:#10212b;color:#fff;box-shadow:0 6px 30px #0006;font:14px/1.5 system-ui,sans-serif;max-height:70dvh;overflow:auto; }
+        #measurement-choice p { margin:0 0 12px; }
+        #measurement-choice strong { display:block;margin-bottom:8px;font-size:16px; }
+        #measurement-choice .measurement-actions { display:flex;flex-wrap:wrap;gap:10px; }
+        #measurement-choice button, #measurement-settings { padding:10px 14px;border:1px solid #91a6b2;border-radius:8px;background:#18333f;color:white;font:inherit;cursor:pointer;min-height:44px; }
+        #measurement-choice button:focus-visible, #measurement-settings:focus-visible { outline:3px solid #5ce1e6;outline-offset:3px; }
+        #measurement-settings { position:fixed;left:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:80;font:12px system-ui,sans-serif; }
+      </style>
+
+
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Mondo Pool Care – analiza vode i webshop | Mondo Acqua</title>
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -25,6 +116,18 @@
 
     <body>
       
+
+      <section id="measurement-choice" hidden role="region" aria-labelledby="measurement-title">
+        <strong id="measurement-title">Postavke mjerenja</strong>
+        <p>Uz tvoje dopuštenje koristimo Googleove oznake i kolačiće za mjerenje posjeta i učinkovitosti oglasa. Google može obrađivati podatke o uređaju i korištenju stranice. Personalizacija oglasa ostaje isključena. Aplikaciju možeš koristiti i bez ovog mjerenja. Odabir možeš promijeniti tipkom „Postavke mjerenja”. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:#5ce1e6;text-decoration:underline">Googleova privatnost</a>.</p>
+        <p id="measurement-status" role="status"></p>
+        <div class="measurement-actions">
+          <button type="button" id="measurement-deny">Ne dopuštam</button>
+          <button type="button" id="measurement-allow">Dopuštam mjerenje</button>
+          <button type="button" id="measurement-close" hidden>Zatvori</button>
+        </div>
+      </section>
+      <button type="button" id="measurement-settings" hidden aria-controls="measurement-choice" aria-expanded="false">Postavke mjerenja</button>
       <div id="root"></div>
       <script type="module" src="/src/main.tsx"></script>
       <script>
