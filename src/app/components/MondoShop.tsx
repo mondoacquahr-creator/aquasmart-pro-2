@@ -41,6 +41,31 @@ const GROUPS: { name: string; subs: string[] }[] = [
   { name: 'Strojarnica', subs: ['Pumpe', 'Filteri', 'Doziranje', 'Elektroliza', 'Toplinske pumpe'] },
   { name: 'Oprema i čišćenje', subs: ['Robotski usisavači', 'Ljestve', 'Rasvjeta', 'Solarne folije', 'Folije za bazen'] },
 ];
+// ── Pretraga: bez kvačica, sve riječi, oblici riječi (pumpa/pumpe), kategorija i opis ──
+const norm = (t: string) => t.toLowerCase().replace(/đ/g, 'd').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const SYNONYMS: Record<string, string> = {
+  usisavac: 'robot', usisavaci: 'robot', cistac: 'robot', reflektor: 'svjetl', reflektori: 'svjetl', lampa: 'svjetl',
+  rasvjeta: 'svjetl', grijanje: 'toplinsk', grijac: 'toplinsk', kemija: 'kemija', pokrivac: 'solarn', prekrivac: 'solarn',
+  stepenice: 'ljestv', merdevine: 'ljestv', tester: 'test', klora: 'klor', ph: 'ph',
+};
+const haystackOf = (p: { name: string; size: string; category: string; description?: string }) => {
+  const g = GROUPS.find((x) => x.subs.includes(p.category));
+  return norm([p.name, p.size, p.category, SUB_LABEL[p.category] || '', g ? g.name : '', p.description || ''].join(' '));
+};
+const matchesSearch = (p: { name: string; size: string; category: string; description?: string }, q: string) => {
+  const hay = haystackOf(p);
+  return norm(q).split(/\s+/).filter(Boolean).every((w) => {
+    // broj mora biti cijeli broj: "4" ne smije pogoditi "304"
+    if (/^\d+([.,]\d+)?$/.test(w)) return new RegExp(`(^|[^\\d,.])${w.replace('.', ',').replace(/[.,]/, '[.,]')}([^\\d]|$)`).test(hay);
+    if (hay.includes(w)) return true;
+    const syn = SYNONYMS[w];
+    if (syn && hay.includes(syn)) return true;
+    // osnova riječi: "pumpe" -> "pump", "ljestvama" -> "ljestv"
+    const stem = w.length > 4 ? w.slice(0, Math.max(4, w.length - 2)) : w;
+    return hay.includes(stem);
+  });
+};
+
 export const SHIPPING_EUR = 10;
 const SUB_LABEL: Record<string, string> = { 'Održavanje': 'Zimovanje i zaštita', 'Ostalo': 'Ostala kemija', 'Robotski usisavači': 'Roboti' };
 const DIVIDER_AFTER = 'Testiranje';
@@ -108,11 +133,12 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
 
   const cartCount = cart.items.reduce((sum, item) => sum + item.quantity, 0);
 
+  const query = search.trim();
   const filteredProducts = SHOP_PRODUCTS.filter((p) => {
-    const matchesSearch = !search || p.name.toLowerCase().includes(search.toLowerCase());
+    // Kad se pretražuje, traži se kroz sve proizvode, bez obzira na odabranu skupinu.
+    if (query) return matchesSearch(p, query);
     const g = GROUPS.find((x) => x.name === group);
-    const matchesCategory = category !== 'Sve' ? p.category === category : !g || g.subs.includes(p.category);
-    return matchesSearch && matchesCategory;
+    return category !== 'Sve' ? p.category === category : !g || g.subs.includes(p.category);
   });
 
   const fmtEUR = (val: number) => val.toFixed(2).replace('.', ',') + ' €';
@@ -512,7 +538,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
   const productCount = filteredProducts.length;
   const productCountLabel = productCount === 1 ? '1 proizvod' : `${productCount} proizvoda`;
   const activeGroup = GROUPS.find((x) => x.name === group);
-  const categoryLabel = category !== 'Sve' ? (SUB_LABEL[category] || category) : activeGroup ? activeGroup.name : 'Svi proizvodi';
+  const categoryLabel = query ? `Rezultati za „${query}”` : category !== 'Sve' ? (SUB_LABEL[category] || category) : activeGroup ? activeGroup.name : 'Svi proizvodi';
 
   const deriveDescription = (product: { name: string; description?: string }): string | null => {
     if ('description' in product && typeof product.description === 'string' && product.description) {
