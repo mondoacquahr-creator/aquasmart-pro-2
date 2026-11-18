@@ -25,7 +25,7 @@ export function buildCjenikRows(shopProducts, mainHtmlPath) {
   const rows = shopProducts.map((p) => {
     const u = unitOf(p);
     return { tip: 'proizvod', naziv: `${p.name} – ${p.size}`, sifra: p.id, marka: brandOf(p), jedinica: u.unit,
-      cijenaJedinica: u.perUnit, cijena: p.priceEUR, posebniOblik: '', sidrena: p.anchorEUR ?? p.priceEUR, barkod: '', dostupnost: 'dostupno' };
+      cijenaJedinica: u.perUnit, cijena: p.priceEUR, posebniOblik: '', sidrena: p.anchorEUR ?? p.priceEUR, sidrenaDatum: p.anchorDate || '2026-09-10', barkod: '', dostupnost: 'dostupno' };
   });
   const html = fs.readFileSync(mainHtmlPath, 'utf8');
   const arr = (name) => { const m = html.match(new RegExp(`const ${name} = (\\[.*?\\]);\\n`)); return m ? Function(`return ${m[1]}`)() : []; };

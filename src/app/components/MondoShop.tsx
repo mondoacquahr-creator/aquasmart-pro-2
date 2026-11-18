@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ANCHOR_DATE_LABEL, anchorPrice } from '../lib/anchorPrices';
+import { anchorDateLabel, anchorPrice } from '../lib/anchorPrices';
 import { ArrowLeft, ShoppingCart, Search, Package, Plus, Minus, X, MessageCircle, Mail, CreditCard, CheckCircle, Waves } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -873,7 +873,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                         </p>
                       </>
                     )}
-                    <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>Cijena na dan {ANCHOR_DATE_LABEL}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
+                    <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>Cijena na dan {anchorDateLabel(product.category)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
                   </div>
 
                   {/* Action */}
@@ -952,7 +952,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                           </p>
                         </>
                       )}
-                      <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>Cijena na dan {ANCHOR_DATE_LABEL}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
+                      <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>Cijena na dan {anchorDateLabel(product.category)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
                     </div>
                     {ActionEl}
                   </div>

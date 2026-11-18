@@ -3,6 +3,11 @@
 // Popis se NE mijenja kad se mijenja prodajna cijena. Novi proizvod dobiva svoju prvu ponuđenu cijenu
 // (ako ga ovdje nema, prikazuje se trenutna cijena; dodajte ga ovdje pri prvoj promjeni cijene).
 export const ANCHOR_DATE_LABEL = '10. 9. 2026.';
+// Bazenska i spa kemija spada u sredstva za čišćenje -> referentni datum 2. 5. 2025. (točka IV. Odluke).
+// Mondo Acqua tada nije prodavala kemiju preko weba; kao sidrena cijena koristi se cijena iz ovog popisa.
+export const CHEM_CATEGORIES = ['pH regulacija', 'Dezinfekcija', 'Alge', 'Bistrenje', 'Održavanje', 'Ostalo', 'Spa i hidromasažne kade'];
+export const anchorDateLabel = (category: string) => (CHEM_CATEGORIES.includes(category) ? '2. 5. 2025.' : ANCHOR_DATE_LABEL);
+export const anchorDateISO = (category: string) => (CHEM_CATEGORIES.includes(category) ? '2025-05-02' : '2026-09-10');
 
 export const ANCHOR_PRICES: Record<string, number> = {
   "ph-plus-1kg": 4.75,
