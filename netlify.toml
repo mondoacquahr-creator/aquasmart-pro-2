@@ -293,3 +293,6 @@
   for = "/google-products.xml"
   [headers.values]
     Content-Type = "application/xml; charset=utf-8"
+
+[functions]
+  external_node_modules = ["sharp"]

@@ -27,7 +27,7 @@ for item in items:
     assert data['offers']['availability'].endswith('InStock')
     assert 'noindex' not in html
     assert 'proizvod=' + product_id in html
-assert len(Path('dist/_redirects').read_text().splitlines()) == sum(not p.startswith('vg-') for p in ids)
+assert len(Path('dist/_redirects').read_text().splitlines()) == sum(not p.startswith(('vg-', 'vh-')) for p in ids)
 for product_id in ids:
     if product_id.startswith('vg-'):
         assert Path('dist/merchant-images', product_id + '.jpg').read_bytes().startswith(b'\xff\xd8')
