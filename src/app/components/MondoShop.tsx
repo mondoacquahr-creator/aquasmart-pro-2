@@ -39,12 +39,12 @@ const GROUPS: { name: string; subs: string[] }[] = [
   { name: 'Spa kemija', subs: ['Spa i hidromasažne kade'] },
   { name: 'Testiranje vode', subs: ['Testiranje'] },
   { name: 'Strojarnica', subs: ['Pumpe', 'Filteri', 'Doziranje', 'Elektroliza', 'Toplinske pumpe'] },
-  { name: 'Oprema i čišćenje', subs: ['Robotski usisavači', 'Ljestve', 'Rasvjeta', 'Solarne folije', 'Folije za bazen'] },
+  { name: 'Oprema i čišćenje', subs: ['Robotski usisavači', 'Baterijski usisavači', 'Pribor za čišćenje', 'Ljestve', 'Rasvjeta', 'Solarne folije', 'Folije za bazen'] },
 ];
 // ── Pretraga: bez kvačica, sve riječi, oblici riječi (pumpa/pumpe), kategorija i opis ──
 const norm = (t: string) => t.toLowerCase().replace(/đ/g, 'd').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 const SYNONYMS: Record<string, string> = {
-  usisavac: 'robot', usisavaci: 'robot', cistac: 'robot', reflektor: 'svjetl', reflektori: 'svjetl', lampa: 'svjetl',
+  usisavac: 'robot', usisavaci: 'robot', cistac: 'robot', cetka: 'cetk', cetke: 'cetk', mreza: 'mrez', mrezica: 'mrez', sipka: 'sipk', stap: 'sipk', crijevo: 'crijev', termometar: 'termometar', toplomjer: 'termometar', reflektor: 'svjetl', reflektori: 'svjetl', lampa: 'svjetl',
   rasvjeta: 'svjetl', grijanje: 'toplinsk', grijac: 'toplinsk', kemija: 'kemija', pokrivac: 'solarn', prekrivac: 'solarn',
   stepenice: 'ljestv', merdevine: 'ljestv', tester: 'test', klora: 'klor', ph: 'ph',
 };
@@ -67,7 +67,7 @@ const matchesSearch = (p: { name: string; size: string; category: string; descri
 };
 
 export const SHIPPING_EUR = 10;
-const SUB_LABEL: Record<string, string> = { 'Održavanje': 'Zimovanje i zaštita', 'Ostalo': 'Ostala kemija', 'Robotski usisavači': 'Roboti' };
+const SUB_LABEL: Record<string, string> = { 'Održavanje': 'Zimovanje i zaštita', 'Ostalo': 'Ostala kemija', 'Robotski usisavači': 'Roboti', 'Baterijski usisavači': 'Ručni baterijski' };
 const DIVIDER_AFTER = 'Testiranje';
 
 
