@@ -18,7 +18,11 @@ export default async (req: Request) => {
     },
   });
   if (!res.ok) return new Response(`Upstream ${res.status}`, { status: 502 });
-  const jpg = await sharp(Buffer.from(await res.arrayBuffer()))
+  const buf = Buffer.from(await res.arrayBuffer());
+  let img;
+  try { img = sharp(buf); await img.metadata(); }
+  catch (e) { return new Response(`Decode failed: ${res.headers.get('content-type')} ${buf.length} B ${buf.subarray(0, 16).toString('hex')} ${(e as Error).message.slice(0, 120)}`, { status: 502 }); }
+  const jpg = await img
     .flatten({ background: '#ffffff' })
     .resize(1000, 1000, { fit: 'inside', withoutEnlargement: true })
     .jpeg({ quality: 88 })
