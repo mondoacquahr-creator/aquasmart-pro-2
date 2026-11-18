@@ -1,6 +1,7 @@
 // Shared catalog: storefront and Merchant feed use the same retail prices.
 import { IVERO_PRICES } from './productPrices';
 import { VAGNER_EQUIPMENT } from './vagnerEquipment';
+import { anchorPrice } from './anchorPrices';
 import { SPA_PRODUCTS } from './spaProducts';
 
 function deriveCategory(id: string): string {
@@ -67,6 +68,7 @@ export interface ShopProduct {
   category: string;
   imageUrl: string | undefined;
   description?: string;
+  anchorEUR?: number; // sidrena cijena (10. 9. 2026.)
 }
 
 const chemProducts: ShopProduct[] = Object.values(IVERO_PRICES).map((p) => ({
@@ -90,7 +92,8 @@ const equipmentProducts: ShopProduct[] = VAGNER_EQUIPMENT.map((p) => ({
   description: p.description,
 }));
 
-export const SHOP_PRODUCTS: ShopProduct[] = [...chemProducts, ...SPA_PRODUCTS, ...equipmentProducts];
+export const SHOP_PRODUCTS: ShopProduct[] = [...chemProducts, ...SPA_PRODUCTS, ...equipmentProducts]
+  .map((p) => ({ ...p, anchorEUR: anchorPrice(p.id, p.priceEUR) }));
 
 export const findProduct = (id: string): ShopProduct | undefined => SHOP_PRODUCTS.find((p) => p.id === id);
 

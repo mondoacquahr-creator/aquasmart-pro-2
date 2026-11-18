@@ -41,6 +41,13 @@ export function ReturnPolicy({ id = 'povrat' }: { id?: string }) {
           od preuzimanja proizvoda. Reklamaciju pošaljite e-mailom s brojem narudžbe, opisom problema i fotografijom.
           Pisani odgovor dobit ćete u roku od 15 dana.
         </p>
+        <p>
+          <b style={{ color: '#fff' }}>Cjenik.</b> Uz svaku cijenu navedena je i cijena na dan 10. 9. 2026. Cijeli cjenik
+          proizvoda i usluga:{' '}
+          <a href="https://www.mondo-acqua.hr/cjenik.csv" style={{ color: '#5ED6E6' }}>CSV</a> ·{' '}
+          <a href="https://www.mondo-acqua.hr/cjenik.xml" style={{ color: '#5ED6E6' }}>XML</a> ·{' '}
+          <a href="https://www.mondo-acqua.hr/cjenik/arhiva" style={{ color: '#5ED6E6' }}>arhiva 30 dana</a>
+        </p>
       </div>
     </details>
   );

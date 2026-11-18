@@ -1,5 +1,7 @@
 import { SHOP_PRODUCTS } from './src/app/lib/shopCatalog'
 import { merchantAssets } from './scripts/merchant-feed.mjs'
+import { buildCjenikRows } from './scripts/cjenik-data.mjs'
+import fs from 'fs'
 import { defineConfig } from 'vite'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
@@ -24,6 +26,8 @@ export default defineConfig({
     {
       name: 'google-merchant-catalog',
       generateBundle() {
+        // Podaci za javni cjenik (Netlify funkcija cjenik)
+        fs.writeFileSync(path.resolve(__dirname, 'netlify/functions/cjenik-data.json'), JSON.stringify(buildCjenikRows(SHOP_PRODUCTS, path.resolve(__dirname, 'public/mondo-web/index.html'))));
         for (const asset of merchantAssets(SHOP_PRODUCTS)) {
           this.emitFile({ type: 'asset', ...asset });
         }
