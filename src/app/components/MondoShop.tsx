@@ -44,9 +44,6 @@ const GROUPS: { name: string; subs: string[] }[] = [
 const SUB_LABEL: Record<string, string> = { 'Održavanje': 'Zimovanje i zaštita', 'Ostalo': 'Ostala kemija', 'Robotski usisavači': 'Roboti' };
 const DIVIDER_AFTER = 'Testiranje';
 
-const pillStyle = (on: boolean) => on
-  ? { background: T.cyan, color: '#020D12' }
-  : { background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: '#fff' };
 
 export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopProps) {
   const cart = useCart();
@@ -625,35 +622,49 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
           </div>
         </div>
 
-        {/* Glavne skupine */}
-        <div className="flex flex-wrap gap-2 mt-5 pb-1">
-          {['Sve', ...GROUPS.map((x) => x.name)].map((name) => (
-            <button
-              key={name}
-              onClick={() => { setGroup(name); setCategory('Sve'); }}
-              className="flex-shrink-0 px-4 py-2 text-sm font-semibold transition-all rounded-full whitespace-nowrap"
-              style={pillStyle(group === name)}
-            >
-              {name === 'Sve' ? 'Svi proizvodi' : name}
-            </button>
-          ))}
+        {/* Glavne skupine – kartice s brojem proizvoda */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mt-5">
+          {[{ name: 'Sve', subs: [] as string[] }, ...GROUPS].map(({ name, subs }) => {
+            const on = group === name;
+            const n = name === 'Sve' ? SHOP_PRODUCTS.length : SHOP_PRODUCTS.filter((p) => subs.includes(p.category)).length;
+            return (
+              <button
+                key={name}
+                onClick={() => { setGroup(name); setCategory('Sve'); }}
+                className="text-left rounded-2xl px-4 py-3 transition-all"
+                style={on
+                  ? { background: T.cyan, color: '#020D12', border: `1px solid ${T.cyan}` }
+                  : { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff' }}
+              >
+                <span className="block text-sm font-semibold leading-tight">{name === 'Sve' ? 'Svi proizvodi' : name}</span>
+                <span className="block text-xs mt-1" style={{ opacity: on ? 0.75 : 0.55 }}>{n} proizvoda</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Podkategorije odabrane skupine */}
         {activeGroup && activeGroup.subs.length > 1 && (
-          <div className="flex flex-wrap gap-2 mt-3">
-            {['Sve', ...activeGroup.subs].map((sub) => (
-              <button
-                key={sub}
-                onClick={() => setCategory(sub)}
-                className="px-3 py-1 text-xs font-semibold transition-all rounded-full"
-                style={category === sub
-                  ? { background: 'rgba(94,214,230,0.18)', border: `1px solid ${T.cyan}`, color: '#fff' }
-                  : { background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.75)' }}
-              >
-                {sub === 'Sve' ? 'Sve' : SUB_LABEL[sub] || sub}
-              </button>
-            ))}
+          <div className="flex flex-wrap gap-2 mt-3 pt-3" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+            {['Sve', ...activeGroup.subs].map((sub) => {
+              const on = category === sub;
+              const n = sub === 'Sve'
+                ? SHOP_PRODUCTS.filter((p) => activeGroup.subs.includes(p.category)).length
+                : SHOP_PRODUCTS.filter((p) => p.category === sub).length;
+              return (
+                <button
+                  key={sub}
+                  onClick={() => setCategory(sub)}
+                  className="px-3.5 py-1.5 text-sm font-medium transition-all rounded-full"
+                  style={on
+                    ? { background: 'rgba(94,214,230,0.16)', border: `1px solid ${T.cyan}`, color: '#fff' }
+                    : { background: 'transparent', border: '1px solid rgba(255,255,255,0.14)', color: 'rgba(255,255,255,0.8)' }}
+                >
+                  {sub === 'Sve' ? 'Sve' : SUB_LABEL[sub] || sub}
+                  <span className="ml-1.5" style={{ opacity: 0.5 }}>{n}</span>
+                </button>
+              );
+            })}
           </div>
         )}
 
