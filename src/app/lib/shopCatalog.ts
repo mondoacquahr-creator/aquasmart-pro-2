@@ -84,7 +84,8 @@ const equipmentProducts: ShopProduct[] = VAGNER_EQUIPMENT.map((p) => ({
   size: p.size,
   priceEUR: p.priceEUR,
   category: p.category,
-  imageUrl: p.imageUrl,
+  // Use the same hosted JPEG as the product page and Google feed.
+  imageUrl: `https://poolcare.mondo-acqua.hr/merchant-images/${encodeURIComponent(p.id)}.jpg`,
   description: p.description,
 }));
 

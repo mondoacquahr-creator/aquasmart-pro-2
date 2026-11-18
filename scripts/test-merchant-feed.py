@@ -8,12 +8,14 @@ ns = {'g': 'http://base.google.com/ns/1.0'}
 items = ET.parse('dist/google-products.xml').getroot().findall('./channel/item')
 assert items, 'Feed must contain products'
 ids = set()
+product_links = set()
 for item in items:
     def value(key):
         return item.findtext('g:' + key, namespaces=ns)
     product_id = value('id')
     assert product_id not in ids, f'Duplicate ID: {product_id}'
     ids.add(product_id)
+    product_links.add(value('link'))
     assert value('availability') == 'in_stock'
     assert re.fullmatch(r'\d+\.\d{2} EUR', value('price'))
     assert value('image_link').endswith('.jpg')
@@ -29,4 +31,9 @@ assert len(Path('dist/_redirects').read_text().splitlines()) == sum(not p.starts
 for product_id in ids:
     if product_id.startswith('vg-'):
         assert Path('dist/merchant-images', product_id + '.jpg').read_bytes().startswith(b'\xff\xd8')
+site_ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+locations = [el.text for el in ET.parse('dist/sitemap.xml').getroot().findall('s:url/s:loc', site_ns)]
+assert len(locations) == len(set(locations)) == len(items) + 1
+assert product_links <= set(locations), 'Every feed product must be discoverable in the sitemap'
+assert 'Sitemap: https://poolcare.mondo-acqua.hr/sitemap.xml' in Path('dist/robots.txt').read_text()
 print(f'Validated {len(items)} products: XML, unique IDs, landing pages, price and availability parity, image rewrites.')
