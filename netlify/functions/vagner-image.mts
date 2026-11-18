@@ -32,4 +32,4 @@ export default async (req: Request) => {
   });
 };
 
-export const config = { path: '/merchant-images/vh-*', preferStatic: true };
+export const config = { path: '/merchant-images/vh-*' };
