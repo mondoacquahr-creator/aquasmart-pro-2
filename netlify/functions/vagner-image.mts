@@ -10,18 +10,21 @@ export default async (req: Request) => {
   const id = decodeURIComponent(file.replace(/\.jpg$/, ''));
   const src = SRC.get(id);
   if (!src) return new Response('Not found', { status: 404 });
-  const res = await fetch(encodeURI(src), {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36',
-      Accept: 'image/avif,image/webp,image/*,*/*;q=0.8',
-      Referer: 'https://www.vagnerpool.hr/',
-    },
-  });
-  if (!res.ok) return new Response(`Upstream ${res.status}`, { status: 502 });
-  const buf = Buffer.from(await res.arrayBuffer());
-  let img;
-  try { img = sharp(buf); await img.metadata(); }
-  catch (e) { return new Response(`Decode failed: ${res.headers.get('content-type')} ${buf.length} B ${buf.subarray(0, 16).toString('hex')} ${(e as Error).message.slice(0, 120)}`, { status: 502 }); }
+  // Vagner uz svaku AVIF sliku ima i JPG (ponekad PNG) istog imena – AVIF ovdje ne možemo dekodirati.
+  const base = src.replace(/\.avif$/i, '');
+  let buf: Buffer | null = null;
+  for (const ext of ['.jpg', '.png']) {
+    const res = await fetch(encodeURI(base + ext), {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36',
+        Accept: 'image/jpeg,image/png,image/*;q=0.8',
+        Referer: 'https://www.vagnerpool.hr/',
+      },
+    });
+    if (res.ok) { buf = Buffer.from(await res.arrayBuffer()); break; }
+  }
+  if (!buf) return new Response('Image not available', { status: 502 });
+  const img = sharp(buf);
   const jpg = await img
     .flatten({ background: '#ffffff' })
     .resize(1000, 1000, { fit: 'inside', withoutEnlargement: true })
