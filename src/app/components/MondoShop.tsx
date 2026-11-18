@@ -498,8 +498,9 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
       return product.description;
     }
     const lower = product.name.toLowerCase();
-    if (lower.includes('plus')) return 'Podiže pH vrijednost vode';
-    if (lower.includes('minus')) return 'Snižava pH vrijednost vode';
+    if (lower.startsWith('klor minus')) return 'Snižava koncentraciju klora u vodi';
+    if (lower.startsWith('ph plus')) return 'Podiže pH vrijednost vode';
+    if (lower.startsWith('ph minus')) return 'Snižava pH vrijednost vode';
     return null;
   };
 
