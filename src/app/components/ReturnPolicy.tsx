@@ -1,4 +1,4 @@
-// Povrat i reklamacije – prikazuje se u webshopu (popis proizvoda i narudžba).
+// Dostava, povrat i reklamacije – prikazuje se u webshopu (popis proizvoda i narudžba).
 const muted = 'rgba(255,255,255,0.72)';
 
 export function ReturnPolicy({ id = 'povrat' }: { id?: string }) {
@@ -9,9 +9,14 @@ export function ReturnPolicy({ id = 'povrat' }: { id?: string }) {
       style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)' }}
     >
       <summary className="cursor-pointer font-semibold text-base" style={{ color: '#fff' }}>
-        Povrat i reklamacije
+        Dostava, povrat i reklamacije
       </summary>
       <div className="space-y-3 mt-3 leading-relaxed" style={{ color: muted }}>
+        <p>
+          <b style={{ color: '#fff' }}>Dostava.</b> Dostava na adresu u Hrvatskoj stoji 10 € po narudžbi, a roba stiže
+          u roku od 0 do 3 radna dana. Narudžbu možete i besplatno preuzeti osobno na adresi Lučinići 17, 51216 Marinići,
+          uz prethodni dogovor.
+        </p>
         <p>
           <b style={{ color: '#fff' }}>Odustanak od kupnje (14 dana).</b> Od narudžbe preko webshopa možete odustati
           u roku od 14 dana od dana primitka proizvoda, bez navođenja razloga. Dovoljno je da nam to javite e-mailom na{' '}

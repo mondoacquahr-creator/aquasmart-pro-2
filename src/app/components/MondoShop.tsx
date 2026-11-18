@@ -41,6 +41,7 @@ const GROUPS: { name: string; subs: string[] }[] = [
   { name: 'Strojarnica', subs: ['Pumpe', 'Filteri', 'Doziranje', 'Elektroliza', 'Toplinske pumpe'] },
   { name: 'Oprema i čišćenje', subs: ['Robotski usisavači', 'Ljestve', 'Rasvjeta', 'Solarne folije', 'Folije za bazen'] },
 ];
+export const SHIPPING_EUR = 10;
 const SUB_LABEL: Record<string, string> = { 'Održavanje': 'Zimovanje i zaštita', 'Ostalo': 'Ostala kemija', 'Robotski usisavači': 'Roboti' };
 const DIVIDER_AFTER = 'Testiranje';
 
@@ -101,6 +102,9 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
 
   const totals = calcCartTotals(cart.items, member, care);
   const cartTotal = totals.total;
+  // Dostava: fiksno 10 € (isto kao u Google Merchant Centeru); osobno preuzimanje je besplatno.
+  const shippingEUR = delivery === 'Dostava' && totals.total > 0 ? SHIPPING_EUR : 0;
+  const grandTotal = Math.round((totals.total + shippingEUR) * 100) / 100;
 
   const cartCount = cart.items.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -139,7 +143,8 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
     lines.push('', `Međuzbroj: ${t.subtotal.toFixed(2)} €`);
     if (member && t.memberDiscount > 0) lines.push(`${care ? 'Popust Mondo Care 10 %' : 'Popust za članove 10 %'}: -${t.memberDiscount.toFixed(2)} €`);
     if (member && t.extraDiscount > 0) lines.push(`Dodatni popust ${care ? 10 : 5} %: -${t.extraDiscount.toFixed(2)} €`);
-    lines.push(`Ukupno: ${t.total.toFixed(2)} €`);
+    if (shippingEUR > 0) lines.push(`Dostava: ${shippingEUR.toFixed(2)} €`);
+    lines.push(`Ukupno: ${grandTotal.toFixed(2)} €`);
     if (member) lines.push(care ? 'Kupac je Mondo Care član.' : 'Kupac je registrirani član (Moj bazen).');
     return lines.join('\n');
   };
@@ -164,7 +169,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
       const p = findProduct(i.productId);
       return { productId: i.productId, name: p?.name || i.productId, size: p?.size || '', quantity: i.quantity, price: p?.priceEUR || 0 };
     });
-    memberApi.saveMemberOrder({ channel, items, total: totals.total, delivery, address: delivery === 'Dostava' ? address : '', note, paypalOrderId }).catch(() => {});
+    memberApi.saveMemberOrder({ channel, items, total: grandTotal, delivery, address: delivery === 'Dostava' ? address : '', note, paypalOrderId }).catch(() => {});
   };
 
   const handleWhatsApp = () => {
@@ -188,10 +193,10 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
 
   // Plaćeno PayPalom: narudžba se šalje Mondo Acqui e-mailom (s PayPal brojem transakcije)
   const handlePayPalPaid = async (info: { paypalOrderId: string; payerEmail?: string; payerName?: string }) => {
-    const text = buildOrderText() + `\n\nPLAĆENO PAYPALOM: ${totals.total.toFixed(2)} € (transakcija ${info.paypalOrderId})`;
+    const text = buildOrderText() + `\n\nPLAĆENO PAYPALOM: ${grandTotal.toFixed(2)} € (transakcija ${info.paypalOrderId})`;
     try {
       await api.post('shop/paypal-order', {
-        paypalOrderId: info.paypalOrderId, amount: totals.total, payerEmail: info.payerEmail || '', payerName: info.payerName || '',
+        paypalOrderId: info.paypalOrderId, amount: grandTotal, payerEmail: info.payerEmail || '', payerName: info.payerName || '',
         name, phone, email, delivery, address, note, orderText: text,
       });
     } catch { /* uplata je prošla; Mondo vidi transakciju u PayPalu */ }
@@ -355,9 +360,13 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                   <span style={{ color: '#2EFF88' }}>−{fmtEUR(totals.extraDiscount)}</span>
                 </div>
               )}
+              <div className="flex items-center justify-between text-sm">
+                <span style={{ color: T.muted }}>Dostava</span>
+                <span>{delivery === 'Dostava' ? fmtEUR(SHIPPING_EUR) : 'besplatno (osobno preuzimanje)'}</span>
+              </div>
               <div className="flex items-center justify-between pt-2" style={{ borderTop: '1px solid rgba(120,220,255,0.08)' }}>
                 <span className="font-medium">Ukupno:</span>
-                <span className="text-2xl font-bold">{fmtEUR(totals.total)}</span>
+                <span className="text-2xl font-bold">{fmtEUR(grandTotal)}</span>
               </div>
               {member && totals.toExtra > 0 && (
                 <p className="text-xs" style={{ color: T.muted }}>
@@ -429,7 +438,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                       : { background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: '#fff' }
                     }
                   >
-                    {d}
+                    {d === 'Dostava' ? `Dostava · ${fmtEUR(SHIPPING_EUR)}` : 'Osobno preuzimanje · besplatno'}
                   </button>
                 ))}
               </div>
@@ -481,10 +490,10 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
             {totals.total > 0 && (
               <div className="pt-2">
                 <p className="text-sm font-semibold flex items-center gap-2 mb-2" style={{ color: T.muted }}>
-                  <CreditCard className="w-4 h-4" /> Ili platite odmah ({fmtEUR(totals.total)}) – PayPal ili kartica
+                  <CreditCard className="w-4 h-4" /> Ili platite odmah ({fmtEUR(grandTotal)}) – PayPal ili kartica
                 </p>
                 <PayPalCheckout
-                  amountEUR={totals.total}
+                  amountEUR={grandTotal}
                   description="Narudžba – Mondo Pool Care"
                   canPay={validate}
                   onPaid={handlePayPalPaid}
