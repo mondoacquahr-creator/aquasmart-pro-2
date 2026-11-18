@@ -33,8 +33,20 @@ interface MondoShopProps {
   onFinished?: () => void;
 }
 
-const CATEGORIES = ['Sve', 'pH regulacija', 'Dezinfekcija', 'Alge', 'Bistrenje', 'Održavanje', 'Testiranje', 'Spa i hidromasažne kade', 'Pumpe', 'Filteri', 'Doziranje', 'Elektroliza', 'Toplinske pumpe', 'Robotski usisavači', 'Ljestve', 'Solarne folije', 'Rasvjeta', 'Folije za bazen', 'Ostalo'];
+// Glavne skupine webshopa i njihove podkategorije (p.category)
+const GROUPS: { name: string; subs: string[] }[] = [
+  { name: 'Kemija za bazen', subs: ['pH regulacija', 'Dezinfekcija', 'Alge', 'Bistrenje', 'Održavanje', 'Ostalo'] },
+  { name: 'Spa kemija', subs: ['Spa i hidromasažne kade'] },
+  { name: 'Testiranje vode', subs: ['Testiranje'] },
+  { name: 'Strojarnica', subs: ['Pumpe', 'Filteri', 'Doziranje', 'Elektroliza', 'Toplinske pumpe'] },
+  { name: 'Oprema i čišćenje', subs: ['Robotski usisavači', 'Ljestve', 'Rasvjeta', 'Solarne folije', 'Folije za bazen'] },
+];
+const SUB_LABEL: Record<string, string> = { 'Održavanje': 'Zimovanje i zaštita', 'Ostalo': 'Ostala kemija', 'Robotski usisavači': 'Roboti' };
 const DIVIDER_AFTER = 'Testiranje';
+
+const pillStyle = (on: boolean) => on
+  ? { background: T.cyan, color: '#020D12' }
+  : { background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: '#fff' };
 
 export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopProps) {
   const cart = useCart();
@@ -43,6 +55,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
   const [view, setView] = useState<'shop' | 'checkout' | 'confirmed'>('shop');
   useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [view]);
   const [search, setSearch] = useState('');
+  const [group, setGroup] = useState('Sve');
   const [category, setCategory] = useState('Sve');
   const [confirmedVia, setConfirmedVia] = useState<'whatsapp' | 'email' | 'paypal' | null>(null);
   const [detailId, setDetailId] = useState<string | null>(() => {
@@ -96,7 +109,8 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
 
   const filteredProducts = SHOP_PRODUCTS.filter((p) => {
     const matchesSearch = !search || p.name.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = category === 'Sve' || p.category === category;
+    const g = GROUPS.find((x) => x.name === group);
+    const matchesCategory = category !== 'Sve' ? p.category === category : !g || g.subs.includes(p.category);
     return matchesSearch && matchesCategory;
   });
 
@@ -491,7 +505,8 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
   // ── SHOP VIEW ───────────────────────────────────────────────────────────────
   const productCount = filteredProducts.length;
   const productCountLabel = productCount === 1 ? '1 proizvod' : `${productCount} proizvoda`;
-  const categoryLabel = category === 'Sve' ? 'Svi proizvodi' : category;
+  const activeGroup = GROUPS.find((x) => x.name === group);
+  const categoryLabel = category !== 'Sve' ? (SUB_LABEL[category] || category) : activeGroup ? activeGroup.name : 'Svi proizvodi';
 
   const deriveDescription = (product: { name: string; description?: string }): string | null => {
     if ('description' in product && typeof product.description === 'string' && product.description) {
@@ -610,35 +625,37 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
           </div>
         </div>
 
-        {/* Category pills – wrap so every category (incl. equipment) is always visible */}
-        <div className="flex flex-wrap items-center gap-2 mt-5 pb-1">
-          {CATEGORIES.map((cat) => (
-            <React.Fragment key={cat}>
-              {cat === 'Pumpe' && (
-                <div
-                  className="flex-shrink-0 self-center"
-                  style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.15)' }}
-                />
-              )}
-              <button
-                onClick={() => setCategory(cat)}
-                className="flex-shrink-0 px-4 py-1.5 text-sm font-semibold transition-all rounded-full"
-                style={
-                  category === cat
-                    ? { background: T.cyan, color: '#020D12', scrollSnapAlign: 'start' }
-                    : {
-                        background: 'transparent',
-                        border: '1px solid rgba(255,255,255,0.15)',
-                        color: '#fff',
-                        scrollSnapAlign: 'start',
-                      }
-                }
-              >
-                {cat}
-              </button>
-            </React.Fragment>
+        {/* Glavne skupine */}
+        <div className="flex flex-wrap gap-2 mt-5 pb-1">
+          {['Sve', ...GROUPS.map((x) => x.name)].map((name) => (
+            <button
+              key={name}
+              onClick={() => { setGroup(name); setCategory('Sve'); }}
+              className="flex-shrink-0 px-4 py-2 text-sm font-semibold transition-all rounded-full whitespace-nowrap"
+              style={pillStyle(group === name)}
+            >
+              {name === 'Sve' ? 'Svi proizvodi' : name}
+            </button>
           ))}
         </div>
+
+        {/* Podkategorije odabrane skupine */}
+        {activeGroup && activeGroup.subs.length > 1 && (
+          <div className="flex flex-wrap gap-2 mt-3">
+            {['Sve', ...activeGroup.subs].map((sub) => (
+              <button
+                key={sub}
+                onClick={() => setCategory(sub)}
+                className="px-3 py-1 text-xs font-semibold transition-all rounded-full"
+                style={category === sub
+                  ? { background: 'rgba(94,214,230,0.18)', border: `1px solid ${T.cyan}`, color: '#fff' }
+                  : { background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.75)' }}
+              >
+                {sub === 'Sve' ? 'Sve' : SUB_LABEL[sub] || sub}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Benefit banner */}
         <div
