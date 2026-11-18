@@ -85,7 +85,8 @@ const equipmentProducts: ShopProduct[] = VAGNER_EQUIPMENT.map((p) => ({
   priceEUR: p.priceEUR,
   category: p.category,
   // Use the same hosted JPEG as the product page and Google feed.
-  imageUrl: `https://poolcare.mondo-acqua.hr/merchant-images/${encodeURIComponent(p.id)}.jpg`,
+  // vg-: lokalna JPG kopija; vh-: izvorna slika s vagnerpool.hr
+  imageUrl: p.id.startsWith('vg-') ? `https://poolcare.mondo-acqua.hr/merchant-images/${encodeURIComponent(p.id)}.jpg` : encodeURI(p.imageUrl),
   description: p.description,
 }));
 

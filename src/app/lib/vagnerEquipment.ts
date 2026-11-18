@@ -1,5 +1,5 @@
 // Oprema – Vagner Pool. Cijene preuzete s vagnerpool.com 22.10.2026. (bez PDV-a) i preračunate s 25 % PDV-a.
-export type EquipmentCategory = 'Pumpe' | 'Filteri' | 'Doziranje' | 'Elektroliza' | 'Testiranje';
+export type EquipmentCategory = 'Pumpe' | 'Filteri' | 'Doziranje' | 'Elektroliza' | 'Testiranje' | 'Toplinske pumpe' | 'Robotski usisavači' | 'Ljestve' | 'Solarne folije' | 'Rasvjeta' | 'Folije za bazen';
 export interface EquipmentProduct { id: string; name: string; size: string; priceEUR: number; category: EquipmentCategory; description: string; imageUrl: string; }
 const IMG = 'https://www.vagnerpool.com/static/1/produkty/';
 const HR = 'https://www.vagnerpool.hr/static/1/produkty/';
@@ -81,6 +81,55 @@ const ROWS: [string, EquipmentCategory, string, string, number, string, string][
   ["vg-693486648", "Testiranje", "Trakice za fotometar eXact – vodikov peroksid", "pakiranje", 25.13, HR + "486648-PEROX.avif", "Za eXact EZ i eXact iDip"],
   ["vg-693486639M", "Testiranje", "Trakice za fotometar eXact Micro – pH", "pakiranje", 19.74, HR + "Micro_PH.avif", "Za eXact Micro"],
   ["vg-693484014", "Testiranje", "Glicinski prašci za fotometar eXact Micro", "pakiranje", 25.44, HR + "Micro_Glycine.avif", "Neutralizator za mjerenje u eXact Micro"],
+  // Toplinske pumpe, roboti, ljestve, solarne folije, rasvjeta, folije – vagnerpool.hr, 18.11.2026. (bez PDV-a).
+  // ID "vh-": slika se uzima izravno s vagnerpool.hr (nema lokalne JPG kopije).
+  ["vh-565NRA008", "Toplinske pumpe", "Toplinska pumpa NORM Super Mini Cube 3 kW", "do 15 m³ · 230 V", 350.71, HR + "Super_mini_cube.avif", "Za male montažne bazene, rashladni medij R32"],
+  ["vh-565NE06", "Toplinske pumpe", "Toplinska pumpa NORM EVO 6 kW", "6 kW · 230 V", 624.39, HR + "normevo.avif", "Step-inverter, COP 9,5–5,9, R32"],
+  ["vh-565RIC015", "Toplinske pumpe", "Toplinska pumpa Rapid Inverter RIC15 6,5 kW s hlađenjem", "15–30 m³ · 230 V", 1251.45, HR + "IPHCR_NEW_1.avif", "Inverterska, grijanje i hlađenje, COP do 14,7"],
+  ["vh-565X26CP10", "Toplinske pumpe", "Toplinska pumpa XP26 10 kW s hlađenjem", "10 kW · 230 V", 2034.25, HR + "X26_1.avif", "Inverterska, grijanje i hlađenje"],
+  ["vh-60XA020", "Robotski usisavači", "Baterijski robot Fairland XA20", "bazeni do 6 × 10 m", 263.68, HR + "xa202.avif", "Bežični, čisti dno, filter 120 mic"],
+  ["vh-60WF1", "Robotski usisavači", "Baterijski robot WYBOT F1", "bežični", 342.48, HR + "wybot_f1_product.avif", "Bežični robot za dno bazena"],
+  ["vh-60WC1P", "Robotski usisavači", "Baterijski robot WYBOT C1 PRO", "bežični", 454.23, HR + "c1pro.avif", "Bežični, filter 180 mic"],
+  ["vh-60WS1", "Robotski usisavači", "Baterijski robot WYBOT S1", "bežični", 599.98, HR + "s1.avif", "Bežični, filter 180 mic"],
+  ["vh-60K040", "Robotski usisavači", "Baterijski robot Fairland iGarden K40", "bežični", 513.97, HR + "K_40_70_1.avif", "Bežični robot za privatne bazene"],
+  ["vh-60X080", "Robotski usisavači", "Baterijski robot Fairland X80", "bazeni do 12 × 10 m", 667.06, HR + "60x060robotx600.avif", "Bežični, filter 100 mic"],
+  ["vh-60K070AI", "Robotski usisavači", "Baterijski robot Fairland iGarden K-AI 70", "bežični", 908.27, HR + "Fairland_K70_AI_4.avif", "Bežični robot s pametnom navigacijom"],
+  ["vh-60642", "Robotski usisavači", "Robotski usisavač Tornado D500 Lite", "bazeni do 15 × 6 m", 971.78, HR + "d500liteweb.avif", "Kabel 16 m, čisti dno i stijenke"],
+  ["vh-60643", "Robotski usisavači", "Robotski usisavač Tornado D600", "bazeni do 15 × 6 m", 1192.45, HR + "d600web.avif", "Kabel 18 m, upravljanje aplikacijom"],
+  ["vh-7012", "Ljestve", "Ljestve Standard, nehrđajući čelik, 2 gazišta", "AISI 304 · sa sidrištem", 272.01, HR + "826297268.avif", "Za betonske i folijske bazene"],
+  ["vh-7013", "Ljestve", "Ljestve Standard, nehrđajući čelik, 3 gazišta", "AISI 304 · sa sidrištem", 298.13, HR + "3495543139.avif", "Za betonske i folijske bazene"],
+  ["vh-7014", "Ljestve", "Ljestve Standard, nehrđajući čelik, 4 gazišta", "AISI 304 · sa sidrištem", 354.36, HR + "7014.avif", "Za dublje bazene"],
+  ["vh-7033", "Ljestve", "Ljestve Mixta, nehrđajući čelik, 3 gazišta", "AISI 304 · sa sidrištem", 309.88, HR + "ZEBRIK_MIXTA.avif", "Ergonomski oblik rukohvata"],
+  ["vh-7034", "Ljestve", "Ljestve Mixta, nehrđajući čelik, 4 gazišta", "AISI 304 · sa sidrištem", 325.66, HR + "889198473.avif", "Ergonomski oblik rukohvata"],
+  ["vh-7053", "Ljestve", "Ljestve Muro (Slim), nehrđajući čelik, 3 gazišta", "AISI 304 · sa sidrištem", 303.72, HR + "2537350339.avif", "Uske ljestve uz zid bazena"],
+  ["vh-7054", "Ljestve", "Ljestve Muro (Slim), nehrđajući čelik, 4 gazišta", "AISI 304 · sa sidrištem", 333.68, HR + "2115849060.avif", "Uske ljestve uz zid bazena"],
+  ["vh-600040030", "Solarne folije", "Solarna folija GeoBubble 400 mic, širina 3 m", "cijena po metru", 21.43, HR + "3296655312.avif", "Zagrijava vodu suncem i smanjuje isparavanje"],
+  ["vh-600040036", "Solarne folije", "Solarna folija 400 mic, širina 3,6 m", "cijena po metru", 28.57, HR + "1868716170.avif", "Zagrijava vodu suncem i smanjuje isparavanje"],
+  ["vh-600040040", "Solarne folije", "Solarna folija 400 mic, širina 4 m", "cijena po metru", 28.57, HR + "4078818099.avif", "Zagrijava vodu suncem i smanjuje isparavanje"],
+  ["vh-600040050", "Solarne folije", "Solarna folija 400 mic, širina 5 m", "cijena po metru", 35.72, HR + "2051018692.avif", "Zagrijava vodu suncem i smanjuje isparavanje"],
+  ["vh-600040060", "Solarne folije", "Solarna folija 400 mic, širina 6 m", "cijena po metru", 42.85, HR + "1042280210.avif", "Zagrijava vodu suncem i smanjuje isparavanje"],
+  ["vh-600050030G", "Solarne folije", "Solarna folija GeoBubble 500 mic, širina 3 m", "cijena po metru", 25.15, HR + "Geobubble_500mic_web.avif", "Deblja folija, veća otpornost na UV i kemiju"],
+  ["vh-600050040G", "Solarne folije", "Solarna folija GeoBubble 500 mic, širina 4 m", "cijena po metru", 33.55, HR + "Geobubble_500mic_web.avif", "Deblja folija, veća otpornost na UV i kemiju"],
+  ["vh-85VAPF16W", "Rasvjeta", "Podvodni reflektor VA LED PF 13 W, bijeli", "12 V · za folijske bazene", 166.86, HR + "Svetlo_85VAPF_sm.avif", "1650 lm, potreban transformator 12 V"],
+  ["vh-85VAPF16R", "Rasvjeta", "Podvodni reflektor VA LED PF 16 W, RGB", "12 V · za folijske bazene", 260.96, HR + "Svetlo_85VAPF_sm_RGB.avif", "Više boja, potreban transformator 12 V"],
+  ["vh-85501160", "Rasvjeta", "Plosnati reflektor SeaMAID, bijeli, 30 LED", "12 V", 145.66, HR + "85501160.avif", "Tanko svjetlo za ugradnju na zid bazena"],
+  ["vh-85501191", "Rasvjeta", "Plosnati reflektor SeaMAID, RGB, 270 LED", "12 V", 225.66, HR + "alphadif1610-10rgb.avif", "Više boja, tanko svjetlo za zid bazena"],
+  ["vh-80600LED14W", "Rasvjeta", "Podvodni reflektor VA Flat LED 14, bijeli", "12 V", 372.62, HR + "led-ploche-svetlo-led14w.avif", "Plosnato podvodno svjetlo"],
+  ["vh-81501542", "Rasvjeta", "LED žarulja PAR56, bijela, 13 W", "12 V · PAR56", 71.57, HR + "81501542.avif", "Zamjena za klasičnu žarulju u reflektoru"],
+  ["vh-81502679", "Rasvjeta", "LED žarulja SeaMAID PAR56, bijela, 16 W", "12 V · PAR56", 101.75, HR + "81502679_1.avif", "510 lm, zamjena za klasičnu žarulju"],
+  ["vh-81501535", "Rasvjeta", "LED žarulja PAR56, RGB, 16 W", "12 V · PAR56", 170.19, HR + "81501535otocene.avif", "Više boja, zamjena za klasičnu žarulju"],
+  ["vh-81HTW301B", "Rasvjeta", "LED žarulja plosnata, bijela, 21 W", "12 V", 154.85, HR + "81htwxxxb.avif", "Plosnata LED žarulja za reflektor"],
+  ["vh-81HTS301B", "Rasvjeta", "LED žarulja plosnata, RGB, 23 W", "12 V", 171.68, HR + "81htsxxxb.avif", "Više boja, plosnata LED žarulja"],
+  ["vh-8900501", "Rasvjeta", "Sigurnosni transformator 230/12 V, 50 W", "50 W", 77.97, HR + "8900.avif", "Napajanje za jedan LED reflektor"],
+  ["vh-890080", "Rasvjeta", "Sigurnosni transformator za LED 230/12 V, 80 W", "80 W", 93.05, HR + "890080.avif", "Napajanje za LED rasvjetu bazena"],
+  ["vh-8901002", "Rasvjeta", "Sigurnosni transformator toroidni 100 W", "100 W", 132.95, HR + "V_011.avif", "Za više reflektora ili RGB rasvjetu"],
+  ["vh-98801165", "Folije za bazen", "Folija AVfol Master, plava, 1,5 mm", "širina 1,65 m · cijena po metru", 46.01, HR + "SQUARE_MASTER_MODRA_OHNUTY_ROH.avif", "Armirana PVC folija za varenje bazena"],
+  ["vh-98802165", "Folije za bazen", "Folija AVfol Master, caribic, 1,5 mm", "širina 1,65 m · cijena po metru", 46.01, HR + "SQUARE_MASTER_CARIBIC_OHNUTY_ROH.avif", "Armirana PVC folija za varenje bazena"],
+  ["vh-98803165", "Folije za bazen", "Folija AVfol Master, azur, 1,5 mm", "širina 1,65 m · cijena po metru", 46.01, HR + "SQUARE_MASTER_AZUR_OHNUTY_ROH.avif", "Armirana PVC folija za varenje bazena"],
+  ["vh-98804165", "Folije za bazen", "Folija AVfol Master, bijela, 1,5 mm", "širina 1,65 m · cijena po metru", 46.01, HR + "SQUARE_MASTER_BILA_OHNUTY_ROH.avif", "Armirana PVC folija za varenje bazena"],
+  ["vh-98806165", "Folije za bazen", "Folija AVfol Master, antracit, 1,5 mm", "širina 1,65 m · cijena po metru", 46.01, HR + "SQUARE_MASTER_ANTRACIT_OHNUTY_ROH.avif", "Armirana PVC folija za varenje bazena"],
+  ["vh-98809165", "Folije za bazen", "Folija AVfol Master, siva, 1,5 mm", "širina 1,65 m · cijena po metru", 46.01, HR + "SQUARE_MASTER_SEDA_OHNUTY_ROH.avif", "Armirana PVC folija za varenje bazena"],
+  ["vh-97814165", "Folije za bazen", "Folija Alkorplan Relief, bijela, protuklizna, 1,8 mm", "širina 1,65 m · cijena po metru", 66.72, HR + "product_photo_Non-slip_White_ALKOR_2K_(web).avif", "Protuklizna folija za stube i plitke dijelove"],
 ];
 
 export const VAGNER_EQUIPMENT: EquipmentProduct[] = ROWS.map(([id, category, name, size, net, img, description]) => ({
