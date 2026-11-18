@@ -129,6 +129,12 @@ const ROWS: [string, EquipmentCategory, string, string, number, string, string][
   ["vh-98804165", "Folije za bazen", "Folija AVfol Master, bijela, 1,5 mm", "širina 1,65 m · cijena po metru", 46.01, HR + "SQUARE_MASTER_BILA_OHNUTY_ROH.avif", "Armirana PVC folija za varenje bazena"],
   ["vh-98806165", "Folije za bazen", "Folija AVfol Master, antracit, 1,5 mm", "širina 1,65 m · cijena po metru", 46.01, HR + "SQUARE_MASTER_ANTRACIT_OHNUTY_ROH.avif", "Armirana PVC folija za varenje bazena"],
   ["vh-98809165", "Folije za bazen", "Folija AVfol Master, siva, 1,5 mm", "širina 1,65 m · cijena po metru", 46.01, HR + "SQUARE_MASTER_SEDA_OHNUTY_ROH.avif", "Armirana PVC folija za varenje bazena"],
+  ["vh-97835165", "Folije za bazen", "Folija Alkorplan Touch, Elegance, 2,0 mm", "širina 1,65 m · cijena po metru", 100.69, HR + "Touch_Elegance1.avif", "3D tekstura, najčvršća Alkorplan folija"],
+  ["vh-97836165", "Folije za bazen", "Folija Alkorplan Touch, Relax, 2,0 mm", "širina 1,65 m · cijena po metru", 100.69, HR + "Touch_Relax1.avif", "3D tekstura, najčvršća Alkorplan folija"],
+  ["vh-97837165", "Folije za bazen", "Folija Alkorplan Touch, Authentic, 2,0 mm", "širina 1,65 m · cijena po metru", 100.69, HR + "Touch_Authentic1.avif", "3D tekstura, najčvršća Alkorplan folija"],
+  ["vh-97857165", "Folije za bazen", "Folija Alkorplan Touch, Vanity, 2,0 mm", "širina 1,65 m · cijena po metru", 100.69, HR + "TOUCH-Vanity1.avif", "3D tekstura, najčvršća Alkorplan folija"],
+  ["vh-97858165", "Folije za bazen", "Folija Alkorplan Touch, Prestige, 2,0 mm", "širina 1,65 m · cijena po metru", 100.69, HR + "Touch_Prestige1.avif", "3D tekstura, najčvršća Alkorplan folija"],
+  ["vh-97863165", "Folije za bazen", "Folija Alkorplan Touch, Sublime, 2,0 mm", "širina 1,65 m · cijena po metru", 100.69, HR + "TOUCH_SUBLIME_1.avif", "3D tekstura, najčvršća Alkorplan folija"],
   ["vh-97814165", "Folije za bazen", "Folija Alkorplan Relief, bijela, protuklizna, 1,8 mm", "širina 1,65 m · cijena po metru", 66.72, HR + "product_photo_Non-slip_White_ALKOR_2K_(web).avif", "Protuklizna folija za stube i plitke dijelove"],
 ];
 
