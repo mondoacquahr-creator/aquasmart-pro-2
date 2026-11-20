@@ -800,6 +800,9 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                 ? '✓ Mondo Care: −10 % na sve proizvode i dodatnih −10 % iznad 1.000 €.'
                 : '✓ Kao član ostvarujete −10 % na sve proizvode i dodatnih −5 % iznad 1.000 €.'
               : 'Registrirani vlasnici bazena: −10 % na kemiju i opremu, dodatnih −5 % za narudžbe iznad 1.000 €.'}
+            <span className="block mt-1 text-[13px]" style={{ color: 'rgba(255,255,255,0.7)' }}>
+              <b style={{ color: '#2EFF88', fontWeight: 600 }}>Uskoro: Pool Care Klub</b> · pokloni za kupnju kemije{member ? ' za registrirane članove.' : '. Registrirajte se besplatno.'}
+            </span>
           </p>
           {!member && onRegisterMember && (
             <button
