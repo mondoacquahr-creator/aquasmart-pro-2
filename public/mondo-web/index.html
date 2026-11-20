@@ -413,6 +413,18 @@ img{height:auto}
 @media (max-width:920px){.mob-only{display:block}.desk-only{display:none}}
 .zhero{position:relative;background:linear-gradient(180deg,rgba(2,13,18,.55),rgba(2,13,18,.82) 70%,rgba(4,24,32,1)),var(--img) center/cover no-repeat;padding-block:clamp(48px,7vw,96px) clamp(40px,5vw,64px)}
 .zhero-in{display:grid;grid-template-columns:minmax(0,760px);gap:clamp(24px,4vw,56px);align-items:center}
+.routes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:clamp(28px,4vw,44px)}
+@media (max-width:900px){.routes{grid-template-columns:1fr}}
+.route{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;min-height:300px;padding:24px;border-radius:22px;overflow:hidden;color:#fff;border:1px solid rgba(120,220,255,.16);background:var(--img) center/cover;isolation:isolate;min-width:0;transition:border-color .2s}
+.route::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(2,13,18,.15),rgba(2,13,18,.92) 68%)}
+.route:hover{border-color:rgba(79,195,240,.55)}
+.route h2{color:#fff;font-size:clamp(1.5rem,2.4vw,1.9rem)}
+.route p{font-size:.92rem;color:rgba(255,255,255,.78)}
+.route-l{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.route-l a{padding:8px 13px;border-radius:999px;font:700 .8rem/1 var(--display);text-decoration:none;color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.route-l a:hover{border-color:#fff}
+.route-l a.route-main{background:var(--aqua);border-color:var(--aqua);color:#04202b}
+@media (max-width:900px){.route{min-height:230px}}
 .zhero-in>*{min-width:0}.zhero h1{font-size:clamp(2.2rem,4.6vw,3.6rem)}
 @media (max-width:900px){.zhero-in{grid-template-columns:1fr}}
 .need{background:rgba(6,30,42,.78);border:1px solid rgba(120,220,255,.16);border-radius:22px;padding:clamp(16px,2.4vw,24px);backdrop-filter:blur(14px)}
@@ -634,9 +646,25 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
       <p class="eyebrow">Mondo Acqua · bazeni, izvedba i održavanje</p>
       <h1>Sve za vaš bazen.<br><em>Od gradnje do bistre vode.</em></h1>
       <p class="lead">Montažni FP, CORAL kompozitni, COMPACT keramički i betonski bazeni po mjeri. Gradimo, montiramo i održavamo u cijeloj Hrvatskoj.</p>
-      <div class="btns"><a class="btn btn-primary" href="#bazeni">Usporedite bazene →</a><a class="btn btn-ghost" href="#upit-home" data-tohome>Zatražite ponudu</a></div>
     </div>
-  </div></div>
+  </div>
+  <div class="wrap"><nav class="routes" aria-label="Odaberite što vas zanima">
+    <div class="route" style="--img:url('slike/fp-naslovna.jpg')">
+      <span class="ch-k">Gradnja</span><h2>Želim bazen</h2>
+      <p>Modeli i cijene, gradnja ključ u ruke i vaš bazen u dvorištu prije gradnje.</p>
+      <div class="route-l"><a class="route-main" href="#bazeni">Usporedba i cijene</a><a href="https://poolcare.mondo-acqua.hr/?stranica=vizualizator">AI vizualizacija</a><a href="#kljuc-u-ruke">Ključ u ruke</a></div>
+    </div>
+    <div class="route" style="--img:url('slike/odrzavanje-usisavanje.jpg')">
+      <span class="ch-k">Vlasnici bazena</span><h2>Imam bazen</h2>
+      <p>Održavanje, analiza vode, nova folija i kemija s dostavom.</p>
+      <div class="route-l"><a class="route-main" href="#odrzavanje">Održavanje</a><a href="https://poolcare.mondo-acqua.hr/?stranica=analiza">Analiza vode</a><a href="#rekonstrukcija">Nova folija</a><a href="https://poolcare.mondo-acqua.hr/?stranica=webshop">Webshop</a></div>
+    </div>
+    <div class="route" style="--img:url('slike/odr-mjerenje-sol-klor.jpg')">
+      <span class="ch-k">Serviseri</span><h2>Za profesionalce</h2>
+      <p>Pool Care PRO: radni nalozi, kemija po nalogu i ponude. 30 dana besplatno.</p>
+      <div class="route-l"><a class="route-main" href="https://poolcare.mondo-acqua.hr/?stranica=registracija">Isprobajte besplatno</a><a href="https://poolcare.mondo-acqua.hr/?stranica=prijava">Prijava</a></div>
+    </div>
+  </nav></div></div>
 
   <div class="zstats"><div class="wrap">
     <div><strong>34</strong><span>modela i dimenzija s cijenama</span></div>
