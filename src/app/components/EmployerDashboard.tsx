@@ -9,6 +9,10 @@ import { AquaSmartProLogo } from './AquaSmartProLogo';
 import { ImportWizard, ImportField, ImportResult } from './ImportWizard';
 import * as XLSX from 'xlsx';
 import { WorkOrderDetailsModal } from './WorkOrderDetailsModal';
+import { ProSidebar } from './pro/ProSidebar';
+import { WorkOrdersTable } from './pro/WorkOrdersTable';
+import { WarehouseTable } from './pro/WarehouseTable';
+import { ClientsTable } from './pro/ClientsTable';
 import { useLanguage } from '../lib/languageContext';
 import { isLiveMode, isDemoMode, generatePassword, Permissions, DEFAULT_EMPLOYEE_PERMISSIONS } from '../lib/session';
 import { api } from '../lib/supabase';
@@ -938,8 +942,14 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
   };
 
   return (
-    <div className="min-h-screen relative" style={{ background: T.pageBg }}>
+    <div className="min-h-screen relative lg:pl-60" style={{ background: T.pageBg }}>
       <WaterBackground />
+      <ProSidebar
+        current={currentView}
+        onGo={(v) => goToView(v as any)}
+        companyName={authService.getCurrentUser()?.companyName}
+        counts={{ 'work-orders': workOrders.filter(o => o.status !== 'completed').length, warehouse: warehouse.filter(w => w.stock < w.minStock).length }}
+      />
       {importing === 'clients' && (
         <ImportWizard
           title="Uvoz klijenata"
@@ -980,11 +990,11 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
       />
 
       {/* Header */}
-      <div className="relative z-10 p-6" style={{ background: 'rgba(2,13,18,0.7)', backdropFilter: 'blur(16px)', borderBottom: T.cardBorder }}>
+      <div className="relative z-10 px-4 py-4 sm:p-6" style={{ background: 'rgba(2,13,18,0.7)', backdropFilter: 'blur(16px)', borderBottom: T.cardBorder }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             {currentView !== 'home' && (
-              <>
+              <div className="flex items-center gap-4 lg:hidden">
                 <button onClick={() => window.history.back()} className="px-3 py-2 rounded-xl transition-all hover:scale-105 flex items-center gap-1 text-sm font-medium" style={{
                   background: 'transparent',
                   border: '1px solid rgba(255,255,255,0.2)',
@@ -999,10 +1009,10 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
                 }}>
                   <Home className="w-5 h-5" />
                 </button>
-              </>
+              </div>
             )}
 
-            <AquaSmartProLogo size="md" variant="employer" />
+            <div className={currentView !== 'home' ? 'hidden sm:block' : ''}><AquaSmartProLogo size="md" variant="employer" /></div>
           </div>
 
           <div className="flex items-center gap-3">
@@ -1018,7 +1028,7 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
               <MoreHorizontal className="w-5 h-5" style={{ color: currentView === 'more' ? '#000' : '#fff' }} />
             </button>
 
-            <button onClick={onBack} className="px-6 py-2 rounded-xl font-bold transition-all hover:scale-105" style={{
+            <button onClick={onBack} className="px-4 sm:px-6 py-2 rounded-xl font-bold transition-all hover:scale-105" style={{
               background: T.accent,
               color: '#000000'
             }}>
@@ -1166,169 +1176,76 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
 
         {currentView === 'work-orders' && (
           <motion.div key="work-orders" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="max-w-7xl mx-auto px-6 py-8">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-3xl font-semibold">Radni Nalozi ({workOrders.length})</h2>
-                <button onClick={() => {
-                  setSelectedWorkOrder({
-                    id: Date.now(),
-                    client: '',
-                    location: '',
-                    task: 'Novi radni nalog',
-                    status: 'pending',
-                    assignee: '',
-                    dueDate: new Date().toISOString().split('T')[0],
-                    priority: 'medium',
-                  });
-                }} className="flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-all hover:scale-105" style={{ background: T.accent, color: '#000000' }}>
-                  <Plus className="w-4 h-4" />
-                  <span>Novi Nalog</span>
-                </button>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                {workOrders.map((order) => (
-                  <div
-                    key={order.id}
-                    onClick={() => setSelectedWorkOrder(order)}
-                    className="p-6 rounded-2xl group cursor-pointer hover:scale-[1.02] transition-all"
-                    style={{ background: 'rgba(10,40,52,0.55)', border: '1px solid rgba(120,220,255,0.12)', boxShadow: '0 20px 60px rgba(0,0,0,0.35)' }}
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-lg mb-1">{order.client}</h3>
-                        <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{order.task}</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="px-3 py-1 rounded-lg text-xs font-semibold" style={{
-                          background: `${getStatusColor(order.status)}20`,
-                          color: getStatusColor(order.status)
-                        }}>
-                          {order.status === 'active' ? 'AKTIVNO' : order.status === 'pending' ? 'NA ČEKANJU' : 'ZAVRŠENO'}
-                        </span>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            deleteWorkOrder(order.id);
-                          }}
-                          className="opacity-0 group-hover:opacity-100 p-2 rounded-lg transition-all hover:bg-red-500/20"
-                        >
-                          <Trash2 className="w-4 h-4 text-red-500" />
-                        </button>
-                      </div>
-                    </div>
-                    <div className="space-y-2 text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                      <div className="flex items-center gap-2"><MapPin className="w-4 h-4" /><span>{order.location}</span></div>
-                      <div className="flex items-center gap-2"><UserCog className="w-4 h-4" /><span>{order.assignee}</span></div>
-                      <div className="flex items-center gap-2"><Calendar className="w-4 h-4" /><span>{order.dueDate}</span></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <WorkOrdersTable
+              orders={workOrders}
+              onOpen={(o) => setSelectedWorkOrder(o)}
+              onDelete={(id) => deleteWorkOrder(id as number)}
+              onNew={() => setSelectedWorkOrder({
+                id: Date.now(),
+                client: '',
+                location: '',
+                task: 'Novi radni nalog',
+                status: 'pending',
+                assignee: '',
+                dueDate: new Date().toISOString().split('T')[0],
+                priority: 'medium',
+              })}
+            />
           </motion.div>
         )}
 
         {currentView === 'clients' && (
           <motion.div key="clients" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="max-w-7xl mx-auto px-6 py-8">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-3xl font-semibold">Klijenti ({clients.length})</h2>
-                <div className="flex gap-2">
-                  <button onClick={downloadTemplate} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)' }}>
-                    <Download className="w-4 h-4" />
-                    <span>Predložak</span>
-                  </button>
-                  <button onClick={() => setImporting('clients')} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'rgba(92,225,230,0.1)', border: '1px solid rgba(92,225,230,0.3)', color: '#5CE1E6' }}>
-                    <Upload className="w-4 h-4" />
-                    <span>Uvoz iz Excela</span>
-                  </button>
-                  <button onClick={addClient} className="flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-all hover:scale-105" style={{ background: T.accent, color: '#000000' }}>
-                    <Plus className="w-4 h-4" />
-                    <span>Novi Klijent</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                {clients.map((client) => (
-                  <div key={client.id} className="p-6 rounded-2xl group" style={{ background: 'rgba(10,40,52,0.55)', border: '1px solid rgba(120,220,255,0.12)', boxShadow: '0 20px 60px rgba(0,0,0,0.35)' }}>
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="font-semibold text-lg flex-1">{client.name}</h3>
-                      <button onClick={() => deleteClient(client.id)} className="opacity-0 group-hover:opacity-100 p-2 rounded-lg transition-all hover:bg-red-500/20">
-                        <Trash2 className="w-4 h-4 text-red-500" />
-                      </button>
-                    </div>
-                    <div className="space-y-2 text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                      <div>📍 {client.location}</div>
-                      <div>🏊 {client.pools} bazen(a)</div>
-                      <div>📅 Zadnji: {client.lastService}</div>
-                      <div>📅 Sljedeći: {client.nextService}</div>
-                      {client.phone && <div>📞 {client.phone}</div>}
-                      {client.email && <div>✉️ {client.email}</div>}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ClientsTable
+              clients={clients}
+              orders={workOrders}
+              onNew={addClient}
+              onDelete={(id) => deleteClient(id)}
+              onNewOrder={(c) => setSelectedWorkOrder({
+                id: Date.now(),
+                client: c.name,
+                location: c.location || '',
+                task: 'Novi radni nalog',
+                status: 'pending',
+                assignee: '',
+                dueDate: new Date().toISOString().split('T')[0],
+                priority: 'medium',
+              })}
+              actions={<>
+                <button onClick={downloadTemplate} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)' }}>
+                  <Download className="w-4 h-4" />
+                  <span>Predložak</span>
+                </button>
+                <button onClick={() => setImporting('clients')} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'rgba(92,225,230,0.1)', border: '1px solid rgba(92,225,230,0.3)', color: '#5CE1E6' }}>
+                  <Upload className="w-4 h-4" />
+                  <span>Uvoz iz Excela</span>
+                </button>
+              </>}
+            />
           </motion.div>
         )}
 
         {currentView === 'warehouse' && (
           <motion.div key="warehouse" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="max-w-7xl mx-auto px-6 py-8">
-              <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-                <h2 className="text-2xl sm:text-3xl font-semibold">Skladište ({warehouse.length} artikala)</h2>
-                <div className="flex flex-wrap gap-2">
-                  <button onClick={downloadWarehouseTemplate} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)' }}>
-                    <Download className="w-4 h-4" />
-                    <span>Predložak</span>
-                  </button>
-                  <button onClick={() => setImporting('warehouse')} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'rgba(92,225,230,0.1)', border: '1px solid rgba(92,225,230,0.3)', color: '#5CE1E6' }}>
-                    <Upload className="w-4 h-4" />
-                    <span>Uvoz iz Excela</span>
-                  </button>
-                  <button onClick={addWarehouseItem} className="flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-all hover:scale-105" style={{ background: T.accent, color: '#000000' }}>
-                    <Plus className="w-4 h-4" />
-                    <span>Novi Artikl</span>
-                  </button>
-                </div>
-              </div>
-
-              {warehouse.length === 0 && (
-                <div className="text-center py-16" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                  <Warehouse className="w-12 h-12 mx-auto mb-4 opacity-40" />
-                  <p>Skladište je prazno. Dodajte artikle ručno ili ih uvezite iz Excela.</p>
-                </div>
-              )}
-
-              {warehouse.length > 0 && (
-                <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(10,40,52,0.55)', border: '1px solid rgba(120,220,255,0.12)' }}>
-                  {warehouse.map((item, i) => {
-                    const low = item.stock < item.minStock;
-                    return (
-                      <div key={item.id} className="flex items-center gap-3 px-4 py-3" style={{ borderTop: i ? '1px solid rgba(120,220,255,0.08)' : 'none' }}>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-semibold text-sm truncate">{item.name}</p>
-                          <p className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                            {item.category}{item.price !== undefined ? ` · ${item.price.toFixed(2).replace('.', ',')} €` : ''}
-                          </p>
-                        </div>
-                        {item.trend === 'up' && <TrendingUp className="w-4 h-4 shrink-0" style={{ color: '#2EFF88' }} />}
-                        {item.trend === 'down' && <TrendingDown className="w-4 h-4 shrink-0" style={{ color: '#FF3B30' }} />}
-                        <div className="text-right shrink-0">
-                          <p className="font-bold text-sm" style={{ color: low ? '#FF3B30' : '#5CE1E6' }}>{item.stock} {item.unit}</p>
-                          <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.45)' }}>min {item.minStock}</p>
-                        </div>
-                        <button onClick={() => deleteWarehouseItem(item.id)} aria-label="Obriši artikl" className="p-2 rounded-lg shrink-0 transition-all hover:bg-red-500/20">
-                          <Trash2 className="w-4 h-4 text-red-500" style={{ opacity: 0.7 }} />
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+            <WarehouseTable
+              items={warehouse}
+              orders={workOrders}
+              onDelete={(id) => deleteWarehouseItem(id as number)}
+              actions={<>
+                <button onClick={downloadWarehouseTemplate} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)' }}>
+                  <Download className="w-4 h-4" />
+                  <span>Predložak</span>
+                </button>
+                <button onClick={() => setImporting('warehouse')} className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all hover:scale-105" style={{ background: 'rgba(92,225,230,0.1)', border: '1px solid rgba(92,225,230,0.3)', color: '#5CE1E6' }}>
+                  <Upload className="w-4 h-4" />
+                  <span>Uvoz iz Excela</span>
+                </button>
+                <button onClick={addWarehouseItem} className="flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-all hover:scale-105" style={{ background: T.accent, color: '#000000' }}>
+                  <Plus className="w-4 h-4" />
+                  <span>Novi artikl</span>
+                </button>
+              </>}
+            />
           </motion.div>
         )}
 

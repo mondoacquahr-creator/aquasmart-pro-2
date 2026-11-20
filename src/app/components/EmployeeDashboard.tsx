@@ -11,6 +11,8 @@ import {
 import { useLanguage } from '../lib/languageContext';
 import { AquaSmartProLogo } from './AquaSmartProLogo';
 import { WorkOrderDetailsModal } from './WorkOrderDetailsModal';
+import { WorkOrdersTable } from './pro/WorkOrdersTable';
+import { ClientsTable } from './pro/ClientsTable';
 import { getPermissions, isLiveMode, isDemoMode, refreshMe } from '../lib/session';
 import { authService } from '../lib/auth';
 import { api } from '../lib/supabase';
@@ -424,118 +426,27 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
   const renderWorkOrdersView = () => {
     const currentUser = authService.getCurrentUser();
     return (
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl font-semibold">Radni Nalozi ({workOrders.length})</h2>
-          {perms.createOrders && (
-            <button
-              onClick={() => {
-                const today = new Date().toISOString().split('T')[0];
-                setSelectedWorkOrder({
-                  id: Date.now(),
-                  client: '',
-                  location: '',
-                  task: 'Novi radni nalog',
-                  status: 'pending',
-                  dueDate: today,
-                  priority: 'medium',
-                  assignee: currentUser?.name ?? '',
-                  assigneeId: currentUser?.id ?? '',
-                });
-              }}
-              className="px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2"
-              style={{ background: T.accent, color: '#000000' }}
-            >
-              <Plus className="w-5 h-5" />
-              <span>Novi nalog</span>
-            </button>
-          )}
-        </div>
-
-        <div className="flex gap-2 mb-6">
-          {['active', 'pending', 'completed'].map((status) => (
-            <button key={status} className="px-4 py-2 rounded-xl font-medium transition-all" style={{
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.08)'
-            }}>
-              {status === 'active' ? 'Aktivni' : status === 'pending' ? 'Na čekanju' : 'Završeni'}
-              <span className="ml-2 px-2 py-0.5 rounded-lg text-xs" style={{ background: 'rgba(255,255,255,0.1)' }}>
-                {workOrders.filter(o => o.status === status).length}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        <div className="space-y-4">
-          {workOrders.map((order) => (
-            <div key={String(order.id)} className="p-6 rounded-2xl" style={{
-              background: 'rgba(10,40,52,0.55)',
-              border: '1px solid rgba(120,220,255,0.12)',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.35)'
-            }}>
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="font-semibold text-lg">{order.client}</h3>
-                    <span className="px-3 py-1 rounded-lg text-xs font-semibold" style={{
-                      background: `${getStatusColor(order.status)}20`,
-                      color: getStatusColor(order.status)
-                    }}>
-                      {order.status === 'active' ? 'AKTIVNO' : order.status === 'pending' ? 'NA ČEKANJU' : 'ZAVRŠENO'}
-                    </span>
-                    <span className="px-3 py-1 rounded-lg text-xs font-semibold" style={{
-                      background: `${getStatusColor(order.priority)}20`,
-                      color: getStatusColor(order.priority)
-                    }}>
-                      {order.priority === 'high' ? 'VISOKI' : order.priority === 'medium' ? 'SREDNJI' : 'NISKI'}
-                    </span>
-                  </div>
-                  <p className="text-sm mb-3" style={{ color: 'rgba(255,255,255,0.6)' }}>{order.task}</p>
-                  {order.notes && (
-                    <p className="text-xs p-3 rounded-lg" style={{ background: 'rgba(255,255,255,0.03)', color: 'rgba(255,255,255,0.5)' }}>
-                      📝 {order.notes}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                  <div className="flex items-center gap-2"><MapPin className="w-4 h-4" /><span>{order.location}</span></div>
-                  <div className="flex items-center gap-2"><Calendar className="w-4 h-4" /><span>{order.dueDate}</span></div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setSelectedWorkOrder(order)}
-                    className="px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 flex items-center gap-2"
-                    style={{ background: 'rgba(92,225,230,0.1)', color: '#5CE1E6', border: '1px solid rgba(92,225,230,0.2)' }}
-                  >
-                    <Eye className="w-4 h-4" /><span>Detalji</span>
-                  </button>
-                  {order.status === 'completed' && (
-                    <button
-                      onClick={() => reopenOrderInList(order.id)}
-                      className="px-4 py-2 rounded-lg font-medium transition-all hover:scale-105 flex items-center gap-2"
-                      style={{ background: 'rgba(255,255,255,0.06)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}
-                    >
-                      <RotateCcw className="w-4 h-4" /><span>Ponovno otvori</span>
-                    </button>
-                  )}
-                  {order.status !== 'completed' && (
-                    <button
-                      onClick={() => markOrderComplete(order.id)}
-                      className="px-6 py-2 rounded-lg font-bold transition-all hover:scale-105 flex items-center gap-2"
-                      style={{ background: T.accent, color: '#000000' }}
-                    >
-                      <CheckCircle className="w-4 h-4" /><span>Završi</span>
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <WorkOrdersTable
+        orders={workOrders.map(o => ({ ...o, assignee: o.assignee || '' }))}
+        onOpen={(o) => setSelectedWorkOrder(workOrders.find(w => w.id === o.id) || null)}
+        canCreate={perms.createOrders}
+        canDelete={false}
+        showAssignee={perms.workOrders === 'all'}
+        onNew={() => {
+          const today = new Date().toISOString().split('T')[0];
+          setSelectedWorkOrder({
+            id: Date.now(),
+            client: '',
+            location: '',
+            task: 'Novi radni nalog',
+            status: 'pending',
+            dueDate: today,
+            priority: 'medium',
+            assignee: currentUser?.name ?? '',
+            assigneeId: currentUser?.id ?? '',
+          });
+        }}
+      />
     );
   };
 
@@ -673,51 +584,20 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
   );
 
   const renderClientsView = () => (
-    <div className="max-w-7xl mx-auto px-6 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-3xl font-semibold">Klijenti ({clients.length})</h2>
-        {perms.clients === 'edit' && (
-          <button
-            onClick={() => setShowAddClientModal(true)}
-            className="px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2"
-            style={{ background: T.accent, color: '#000000' }}
-          >
-            <Plus className="w-5 h-5" /><span>Novi klijent</span>
-          </button>
-        )}
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-4">
-        {clients.map((client) => (
-          <div key={client.id} className="p-6 rounded-2xl" style={{
-            background: 'rgba(10,40,52,0.55)',
-            border: '1px solid rgba(120,220,255,0.12)',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.35)'
-          }}>
-            <h3 className="font-semibold text-lg mb-1">{client.name}</h3>
-            {client.location && (
-              <div className="flex items-center gap-2 text-sm mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                <MapPin className="w-4 h-4" /><span>{client.location}</span>
-              </div>
-            )}
-            <div className="space-y-1 text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-              {client.phone && (
-                <div className="flex items-center gap-2"><Phone className="w-3 h-3" /><span>{client.phone}</span></div>
-              )}
-              {client.email && (
-                <div className="flex items-center gap-2"><Mail className="w-3 h-3" /><span>{client.email}</span></div>
-              )}
-            </div>
-          </div>
-        ))}
-        {clients.length === 0 && (
-          <div className="col-span-2 text-center py-16" style={{ color: 'rgba(255,255,255,0.3)' }}>
-            <UserCog className="w-12 h-12 mx-auto mb-4" />
-            <p>Nema klijenata</p>
-          </div>
-        )}
-      </div>
-    </div>
+    <ClientsTable
+      clients={clients}
+      orders={workOrders}
+      canCreate={perms.clients === 'edit'}
+      onNew={() => setShowAddClientModal(true)}
+      onNewOrder={perms.createOrders ? (c) => {
+        const currentUser = authService.getCurrentUser();
+        setSelectedWorkOrder({
+          id: Date.now(), client: c.name, location: c.location || '', task: 'Novi radni nalog', status: 'pending',
+          dueDate: new Date().toISOString().split('T')[0], priority: 'medium',
+          assignee: currentUser?.name ?? '', assigneeId: currentUser?.id ?? '',
+        });
+      } : undefined}
+    />
   );
 
   const renderMoreView = () => {
@@ -771,7 +651,7 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
     <div className="min-h-screen relative" style={{ background: T.pageBg }}>
       <WaterBackground />
       {/* Header */}
-      <div className="relative z-10 p-6" style={{ background: 'rgba(2,13,18,0.7)', backdropFilter: 'blur(16px)', borderBottom: T.cardBorder }}>
+      <div className="relative z-10 px-4 py-4 sm:p-6" style={{ background: 'rgba(2,13,18,0.7)', backdropFilter: 'blur(16px)', borderBottom: T.cardBorder }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             {currentView !== 'home' && (
@@ -792,7 +672,7 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
                 </button>
               </>
             )}
-            <AquaSmartProLogo size="md" variant="employee" />
+            <div className={currentView !== 'home' ? 'hidden sm:block' : ''}><AquaSmartProLogo size="md" variant="employee" /></div>
           </div>
 
           <div className="flex items-center gap-3">
@@ -808,7 +688,7 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
               <MoreHorizontal className="w-5 h-5" style={{ color: currentView === 'more' ? '#000' : '#fff' }} />
             </button>
 
-            <button onClick={onBack} className="px-6 py-2 rounded-xl font-bold transition-all hover:scale-105" style={{
+            <button onClick={onBack} className="px-4 sm:px-6 py-2 rounded-xl font-bold transition-all hover:scale-105" style={{
               background: T.accent,
               color: '#000000'
             }}>

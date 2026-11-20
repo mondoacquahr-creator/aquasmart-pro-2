@@ -1,5 +1,6 @@
 import { fmtClock, itemDurations, itemTimeLabel, totalWorkLabel } from "./workTime";
 import { getCompanyLogo } from "./companyLogo";
+import { WATER_PARAMS, rate, RATING_LABEL, rangeText } from "./waterRanges";
 
 type WorkOrderStatus = "active" | "pending" | "completed";
 
@@ -73,6 +74,7 @@ export interface WorkOrderPrintData {
     dueDate?: string;
     workStartedAt?: string;
     workEndedAt?: string;
+    notes?: string;
   };
   companyName?: string;
   logoDataUrl?: string | null;
@@ -291,6 +293,16 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
     ["Redox", waterAnalysis?.redox, "mV"],
   ].filter(([, value]) => hasValue(value));
 
+  // Analiza vode za klijenta: izmjereno, preporučeni raspon i ocjena
+  const waterTableRows = WATER_PARAMS
+    .map((p) => ({ p, v: (waterAnalysis as any)?.[p.key] }))
+    .filter(({ v }) => hasValue(v))
+    .map(({ p, v }) => {
+      const r = rate(p, v);
+      const badge = p.min !== undefined && r !== "none" ? `<span class="v v-${r}">${escapeHtml(RATING_LABEL[r])}</span>` : "—";
+      return `<tr><td>${escapeHtml(p.label)}</td><td class="num"><strong>${escapeHtml(`${formatNumber(v)} ${p.unit}`.trim())}</strong></td><td>${escapeHtml(rangeText(p))}${p.unit && p.min !== undefined ? " " + escapeHtml(p.unit) : ""}</td><td>${badge}</td></tr>`;
+    }).join("");
+
   const systemLabels: Record<string, string> = {
     klor: "Klor",
     so: "Elektroliza",
@@ -478,6 +490,17 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
       font-size: 12pt;
       font-weight: 800;
     }
+    table.params { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+    table.params th { background: transparent !important; text-align: left; font-size: 7.5pt; text-transform: uppercase; letter-spacing: .06em; color: #59636a; padding: 2mm 2mm; border-bottom: .3mm solid #cbd4d8; }
+    table.params td { padding: 2.2mm 2mm; border-bottom: .25mm solid #e3e8ea; }
+    .v { display: inline-block; padding: .6mm 2.2mm; border-radius: 1.2mm; font-size: 8pt; font-weight: 700; }
+    .v-ok { background: #E2F4EC; color: #1F7A57; }
+    .v-low { background: #FBEFD9; color: #8A5A12; }
+    .v-high { background: #FBE3E3; color: #9B2C2C; }
+    p.notes { margin: 0; font-size: 10pt; line-height: 1.5; white-space: pre-wrap; }
+    .sign { display: flex; justify-content: space-between; gap: 20mm; margin-top: 14mm; font-size: 8.5pt; color: #59636a; }
+    .sign div { flex: 1; max-width: 70mm; text-align: center; }
+    .sign i { display: block; border-bottom: .3mm solid #9aaeb4; height: 10mm; margin-bottom: 1.5mm; }
     .water-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -518,7 +541,8 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
       ${pay ? `<div class="company-meta">${[pay.address, pay.city].filter(Boolean).map(escapeHtml).join(", ")}${pay.oib ? ` · OIB ${escapeHtml(pay.oib)}` : ""}${pay.email ? `<br>${escapeHtml(pay.email)}` : ""}${pay.phone ? ` · ${escapeHtml(pay.phone)}` : ""}</div>` : ""}
     </div>
     <div class="document-meta">
-      <strong>${pay ? "PONUDA" : "RADNI NALOG"} br. ${escapeHtml(order.id)}</strong>
+      <strong>${pay ? `PONUDA br. ${escapeHtml(order.id)}` : "IZVJEŠTAJ O SERVISU"}</strong>
+      ${pay ? "" : `<span>Nalog br. ${escapeHtml(order.id)}</span><br>`}
       <span>${escapeHtml(formatDate(documentDate))}</span>
     </div>
   </header>
@@ -530,6 +554,18 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
     <div><dt>Status</dt><dd>${escapeHtml(statusLabels[order.status] || order.status)}</dd></div>
     ${workTotal ? `<div><dt>Vrijeme rada</dt><dd>${escapeHtml(workTotal)}</dd></div>` : ""}
   </dl>
+
+  ${!pay && waterTableRows ? `
+  <section>
+    <h2>Analiza vode</h2>
+    <table class="params"><thead><tr><th>Parametar</th><th>Izmjereno</th><th>Preporučeno</th><th>Ocjena</th></tr></thead><tbody>${waterTableRows}</tbody></table>
+  </section>` : ""}
+
+  ${!pay && hasValue(order.notes) ? `
+  <section>
+    <h2>Napomena servisera</h2>
+    <p class="notes">${escapeHtml(order.notes)}</p>
+  </section>` : ""}
 
   ${section("Izvršene usluge", table(
     ["Naziv", "Opis", ...(showTimes ? ["Vrijeme"] : []), ...(hidePrices ? [] : ["Iznos"])],
@@ -576,7 +612,7 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
     <p class="note">Ovo je ponuda, a ne fiskalizirani račun. Račun se izdaje nakon uplate.</p>
   </section>` : ""}
 
-  ${section("Analiza vode", waterValues.length ? `
+  ${section("Analiza vode", pay && waterValues.length ? `
     <div class="water-grid">${waterValues.map(([label, value, unit]) => `
       <div><span>${escapeHtml(label)}</span><strong>${escapeHtml(`${formatNumber(value)} ${unit}`.trim())}</strong></div>
     `).join("")}</div>` : "")}
@@ -591,7 +627,9 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
       </figure>
     `).join("")}</div>` : "")}
 
-  <footer>Dokument generiran u Mondo Pool Care · ${escapeHtml(generatedAt.toLocaleString("hr-HR"))}</footer>
+  ${!pay ? `<div class="sign"><div><i></i>${escapeHtml(order.assignee || "Serviser")}</div><div><i></i>Klijent</div></div>` : ""}
+
+  <footer>Mondo Pool Care PRO · generirano ${escapeHtml(generatedAt.toLocaleString("hr-HR"))}</footer>
 </body>
 </html>`;
 

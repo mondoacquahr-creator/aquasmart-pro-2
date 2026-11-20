@@ -13,6 +13,7 @@ import {
   AlertTriangle, Package, Images, Loader2, ChevronLeft, ChevronRight, Clock, Play, Square, RotateCcw
 } from 'lucide-react';
 import { fmtClock, itemDurations, itemTimeLabel, totalWorkLabel } from '../lib/workTime';
+import { WATER_PARAMS, rate, RATING_LABEL, fmtVal, rangeText } from '../lib/waterRanges';
 import { queuePhoto, uploadQueuedPhoto, getQueuedPhotoBlob, removeQueuedPhoto, companyFolder } from '../lib/photoOutbox';
 
 interface WorkOrderDetailsModalProps {
@@ -236,7 +237,7 @@ export function WorkOrderDetailsModal({
   warehouseProducts
 }: WorkOrderDetailsModalProps) {
   const defaultTab = hidePrices ? 'services' : 'services';
-  const [activeTab, setActiveTab] = useState<'services' | 'tasks' | 'products' | 'water' | 'automation' | 'photos' | 'invoice'>(defaultTab);
+  const [activeTab, setActiveTab] = useState<'overview' | 'services' | 'tasks' | 'products' | 'water' | 'automation' | 'photos' | 'invoice'>('overview');
   const [editedOrder, setEditedOrder] = useState(order);
   const [photos, setPhotos] = useState<Photo[]>(order.photos || []);
   const [photoMode, setPhotoMode] = useState<'checking' | 'demo' | 'live'>('checking');
@@ -843,6 +844,7 @@ export function WorkOrderDetailsModal({
   const selectedWP = warehouseProducts?.find(p => String(p.id) === newProductWarehouseId);
 
   const tabs = [
+    { id: 'overview', icon: FileText, label: 'Pregled' },
     { id: 'services', icon: Wrench, label: 'Usluge' },
     { id: 'tasks', icon: CheckCircle, label: 'Zadaci' },
     { id: 'products', icon: Beaker, label: 'Kemija' },
@@ -1082,6 +1084,78 @@ export function WorkOrderDetailsModal({
         {/* Content */}
         <div className="p-4 sm:p-6 sm:overflow-y-auto sm:max-h-[calc(90vh-320px)]">
           <AnimatePresence mode="wait">
+            {/* PREGLED: sažetak naloga kao na prikazu aplikacije */}
+            {activeTab === 'overview' && (
+              <motion.div key="overview" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
+                <div className="grid lg:grid-cols-[1.15fr_.85fr] gap-4">
+                  <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(120,220,255,0.12)' }}>
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.5)' }}>Mjerenja</p>
+                      <button type="button" onClick={() => setActiveTab('water')} className="text-xs font-semibold" style={{ color: '#4FC3F0' }}>Uredi</button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2.5">
+                      {WATER_PARAMS.map(p => {
+                        const v = (waterAnalysis as any)[p.key];
+                        const r = rate(p, v);
+                        const color = r === 'ok' ? '#5FD3A6' : r === 'none' ? 'rgba(255,255,255,0.4)' : '#E8B45A';
+                        return (
+                          <div key={p.key} className="rounded-xl px-3 py-2.5" style={{ background: 'rgba(0,0,0,0.18)', border: `1px solid ${r === 'low' || r === 'high' ? 'rgba(232,180,90,0.35)' : 'rgba(255,255,255,0.08)'}` }}>
+                            <p className="text-[11px] truncate" style={{ color: 'rgba(255,255,255,0.55)' }}>{p.label}</p>
+                            <div className="flex items-baseline gap-1 mt-0.5">
+                              <span className="text-lg font-bold text-white">{fmtVal(v)}</span>
+                              {p.unit && <span className="text-[11px]" style={{ color: 'rgba(255,255,255,0.45)' }}>{p.unit}</span>}
+                              {r !== 'none' && p.min !== undefined && <span className="ml-auto text-[11px] font-semibold" style={{ color }}>{RATING_LABEL[r]}</span>}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl p-4 flex flex-col" style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(120,220,255,0.12)' }}>
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.5)' }}>Utrošeni proizvodi</p>
+                      <button type="button" onClick={() => setActiveTab('products')} className="text-xs font-semibold" style={{ color: '#4FC3F0' }}>Dodaj</button>
+                    </div>
+                    {productsUsed.length === 0 ? (
+                      <p className="text-sm py-2" style={{ color: 'rgba(255,255,255,0.45)' }}>Još nije upisana kemija.</p>
+                    ) : productsUsed.map(p => (
+                      <div key={p.id} className="flex items-center justify-between gap-3 py-2 text-sm" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                        <span className="truncate" style={{ color: 'rgba(255,255,255,0.8)' }}>{p.productName}</span>
+                        <b className="text-white whitespace-nowrap">{fmtVal(p.quantity)} {p.unit}</b>
+                      </div>
+                    ))}
+                    <button type="button" onClick={() => setActiveTab('photos')} className="mt-3 rounded-xl py-3 flex items-center justify-center gap-2 text-sm"
+                      style={{ border: '1px dashed rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.6)' }}>
+                      <Camera className="w-4 h-4" />
+                      {photos.length ? `Fotografije bazena (${photos.length})` : 'Dodaj fotografiju bazena'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mt-4 rounded-2xl p-4" style={{ background: 'rgba(0,0,0,0.15)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  <p className="text-[11px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>Napomena servisera</p>
+                  <textarea
+                    value={(editedOrder as any).notes || ''}
+                    onChange={(e) => setEditedOrder({ ...editedOrder, notes: e.target.value } as any)}
+                    rows={2}
+                    placeholder="Npr. tlak filtra, stanje opreme, što je rečeno klijentu"
+                    className="w-full bg-transparent outline-none text-sm resize-y"
+                    style={{ color: 'rgba(255,255,255,0.85)', fontSize: 16 }}
+                  />
+                </div>
+
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                  <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                    {completedTasksAndServices} / {totalTasksAndServices} stavki obavljeno{editedOrder.assignee ? ` · ${editedOrder.assignee}` : ''}
+                  </span>
+                  <button type="button" onClick={() => void handlePrint()} className="px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2" style={{ background: '#4FC3F0', color: '#04202b' }}>
+                    <FileText className="w-4 h-4" /> Generiraj izvještaj
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
             {/* SERVICES TAB */}
             {activeTab === 'services' && (
               <motion.div key="services" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
