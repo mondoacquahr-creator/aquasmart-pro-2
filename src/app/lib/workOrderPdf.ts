@@ -1,4 +1,5 @@
 import { fmtClock, itemDurations, itemTimeLabel, totalWorkLabel } from "./workTime";
+import { getCompanyLogo } from "./companyLogo";
 
 type WorkOrderStatus = "active" | "pending" | "completed";
 
@@ -74,6 +75,7 @@ export interface WorkOrderPrintData {
     workEndedAt?: string;
   };
   companyName?: string;
+  logoDataUrl?: string | null;
   services: PrintableService[];
   maintenanceTasks: PrintableTask[];
   productsUsed: PrintableProduct[];
@@ -216,6 +218,14 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
 
   const documentDate = parseDate(order.dueDate);
   const generatedAt = new Date();
+  // Logo tvrtke (iz postavki); ispis ne čeka dulje od 3 s ako je veza spora.
+  const logo = data.logoDataUrl !== undefined
+    ? data.logoDataUrl
+    : await Promise.race([
+        getCompanyLogo().catch(() => null),
+        new Promise<null>((resolve) => setTimeout(() => resolve(null), 3000)),
+      ]);
+  const safeLogo = typeof logo === "string" && /^data:image\/(png|jpeg|webp|svg\+xml);base64,/.test(logo) ? logo : "";
   const completedServices = services.filter((item) => item.completed);
   const completedTasks = maintenanceTasks.filter((item) => item.completed);
 
@@ -407,6 +417,7 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
       padding-bottom: 5mm;
       border-bottom: 1.2mm solid #0B2A3C;
     }
+    .brand-logo { display: block; max-width: 60mm; max-height: 18mm; width: auto; height: auto; margin-bottom: 2.5mm; }
     .company { font-size: 20pt; font-weight: 750; color: #0B2A3C; letter-spacing: -.02em; }
     .document-meta { text-align: right; }
     .document-meta strong { display: block; font-size: 14pt; white-space: nowrap; }
@@ -502,6 +513,7 @@ export async function printWorkOrder(data: WorkOrderPrintData): Promise<void> {
 <body>
   <header>
     <div>
+      ${safeLogo ? `<img class="brand-logo" src="${safeLogo}" alt="">` : ""}
       <div class="company">${escapeHtml((pay && pay.companyName) || data.companyName || "Mondo Pool Care")}</div>
       ${pay ? `<div class="company-meta">${[pay.address, pay.city].filter(Boolean).map(escapeHtml).join(", ")}${pay.oib ? ` · OIB ${escapeHtml(pay.oib)}` : ""}${pay.email ? `<br>${escapeHtml(pay.email)}` : ""}${pay.phone ? ` · ${escapeHtml(pay.phone)}` : ""}</div>` : ""}
     </div>

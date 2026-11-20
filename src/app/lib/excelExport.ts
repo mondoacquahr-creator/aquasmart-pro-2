@@ -22,3 +22,20 @@ export function hrDate(value: any): string {
   if (isNaN(d.getTime())) return '';
   return `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${d.getFullYear()}.`;
 }
+
+// Više listova u jednoj Excel datoteci.
+export function exportWorkbook(fileBase: string, sheets: { name: string; rows: Record<string, any>[] }[]) {
+  const book = XLSX.utils.book_new();
+  for (const { name, rows } of sheets) {
+    const data = rows.length ? rows : [{ Napomena: 'Nema podataka' }];
+    const sheet = XLSX.utils.json_to_sheet(data);
+    const headers = Array.from(new Set(data.flatMap(r => Object.keys(r))));
+    sheet['!cols'] = headers.map((h) => {
+      const longest = data.reduce((max, r) => Math.max(max, String(r[h] ?? '').length), h.length);
+      return { wch: Math.min(Math.max(longest + 2, 10), 50) };
+    });
+    XLSX.utils.book_append_sheet(book, sheet, name.slice(0, 31));
+  }
+  const today = new Date().toISOString().slice(0, 10);
+  XLSX.writeFile(book, `${fileBase}_${today}.xlsx`);
+}

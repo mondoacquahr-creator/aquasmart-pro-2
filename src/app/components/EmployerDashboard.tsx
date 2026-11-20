@@ -13,7 +13,8 @@ import { useLanguage } from '../lib/languageContext';
 import { isLiveMode, isDemoMode, generatePassword, Permissions, DEFAULT_EMPLOYEE_PERMISSIONS } from '../lib/session';
 import { api } from '../lib/supabase';
 import { EmployeePermissionsEditor } from './EmployeePermissionsEditor';
-import { loadCompanyData, saveChanges } from '../lib/companyData';
+import { exportCompanyData } from '../lib/companyExport';
+import { loadCompanyData, saveChanges, lastLoadWasOffline, OFFLINE_MESSAGE } from '../lib/companyData';
 import { totalWorkLabel } from '../lib/workTime';
 import { authService } from '../lib/auth';
 
@@ -206,9 +207,9 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
       setWorkOrders(serverOrders);
       setEmployees(serverEmployees);
       setWarehouse(serverWarehouse);
-      setSyncError('');
+      setSyncError(lastLoadWasOffline() ? OFFLINE_MESSAGE : '');
 
-      if (!firstLoadDoneRef.current) {
+      if (!firstLoadDoneRef.current && !lastLoadWasOffline()) {
         firstLoadDoneRef.current = true;
         const allEmpty = serverClients.length === 0 && serverOrders.length === 0 && serverWarehouse.length === 0;
         if (allEmpty) {
@@ -279,7 +280,7 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
     setClients(newClients);
     if (live) {
       try { await saveChanges('clients', previous, newClients); }
-      catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
+      catch (e: any) { setSyncError('Poslužitelj je odbio izmjenu: ' + (e?.message || 'pokušajte ponovno.')); }
     } else {
       saveData(STORAGE_KEYS.CLIENTS, newClients);
     }
@@ -290,7 +291,7 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
     setWorkOrders(newOrders);
     if (live) {
       try { await saveChanges('work-orders', previous, newOrders); }
-      catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
+      catch (e: any) { setSyncError('Poslužitelj je odbio izmjenu: ' + (e?.message || 'pokušajte ponovno.')); }
     } else {
       saveData(STORAGE_KEYS.WORK_ORDERS, newOrders);
     }
@@ -306,7 +307,7 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
     setWarehouse(newWarehouse);
     if (live) {
       try { await saveChanges('warehouse', previous, newWarehouse); }
-      catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
+      catch (e: any) { setSyncError('Poslužitelj je odbio izmjenu: ' + (e?.message || 'pokušajte ponovno.')); }
     } else {
       saveData(STORAGE_KEYS.WAREHOUSE, newWarehouse);
     }
@@ -1563,7 +1564,8 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
                   { id: 'water-analysis', icon: Droplets, label: 'Analiza Vode', desc: 'Testiranje vode', color: '#2EFF88' },
                   { id: 'products', icon: Package, label: 'Proizvodi', desc: 'Katalog proizvoda', color: '#5CE1E6' },
                   { id: 'stores', icon: MapPin, label: 'Prodajna Mjesta', desc: 'Lokacije trgovina', color: '#FFB020' },
-                  { id: 'settings', icon: Settings, label: 'Postavke tvrtke', desc: 'Naziv, OIB, adresa i IBAN za ponude', color: '#FF3B30' },
+                  { id: 'settings', icon: Settings, label: 'Postavke tvrtke', desc: 'Naziv, logo, OIB, adresa i IBAN za ponude', color: '#FF3B30' },
+                  { id: 'export', icon: Download, label: 'Izvoz podataka', desc: 'Svi nalozi, klijenti, bazeni, analize i skladište u Excelu', color: '#4FC3F0' },
                 ].map((item) => (
                   <motion.div
                     key={item.id}
@@ -1576,6 +1578,7 @@ export function EmployerDashboard({ onBack, onNavigate, onAdminPanel }: Employer
                       else if (item.id === 'products') onNavigate('products');
                       else if (item.id === 'stores') onNavigate('stores');
                       else if (item.id === 'settings') setShowCompanySettings(true);
+                      else if (item.id === 'export') exportCompanyData(authService.getCurrentUser()?.companyName).catch((e: any) => alert(e?.message || 'Izvoz nije uspio.'));
                       else alert(`${item.label} uskoro dostupno!`);
                     }}
                     className="p-8 rounded-3xl cursor-pointer backdrop-blur-xl group relative overflow-hidden"
