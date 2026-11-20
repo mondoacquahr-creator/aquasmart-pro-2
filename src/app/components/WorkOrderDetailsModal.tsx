@@ -7,6 +7,7 @@ import { loadCompanySettings } from '../lib/companySettings';
 import { api } from '../lib/supabase';
 import { isLiveMode } from '../lib/session';
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   X, Save, Printer, Camera, Wrench, Beaker, Droplets, Settings,
   CheckCircle, Plus, Trash2, DollarSign, FileText,
@@ -237,7 +238,7 @@ export function WorkOrderDetailsModal({
   warehouseProducts
 }: WorkOrderDetailsModalProps) {
   const defaultTab = hidePrices ? 'services' : 'services';
-  const [activeTab, setActiveTab] = useState<'overview' | 'services' | 'tasks' | 'products' | 'water' | 'automation' | 'photos' | 'invoice'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'work' | 'products' | 'water' | 'photos' | 'invoice'>('overview');
   const [editedOrder, setEditedOrder] = useState(order);
   const [photos, setPhotos] = useState<Photo[]>(order.photos || []);
   const [photoMode, setPhotoMode] = useState<'checking' | 'demo' | 'live'>('checking');
@@ -824,6 +825,17 @@ export function WorkOrderDetailsModal({
   const photoSource = (photo: Photo) =>
     photoPreviews[photo.id] || photoUrls[photo.id] || photo.dataUrl || '';
 
+  useEffect(() => {
+    if (!viewerPhotoId) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setViewerPhotoId(null);
+      if (e.key === 'ArrowLeft') showPreviousPhoto();
+      if (e.key === 'ArrowRight') showNextPhoto();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  });
+
   const showPreviousPhoto = () => {
     if (filteredPhotos.length < 2 || viewerIndex < 0) return;
     const nextIndex = (viewerIndex - 1 + filteredPhotos.length) % filteredPhotos.length;
@@ -845,46 +857,155 @@ export function WorkOrderDetailsModal({
 
   const tabs = [
     { id: 'overview', icon: FileText, label: 'Pregled' },
-    { id: 'services', icon: Wrench, label: 'Usluge' },
-    { id: 'tasks', icon: CheckCircle, label: 'Zadaci' },
+    { id: 'work', icon: CheckCircle, label: 'Rad' },
     { id: 'products', icon: Beaker, label: 'Kemija' },
-    { id: 'water', icon: Droplets, label: 'Analiza' },
-    { id: 'automation', icon: Settings, label: 'Automatika' },
-    { id: 'photos', icon: Camera, label: `Fotografije (${photos.length})` },
-    ...(!hidePrices ? [{ id: 'invoice', icon: DollarSign, label: 'Račun' }] : []),
+    { id: 'water', icon: Droplets, label: 'Voda' },
+    { id: 'photos', icon: Camera, label: photos.length ? `Fotke (${photos.length})` : 'Fotke' },
   ] as { id: string; icon: any; label: string }[];
+  const [showFields, setShowFields] = useState(!order.client);
+  const [pdfMenu, setPdfMenu] = useState(false);
+  const statusInfo = editedOrder.status === 'completed'
+    ? { label: 'Završeno', bg: 'rgba(95,211,166,0.12)', bd: 'rgba(95,211,166,0.34)', fg: '#8FE3C2' }
+    : editedOrder.status === 'active' || workRunning
+      ? { label: 'U tijeku', bg: 'rgba(232,180,90,0.13)', bd: 'rgba(232,180,90,0.38)', fg: '#F0C983' }
+      : { label: 'Novi', bg: 'rgba(79,195,240,0.14)', bd: 'rgba(79,195,240,0.38)', fg: '#9FE6EC' };
+  const workLabel = editedOrder.workStartedAt
+    ? totalWorkLabel(editedOrder.workStartedAt, editedOrder.workEndedAt, workRunning ? nowTick : undefined)
+    : '';
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4"
+      className="fixed inset-0 z-50 flex items-stretch sm:items-center justify-center p-0 sm:p-4"
       style={{ background: 'rgba(0,0,0,0.85)' }}
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.9, y: 20 }}
-        animate={{ scale: 1, y: 0 }}
-        exit={{ scale: 0.9, y: 20 }}
+        initial={{ y: 20, opacity: 0.6 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 20, opacity: 0 }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-6xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto overscroll-contain sm:overflow-hidden rounded-3xl"
+        className="w-full max-w-6xl h-[100dvh] sm:h-[90vh] flex flex-col overflow-hidden sm:rounded-3xl"
         style={{
-          background: 'rgba(4,24,32,0.96)',
+          background: 'rgba(4,24,32,0.98)',
           border: '1px solid rgba(120,220,255,0.12)',
-          backdropFilter: 'blur(24px)',
           boxShadow: '0 20px 60px rgba(0,0,0,0.35)'
         }}
       >
-        {/* Header */}
-        <div className="p-4 sm:p-6" style={{ borderBottom: '1px solid rgba(120,220,255,0.12)' }}>
-          <div className="flex flex-col-reverse sm:flex-row sm:items-start sm:justify-between gap-4">
-            <div className="flex-1 min-w-0">
-              <h2 className="text-xl sm:text-2xl font-bold mb-1 break-words">Radni Nalog #{order.id}</h2>
-              <p className="text-sm mb-3" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                {editedOrder.client} • {editedOrder.location} • {editedOrder.assignee}
-              </p>
+        {/* Zaglavlje: jedan red */}
+        <div className="shrink-0 flex items-center gap-2 px-3 sm:px-5 py-2.5" style={{ borderBottom: '1px solid rgba(120,220,255,0.12)', paddingTop: 'max(10px, env(safe-area-inset-top, 0px))' }}>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 min-w-0">
+              <h2 className="text-base sm:text-lg font-bold flex items-baseline gap-1.5 min-w-0">
+                <span className="shrink-0">#{order.id}</span>
+                {editedOrder.client ? <span className="font-semibold truncate" style={{ color: 'rgba(255,255,255,0.8)' }}>{editedOrder.client}</span> : <span className="font-semibold" style={{ color: 'rgba(255,255,255,0.5)' }}>Novi nalog</span>}
+              </h2>
+              <span className="shrink-0 px-2 py-0.5 rounded-full text-[11px] font-semibold" style={{ background: statusInfo.bg, border: `1px solid ${statusInfo.bd}`, color: statusInfo.fg }}>{statusInfo.label}</span>
+            </div>
+            {saveError && <p className="text-xs mt-0.5 truncate" style={{ color: '#FF8A80' }}>{saveError}</p>}
+          </div>
 
+          <div className="relative shrink-0">
+            <button onClick={() => setPdfMenu(m => !m)} aria-label="PDF" className="h-10 px-3 rounded-xl font-bold flex items-center gap-1.5 text-sm" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.14)', color: '#fff' }}>
+              <Printer className="w-4 h-4" /><span className="hidden sm:inline">PDF</span>
+            </button>
+            {pdfMenu && (
+              <div className="absolute right-0 mt-2 w-60 rounded-2xl p-1.5 z-20 shadow-2xl" style={{ background: '#06202c', border: '1px solid rgba(120,220,255,0.22)' }}>
+                <button className="w-full text-left px-3 py-2.5 rounded-xl text-sm hover:bg-white/5" onClick={() => { setPdfMenu(false); void handlePrint(); }}>
+                  <b className="block text-white">Izvještaj za klijenta</b><span className="text-xs" style={{ color: 'rgba(255,255,255,0.55)' }}>Mjerenja, rad i kemija</span>
+                </button>
+                {!hidePrices && (
+                  <button className="w-full text-left px-3 py-2.5 rounded-xl text-sm hover:bg-white/5" onClick={() => { setPdfMenu(false); void handlePrintOffer(); }}>
+                    <b className="block text-white">Ponuda za plaćanje</b><span className="text-xs" style={{ color: 'rgba(255,255,255,0.55)' }}>S IBAN-om i 2D kodom</span>
+                  </button>
+                )}
+                {!hidePrices && (
+                  <button className="w-full text-left px-3 py-2.5 rounded-xl text-sm hover:bg-white/5" onClick={() => { setPdfMenu(false); setActiveTab('invoice'); }}>
+                    <b className="block text-white">Račun / obračun</b><span className="text-xs" style={{ color: 'rgba(255,255,255,0.55)' }}>Pregled iznosa po stavkama</span>
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+
+          <button
+            onClick={() => handleSave()}
+            disabled={isUploadingPhotos}
+            className="shrink-0 h-10 px-4 rounded-xl font-bold flex items-center gap-1.5 text-sm"
+            style={{ background: '#4FC3F0', color: '#04202b', opacity: isUploadingPhotos ? 0.65 : 1 }}
+          >
+            {isUploadingPhotos ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            <span>Spremi</span>
+          </button>
+
+          <button onClick={onClose} aria-label="Zatvori" className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.05)' }}>
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Tanka traka: napredak, vrijeme, iznos i radnja */}
+        <div className="shrink-0 px-3 sm:px-5 py-2" style={{ background: 'rgba(2,13,18,0.55)', borderBottom: '1px solid rgba(120,220,255,0.08)' }}>
+          <div className="flex items-center gap-3">
+            <div className="flex-1 min-w-0 text-xs sm:text-sm truncate" style={{ color: 'rgba(255,255,255,0.75)' }}>
+              <b className="text-white">{completedTasksAndServices}/{totalTasksAndServices}</b> obavljeno
+              {workLabel && <> · <span style={{ color: workRunning ? '#2EFF88' : '#5CE1E6' }}>{workLabel}</span></>}
+              {!hidePrices && <> · <b style={{ color: '#5CE1E6' }}>{totals.grandTotal.toFixed(2).replace('.', ',')} €</b></>}
+            </div>
+            {editedOrder.status === 'completed' ? (
+              <button onClick={reopenOrder} className="shrink-0 h-9 px-3 rounded-xl font-bold flex items-center gap-1.5 text-xs sm:text-sm" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.25)', color: '#fff' }}>
+                <RotateCcw className="w-4 h-4" /> Ponovno otvori
+              </button>
+            ) : !editedOrder.workStartedAt ? (
+              <button onClick={startWork} className="shrink-0 h-9 px-3 rounded-xl font-bold flex items-center gap-1.5 text-xs sm:text-sm" style={{ background: '#2EFF88', color: '#000' }}>
+                <Play className="w-4 h-4" /> Započni rad
+              </button>
+            ) : workRunning ? (
+              <button onClick={finishWork} disabled={isUploadingPhotos} className="shrink-0 h-9 px-3 rounded-xl font-bold flex items-center gap-1.5 text-xs sm:text-sm" style={{ background: '#FFB020', color: '#000', opacity: isUploadingPhotos ? 0.65 : 1 }}>
+                <Square className="w-4 h-4" /> Završi rad
+              </button>
+            ) : null}
+          </div>
+          <div className="w-full h-1 rounded-full overflow-hidden mt-1.5" style={{ background: 'rgba(255,255,255,0.08)' }}>
+            <div className="h-full transition-all" style={{ width: `${progress}%`, background: '#4FC3F0' }} />
+          </div>
+        </div>
+
+        {/* Kartice: na računalu gore */}
+        <div className="hidden sm:flex shrink-0 gap-1.5 px-5 py-2" style={{ borderBottom: '1px solid rgba(120,220,255,0.12)' }}>
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as any)}
+              className="px-3.5 py-1.5 rounded-lg text-sm font-medium flex items-center gap-2 whitespace-nowrap"
+              style={{
+                background: activeTab === tab.id ? 'rgba(92,225,230,0.12)' : 'transparent',
+                color: activeTab === tab.id ? '#5CE1E6' : 'rgba(255,255,255,0.55)',
+                border: activeTab === tab.id ? '1px solid rgba(92,225,230,0.3)' : '1px solid transparent'
+              }}
+            >
+              <tab.icon className="w-4 h-4" />
+              <span>{tab.label}</span>
+            </button>
+          ))}
+          {activeTab === 'invoice' && (
+            <span className="ml-auto px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-2" style={{ background: 'rgba(92,225,230,0.12)', color: '#5CE1E6' }}>
+              <DollarSign className="w-4 h-4" /> Račun
+            </span>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-3 sm:p-5">
+          <AnimatePresence>
+            {/* PREGLED: sažetak naloga kao na prikazu aplikacije */}
+            {activeTab === 'overview' && (
+              <motion.div key="overview" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
+                {(clients || employees) && (
+                  <div className="mb-4 rounded-2xl p-3 sm:p-4" style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(120,220,255,0.12)' }}>
+                    {showFields ? (
+                      <>
               {(clients || employees) && (
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {clients && (
@@ -959,134 +1080,22 @@ export function WorkOrderDetailsModal({
                   )}
                 </div>
               )}
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3 sm:shrink-0">
-              <div className="sm:text-right mr-auto sm:mr-4">
-                <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>Napredak</div>
-                <div className="text-xl font-bold" style={{ color: '#5CE1E6' }}>{Math.round(progress)}%</div>
-              </div>
-
-              <button
-                onClick={handlePrint}
-                className="px-4 py-2 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2"
-                style={{ background: T.accent, color: '#000000' }}
-              >
-                <Printer className="w-4 h-4" />
-                <span>PDF</span>
-              </button>
-
-              <div className="flex flex-col items-end gap-1">
-                <button
-                  onClick={() => handleSave()}
-                  disabled={isUploadingPhotos}
-                  className="px-4 py-2 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2"
-                  style={{ background: T.accent, color: '#000000', opacity: isUploadingPhotos ? 0.65 : 1 }}
-                >
-                  {isUploadingPhotos ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-                  <span>{isUploadingPhotos ? 'Šaljem fotografije…' : 'Spremi'}</span>
-                </button>
-                {saveError && (
-                  <span className="text-xs" style={{ color: '#FF3B30' }}>{saveError}</span>
+                        {editedOrder.client && (
+                          <button type="button" onClick={() => setShowFields(false)} className="mt-3 text-xs font-semibold" style={{ color: '#4FC3F0' }}>Gotovo</button>
+                        )}
+                      </>
+                    ) : (
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-sm min-w-0 truncate" style={{ color: 'rgba(255,255,255,0.8)' }}>
+                          <b className="text-white">{editedOrder.client || 'Bez klijenta'}</b>
+                          {editedOrder.location ? ` · ${editedOrder.location}` : ''}
+                          {editedOrder.assignee ? ` · ${editedOrder.assignee}` : ''}
+                        </p>
+                        <button type="button" onClick={() => setShowFields(true)} className="shrink-0 text-xs font-semibold" style={{ color: '#4FC3F0' }}>Uredi</button>
+                      </div>
+                    )}
+                  </div>
                 )}
-              </div>
-
-              <button
-                onClick={onClose}
-                className="p-2 rounded-xl transition-all hover:scale-105"
-                style={{ background: 'rgba(255,255,255,0.05)' }}
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="px-6 py-3" style={{ background: 'rgba(2,13,18,0.5)' }}>
-          <div className="flex items-center justify-between mb-2 text-sm">
-            <span style={{ color: 'rgba(255,255,255,0.7)' }}>
-              {completedTasksAndServices} / {totalTasksAndServices} Zadataka
-            </span>
-            {!hidePrices && (
-              <span className="font-bold" style={{ color: '#5CE1E6' }}>
-                {totals.grandTotal.toFixed(2)} EUR
-              </span>
-            )}
-          </div>
-          <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.1)' }}>
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.5 }}
-              className="h-full"
-              style={{ background: T.accent }}
-            />
-          </div>
-
-          {/* Vrijeme rada */}
-          <div className="flex flex-wrap items-center justify-between gap-2 mt-3 text-sm">
-            {editedOrder.status === 'completed' ? (
-              <>
-                <span style={{ color: 'rgba(255,255,255,0.8)' }}>
-                  <CheckCircle className="w-4 h-4 inline -mt-0.5 mr-1" style={{ color: '#2EFF88' }} />
-                  Nalog je zatvoren{editedOrder.workStartedAt && editedOrder.workEndedAt ? ` · rad ${fmtClock(editedOrder.workStartedAt)} – ${fmtClock(editedOrder.workEndedAt)}, ukupno ${totalWorkLabel(editedOrder.workStartedAt, editedOrder.workEndedAt)}` : ''}
-                </span>
-                <button onClick={reopenOrder} className="min-h-[40px] px-4 py-2 rounded-xl font-bold flex items-center gap-2" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.25)', color: '#fff' }}>
-                  <RotateCcw className="w-4 h-4" /> Ponovno otvori
-                </button>
-              </>
-            ) : !editedOrder.workStartedAt ? (
-              <>
-                <span style={{ color: 'rgba(255,255,255,0.6)' }}>Vrijeme rada se mjeri od početka rada.</span>
-                <button onClick={startWork} className="min-h-[40px] px-4 py-2 rounded-xl font-bold flex items-center gap-2" style={{ background: '#2EFF88', color: '#000' }}>
-                  <Play className="w-4 h-4" /> Započni rad
-                </button>
-              </>
-            ) : workRunning ? (
-              <>
-                <span style={{ color: 'rgba(255,255,255,0.8)' }}>
-                  <Clock className="w-4 h-4 inline -mt-0.5 mr-1" style={{ color: '#2EFF88' }} />
-                  Rad u tijeku od {fmtClock(editedOrder.workStartedAt)} · <strong style={{ color: '#2EFF88' }}>{totalWorkLabel(editedOrder.workStartedAt, undefined, nowTick)}</strong>
-                </span>
-                <button onClick={finishWork} disabled={isUploadingPhotos} className="min-h-[40px] px-4 py-2 rounded-xl font-bold flex items-center gap-2" style={{ background: '#FFB020', color: '#000', opacity: isUploadingPhotos ? 0.65 : 1 }}>
-                  <Square className="w-4 h-4" /> Završi rad
-                </button>
-              </>
-            ) : (
-              <span style={{ color: 'rgba(255,255,255,0.8)' }}>
-                <Clock className="w-4 h-4 inline -mt-0.5 mr-1" style={{ color: '#5CE1E6' }} />
-                Rad: {fmtClock(editedOrder.workStartedAt)} – {fmtClock(editedOrder.workEndedAt)} · ukupno <strong style={{ color: '#5CE1E6' }}>{totalWorkLabel(editedOrder.workStartedAt, editedOrder.workEndedAt)}</strong>
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div className="flex gap-2 px-6 py-4 overflow-x-auto" style={{ borderBottom: '1px solid rgba(120,220,255,0.12)' }}>
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className="px-4 py-2 rounded-xl font-medium transition-all flex items-center gap-2 whitespace-nowrap"
-              style={{
-                background: activeTab === tab.id ? 'rgba(92,225,230,0.12)' : 'rgba(255,255,255,0.03)',
-                color: activeTab === tab.id ? '#5CE1E6' : 'rgba(255,255,255,0.5)',
-                border: activeTab === tab.id ? '1px solid rgba(92,225,230,0.3)' : '1px solid transparent'
-              }}
-            >
-              <tab.icon className="w-4 h-4" />
-              <span>{tab.label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Content */}
-        <div className="p-4 sm:p-6 sm:overflow-y-auto sm:max-h-[calc(90vh-320px)]">
-          <AnimatePresence mode="wait">
-            {/* PREGLED: sažetak naloga kao na prikazu aplikacije */}
-            {activeTab === 'overview' && (
-              <motion.div key="overview" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
                 <div className="grid lg:grid-cols-[1.15fr_.85fr] gap-4">
                   <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(120,220,255,0.12)' }}>
                     <div className="flex items-center justify-between mb-3">
@@ -1157,14 +1166,14 @@ export function WorkOrderDetailsModal({
             )}
 
             {/* SERVICES TAB */}
-            {activeTab === 'services' && (
+            {activeTab === 'work' && (
               <motion.div key="services" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-semibold">Izvršene Usluge</h3>
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-base font-semibold">Izvršene Usluge</h3>
                   {!showAddServiceForm && (
                     <button
                       onClick={() => setShowAddServiceForm(true)}
-                      className="px-4 py-2 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2"
+                      className="px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-1.5"
                       style={{ background: T.accent, color: '#000000' }}
                     >
                       <Plus className="w-4 h-4" />
@@ -1253,17 +1262,17 @@ export function WorkOrderDetailsModal({
                   </form>
                 )}
 
-                <div className="space-y-3">
+                <div className="space-y-1.5">
                   {services.map((service) => (
                     <div
                       key={service.id}
-                      className="p-4 rounded-xl flex items-center justify-between"
+                      className="px-3 py-2.5 rounded-xl flex items-center justify-between gap-2"
                       style={{
                         background: service.completed ? 'rgba(46,255,136,0.1)' : 'rgba(255,255,255,0.03)',
                         border: `1px solid ${service.completed ? 'rgba(46,255,136,0.2)' : 'rgba(255,255,255,0.08)'}`
                       }}
                     >
-                      <div className="flex items-center gap-4 flex-1">
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
                         <button
                           onClick={() => toggleService(service.id)}
                           className="w-6 h-6 rounded-lg flex items-center justify-center transition-all"
@@ -1276,8 +1285,8 @@ export function WorkOrderDetailsModal({
                         </button>
 
                         <div className="flex-1">
-                          <h4 className="font-semibold">{service.name}</h4>
-                          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{service.description}</p>
+                          <h4 className="font-semibold text-sm truncate">{service.name}</h4>
+                          {service.description ? <p className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.5)' }}>{service.description}</p> : null}
                           {service.completed && service.completedAt && (
                             <p className="text-xs mt-1" style={{ color: '#2EFF88' }}>✓ {itemTimeLabel(service, `s${service.id}`, durations)}</p>
                           )}
@@ -1296,14 +1305,14 @@ export function WorkOrderDetailsModal({
             )}
 
             {/* TASKS TAB */}
-            {activeTab === 'tasks' && (
-              <motion.div key="tasks" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-semibold">Zadaci održavanja</h3>
+            {activeTab === 'work' && (
+              <motion.div key="tasks" className="mt-6" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-base font-semibold">Zadaci održavanja</h3>
                   {!showAddTaskForm && (
                     <button
                       onClick={() => setShowAddTaskForm(true)}
-                      className="px-4 py-2 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2"
+                      className="px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-1.5"
                       style={{ background: T.accent, color: '#000000' }}
                     >
                       <Plus className="w-4 h-4" />
@@ -1382,17 +1391,17 @@ export function WorkOrderDetailsModal({
                   </form>
                 )}
 
-                <div className="space-y-3">
+                <div className="space-y-1.5">
                   {maintenanceTasks.map((task) => (
                     <div
                       key={task.id}
-                      className="p-4 rounded-xl flex items-center justify-between"
+                      className="px-3 py-2.5 rounded-xl flex items-center justify-between gap-2"
                       style={{
                         background: task.completed ? 'rgba(46,255,136,0.1)' : 'rgba(255,255,255,0.03)',
                         border: `1px solid ${task.completed ? 'rgba(46,255,136,0.2)' : 'rgba(255,255,255,0.08)'}`
                       }}
                     >
-                      <div className="flex items-center gap-4 flex-1">
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
                         <button
                           onClick={() => toggleTask(task.id)}
                           className="w-6 h-6 rounded-lg flex items-center justify-center transition-all"
@@ -1426,12 +1435,12 @@ export function WorkOrderDetailsModal({
             {/* PRODUCTS TAB */}
             {activeTab === 'products' && (
               <motion.div key="products" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-semibold">Utrošena Kemija</h3>
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-base font-semibold">Utrošena Kemija</h3>
                   {!showAddProductForm && (
                     <button
                       onClick={() => setShowAddProductForm(true)}
-                      className="px-4 py-2 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2"
+                      className="px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-1.5"
                       style={{ background: T.accent, color: '#000000' }}
                     >
                       <Plus className="w-4 h-4" />
@@ -1547,7 +1556,7 @@ export function WorkOrderDetailsModal({
                   </div>
                 )}
 
-                <div className="space-y-3">
+                <div className="space-y-1.5">
                   {productsUsed.map((product) => (
                     <div
                       key={product.id}
@@ -1555,7 +1564,7 @@ export function WorkOrderDetailsModal({
                       style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-semibold">{product.productName}</h4>
+                        <h4 className="font-semibold text-sm truncate">{product.productName}</h4>
                         <button
                           onClick={() => deleteProduct(product.id)}
                           className="p-1 rounded-lg hover:bg-red-500/20 transition-all"
@@ -1692,8 +1701,8 @@ export function WorkOrderDetailsModal({
             )}
 
             {/* AUTOMATION TAB */}
-            {activeTab === 'automation' && (
-              <motion.div key="automation" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
+            {activeTab === 'water' && (
+              <motion.div key="automation" className="mt-8" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
                 <h3 className="text-xl font-semibold mb-6">Automatika</h3>
 
                 <div className="mb-6 p-6 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
@@ -2180,9 +2189,23 @@ export function WorkOrderDetailsModal({
           </AnimatePresence>
         </div>
 
-        {viewerIndex >= 0 && filteredPhotos[viewerIndex] && (
+        {/* Kartice: na mobitelu dolje, gdje je palac */}
+        <nav className="sm:hidden shrink-0 grid grid-cols-5" style={{ borderTop: '1px solid rgba(120,220,255,0.14)', background: 'rgba(2,13,18,0.92)', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+          {tabs.map((tab) => {
+            const on = activeTab === tab.id;
+            return (
+              <button key={tab.id} onClick={() => setActiveTab(tab.id as any)} className="flex flex-col items-center justify-center gap-0.5 py-2 text-[11px] font-semibold"
+                style={{ color: on ? '#5CE1E6' : 'rgba(255,255,255,0.5)' }}>
+                <tab.icon className="w-5 h-5" />
+                <span className="truncate max-w-full px-1">{tab.label}</span>
+              </button>
+            );
+          })}
+        </nav>
+
+        {viewerIndex >= 0 && filteredPhotos[viewerIndex] && createPortal(
           <div
-            className="fixed inset-0 z-[80] flex items-center justify-center p-4"
+            className="fixed inset-0 z-[90] flex items-center justify-center p-4"
             style={{ background: 'rgba(0,0,0,0.94)' }}
             onClick={() => setViewerPhotoId(null)}
             onTouchStart={event => {
@@ -2201,8 +2224,8 @@ export function WorkOrderDetailsModal({
             <button
               type="button"
               onClick={() => setViewerPhotoId(null)}
-              className="absolute top-4 right-4 p-3 rounded-xl"
-              style={{ background: 'rgba(255,255,255,0.1)' }}
+              className="absolute right-4 p-3 rounded-xl z-10"
+              style={{ background: 'rgba(255,255,255,0.14)', top: 'calc(16px + env(safe-area-inset-top, 0px))' }}
               aria-label="Zatvori"
             >
               <X className="w-6 h-6" />
@@ -2221,12 +2244,19 @@ export function WorkOrderDetailsModal({
             )}
 
             <div className="max-w-5xl w-full h-full flex flex-col items-center justify-center gap-3" onClick={event => event.stopPropagation()}>
-              <img
-                src={photoSource(filteredPhotos[viewerIndex])}
-                alt={photoCategoryLabel(filteredPhotos[viewerIndex].category)}
-                className="max-w-full max-h-[82vh] object-contain rounded-xl"
-                onError={() => handlePhotoImageError(filteredPhotos[viewerIndex])}
-              />
+              {photoSource(filteredPhotos[viewerIndex]) ? (
+                <img
+                  src={photoSource(filteredPhotos[viewerIndex])}
+                  alt={photoCategoryLabel(filteredPhotos[viewerIndex].category)}
+                  className="max-w-full max-h-[82vh] object-contain rounded-xl"
+                  onError={() => handlePhotoImageError(filteredPhotos[viewerIndex])}
+                />
+              ) : (
+                <div className="flex flex-col items-center gap-3 py-16 text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                  <Loader2 className="w-7 h-7 animate-spin" />
+                  Fotografija se učitava. Ako nema signala, prikazat će se kad se veza vrati.
+                </div>
+              )}
               <div className="text-center">
                 <p className="text-sm font-semibold" style={{ color: '#5CE1E6' }}>
                   {photoCategoryLabel(filteredPhotos[viewerIndex].category)}
@@ -2250,7 +2280,8 @@ export function WorkOrderDetailsModal({
                 <ChevronRight className="w-7 h-7" />
               </button>
             )}
-          </div>
+          </div>,
+          document.body
         )}
       </motion.div>
     </motion.div>
