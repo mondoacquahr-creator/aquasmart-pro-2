@@ -18,9 +18,10 @@ export type OutboxOp = {
   body?: any;
   queuedAt: string;
   tries: number;
+  base?: any;                  // stanje stavke prije prve izmjene bez veze (za spajanje)
 };
 
-export type RejectedOp = { resource: string; id: string; reason: string; at: string };
+export type RejectedOp = { resource: string; id: string; reason: string; at: string; kind?: 'rejected' | 'merged' };
 
 export type OutboxState = { pending: number; rejected: RejectedOp[]; sending: boolean; online: boolean };
 
@@ -179,8 +180,15 @@ export function pendingCountSync(): number {
 
 async function enqueue(op: Omit<OutboxOp, 'key' | 'queuedAt' | 'tries'>) {
   const key = `${op.resource}:${op.id}`;
-  const q = (await getQueue()).filter(o => o.key !== key);
-  const full: OutboxOp = { ...op, key, queuedAt: new Date().toISOString(), tries: 0 };
+  const all = await getQueue();
+  const prev = all.find(o => o.key === key);
+  let base = prev ? prev.base : undefined;
+  if (!prev) {
+    const cache = await readCache();
+    base = (cache?.[op.resource] || []).find((x: any) => idOf(x) === op.id);
+  }
+  const q = all.filter(o => o.key !== key);
+  const full: OutboxOp = { ...op, key, queuedAt: new Date().toISOString(), tries: 0, ...(base !== undefined ? { base } : {}) };
   q.push(full);
   await setQueue(q);
   await patchCache(full);
@@ -226,6 +234,52 @@ async function run(op: Omit<OutboxOp, 'key' | 'queuedAt' | 'tries'>): Promise<Sa
   }
 }
 
+// ---------- Spajanje kad je netko drugi u međuvremenu mijenjao istu stavku ----------
+
+const isObj = (v: any) => v && typeof v === 'object' && !Array.isArray(v);
+const stable = (v: any): string => JSON.stringify(v, (_k, x) => (isObj(x) ? Object.keys(x).sort().reduce((o: any, k) => { o[k] = x[k]; return o; }, {}) : x));
+const same = (a: any, b: any) => stable(a) === stable(b);
+const byIdList = (v: any) => Array.isArray(v) && v.every(x => isObj(x) && x.id !== undefined);
+
+// Trostrano spajanje: što je promijenio samo jedan, uzima se njegovo; što su promijenila oba, zadržava se lokalno i bilježi.
+export function merge3(base: any, local: any, server: any, path = '', conflicts: string[] = []): any {
+  if (same(local, base)) return server;
+  if (same(server, base) || same(server, local)) return local;
+  if (isObj(base) && isObj(local) && isObj(server)) {
+    const out: any = {};
+    for (const k of new Set([...Object.keys(server), ...Object.keys(local)])) {
+      const inL = k in local, inR = k in server;
+      if (inL && inR) out[k] = merge3(base?.[k], local[k], server[k], path ? `${path}.${k}` : k, conflicts);
+      else if (inL) { if (!(k in base) || !same(local[k], base[k])) out[k] = local[k]; }
+      else { if (!(k in base) || !same(server[k], base[k])) out[k] = server[k]; }
+    }
+    return out;
+  }
+  if (byIdList(local) && byIdList(server) && (base === undefined || byIdList(base))) {
+    const b = new Map((base || []).map((x: any) => [String(x.id), x]));
+    const l = new Map(local.map((x: any) => [String(x.id), x]));
+    const r = new Map(server.map((x: any) => [String(x.id), x]));
+    const order = [...server.map((x: any) => String(x.id)), ...local.map((x: any) => String(x.id)).filter((id: string) => !r.has(id))];
+    const out: any[] = [];
+    for (const id of order) {
+      const bx = b.get(id), lx = l.get(id), rx = r.get(id);
+      if (lx && rx) out.push(merge3(bx, lx, rx, `${path}[${id}]`, conflicts));
+      else if (lx && !rx) { if (!bx || !same(lx, bx)) out.push(lx); }       // novo lokalno, ili obrisano na poslužitelju a lokalno mijenjano
+      else if (rx && !lx) { if (!bx || !same(rx, bx)) out.push(rx); }       // novo na poslužitelju, ili lokalno obrisano a tamo mijenjano
+    }
+    return out;
+  }
+  conflicts.push(path || 'stavka');
+  return local;
+}
+
+const FIELD_NAMES: Record<string, string> = {
+  status: 'status', notes: 'napomena', services: 'usluge', maintenanceTasks: 'zadaci', productsUsed: 'utrošena kemija',
+  waterAnalysis: 'analiza vode', photos: 'fotografije', assignee: 'izvršitelj', stock: 'stanje', dueDate: 'rok',
+};
+const describeConflicts = (paths: string[]) =>
+  Array.from(new Set(paths.map(p => FIELD_NAMES[p.split(/[.[]/)[0]] || p.split(/[.[]/)[0]))).join(', ');
+
 // Pošalji sve što čeka, redom. Staje na prvoj grešci veze.
 export async function flush(): Promise<void> {
   if (sending) return;
@@ -234,12 +288,35 @@ export async function flush(): Promise<void> {
   if (!data?.session) return;
   sending = true;
   notify();
+  const serverLists = new Map<string, any[] | null>();
+  const serverItem = async (resource: string, id: string) => {
+    if (!serverLists.has(resource)) {
+      try { serverLists.set(resource, await api.get(resource)); } catch { serverLists.set(resource, null); }
+    }
+    const list = serverLists.get(resource);
+    return Array.isArray(list) ? list.find((x: any) => idOf(x) === id) : undefined;
+  };
   try {
     while (true) {
       const q = await getQueue();
       if (!q.length) break;
       const op = q[0];
       try {
+        if (op.op === 'post' && op.base !== undefined) {
+          const current = await serverItem(op.resource, op.id);
+          if (current && !same(current, op.base)) {
+            const conflicts: string[] = [];
+            const merged = merge3(op.base, op.body, current, '', conflicts);
+            op.body = merged;
+            await patchCache(op);
+            if (conflicts.length) {
+              await addRejected({
+                resource: op.resource, id: op.id, kind: 'merged', at: new Date().toISOString(),
+                reason: `Netko je u međuvremenu mijenjao istu stavku. Izmjene su spojene; kod polja „${describeConflicts(conflicts)}” zadržana je vaša verzija – provjerite.`,
+              });
+            }
+          }
+        }
         await sendOne(op);
       } catch (err: any) {
         if (isRetryable(err)) {

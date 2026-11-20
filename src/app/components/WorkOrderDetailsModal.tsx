@@ -13,6 +13,7 @@ import {
   AlertTriangle, Package, Images, Loader2, ChevronLeft, ChevronRight, Clock, Play, Square, RotateCcw
 } from 'lucide-react';
 import { fmtClock, itemDurations, itemTimeLabel, totalWorkLabel } from '../lib/workTime';
+import { queuePhoto, uploadQueuedPhoto, getQueuedPhotoBlob, removeQueuedPhoto, companyFolder } from '../lib/photoOutbox';
 
 interface WorkOrderDetailsModalProps {
   order: {
@@ -244,7 +245,7 @@ export function WorkOrderDetailsModal({
   const [photoError, setPhotoError] = useState('');
   const [photoUrls, setPhotoUrls] = useState<Record<string, string>>({});
   const [photoPreviews, setPhotoPreviews] = useState<Record<string, string>>({});
-  const [photoUploadStates, setPhotoUploadStates] = useState<Record<string, 'uploading' | 'failed' | 'done'>>({});
+  const [photoUploadStates, setPhotoUploadStates] = useState<Record<string, 'uploading' | 'failed' | 'done' | 'queued'>>({});
   const [photoUploadErrors, setPhotoUploadErrors] = useState<Record<string, 'offline' | 'upload'>>({});
   const [deletePhotoId, setDeletePhotoId] = useState<string | null>(null);
   const [viewerPhotoId, setViewerPhotoId] = useState<string | null>(null);
@@ -324,6 +325,26 @@ export function WorkOrderDetailsModal({
     });
   }, [photoMode, photos, photoUrls]);
 
+  // Fotografije koje su snimljene bez signala i još čekaju slanje (i nakon ponovnog otvaranja naloga).
+  useEffect(() => {
+    if (photoMode !== 'live') return;
+    let cancelled = false;
+    (async () => {
+      for (const photo of photos) {
+        if (photoUploadStates[photo.id] || photoPreviews[photo.id]) continue;
+        const blob = await getQueuedPhotoBlob(photo.id);
+        if (!blob || cancelled) continue;
+        const preview = URL.createObjectURL(blob);
+        previewUrlsRef.current.add(preview);
+        setPhotoPreviews(previous => ({ ...previous, [photo.id]: preview }));
+        setPhotoUploadStates(previous => ({ ...previous, [photo.id]: 'queued' }));
+        if (navigator.onLine) void uploadPhoto(photo);
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [photoMode]);
+
   useEffect(() => () => {
     previewUrlsRef.current.forEach(url => URL.revokeObjectURL(url));
     previewUrlsRef.current.clear();
@@ -333,7 +354,7 @@ export function WorkOrderDetailsModal({
     const retryFailedPhotos = () => {
       if (photoMode !== 'live') return;
       photos
-        .filter(photo => photoUploadStates[photo.id] === 'failed')
+        .filter(photo => photoUploadStates[photo.id] === 'failed' || photoUploadStates[photo.id] === 'queued')
         .forEach(photo => void uploadPhoto(photo));
     };
     window.addEventListener('online', retryFailedPhotos);
@@ -342,7 +363,8 @@ export function WorkOrderDetailsModal({
 
   useEffect(() => {
     const hasFailedPhotos = Object.values(photoUploadStates).some(state => state === 'failed');
-    if (!hasFailedPhotos && saveError === 'Neke fotografije nisu poslane. Pokušajte ponovno ili ih obrišite.') {
+  const queuedPhotoCount = Object.values(photoUploadStates).filter(state => state === 'queued').length;
+    if (!hasFailedPhotos && saveError === 'Poslužitelj je odbio neke fotografije. Pokušajte ponovno ili ih obrišite.') {
       setSaveError('');
     }
   }, [photoUploadStates, saveError]);
@@ -524,11 +546,15 @@ export function WorkOrderDetailsModal({
   }
 
   const uploadPhoto = async (photo: Photo, blob?: Blob, previewUrl?: string) => {
-    const uploadBlob = blob || uploadBlobsRef.current.get(photo.id);
-    if (!uploadBlob || photoMode !== 'live') return;
+    if (photoMode !== 'live') return;
+    // Fotografija je uvijek prvo spremljena na uređaj; ovdje se samo pokušava poslati.
+    const memBlob = blob || uploadBlobsRef.current.get(photo.id);
+    if (memBlob && !(await getQueuedPhotoBlob(photo.id))) {
+      const rel = photo.path ? photo.path.split('/').slice(1).join('/') : `work-orders/${editedOrder.id}/${photo.id}.jpg`;
+      await queuePhoto(photo.id, rel, memBlob);
+    }
     if (!navigator.onLine) {
-      setPhotoUploadStates(previous => ({ ...previous, [photo.id]: 'failed' }));
-      setPhotoUploadErrors(previous => ({ ...previous, [photo.id]: 'offline' }));
+      setPhotoUploadStates(previous => ({ ...previous, [photo.id]: 'queued' }));
       return;
     }
     setPhotoUploadStates(previous => ({ ...previous, [photo.id]: 'uploading' }));
@@ -537,40 +563,28 @@ export function WorkOrderDetailsModal({
       delete next[photo.id];
       return next;
     });
-    const timestamp = Date.now();
-    const random = Math.random().toString(36).slice(2, 10);
-    const path = `work-orders/${editedOrder.id}/${timestamp}-${random}.jpg`;
-    try {
-      const file = new File([uploadBlob], `${timestamp}-${random}.jpg`, { type: 'image/jpeg' });
-      const response: any = await api.uploadImage(file, path);
-      const storedPath = typeof response?.path === 'string' ? response.path : path;
-      const signedUrl = await loadSignedPhotoUrl({ ...photo, path: storedPath }, true);
-      setPhotos(previous => previous.map(item =>
-        item.id === photo.id ? { ...item, path: storedPath } : item
-      ));
-      setPhotoUploadStates(previous => ({ ...previous, [photo.id]: 'done' }));
-      setPhotoUploadErrors(previous => {
+    const result = await uploadQueuedPhoto(photo.id);
+    if (result === 'waiting') {
+      setPhotoUploadStates(previous => ({ ...previous, [photo.id]: 'queued' }));
+      return;
+    }
+    if (result === 'rejected') {
+      setPhotoUploadStates(previous => ({ ...previous, [photo.id]: 'failed' }));
+      setPhotoUploadErrors(previous => ({ ...previous, [photo.id]: 'upload' }));
+      return;
+    }
+    setPhotoUploadStates(previous => ({ ...previous, [photo.id]: 'done' }));
+    uploadBlobsRef.current.delete(photo.id);
+    const signedUrl = await loadSignedPhotoUrl(photo, true);
+    const preview = previewUrl || photoPreviews[photo.id];
+    if (preview && signedUrl) {
+      URL.revokeObjectURL(preview);
+      previewUrlsRef.current.delete(preview);
+      setPhotoPreviews(previous => {
         const next = { ...previous };
         delete next[photo.id];
         return next;
       });
-      uploadBlobsRef.current.delete(photo.id);
-      const preview = previewUrl || photoPreviews[photo.id];
-      if (preview && signedUrl) {
-        URL.revokeObjectURL(preview);
-        previewUrlsRef.current.delete(preview);
-        setPhotoPreviews(previous => {
-          const next = { ...previous };
-          delete next[photo.id];
-          return next;
-        });
-      }
-    } catch {
-      setPhotoUploadStates(previous => ({ ...previous, [photo.id]: 'failed' }));
-      setPhotoUploadErrors(previous => ({
-        ...previous,
-        [photo.id]: navigator.onLine ? 'upload' : 'offline',
-      }));
     }
   };
 
@@ -607,17 +621,17 @@ export function WorkOrderDetailsModal({
           setPhotos(previous => [...previous, { ...photo, dataUrl }].slice(0, 40));
           setPhotoUploadStates(previous => ({ ...previous, [id]: 'done' }));
         } else {
+          const folder = await companyFolder();
+          const rel = `work-orders/${editedOrder.id}/${id}.jpg`;
+          if (folder) photo.path = `${folder}/${rel}`;
+          await queuePhoto(id, rel, compressed);
           const preview = URL.createObjectURL(compressed);
           previewUrlsRef.current.add(preview);
           uploadBlobsRef.current.set(id, compressed);
           setPhotoPreviews(previous => ({ ...previous, [id]: preview }));
           setPhotos(previous => [...previous, photo].slice(0, 40));
-          if (navigator.onLine) {
-            void uploadPhoto(photo, compressed, preview);
-          } else {
-            setPhotoUploadStates(previous => ({ ...previous, [id]: 'failed' }));
-            setPhotoUploadErrors(previous => ({ ...previous, [id]: 'offline' }));
-          }
+          setPhotoUploadStates(previous => ({ ...previous, [id]: 'queued' }));
+          if (navigator.onLine) void uploadPhoto(photo, compressed, preview);
         }
       } catch {
         setPhotoError('Fotografiju nije moguće obraditi. Pokušajte s drugom datotekom.');
@@ -640,6 +654,7 @@ export function WorkOrderDetailsModal({
       previewUrlsRef.current.delete(preview);
     }
     uploadBlobsRef.current.delete(id);
+    void removeQueuedPhoto(id);
     setPhotos(previous => previous.filter(photo => photo.id !== id));
     setPhotoUrls(previous => {
       const next = { ...previous };
@@ -686,10 +701,9 @@ export function WorkOrderDetailsModal({
   const totals = calculateTotals();
 
   const handleSave = (extra: { workEndedAt?: string } = {}) => {
-    if (Object.values(photoUploadStates).some(state => state === 'uploading')) return;
     if (Object.values(photoUploadStates).some(state => state === 'failed')) {
       setActiveTab('photos');
-      setSaveError('Neke fotografije nisu poslane. Pokušajte ponovno ili ih obrišite.');
+      setSaveError('Poslužitelj je odbio neke fotografije. Pokušajte ponovno ili ih obrišite.');
       return;
     }
     if (!editedOrder.client) {
@@ -1825,6 +1839,16 @@ export function WorkOrderDetailsModal({
                   <p className="text-sm mb-4" style={{ color: '#FF3B30' }}>{photoError}</p>
                 )}
 
+                {queuedPhotoCount > 0 && (
+                  <div className="mb-4 p-3 rounded-xl text-sm" style={{ background: 'rgba(255,210,122,0.08)', border: '1px solid rgba(255,210,122,0.3)', color: '#FFD27A' }}>
+                    <strong>{queuedPhotoCount} {queuedPhotoCount === 1 ? 'fotografija čeka' : 'fotografije čekaju'} signal.</strong> Spremljene su na mobitel i šalju se same čim bude veze. Nalog možete spremiti normalno. Ne odjavljujte se i ne brišite podatke preglednika dok se ne pošalju.
+                  </div>
+                )}
+                {hasFailedPhotos && (
+                  <div className="mb-2 text-sm" style={{ color: '#FF8A80' }}>
+                    Poslužitelj nije primio neke fotografije. Pošaljite ih ponovno ili ih obrišite; nalog se ne može spremiti dok ne riješite te fotografije.
+                  </div>
+                )}
                 {hasFailedPhotos && (
                   <button
                     type="button"
@@ -1896,10 +1920,13 @@ export function WorkOrderDetailsModal({
                               className="text-left text-xs font-semibold"
                               style={{ color: '#FF3B30' }}
                             >
-                              {photoUploadErrors[photo.id] === 'offline'
-                                ? 'Nema interneta – pošaljite kad se spojite'
-                                : 'Nije poslano – Pokušaj ponovno'}
+                              Poslužitelj nije primio fotografiju – dodirnite za ponovno slanje
                             </button>
+                          )}
+                          {uploadState === 'queued' && (
+                            <p className="text-xs font-semibold" style={{ color: '#FFD27A' }}>
+                              Spremljeno na mobitel – šalje se samo kad bude signala
+                            </p>
                           )}
 
                           {deletePhotoId === photo.id ? (

@@ -8,6 +8,7 @@ import { RegisterPage } from './components/RegisterPage';
 import { FreePortal } from './components/FreePortal';
 import { EmployerDashboard } from './components/EmployerDashboard';
 import { OutboxBadge } from './components/OutboxBadge';
+import { WhatsNew } from './components/WhatsNew';
 import { clearCacheForLogout } from './lib/outbox';
 import { EmployeeDashboard } from './components/EmployeeDashboard';
 import { MondoAdmin } from './components/MondoAdmin';
@@ -265,6 +266,7 @@ export default function App() {
 
           {/* PRO Portal - Show different dashboard based on userRole */}
           {currentPage === 'pro-portal' && userRole !== 'member' && <OutboxBadge />}
+          {currentPage === 'pro-portal' && (userRole === 'employer' || userRole === 'employee') && <WhatsNew isOwner={userRole === 'employer'} />}
           {currentPage === 'pro-portal' && userRole === 'employer' && (
             <EmployerDashboard onBack={handleLogout} onNavigate={(page) => handleNavigate(page)} />
           )}
