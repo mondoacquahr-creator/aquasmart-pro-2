@@ -25,7 +25,32 @@ export default defineConfig({
     figmaAssetResolver(),
     {
       name: 'google-merchant-catalog',
-      generateBundle() {
+      async generateBundle() {
+        // Ivero slike: kopija na naš poslužitelj (/proizvodi-slike/<id>.<ext>). Uspješno preuzete slike čuvaju se i u
+        // node_modules/.cache (Netlify ga čuva između objava), pa privremeni pad izvora ne briše slike sa stranice.
+        const cacheDir = path.resolve(__dirname, 'node_modules/.cache/proizvodi-slike');
+        fs.mkdirSync(cacheDir, { recursive: true });
+        const todo = SHOP_PRODUCTS.filter((p) => p.sourceImageUrl && p.imageUrl?.startsWith('/proizvodi-slike/'));
+        let fetched = 0, cached = 0, missing = 0;
+        await Promise.all(todo.map(async (p) => {
+          const fileName = p.imageUrl!.slice(1);
+          const cacheFile = path.join(cacheDir, path.basename(fileName));
+          let data: Buffer | null = null;
+          try {
+            const res = await fetch(p.sourceImageUrl!, { signal: AbortSignal.timeout(20000) });
+            const type = res.headers.get('content-type') || '';
+            if (res.ok && type.startsWith('image/')) {
+              data = Buffer.from(await res.arrayBuffer());
+              fs.writeFileSync(cacheFile, data);
+              fetched++;
+            }
+          } catch { /* izvor nedostupan */ }
+          if (!data && fs.existsSync(cacheFile)) { data = fs.readFileSync(cacheFile); cached++; }
+          if (data) this.emitFile({ type: 'asset', fileName, source: data });
+          else missing++;
+        }));
+        console.log(`[proizvodi-slike] preuzeto ${fetched}, iz predmemorije ${cached}, nedostaje ${missing} (prikaz koristi izvornu sliku)`);
+
         // Podaci za javni cjenik (Netlify funkcija cjenik)
         fs.writeFileSync(path.resolve(__dirname, 'netlify/functions/cjenik-data.json'), JSON.stringify(buildCjenikRows(SHOP_PRODUCTS, path.resolve(__dirname, 'public/mondo-web/index.html'))));
         for (const asset of merchantAssets(SHOP_PRODUCTS)) {

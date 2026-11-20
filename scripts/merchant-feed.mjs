@@ -13,7 +13,7 @@ export function merchantAssets(products) {
   for (const p of products) {
     if (!/^[a-zA-Z0-9-]+$/.test(p.id) || seen.has(p.id)) throw new Error(`Invalid or duplicate product ID: ${p.id}`);
     seen.add(p.id);
-    if (!(Number.isFinite(p.priceEUR) && p.priceEUR > 0) || !p.name || !p.size || !p.imageUrl?.startsWith('https://')) throw new Error(`Incomplete product: ${p.id}`);
+    if (!(Number.isFinite(p.priceEUR) && p.priceEUR > 0) || !p.name || !p.size || !(p.sourceImageUrl || p.imageUrl)?.startsWith('https://')) throw new Error(`Incomplete product: ${p.id}`);
   }
   const tag = (key, value) => `<g:${key}>${escapeXml(value)}</g:${key}>`;
   const items = products.map(p => `<item>${[
@@ -24,7 +24,7 @@ export function merchantAssets(products) {
   const feed = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"><channel><title>Mondo Acqua Pool Care</title><link>${SHOP_ORIGIN}/?stranica=webshop</link><description>Proizvodi za bazene i spa – maloprodajne cijene s PDV-om.</description>\n${items}\n</channel></rss>\n`;
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[`${SHOP_ORIGIN}/?stranica=webshop`, ...products.map(productUrl)].map(url => `<url><loc>${escapeXml(url)}</loc></url>`).join('\n')}\n</urlset>\n`;
   return [
-    {fileName:'_redirects', source: products.filter(p => !p.id.startsWith('vg-') && !p.id.startsWith('vh-')).map(p => `/merchant-images/${p.id}.jpg /.netlify/images?url=${encodeURIComponent(p.imageUrl)}&fm=jpg&q=90 200`).join('\n') + '\n'},
+    {fileName:'_redirects', source: products.filter(p => !p.id.startsWith('vg-') && !p.id.startsWith('vh-')).map(p => `/merchant-images/${p.id}.jpg /.netlify/images?url=${encodeURIComponent(p.sourceImageUrl || p.imageUrl)}&fm=jpg&q=90 200`).join('\n') + '\n'},
     {fileName:'google-products.xml',source:feed},
     {fileName:'sitemap.xml',source:sitemap},
     {fileName:'robots.txt',source:`User-agent: *\nAllow: /\n\nSitemap: ${SHOP_ORIGIN}/sitemap.xml\n`},

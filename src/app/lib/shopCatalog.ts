@@ -70,7 +70,12 @@ export interface ShopProduct {
   description?: string;
   anchorEUR?: number; // sidrena cijena
   anchorDate?: string; // datum sidrene cijene (YYYY-MM-DD)
+  sourceImageUrl?: string; // izvorna slika dobavljača (rezerva i Google Merchant)
 }
+
+// Ivero slike kopiraju se na naš poslužitelj pri svakoj objavi (vite.config.ts → /proizvodi-slike/).
+// Ako kopija iz bilo kojeg razloga ne postoji, prikaz se vraća na izvornu sliku (onError).
+export const localImagePath = (id: string, url: string) => `/proizvodi-slike/${id}${(url.match(/\.(jpe?g|png|webp)$/i)?.[0] || '.jpg').toLowerCase()}`;
 
 const chemProducts: ShopProduct[] = Object.values(IVERO_PRICES).map((p) => ({
   id: p.id,
@@ -78,7 +83,8 @@ const chemProducts: ShopProduct[] = Object.values(IVERO_PRICES).map((p) => ({
   size: p.size,
   priceEUR: p.priceEUR,
   category: deriveCategory(p.id),
-  imageUrl: PRODUCT_IMAGES[p.id],
+  imageUrl: PRODUCT_IMAGES[p.id] ? localImagePath(p.id, PRODUCT_IMAGES[p.id]) : undefined,
+  sourceImageUrl: PRODUCT_IMAGES[p.id],
 }));
 
 const equipmentProducts: ShopProduct[] = VAGNER_EQUIPMENT.map((p) => ({

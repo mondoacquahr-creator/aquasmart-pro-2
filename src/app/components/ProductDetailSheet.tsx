@@ -81,7 +81,7 @@ export function ProductDetailSheet({ product, qty, member, care, onClose, onRegi
         {/* Slika */}
         <div className="relative flex items-center justify-center" style={{ background: '#fff', height: 240 }}>
           {product.imageUrl && imgOk ? (
-            <img src={product.imageUrl} alt={product.name} className="h-full w-full object-contain p-4" onError={() => setImgOk(false)} />
+            <img src={product.imageUrl} alt={product.name} className="h-full w-full object-contain p-4" onError={(e) => { const el = e.currentTarget; if (product.sourceImageUrl && el.src !== product.sourceImageUrl) { el.src = product.sourceImageUrl; return; } setImgOk(false); }} />
           ) : (
             <Package className="w-16 h-16" style={{ color: T.cyan }} />
           )}
