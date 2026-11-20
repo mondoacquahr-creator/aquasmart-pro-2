@@ -546,7 +546,7 @@ img{height:auto}
 @media (max-width:820px){.pro-first{grid-template-columns:1fr}}
 .pro-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}@media (max-width:900px){.pro-plans{grid-template-columns:1fr}}
 .pro-plan{position:relative;display:flex;flex-direction:column;gap:14px;padding:26px;border-radius:20px;border:1px solid var(--line);background:rgba(6,30,42,.6);min-width:0}
-.pro-plan h3{color:#fff;font-size:1.3rem}.pro-plan .pro-ul{flex:1}.pro-plan .btn{justify-content:center}
+.pro-plan h3{color:#fff;font-size:1.3rem}.pro-price{display:flex;align-items:baseline;gap:6px;margin:2px 0 4px}.pro-price b{font:800 2.2rem/1 var(--display);color:#fff;letter-spacing:-.04em}.pro-price span,.pro-price small{font-size:.85rem;color:var(--muted)}.pro-plan .pro-ul{flex:1}.pro-plan .btn{justify-content:center}
 .pro-plan.on{border-color:rgba(79,195,240,.6);box-shadow:0 0 0 1px rgba(79,195,240,.25),0 24px 60px rgba(0,0,0,.35)}
 .pro-tag{position:absolute;top:-11px;left:22px;background:var(--aqua);color:#04202b;font:800 .64rem/1 var(--display);letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:6px}
 .pro-note{margin-top:18px;padding:16px 20px;border-left:3px solid var(--aqua);background:rgba(79,195,240,.06);border-radius:0 12px 12px 0;font-size:.92rem}.pro-note b{color:#fff}
@@ -1125,7 +1125,7 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
       <h1>Softver koji vodi<br><em>vaš servis bazena.</em></h1>
       <p class="lead">Radni nalozi, tim i ovlasti, skladište i razduženje, izvještaji klijentima. Sve na jednom mjestu, umjesto u bilježnici, na WhatsAppu i u tri Excel tablice.</p>
       <div class="btns"><a class="btn btn-primary" href="https://poolcare.mondo-acqua.hr/?stranica=registracija">Isprobajte 30 dana besplatno →</a><a class="btn btn-ghost" href="#pro-paketi" data-pro-jump>Paketi</a></div>
-      <p class="small" style="margin:0">Bez kartice · bez ugovorne obveze · podaci ostaju vaši · podrška na hrvatskom</p>
+      <p class="small" style="margin:0"><b style="color:#fff">od 19 € mjesečno</b> · 30 dana besplatno · bez kartice · bez ugovorne obveze</p>
     </div>
   </div></div>
 
@@ -1367,22 +1367,22 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     <div class="pro-first">
       <div><p class="eyebrow">Prvih 20 tvrtki</p><h2>Ne dobivate samo licencu.</h2>
         <p class="lead" style="margin-top:12px">Uvođenje radimo zajedno: prenesemo vaše klijente, posložimo skladište i prođemo prvi izvještaj s vama.</p></div>
-      <ul class="pro-ul"><li>Osobno uvođenje tima, uživo ili preko video poziva.</li><li>Izvještaji nose vaš logo i vaše ime.</li><li>Izravna linija do tima koji gradi aplikaciju.</li><li>Prvi mjesec zajedno slažemo radne procese.</li></ul>
+      <ul class="pro-ul"><li>Osobno uvođenje tima, uživo ili preko video poziva.</li><li>Izvještaji nose vaš logo i vaše ime.</li><li>Izravna linija do tima koji gradi aplikaciju.</li><li>Prvi mjesec zajedno slažemo radne procese.</li><li>Cijena paketa ostaje zaključana, bez kasnijih poskupljenja.</li></ul>
     </div>
   </div></div>
 
   <div class="band soft" id="pro-paketi"><div class="wrap">
     <p class="eyebrow">Paketi</p>
     <h2 style="margin-bottom:10px">Tri paketa. Bez skrivenih stavki.</h2>
-    <p class="lead" style="margin-bottom:28px">Svaki paket počinje s 30 dana besplatno. Cijene su mjesečne, bez PDV-a.</p>
+    <p class="lead" style="margin-bottom:28px">Svaki paket počinje s 30 dana besplatno. Cijene su mjesečne, bez PDV-a. Uz godišnje plaćanje plaćate 10 mjeseci, a koristite cijelu godinu.</p>
     <div class="pro-plans">
-      <div class="pro-plan"><h3>Starter</h3><p class="small">Za servisera koji radi sam ili s jednim pomoćnikom.</p>
+      <div class="pro-plan"><h3>Starter</h3><p class="small">Za servisera koji radi sam ili s jednim pomoćnikom.</p><p class="pro-price"><b>19 €</b><span>/mj, bez PDV-a</span></p>
         <ul class="pro-ul"><li>1 serviser</li><li>do 50 radnih naloga mjesečno</li><li>do 30 klijenata i bazena</li><li>PDF izvještaji klijentima</li><li>osnovno skladište</li></ul>
         <a class="btn btn-ghost" href="https://poolcare.mondo-acqua.hr/?stranica=registracija">Isprobajte besplatno</a></div>
-      <div class="pro-plan on"><span class="pro-tag">Najčešći izbor</span><h3>Tim</h3><p class="small">Za tvrtku s nekoliko servisera i zajedničkim skladištem.</p>
+      <div class="pro-plan on"><span class="pro-tag">Najčešći izbor</span><h3>Tim</h3><p class="small">Za tvrtku s nekoliko servisera i zajedničkim skladištem.</p><p class="pro-price"><b>49 €</b><span>/mj, bez PDV-a</span></p>
         <ul class="pro-ul"><li>do 5 servisera</li><li>neograničeni nalozi, klijenti i bazeni</li><li>izvještaji s vašim logom</li><li>skladište i razduženje po nalogu</li><li>ovlasti po serviseru</li></ul>
         <a class="btn btn-primary" href="https://poolcare.mondo-acqua.hr/?stranica=registracija">Isprobajte besplatno</a></div>
-      <div class="pro-plan"><h3>Tvrtka</h3><p class="small">Za veće timove, više lokacija i uvoz postojećih podataka.</p>
+      <div class="pro-plan"><h3>Tvrtka</h3><p class="small">Za veće timove, više lokacija i uvoz postojećih podataka.</p><p class="pro-price"><small>od</small> <b>99 €</b><span>/mj, bez PDV-a</span></p>
         <ul class="pro-ul"><li>6 i više servisera</li><li>sve iz paketa Tim</li><li>više lokacija i skladišta</li><li>uvoz postojećih klijenata</li><li>osobno uvođenje tima</li></ul>
         <a class="btn btn-ghost" href="tel:+385952087321">Nazovite nas</a></div>
     </div>
@@ -1393,6 +1393,7 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     <p class="eyebrow">Pitanja</p>
     <h2 style="margin-bottom:22px">Ono što serviseri pitaju prije prijave.</h2>
     <div class="pro-faq">
+      <details><summary>Koliko košta nakon probnog razdoblja?</summary><p>Starter 19 €, Tim 49 € i Tvrtka od 99 € mjesečno, bez PDV-a. Uz godišnje plaćanje plaćate 10 mjeseci za cijelu godinu. Ako ne odaberete paket, ništa se ne naplaćuje.</p></details>
       <details><summary>Treba li kartica za probno razdoblje?</summary><p>Ne. Probno razdoblje traje 30 dana i ne traži karticu.</p></details>
       <details><summary>Kome pripadaju podaci?</summary><p>Vama. Klijenti, bazeni, mjerenja i nalozi su podaci vaše tvrtke i možete ih izvesti.</p></details>
       <details><summary>Mogu li servisirati klijente koji nisu kupili bazen od Mondo Acque?</summary><p>Da. PRO služi za vođenje vašeg servisa, za sve vaše klijente.</p></details>
@@ -1752,7 +1753,7 @@ const SLUG = {pocetna:'',pro:'pro',bazeni:'bazeni',fp:'bazeni/fp',coral:'bazeni/
 const BYPATH = Object.fromEntries(Object.entries(SLUG).map(([k,v]) => [v,k]));
 const BASE = window.MW_BASE || '/';
 const DESC = {
-  pro:'Mondo Pool Care PRO: radni nalozi, tim i ovlasti, skladište i razduženje te PDF izvještaji klijentima. 30 dana besplatno, bez kartice.',
+  pro:'Mondo Pool Care PRO: radni nalozi, tim i ovlasti, skladište i razduženje te PDF izvještaji klijentima. Od 19 € mjesečno, 30 dana besplatno, bez kartice.',
   pocetna:'Montažni FP, CORAL kompozitni i COMPACT keramički bazeni, betonski bazeni po mjeri, gradnja ključ u ruke i održavanje bazena u cijeloj Hrvatskoj.',
   bazeni:'Usporedite FP, CORAL, COMPACT i betonske bazene: cijene s PDV-om, što je uključeno i od čega se sastoji investicija.',
   fp:'Montažni FP bazeni, ovalni i pravokutni, s opremom i montažom. Cijene od 5.030 € s PDV-om i okvirni građevinski radovi.',
