@@ -413,6 +413,147 @@ img{height:auto}
 @media (max-width:920px){.mob-only{display:block}.desk-only{display:none}}
 .zhero{position:relative;background:linear-gradient(180deg,rgba(2,13,18,.55),rgba(2,13,18,.82) 70%,rgba(4,24,32,1)),var(--img) center/cover no-repeat;padding-block:clamp(48px,7vw,96px) clamp(40px,5vw,64px)}
 .zhero-in{display:grid;grid-template-columns:minmax(0,760px);gap:clamp(24px,4vw,56px);align-items:center}
+.routes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:clamp(28px,4vw,44px)}
+@media (max-width:900px){.routes{grid-template-columns:1fr}}
+.route{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;min-height:300px;padding:24px;border-radius:22px;overflow:hidden;color:#fff;border:1px solid rgba(120,220,255,.16);background:var(--img) center/cover;isolation:isolate;min-width:0;transition:border-color .2s}
+.route::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(2,13,18,.15),rgba(2,13,18,.92) 68%)}
+.route:hover{border-color:rgba(79,195,240,.55)}
+.route h2{color:#fff;font-size:clamp(1.5rem,2.4vw,1.9rem)}
+.route p{font-size:.92rem;color:rgba(255,255,255,.78)}
+.route-l{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.route-l a{padding:8px 13px;border-radius:999px;font:700 .8rem/1 var(--display);text-decoration:none;color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.route-l a:hover{border-color:#fff}
+.route-l a.route-main{background:var(--aqua);border-color:var(--aqua);color:#04202b}
+@media (max-width:900px){.route{min-height:230px}}
+/* ===== Pool Care PRO stranica ===== */
+.pro-pain{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}@media (max-width:980px){.pro-pain{grid-template-columns:1fr 1fr}}@media (max-width:560px){.pro-pain{grid-template-columns:1fr}}
+.pro-pain>div{padding:22px;border-radius:18px;background:rgba(6,30,42,.6);border:1px solid var(--line);min-width:0}
+.pro-pain span{font:800 .78rem var(--display);color:var(--aqua-ink);letter-spacing:.12em}.pro-pain h3{margin:10px 0 8px;color:#fff}.pro-pain p{font-size:.92rem;color:var(--muted)}
+.pro-tour{--line:rgba(242,246,247,.10);--line-2:rgba(242,246,247,.16);--text:#F2F6F7;--muted:#9DB0B7;--muted-2:#7E939B;--accent:#4FC3F0;--accent-ink:#04222A;--ok:#5FD3A6;--warn:#E8B45A}
+.pro-tour .frame{background:#0C1F27;border:1px solid rgba(242,246,247,.13);border-radius:14px;overflow:hidden;box-shadow:0 34px 70px -34px rgba(0,0,0,.85);min-width:0}
+.pro-tour .chrome{display:flex;align-items:center;gap:7px;padding:9px 11px;background:#08161D;border-bottom:1px solid var(--line)}
+.pro-tour .chrome i{width:7px;height:7px;border-radius:50%;background:rgba(242,246,247,.18);display:block;flex:0 0 auto}
+.pro-tour .chrome .url{flex:1;min-width:0;height:20px;border-radius:5px;background:rgba(255,255,255,.045);display:flex;align-items:center;padding:0 8px;font-size:9.5px;color:#7E939B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em}
+.pro-tour .chrome .url b{color:#A9BEC5;font-weight:500}
+.pro-tour .app{display:grid;grid-template-columns:132px 1fr;min-height:0}
+.pro-tour .side{background:rgba(0,0,0,.16);border-right:1px solid var(--line);padding:12px 10px;display:flex;flex-direction:column;gap:3px}
+.pro-tour .side .s-brand{display:flex;align-items:center;gap:6px;font-size:9.5px;font-weight:650;letter-spacing:-.01em;margin-bottom:10px;color:#DCEAEC}
+.pro-tour .side .s-brand span{width:14px;height:14px;border-radius:4px;background:linear-gradient(145deg,#2FB6C4,#1B7F8C);display:block;flex:0 0 auto}
+.pro-tour .side > span{font-size:9.5px;color:#8CA2A9;padding:5px 7px;border-radius:5px;display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pro-tour .side > span::before{content:"";width:4px;height:4px;border-radius:1px;background:currentColor;opacity:.5;flex:0 0 auto}
+.pro-tour .side > span.on{background:rgba(47,182,196,.13);color:#9FE6EC}
+.pro-tour .side > span.on::before{background:var(--accent);opacity:1}
+.pro-tour .main{padding:12px 13px 14px;min-width:0}
+.pro-tour .mtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
+.pro-tour .mtop .mh{font-size:12.5px;letter-spacing:-.02em;font-weight:650}
+.pro-tour .mtop .sub{font-size:9px;color:var(--muted-2);margin-top:2px}
+.pro-tour .mbtn{font-size:9px;font-weight:600;padding:5px 9px;border-radius:5px;background:var(--accent);color:var(--accent-ink);white-space:nowrap;border:0}
+.pro-tour .mbtn.ghost{background:transparent;border:1px solid var(--line-2);color:#C6D6DA}
+.pro-tour .filters{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.pro-tour .fsel{font-size:8.5px;color:#A9BEC5;border:1px solid var(--line);border-radius:5px;padding:4px 7px;background:rgba(255,255,255,.03);display:flex;align-items:center;gap:5px;white-space:nowrap}
+.pro-tour .fsel::after{content:"";width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-top:3px solid #6E858D}
+.pro-tour .chips{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap}
+.pro-tour .chip{font-size:8px;padding:3px 7px;border-radius:999px;border:1px solid var(--line);color:#9DB0B7;white-space:nowrap}
+.pro-tour .chip.on{background:rgba(47,182,196,.14);border-color:rgba(47,182,196,.4);color:#9FE6EC}
+.pro-tour .chip.new{background:rgba(47,182,196,.14);border-color:rgba(47,182,196,.35);color:#9FE6EC}
+.pro-tour .chip.wip{background:rgba(232,180,90,.13);border-color:rgba(232,180,90,.35);color:#F0C983}
+.pro-tour .chip.done{background:rgba(95,211,166,.12);border-color:rgba(95,211,166,.32);color:#8FE3C2}
+.pro-tour .chip.late{background:rgba(255,255,255,.05);border-color:var(--line-2);color:#A9BEC5}
+.pro-tour .tbl{width:100%;font-size:9px}
+.pro-tour .thead,.pro-tour .trow{display:grid;align-items:center;gap:8px;padding:6px 4px}
+.pro-tour .thead{color:#6E858D;font-size:7.5px;letter-spacing:.09em;text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:5px}
+.pro-tour .trow{border-bottom:1px solid rgba(242,246,247,.055)}
+.pro-tour .trow:last-child{border-bottom:0}
+.pro-tour .trow .c1{font-weight:600;color:#E4EEF0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pro-tour .trow .c2,.pro-tour .trow .c3{color:#93A7AE;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pro-tour .trow .act{font-size:8px;color:var(--accent);white-space:nowrap;text-align:right}
+
+.pro-tour .tour-item{min-width:0}
+.pro-tour .tour-item figcaption{margin-top:12px;font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:baseline}
+.pro-tour .tour-item figcaption b{color:var(--text);font-weight:600;font-size:13.5px}
+.pro-tour .tour-item figcaption span{color:var(--muted-2)}
+.pro-tour figure{margin:0}
+.pro-tour .dgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:10px}
+.pro-tour .dbox{border:1px solid var(--line);border-radius:7px;padding:8px 9px;background:rgba(255,255,255,.022);min-width:0}
+.pro-tour .dbox .dh{margin:0 0 7px;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#6E858D;font-weight:600}
+.pro-tour .meas{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pro-tour .mfield{border:1px solid var(--line);border-radius:6px;padding:6px 7px;background:rgba(0,0,0,.14);min-width:0}
+.pro-tour .mfield label{display:block;font-size:7.5px;color:#8CA2A9;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pro-tour .mfield .val{font-size:12px;font-weight:650;letter-spacing:-.02em;color:#EAF3F4;display:flex;align-items:baseline;gap:3px}
+.pro-tour .mfield .val small{font-size:7px;font-weight:400;color:#7E939B}
+.pro-tour .mfield .val em{font-style:normal;font-size:7px;color:var(--ok);margin-left:auto}
+.pro-tour .mfield.warn .val em{color:var(--warn)}
+.pro-tour .prod{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:5px 0;border-bottom:1px solid rgba(242,246,247,.06);font-size:8.5px}
+.pro-tour .prod:last-child{border-bottom:0}
+.pro-tour .prod span{color:#B9CBD0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pro-tour .prod b{color:#EAF3F4;font-weight:600;white-space:nowrap}
+.pro-tour .photo{margin-top:8px;height:52px;border-radius:6px;border:1px dashed rgba(242,246,247,.18);background:rgba(255,255,255,.02);display:grid;place-items:center;gap:2px;color:#6E858D;font-size:7.5px;text-align:center}
+.pro-tour .photo .cam{width:14px;height:10px;border:1px solid #6E858D;border-radius:2px;position:relative}
+.pro-tour .photo .cam::after{content:"";position:absolute;inset:2px 4px;border:1px solid #6E858D;border-radius:50%}
+.pro-tour .note{margin-top:8px;border:1px solid var(--line);border-radius:6px;padding:6px 7px;font-size:8px;color:#8CA2A9;background:rgba(0,0,0,.14);line-height:1.45}
+.pro-tour .note b{color:#B9CBD0;font-weight:500}
+.pro-tour .dfoot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:9px}
+.pro-tour .dfoot .hint{font-size:7.5px;color:#6E858D}
+.pro-tour .stage{background:#08161D;padding:16px;display:flex;justify-content:center}
+.pro-tour .paper{width:100%;max-width:400px;aspect-ratio:210/297;background:#FBFCFC;color:#12262E;border-radius:3px;padding:16px 16px 12px;display:flex;flex-direction:column;box-shadow:0 18px 40px -18px rgba(0,0,0,.8);overflow:hidden}
+.pro-tour .paper .p-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding-bottom:9px;border-bottom:2px solid #12262E}
+.pro-tour .paper .p-logo{width:52px;height:26px;border:1px dashed #9AAEB4;border-radius:3px;display:grid;place-items:center;font-size:6px;color:#7E939B;letter-spacing:.06em;text-align:center;line-height:1.2}
+.pro-tour .paper .p-co{font-size:7px;color:#5C737B;text-align:right;line-height:1.5}
+.pro-tour .paper .p-co b{display:block;font-size:8.5px;color:#12262E;letter-spacing:-.01em}
+.pro-tour .paper .ph{margin:9px 0 2px;font-size:11px;letter-spacing:-.02em;color:#12262E}
+.pro-tour .paper .p-meta{font-size:6.5px;color:#6E858D;letter-spacing:.04em;text-transform:uppercase}
+.pro-tour .paper .p-two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.pro-tour .paper .p-blk{font-size:6.5px;line-height:1.55;color:#3E565F}
+.pro-tour .paper .p-blk b{display:block;font-size:6px;letter-spacing:.1em;text-transform:uppercase;color:#8CA2A9;margin-bottom:2px}
+.pro-tour .paper table{min-width:0;width:100%;border-collapse:collapse;margin-top:9px;font-size:6.5px}
+.pro-tour .paper th{text-align:left;font-size:5.8px;letter-spacing:.08em;text-transform:uppercase;color:#7E939B;padding:3px 2px;border-bottom:1px solid #D7E0E2;font-weight:600}
+.pro-tour .paper td{padding:3.5px 2px;border-bottom:1px solid #E7EDEE;color:#2C444D}
+.pro-tour .paper td.n{text-align:right;font-variant-numeric:tabular-nums;color:#12262E;font-weight:600}
+.pro-tour .paper .v{font-size:5.5px;padding:1px 4px;border-radius:3px;white-space:nowrap;font-weight:600}
+.pro-tour .paper .v.ok{background:#E2F4EC;color:#1F7A57}
+.pro-tour .paper .v.lo{background:#FBEFD9;color:#8A5A12}
+.pro-tour .paper .v.hi{background:#FBE3E3;color:#9B2C2C}
+.pro-tour .paper .p-foot{margin-top:auto;padding-top:8px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.pro-tour .paper .sign{font-size:6px;color:#6E858D;text-align:center}
+.pro-tour .paper .sign i{display:block;width:78px;border-bottom:1px solid #9AAEB4;height:16px;margin-bottom:3px}
+.pro-tour .paper .stamp{font-size:5.5px;color:#8CA2A9;text-align:right;line-height:1.5}
+.pro-tour .strow{display:grid;grid-template-columns:1.5fr .7fr .55fr .5fr .5fr auto;gap:7px;align-items:center;padding:6px 4px;border-bottom:1px solid rgba(242,246,247,.055);font-size:8.5px}
+.pro-tour .strow:last-child{border-bottom:0}
+.pro-tour .strow .pname{color:#E4EEF0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pro-tour .strow .code{color:#7E939B;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pro-tour .strow .qty{color:#B9CBD0;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pro-tour .strow .qty b{color:#EAF3F4}
+.pro-tour .strow.low{background:rgba(232,180,90,.07);border-radius:5px;border-bottom-color:transparent;box-shadow:inset 2px 0 0 var(--warn)}
+.pro-tour .strow.low .qty b{color:#F0C983}
+.pro-tour .strow .act{font-size:7.5px;color:var(--accent);white-space:nowrap;text-align:right}
+.pro-tour .sthead{display:grid;grid-template-columns:1.5fr .7fr .55fr .5fr .5fr auto;gap:7px;padding:0 4px 5px;font-size:7px;letter-spacing:.09em;text-transform:uppercase;color:#6E858D;border-bottom:1px solid var(--line)}
+.pro-tour .sthead span:nth-child(3),.pro-tour .sthead span:nth-child(4),.pro-tour .sthead span:nth-child(5){text-align:right}
+.pro-tour .tour-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media (max-width:980px){.pro-tour .tour-grid{grid-template-columns:1fr;gap:36px}}
+@media (max-width:640px){.pro-tour .app{grid-template-columns:1fr}.pro-tour .side{display:none}.pro-tour .m-hide{display:none}.pro-tour .tour-item figcaption{flex-direction:column;gap:2px}}
+@media (max-width:420px){.pro-tour .paper{padding:12px}.pro-tour .dgrid{grid-template-columns:1fr}.pro-tour .strow,.pro-tour .sthead{grid-template-columns:1.4fr .6fr .5fr auto}.pro-tour .hide-s{display:none}}
+
+.pro-feat{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media (max-width:820px){.pro-feat{grid-template-columns:1fr}}
+.pro-feat>div{padding:26px;border-radius:18px;border:1px solid var(--line);background:rgba(6,30,42,.45);min-width:0}.pro-feat h3{color:#fff;margin-bottom:12px;font-size:1.25rem}
+.pro-ul{list-style:none;padding:0;margin:0;display:grid;gap:9px}.pro-ul li{position:relative;padding-left:24px;font-size:.93rem}
+.pro-ul li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;height:9px;border-radius:50%;border:2px solid var(--aqua)}
+.pro-cmp table{width:100%;border-collapse:collapse;font-size:.92rem}.pro-cmp th,.pro-cmp td{padding:13px 16px;border-bottom:1px solid var(--line);text-align:center}
+.pro-cmp th:first-child,.pro-cmp td:first-child{text-align:left;color:#fff}.pro-cmp th{font:700 .7rem var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pro-cmp th:last-child,.pro-cmp td:last-child{background:rgba(79,195,240,.07);color:#fff}.pro-cmp tr:last-child td{border-bottom:0}
+.pro-cmp table{min-width:0!important;table-layout:fixed}.pro-cmp th:first-child{width:40%}.pro-cmp th,.pro-cmp td{white-space:normal!important}
+@media (max-width:560px){.pro-cmp th,.pro-cmp td{padding:11px 8px;font-size:.8rem}.pro-cmp th{font-size:.6rem;letter-spacing:.06em}}
+.pro-first{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,4vw,56px);align-items:center;padding:clamp(24px,4vw,44px);border-radius:22px;border:1px solid rgba(79,195,240,.3);background:linear-gradient(135deg,rgba(8,48,61,.7),rgba(2,13,18,.6))}
+@media (max-width:820px){.pro-first{grid-template-columns:1fr}}
+.pro-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}@media (max-width:900px){.pro-plans{grid-template-columns:1fr}}
+.pro-plan{position:relative;display:flex;flex-direction:column;gap:14px;padding:26px;border-radius:20px;border:1px solid var(--line);background:rgba(6,30,42,.6);min-width:0}
+.pro-plan h3{color:#fff;font-size:1.3rem}.pro-plan .pro-ul{flex:1}.pro-plan .btn{justify-content:center}
+.pro-plan.on{border-color:rgba(79,195,240,.6);box-shadow:0 0 0 1px rgba(79,195,240,.25),0 24px 60px rgba(0,0,0,.35)}
+.pro-tag{position:absolute;top:-11px;left:22px;background:var(--aqua);color:#04202b;font:800 .64rem/1 var(--display);letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:6px}
+.pro-note{margin-top:18px;padding:16px 20px;border-left:3px solid var(--aqua);background:rgba(79,195,240,.06);border-radius:0 12px 12px 0;font-size:.92rem}.pro-note b{color:#fff}
+.pro-faq details{border-bottom:1px solid var(--line)}.pro-faq summary{cursor:pointer;list-style:none;padding:18px 36px 18px 0;position:relative;font-weight:600;color:#fff}
+.pro-faq summary::-webkit-details-marker{display:none}.pro-faq summary::after{content:"+";position:absolute;right:4px;top:14px;font-size:1.4rem;color:var(--aqua)}
+.pro-faq details[open] summary::after{content:"–"}.pro-faq p{padding:0 0 18px;color:var(--muted)}
+.pro-end{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center}@media (max-width:820px){.pro-end{grid-template-columns:1fr}}
 .zhero-in>*{min-width:0}.zhero h1{font-size:clamp(2.2rem,4.6vw,3.6rem)}
 @media (max-width:900px){.zhero-in{grid-template-columns:1fr}}
 .need{background:rgba(6,30,42,.78);border:1px solid rgba(120,220,255,.16);border-radius:22px;padding:clamp(16px,2.4vw,24px);backdrop-filter:blur(14px)}
@@ -634,9 +775,25 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
       <p class="eyebrow">Mondo Acqua · bazeni, izvedba i održavanje</p>
       <h1>Sve za vaš bazen.<br><em>Od gradnje do bistre vode.</em></h1>
       <p class="lead">Montažni FP, CORAL kompozitni, COMPACT keramički i betonski bazeni po mjeri. Gradimo, montiramo i održavamo u cijeloj Hrvatskoj.</p>
-      <div class="btns"><a class="btn btn-primary" href="#bazeni">Usporedite bazene →</a><a class="btn btn-ghost" href="#upit-home" data-tohome>Zatražite ponudu</a></div>
     </div>
-  </div></div>
+  </div>
+  <div class="wrap"><nav class="routes" aria-label="Odaberite što vas zanima">
+    <div class="route" style="--img:url('slike/fp-naslovna.jpg')">
+      <span class="ch-k">Gradnja</span><h2>Želim bazen</h2>
+      <p>Modeli i cijene, gradnja ključ u ruke i vaš bazen u dvorištu prije gradnje.</p>
+      <div class="route-l"><a class="route-main" href="#bazeni">Usporedba i cijene</a><a href="https://poolcare.mondo-acqua.hr/?stranica=vizualizator">AI vizualizacija</a><a href="#kljuc-u-ruke">Ključ u ruke</a></div>
+    </div>
+    <div class="route" style="--img:url('slike/odrzavanje-usisavanje.jpg')">
+      <span class="ch-k">Vlasnici bazena</span><h2>Imam bazen</h2>
+      <p>Održavanje, analiza vode, nova folija i kemija s dostavom.</p>
+      <div class="route-l"><a class="route-main" href="#odrzavanje">Održavanje</a><a href="https://poolcare.mondo-acqua.hr/?stranica=analiza">Analiza vode</a><a href="#rekonstrukcija">Nova folija</a><a href="https://poolcare.mondo-acqua.hr/?stranica=webshop">Webshop</a></div>
+    </div>
+    <div class="route" style="--img:url('slike/odr-mjerenje-sol-klor.jpg')">
+      <span class="ch-k">Serviseri</span><h2>Za profesionalce</h2>
+      <p>Pool Care PRO: radni nalozi, kemija po nalogu i ponude. 30 dana besplatno.</p>
+      <div class="route-l"><a class="route-main" href="#pro">Pool Care PRO</a><a href="https://poolcare.mondo-acqua.hr/?stranica=registracija">30 dana besplatno</a><a href="https://poolcare.mondo-acqua.hr/?stranica=prijava">Prijava</a></div>
+    </div>
+  </nav></div></div>
 
   <div class="zstats"><div class="wrap">
     <div><strong>34</strong><span>modela i dimenzija s cijenama</span></div>
@@ -697,7 +854,7 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     <div class="shead"><div><p class="eyebrow">Alati za vlasnike i servisere</p><h2>Mondo Pool Care za vlasnike i servisere.</h2></div><a class="btn btn-ghost" href="https://play.google.com/store/apps/details?id=hr.mondoacqua.poolcare&amp;referrer=utm_source%3Dmondo-acqua.hr%26utm_medium%3Dweb" target="_blank" rel="noopener">Aplikacija na Google Playu ↗</a></div>
     <div class="tools">
       <a class="tool tool-app" href="https://poolcare.mondo-acqua.hr/?stranica=webshop" style="--img:url('slike/odr-zimovanje-winterp.jpg')"><img class="ch-phone" src="slike/app-webshop.png" alt="" loading="lazy"><span class="ch-k">Webshop</span><strong>Kemija i oprema</strong><p>Registrirani vlasnici bazena imaju −10 % na kemiju.</p><span class="ch-go">Otvorite webshop</span></a>
-      <a class="tool" href="https://poolcare.mondo-acqua.hr/?stranica=prijava" style="--img:url('slike/odr-zelena-ciscenje.jpg')"><span class="ch-k">Za servisere · Pro</span><strong>Pool Care PRO</strong><p>Radni nalozi, vrijeme i kemija po nalogu, ponude i fakturiranje. 30 dana besplatno.</p><span class="ch-go">Ulaz za servisere</span></a>
+      <a class="tool" href="#pro" style="--img:url('slike/odr-zelena-ciscenje.jpg')"><span class="ch-k">Za servisere · Pro</span><strong>Pool Care PRO</strong><p>Radni nalozi, vrijeme i kemija po nalogu, ponude i fakturiranje. 30 dana besplatno.</p><span class="ch-go">Upoznajte PRO</span></a>
     </div>
   </div></div>
   <div class="band soft pc-bottom"><div class="wrap zcare">
@@ -959,6 +1116,299 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     <div class="gallery" id="galleryKurObloge"></div>
   </div></div>
   </section>
+
+<!-- ============ POOL CARE PRO (serviseri) ============ -->
+<section class="page" id="p-pro">
+  <div class="zhero" style="--img:url('slike/odr-mreza-ciscenje.jpg')"><div class="wrap zhero-in">
+    <div class="stack" style="gap:18px">
+      <p class="eyebrow">Mondo Pool Care PRO · za servisere bazena</p>
+      <h1>Softver koji vodi<br><em>vaš servis bazena.</em></h1>
+      <p class="lead">Radni nalozi, tim i ovlasti, skladište i razduženje, izvještaji klijentima. Sve na jednom mjestu, umjesto u bilježnici, na WhatsAppu i u tri Excel tablice.</p>
+      <div class="btns"><a class="btn btn-primary" href="https://poolcare.mondo-acqua.hr/?stranica=registracija">Isprobajte 30 dana besplatno →</a><a class="btn btn-ghost" href="#pro-paketi" data-pro-jump>Paketi</a></div>
+      <p class="small" style="margin:0">Bez kartice · bez ugovorne obveze · podaci ostaju vaši · podrška na hrvatskom</p>
+    </div>
+  </div></div>
+
+  <div class="band"><div class="wrap">
+    <p class="eyebrow">Zašto PRO</p>
+    <h2 style="margin-bottom:28px">Od papira i WhatsAppa<br>do uređenog servisa.</h2>
+    <div class="pro-pain">
+      <div><span>01</span><h3>Svaki posao je nalog</h3><p>Status, datum, serviser i klijent. Nitko više ne pita „je li to gotovo”, odgovor je u aplikaciji.</p></div>
+      <div><span>02</span><h3>Povijest po bazenu</h3><p>Otvorite bazen i vidite tko je bio, kada, što je izmjerio i što je stavio. Povijest ostaje i kad serviser ode.</p></div>
+      <div><span>03</span><h3>Skladište se poklapa</h3><p>Razduženje ide po nalogu, a ne po sjećanju. Na kraju mjeseca znate koliko je kemije stvarno otišlo na teren.</p></div>
+      <div><span>04</span><h3>PDF u dva klika</h3><p>Izvještaj se slaže iz mjerenja i utrošenih proizvoda, s vašim logom i potpisom servisera. Klijent ga dobije isti dan.</p></div>
+    </div>
+  </div></div>
+
+  <div class="band soft"><div class="wrap">
+    <p class="eyebrow">Kako izgleda</p>
+    <h2 style="margin-bottom:10px">Ovako to izgleda kad se otvori.</h2>
+    <p class="lead" style="margin-bottom:28px">Četiri zaslona koja serviser i vlasnik tvrtke koriste svaki dan. Prikaz rasporeda aplikacije s primjerom podataka.</p>
+    <div class="pro-tour">
+    <div class="tour-grid">
+
+      <figure class="tour-item">
+        <div class="frame">
+          <div class="chrome"><i></i><i></i><i></i><div class="url"><b>poolcare.mondo-acqua.hr</b>/pro/nalozi</div></div>
+          <div class="app">
+            <aside class="side">
+              <div class="s-brand"><span></span>Pool Care PRO</div>
+              <span class="on">Radni nalozi</span>
+              <span>Klijenti</span>
+              <span>Bazeni</span>
+              <span>Skladište</span>
+              <span>Izvještaji</span>
+              <span>Tim</span>
+              <span>Postavke</span>
+            </aside>
+            <div class="main">
+              <div class="mtop">
+                <div><div class="mh">Radni nalozi</div><div class="sub">Utorak, 19. studenoga · 18 naloga</div></div>
+                <button class="mbtn" type="button" tabindex="-1">+ Novi nalog</button>
+              </div>
+              <div class="filters">
+                <span class="fsel">Status: svi</span>
+                <span class="fsel">Serviser: svi</span>
+                <span class="fsel">Datum: ovaj tjedan</span>
+              </div>
+              <div class="chips">
+                <span class="chip on">Svi 18</span>
+                <span class="chip new">Novi 5</span>
+                <span class="chip wip">U tijeku 4</span>
+                <span class="chip done">Završeno 8</span>
+                <span class="chip late">Odgođeno 1</span>
+              </div>
+              <div class="tbl">
+                <div class="thead" style="grid-template-columns:1.35fr 1.15fr .8fr .85fr .75fr auto">
+                  <span>Klijent</span><span class="m-hide">Adresa</span><span>Termin</span><span>Serviser</span><span>Status</span><span></span>
+                </div>
+                <div class="trow" style="grid-template-columns:1.35fr 1.15fr .8fr .85fr .75fr auto">
+                  <span class="c1">Vila Lavanda</span><span class="c2 m-hide">Rovinj, Istarska 4</span><span class="c3">19.11.</span><span class="c3">I. Babić</span><span class="chip wip">U tijeku</span><span class="act">Otvori</span>
+                </div>
+                <div class="trow" style="grid-template-columns:1.35fr 1.15fr .8fr .85fr .75fr auto">
+                  <span class="c1">Hotel Jadran</span><span class="c2 m-hide">Split, Obala 12</span><span class="c3">19.11.</span><span class="c3">M. Kovač</span><span class="chip new">Novi</span><span class="act">Otvori</span>
+                </div>
+                <div class="trow" style="grid-template-columns:1.35fr 1.15fr .8fr .85fr .75fr auto">
+                  <span class="c1">Obitelj Horvat</span><span class="c2 m-hide">Zagreb, Ilica 88</span><span class="c3">19.11.</span><span class="c3">I. Babić</span><span class="chip done">Završeno</span><span class="act">Otvori</span>
+                </div>
+                <div class="trow" style="grid-template-columns:1.35fr 1.15fr .8fr .85fr .75fr auto">
+                  <span class="c1">Villa Mare</span><span class="c2 m-hide">Pula, Verudela 7</span><span class="c3">20.11.</span><span class="c3">L. Novak</span><span class="chip new">Novi</span><span class="act">Otvori</span>
+                </div>
+                <div class="trow" style="grid-template-columns:1.35fr 1.15fr .8fr .85fr .75fr auto">
+                  <span class="c1">Apartmani Sunce</span><span class="c2 m-hide">Rijeka, Korzo 3</span><span class="c3">20.11.</span><span class="c3">M. Kovač</span><span class="chip late">Odgođeno</span><span class="act">Otvori</span>
+                </div>
+                <div class="trow" style="grid-template-columns:1.35fr 1.15fr .8fr .85fr .75fr auto">
+                  <span class="c1">Gradski bazen</span><span class="c2 m-hide">Osijek, Šetalište 2</span><span class="c3">21.11.</span><span class="c3">D. Jurić</span><span class="chip new">Novi</span><span class="act">Otvori</span>
+                </div>
+                <div class="trow" style="grid-template-columns:1.35fr 1.15fr .8fr .85fr .75fr auto">
+                  <span class="c1">Kuća Bilić</span><span class="c2 m-hide">Zagreb, Maksimirska 41</span><span class="c3">21.11.</span><span class="c3">L. Novak</span><span class="chip wip">U tijeku</span><span class="act">Otvori</span>
+                </div>
+                <div class="trow" style="grid-template-columns:1.35fr 1.15fr .8fr .85fr .75fr auto">
+                  <span class="c1">Hotel Bellevue</span><span class="c2 m-hide">Split, Bačvice 9</span><span class="c3">22.11.</span><span class="c3">D. Jurić</span><span class="chip done">Završeno</span><span class="act">Otvori</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>Radni nalozi</b><span>Filteri, statusi i tko je na kojem poslu.</span></figcaption>
+      </figure>
+      <figure class="tour-item">
+        <div class="frame">
+          <div class="chrome"><i></i><i></i><i></i><div class="url"><b>poolcare.mondo-acqua.hr</b>/pro/nalozi/1042</div></div>
+          <div class="main" style="padding:14px 15px 16px">
+            <div class="mtop">
+              <div>
+                <div class="mh">Nalog #1042 · Vila Lavanda</div>
+                <div class="sub">Rovinj, Istarska 4 · bazen 48 m³ · otvoreni tip</div>
+              </div>
+              <span class="chip wip">U tijeku</span>
+            </div>
+            <div class="dgrid">
+              <div class="dbox">
+                <div class="dh">Mjerenja</div>
+                <div class="meas">
+                  <div class="mfield"><label>pH vrijednost</label><div class="val">7,2 <em>u redu</em></div></div>
+                  <div class="mfield"><label>Slobodni klor</label><div class="val">1,4 <small>mg/l</small><em>u redu</em></div></div>
+                  <div class="mfield"><label>Ukupna alkalnost</label><div class="val">95 <small>mg/l</small><em>u redu</em></div></div>
+                  <div class="mfield"><label>Stabilizator</label><div class="val">40 <small>mg/l</small><em>u redu</em></div></div>
+                  <div class="mfield"><label>Temperatura vode</label><div class="val">24 <small>°C</small><em>u redu</em></div></div>
+                  <div class="mfield warn"><label>Vezani klor</label><div class="val">0,4 <small>mg/l</small><em>povišeno</em></div></div>
+                </div>
+              </div>
+              <div class="dbox">
+                <div class="dh">Utrošeni proizvodi</div>
+                <div class="prod"><span>Klor granulat 90%</span><b>1,2 kg</b></div>
+                <div class="prod"><span>pH minus</span><b>0,8 kg</b></div>
+                <div class="prod"><span>Alkalnost plus</span><b>1,5 kg</b></div>
+                <div class="prod"><span>Flokulant</span><b>0,2 l</b></div>
+                <div class="photo"><span class="cam" aria-hidden="true"></span>Fotografija bazena</div>
+              </div>
+            </div>
+            <div class="note"><b>Napomena servisera:</b> tlak filtra 1,1 bar, ispran pijesak. Klijent upozoren na vezani klor — preporučena šok obrada kroz 48 h.</div>
+            <div class="dfoot">
+              <span class="hint">Spremljeno 14:32 · I. Babić</span>
+              <button class="mbtn" type="button" tabindex="-1">Generiraj izvještaj</button>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>Detalj naloga</b><span>Mjerenja, utrošeni proizvodi i napomena — sve uz nalog.</span></figcaption>
+      </figure>
+      <figure class="tour-item">
+        <div class="frame">
+          <div class="chrome"><i></i><i></i><i></i><div class="url"><b>poolcare.mondo-acqua.hr</b>/pro/izvjestaji/1042.pdf</div></div>
+          <div class="stage">
+            <div class="paper">
+              <div class="p-top">
+                <div class="p-logo">VAŠ<br>LOGO</div>
+                <div class="p-co"><b>Vaša tvrtka d.o.o.</b>Servis bazena · Hrvatska<br>info@vasa-tvrtka.hr</div>
+              </div>
+              <div class="ph">Izvještaj o servisu bazena</div>
+              <div class="p-meta">Nalog #1042 · 19. studenoga 2026.</div>
+              <div class="p-two">
+                <div class="p-blk"><b>Klijent i bazen</b>Vila Lavanda<br>Istarska 4, Rovinj<br>Bazen 48 m³ · otvoreni tip</div>
+                <div class="p-blk"><b>Servis</b>Datum: 19. 11. 2026.<br>Serviser: Ivan Babić<br>Sljedeći posjet: 3. 12. 2026.</div>
+              </div>
+              <table>
+                <thead><tr><th>Parametar</th><th>Izmjereno</th><th>Referentno</th><th>Ocjena</th></tr></thead>
+                <tbody>
+                  <tr><td>pH vrijednost</td><td class="n">7,2</td><td>7,0 – 7,6</td><td><span class="v ok">u redu</span></td></tr>
+                  <tr><td>Slobodni klor</td><td class="n">1,4 mg/l</td><td>1,0 – 2,0</td><td><span class="v ok">u redu</span></td></tr>
+                  <tr><td>Ukupna alkalnost</td><td class="n">95 mg/l</td><td>80 – 120</td><td><span class="v ok">u redu</span></td></tr>
+                  <tr><td>Stabilizator</td><td class="n">40 mg/l</td><td>30 – 50</td><td><span class="v ok">u redu</span></td></tr>
+                  <tr><td>Vezani klor</td><td class="n">0,4 mg/l</td><td>&lt; 0,3</td><td><span class="v hi">previsoko</span></td></tr>
+                  <tr><td>Temperatura vode</td><td class="n">24 °C</td><td>—</td><td><span class="v ok">u redu</span></td></tr>
+                </tbody>
+              </table>
+              <div class="p-blk" style="margin-top:9px"><b>Provedeni tretman</b>Šok tretman klor granulatom 1,2 kg, korekcija pH minusom 0,8 kg i alkalnost plusom 1,5 kg. Filter ispran, tlak 1,1 bar. Preporučena kontrola vezanog klora kroz 48 h.</div>
+              <div class="p-foot">
+                <div class="sign"><i></i>Ivan Babić, serviser</div>
+                <div class="stamp">Mondo Pool Care PRO<br>generirano 19. 11. 2026. u 14:34</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>Izvještaj klijentu</b><span>PDF s vašim logom, ocjenom svakog parametra i potpisom.</span></figcaption>
+      </figure>
+      <figure class="tour-item">
+        <div class="frame">
+          <div class="chrome"><i></i><i></i><i></i><div class="url"><b>poolcare.mondo-acqua.hr</b>/pro/skladiste</div></div>
+          <div class="app">
+            <aside class="side">
+              <div class="s-brand"><span></span>Pool Care PRO</div>
+              <span>Radni nalozi</span>
+              <span>Klijenti</span>
+              <span>Bazeni</span>
+              <span class="on">Skladište</span>
+              <span>Izvještaji</span>
+              <span>Tim</span>
+              <span>Postavke</span>
+            </aside>
+            <div class="main">
+              <div class="mtop">
+                <div><div class="mh">Skladište · Marinići</div><div class="sub">7 artikala · 1 ispod minimalne zalihe</div></div>
+                <button class="mbtn" type="button" tabindex="-1">Razduži po nalogu</button>
+              </div>
+              <div class="filters">
+                <span class="fsel">Sve kategorije</span>
+                <span class="fsel">Samo aktivno</span>
+              </div>
+              <div class="sthead"><span>Proizvod</span><span>Šifra</span><span>Stanje</span><span class="hide-s">Izdano</span><span class="hide-s">Vraćeno</span><span></span></div>
+              <div class="strow"><span class="pname">Klor granulat 90% · 1 kg</span><span class="code">KEM-014</span><span class="qty"><b>24</b></span><span class="qty hide-s">12</span><span class="qty hide-s">0</span><span class="act">Razduži</span></div>
+              <div class="strow"><span class="pname">pH minus · 1 kg</span><span class="code">KEM-021</span><span class="qty"><b>18</b></span><span class="qty hide-s">6</span><span class="qty hide-s">0</span><span class="act">Razduži</span></div>
+              <div class="strow"><span class="pname">Alkalnost plus · 1 kg</span><span class="code">KEM-033</span><span class="qty"><b>9</b></span><span class="qty hide-s">4</span><span class="qty hide-s">0</span><span class="act">Razduži</span></div>
+              <div class="strow low"><span class="pname">Flokulant tekući · 1 l</span><span class="code">KEM-047</span><span class="qty"><b>3</b></span><span class="qty hide-s">2</span><span class="qty hide-s">0</span><span class="act">Razduži</span></div>
+              <div class="strow"><span class="pname">Sol za bazene · 25 kg</span><span class="code">KEM-052</span><span class="qty"><b>40</b></span><span class="qty hide-s">10</span><span class="qty hide-s">2</span><span class="act">Razduži</span></div>
+              <div class="strow"><span class="pname">Pijesak za filter · 25 kg</span><span class="code">OPR-108</span><span class="qty"><b>12</b></span><span class="qty hide-s">0</span><span class="qty hide-s">0</span><span class="act">Razduži</span></div>
+              <div class="strow"><span class="pname">Test trake 6 u 1</span><span class="code">TES-006</span><span class="qty"><b>31</b></span><span class="qty hide-s">5</span><span class="qty hide-s">0</span><span class="act">Razduži</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>Skladište i razduženje</b><span>Stanje, izdano i vraćeno — po svakom nalogu.</span></figcaption>
+      </figure>
+
+    </div>
+    </div>
+  </div></div>
+
+  <div class="band"><div class="wrap">
+    <p class="eyebrow">Detaljnije</p>
+    <h2 style="margin-bottom:28px">Četiri stvari koje svaki dan pojedu sat vremena.</h2>
+    <div class="pro-feat">
+      <div><p class="eyebrow">Radni nalozi</p><h3>Nalozi koji se ne izgube između dvije poruke.</h3>
+        <ul class="pro-ul"><li>Ujutro vidite tko je slobodan i koji posao čeka.</li><li>Status se mijenja na terenu, s telefona, i vidi se u uredu odmah.</li><li>Kad serviser ode, povijest njegovih bazena ostaje vama.</li></ul></div>
+      <div><p class="eyebrow">Tim i ovlasti</p><h3>Svaki serviser vidi samo ono što mu treba.</h3>
+        <ul class="pro-ul"><li>Vlasnik ima cijelu sliku, serviser svoje naloge i svoje skladište.</li><li>Nitko ne mijenja cijene ni stanje bez ovlasti.</li><li>Pristup se ukida odmah, ne „kad se sjetimo”.</li></ul></div>
+      <div><p class="eyebrow">Skladište i razduženje</p><h3>Stanje u aplikaciji i stanje u kombiju, ista brojka.</h3>
+        <ul class="pro-ul"><li>Kemija se izdaje po nalogu, a ne po sjećanju.</li><li>Na kraju mjeseca znate stvarni utrošak po bazenu.</li><li>Naručujete prije nego zaliha padne na nulu.</li></ul></div>
+      <div><p class="eyebrow">Izvještaji klijentima</p><h3>Izvještaj koji klijent stvarno pročita.</h3>
+        <ul class="pro-ul"><li>Uredan PDF s vašim logom i imenom, ne tuđim brendom.</li><li>Ide isti dan, dok je posjet još svjež.</li><li>Manje poziva „što ste stavili u bazen”.</li></ul></div>
+    </div>
+  </div></div>
+
+  <div class="band soft"><div class="wrap">
+    <p class="eyebrow">Usporedba</p>
+    <h2 style="margin-bottom:24px">Vlasnik bazena ili servisna tvrtka?</h2>
+    <div class="tbl-wrap pro-cmp"><table>
+      <thead><tr><th>Značajka</th><th>Vlasnik bazena</th><th>Servisna tvrtka · PRO</th></tr></thead>
+      <tbody>
+        <tr><td>Unos mjerenja i analiza vode</td><td>✓</td><td>✓</td></tr>
+        <tr><td>Naručivanje iz webshopa</td><td>✓</td><td>✓</td></tr>
+        <tr><td>Broj bazena</td><td>Vlastiti</td><td>Neograničeno</td></tr>
+        <tr><td>Radni nalozi</td><td>—</td><td>✓</td></tr>
+        <tr><td>Tim i ovlasti</td><td>—</td><td>✓</td></tr>
+        <tr><td>Skladište i razduženje</td><td>—</td><td>✓</td></tr>
+        <tr><td>Izvještaji klijentima</td><td>Pregled analize</td><td>PDF s vašim logom</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small" style="margin-top:14px">Vlasnik bazena i dalje besplatno unosi mjerenja i naručuje iz webshopa. PRO dodaje ono što treba tvrtki koja radi za druge.</p>
+  </div></div>
+
+  <div class="band"><div class="wrap">
+    <div class="pro-first">
+      <div><p class="eyebrow">Prvih 20 tvrtki</p><h2>Ne dobivate samo licencu.</h2>
+        <p class="lead" style="margin-top:12px">Uvođenje radimo zajedno: prenesemo vaše klijente, posložimo skladište i prođemo prvi izvještaj s vama.</p></div>
+      <ul class="pro-ul"><li>Osobno uvođenje tima, uživo ili preko video poziva.</li><li>Izvještaji nose vaš logo i vaše ime.</li><li>Izravna linija do tima koji gradi aplikaciju.</li><li>Prvi mjesec zajedno slažemo radne procese.</li></ul>
+    </div>
+  </div></div>
+
+  <div class="band soft" id="pro-paketi"><div class="wrap">
+    <p class="eyebrow">Paketi</p>
+    <h2 style="margin-bottom:10px">Tri paketa. Bez skrivenih stavki.</h2>
+    <p class="lead" style="margin-bottom:28px">Svaki paket počinje s 30 dana besplatno. Cijene su mjesečne, bez PDV-a.</p>
+    <div class="pro-plans">
+      <div class="pro-plan"><h3>Starter</h3><p class="small">Za servisera koji radi sam ili s jednim pomoćnikom.</p>
+        <ul class="pro-ul"><li>1 serviser</li><li>do 50 radnih naloga mjesečno</li><li>do 30 klijenata i bazena</li><li>PDF izvještaji klijentima</li><li>osnovno skladište</li></ul>
+        <a class="btn btn-ghost" href="https://poolcare.mondo-acqua.hr/?stranica=registracija">Isprobajte besplatno</a></div>
+      <div class="pro-plan on"><span class="pro-tag">Najčešći izbor</span><h3>Tim</h3><p class="small">Za tvrtku s nekoliko servisera i zajedničkim skladištem.</p>
+        <ul class="pro-ul"><li>do 5 servisera</li><li>neograničeni nalozi, klijenti i bazeni</li><li>izvještaji s vašim logom</li><li>skladište i razduženje po nalogu</li><li>ovlasti po serviseru</li></ul>
+        <a class="btn btn-primary" href="https://poolcare.mondo-acqua.hr/?stranica=registracija">Isprobajte besplatno</a></div>
+      <div class="pro-plan"><h3>Tvrtka</h3><p class="small">Za veće timove, više lokacija i uvoz postojećih podataka.</p>
+        <ul class="pro-ul"><li>6 i više servisera</li><li>sve iz paketa Tim</li><li>više lokacija i skladišta</li><li>uvoz postojećih klijenata</li><li>osobno uvođenje tima</li></ul>
+        <a class="btn btn-ghost" href="tel:+385952087321">Nazovite nas</a></div>
+    </div>
+    <p class="pro-note"><b>Što se događa 31. dan?</b> Probno razdoblje završava i ništa se ne naplaćuje automatski. Podaci ostaju sačuvani. Odaberete paket i plaćate po ponudi, bez kartice.</p>
+  </div></div>
+
+  <div class="band"><div class="wrap" style="max-width:820px">
+    <p class="eyebrow">Pitanja</p>
+    <h2 style="margin-bottom:22px">Ono što serviseri pitaju prije prijave.</h2>
+    <div class="pro-faq">
+      <details><summary>Treba li kartica za probno razdoblje?</summary><p>Ne. Probno razdoblje traje 30 dana i ne traži karticu.</p></details>
+      <details><summary>Kome pripadaju podaci?</summary><p>Vama. Klijenti, bazeni, mjerenja i nalozi su podaci vaše tvrtke i možete ih izvesti.</p></details>
+      <details><summary>Mogu li servisirati klijente koji nisu kupili bazen od Mondo Acque?</summary><p>Da. PRO služi za vođenje vašeg servisa, za sve vaše klijente.</p></details>
+      <details><summary>Plaćaju li moji klijenti pristup aplikaciji?</summary><p>Ne. Registracija za vlasnike bazena je besplatna.</p></details>
+      <details><summary>Čiji logo i naziv stoje na izvještaju klijentu?</summary><p>Vaši. Izvještaj nosi logo i ime vaše tvrtke i potpis servisera.</p></details>
+      <details><summary>Kako se plaća i kako mogu otkazati?</summary><p>Nakon probnog razdoblja dobivate ponudu s IBAN-om, bez automatske naplate. Nema ugovorne obveze. Ako ne nastavite, pristup se ograniči, a podaci ostaju sačuvani.</p></details>
+      <details><summary>Što kad tim naraste?</summary><p>Prijeđete na veći paket. Nalozi, klijenti i skladište ostaju gdje jesu.</p></details>
+    </div>
+  </div></div>
+
+  <div class="band dark"><div class="wrap pro-end">
+    <div><p class="eyebrow">Prijava</p><h2>Isprobajte 30 dana. Bez kartice.</h2>
+      <p class="lead" style="margin-top:12px">Otvorite račun i počnite s prvim nalogom danas. Za uvođenje tima nazovite nas.</p></div>
+    <div class="btns"><a class="btn btn-primary" href="https://poolcare.mondo-acqua.hr/?stranica=registracija">Započnite besplatno →</a><a class="btn btn-ghost" href="https://poolcare.mondo-acqua.hr/?stranica=prijava">Prijava za postojeće</a><a class="btn btn-ghost" href="tel:+385952087321">+385 95 208 7321</a></div>
+  </div></div>
+</section>
 
 <!-- ============ ODRŽAVANJE ============ -->
 <section class="page" id="p-odrzavanje">
@@ -1294,14 +1744,15 @@ function mountForm(slot){
 document.querySelectorAll('[data-form-slot]').forEach(mountForm);
 
 /* ---------- Usmjeravanje (hash) ---------- */
-const PAGES = ['privatnost','pocetna','bazeni','fp','coral','compact','po-mjeri','swim-spa','rekonstrukcija','kljuc-u-ruke','odrzavanje','galerija','o-nama','kontakt'];
-const TITLES = {privatnost:'Privatnost i kolačići',pocetna:'Mondo Acqua – bazeni, oprema i održavanje',bazeni:'Bazeni',fp:'Montažni FP bazeni',coral:'CORAL kompozitni bazeni',compact:'COMPACT keramički bazeni','po-mjeri':'Betonski bazeni po mjeri',rekonstrukcija:'Rekonstrukcija bazena i izmjena folije','swim-spa':'Swim spa i hidromasaža','kljuc-u-ruke':'Bazen ključ u ruke',odrzavanje:'Održavanje bazena',galerija:'Galerija',['o-nama']:'O nama',kontakt:'Kontakt'};
+const PAGES = ['privatnost','pocetna','pro','bazeni','fp','coral','compact','po-mjeri','swim-spa','rekonstrukcija','kljuc-u-ruke','odrzavanje','galerija','o-nama','kontakt'];
+const TITLES = {privatnost:'Privatnost i kolačići',pro:'Mondo Pool Care PRO – softver za servisere bazena',pocetna:'Mondo Acqua – bazeni, oprema i održavanje',bazeni:'Bazeni',fp:'Montažni FP bazeni',coral:'CORAL kompozitni bazeni',compact:'COMPACT keramički bazeni','po-mjeri':'Betonski bazeni po mjeri',rekonstrukcija:'Rekonstrukcija bazena i izmjena folije','swim-spa':'Swim spa i hidromasaža','kljuc-u-ruke':'Bazen ključ u ruke',odrzavanje:'Održavanje bazena',galerija:'Galerija',['o-nama']:'O nama',kontakt:'Kontakt'};
 let pendingModel = '';
 document.addEventListener('click', e => { const a = e.target.closest('[data-model]'); if (a) pendingModel = a.dataset.model; });
-const SLUG = {pocetna:'',bazeni:'bazeni',fp:'bazeni/fp',coral:'bazeni/coral',compact:'bazeni/compact','po-mjeri':'bazeni/betonski','swim-spa':'bazeni/swim-spa',rekonstrukcija:'bazeni/rekonstrukcija','kljuc-u-ruke':'kljuc-u-ruke',odrzavanje:'odrzavanje',galerija:'galerija','o-nama':'o-nama',kontakt:'kontakt',privatnost:'privatnost',upit:'upit'};
+const SLUG = {pocetna:'',pro:'pro',bazeni:'bazeni',fp:'bazeni/fp',coral:'bazeni/coral',compact:'bazeni/compact','po-mjeri':'bazeni/betonski','swim-spa':'bazeni/swim-spa',rekonstrukcija:'bazeni/rekonstrukcija','kljuc-u-ruke':'kljuc-u-ruke',odrzavanje:'odrzavanje',galerija:'galerija','o-nama':'o-nama',kontakt:'kontakt',privatnost:'privatnost',upit:'upit'};
 const BYPATH = Object.fromEntries(Object.entries(SLUG).map(([k,v]) => [v,k]));
 const BASE = window.MW_BASE || '/';
 const DESC = {
+  pro:'Mondo Pool Care PRO: radni nalozi, tim i ovlasti, skladište i razduženje te PDF izvještaji klijentima. 30 dana besplatno, bez kartice.',
   pocetna:'Montažni FP, CORAL kompozitni i COMPACT keramički bazeni, betonski bazeni po mjeri, gradnja ključ u ruke i održavanje bazena u cijeloj Hrvatskoj.',
   bazeni:'Usporedite FP, CORAL, COMPACT i betonske bazene: cijene s PDV-om, što je uključeno i od čega se sastoji investicija.',
   fp:'Montažni FP bazeni, ovalni i pravokutni, s opremom i montažom. Cijene od 5.030 € s PDV-om i okvirni građevinski radovi.',
@@ -1342,7 +1793,7 @@ function route(){
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'p-' + h));
   document.querySelectorAll('nav.main [data-nav]').forEach(a => a.toggleAttribute('aria-current', a.dataset.nav === h || (a.dataset.nav === 'bazeni' && ['fp','coral','compact','po-mjeri','swim-spa','rekonstrukcija'].includes(h))));
   document.querySelectorAll('nav.main [aria-current]').forEach(a => a.setAttribute('aria-current','page'));
-  document.body.classList.toggle('pc', h === 'odrzavanje');
+  document.body.classList.toggle('pc', h === 'odrzavanje' || h === 'pro');
   document.title = h === 'pocetna' ? TITLES.pocetna : `${TITLES[h]} – Mondo Acqua`;
   const md = document.querySelector('meta[name=description]'); if (md) md.content = DESC[h] || DESC.pocetna;
   const cn = document.querySelector('link[rel=canonical]'); if (cn) cn.href = 'https://www.mondo-acqua.hr/' + (SLUG[h] || '');
@@ -1365,6 +1816,7 @@ addEventListener('keydown', e => { if (e.key === 'Escape') shClose(); });
   g.addEventListener('pointerdown', e => { y0 = e.clientY; dy = 0; sheet.style.transition = 'none'; g.setPointerCapture(e.pointerId); });
   g.addEventListener('pointermove', e => { if (y0 === null) return; dy = Math.max(0, e.clientY - y0); sheet.style.transform = `translateY(${dy}px)`; });
   g.addEventListener('pointerup', () => { sheet.style.transition = ''; if (dy > 90) shClose(); else sheet.style.transform = ''; y0 = null; }); })();
+document.addEventListener('click', e => { const a = e.target.closest('[data-pro-jump]'); if (!a) return; e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if (t) t.scrollIntoView({behavior:'smooth',block:'start'}); });
 window.addEventListener('hashchange', () => { if (SLUG[location.hash.slice(1)] !== undefined) route(); });
 (() => { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; const w = document.querySelector('.mw-ringA'), g = document.querySelector('.mw-ringB'); let t = false; addEventListener('scroll', () => { if (t) return; t = true; requestAnimationFrame(() => { const y = Math.min(scrollY, 3000); w.style.translate = `0 ${y * -0.10}px`; g.style.translate = `0 ${y * -0.04}px`; g.style.rotate = `${y * 0.002}deg`; t = false; }); }, { passive: true }); })();
 
