@@ -1,5 +1,5 @@
 // Ivero Product Prices (EUR)
-// Source: shop.ivero.hr
+// Source: shop.ivero.hr – maloprodajne cijene S PDV-om (potvrdio Mondo Acqua 20. 11. 2026.), preuzimaju se 1:1.
 
 export interface ProductPrice {
   id: string;

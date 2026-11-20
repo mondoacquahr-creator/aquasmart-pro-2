@@ -6,10 +6,10 @@ import { useEffect } from 'react';
 export const SELLER = {
   name: 'Mondo Acqua d.o.o.',
   address: 'Lučinići 17, 51216 Marinići',
-  oib: '',          // upisati OIB tvrtke
+  oib: '23570721801',
   email: 'info@mondo-acqua.hr',
   phone: '+385 95 208 7321',
-  vatNote: '',      // npr. „Sve cijene uključuju PDV.” – potvrđuje vlasnik
+  vatNote: 'Sve cijene uključuju PDV (25 %).',
 };
 
 const box = { background: 'rgba(6,30,42,0.6)', border: '1px solid rgba(120,220,255,0.12)' };
