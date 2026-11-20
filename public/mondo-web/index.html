@@ -103,7 +103,22 @@
         #measurement-settings { padding:6px 12px;min-height:32px;border-radius:999px;background:rgba(10,24,32,.85);border-color:rgba(255,255,255,.2);opacity:.85; }
         @media(max-width:520px){ #measurement-choice .measurement-actions{flex:1 1 100%} #measurement-choice .mc-primary{flex:1} }
         @media(max-width:760px){#measurement-choice,#measurement-settings{bottom:calc(80px + env(safe-area-inset-bottom,0px));}}
-      </style>
+      .pricepromise{margin-top:22px;padding:22px 24px;border-radius:18px;border:1px solid rgba(79,195,240,.3);background:rgba(79,195,240,.05)}
+.pp-h{font:800 1.2rem/1.3 var(--display);color:#fff;margin:0 0 6px}
+.pp-t{margin:0 0 14px;color:var(--muted);max-width:70ch}
+.pp-l{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.pp-l li{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:#fff;font-weight:600;font-size:.92rem}
+@media (max-width:760px){.pp-l{grid-template-columns:1fr 1fr}}
+/* Mobitel: zaglavlje mora stati u 360–390 px (bez vodoravnog pomicanja) */
+@media (max-width:420px){
+  header.site .wrap{gap:8px;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+  .logo{gap:6px!important}.logo svg{width:30px!important;height:32px!important}
+  .wm{font-size:12px!important;letter-spacing:.03em}
+  .head-cta{gap:6px!important}.head-cta .btn{padding:10px 12px!important;font-size:.8rem!important}
+  .menu-btn{width:40px;height:40px}
+}
+@media (max-width:370px){.head-cta .btn{padding:9px 10px!important;font-size:.74rem!important}.wm{font-size:11px!important}}
+</style>
 <script>window.MW_BASE=location.pathname.indexOf('/mondo-web')===0?'/mondo-web/':'/';document.write('<base href="'+window.MW_BASE+'">');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mondo Acqua – bazeni, oprema i održavanje</title>
@@ -575,7 +590,7 @@ img{height:auto}
 .zsteps div{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(120,220,255,.12);font:600 .92rem var(--display);color:#fff}
 .zsteps span{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#4FC3F0;color:#0a0a0a;font-weight:800}
 @media (max-width:480px){.zsteps{grid-template-columns:1fr}}
-.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}@media (max-width:900px){.tools{grid-template-columns:1fr}}
+.tools{display:grid;grid-template-columns:1fr;gap:16px}@media (max-width:900px){.tools{grid-template-columns:1fr}}
 .tool{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;min-height:300px;padding:22px;border-radius:22px;overflow:hidden;color:#fff;text-decoration:none;border:1px solid rgba(120,220,255,.14);background:var(--img) center/cover;isolation:isolate;transition:transform .2s,border-color .2s;min-width:0}
 .tool::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(2,13,18,.25),rgba(2,13,18,.95) 75%)}
 .tool:hover{transform:translateY(-4px);border-color:rgba(79,195,240,.55)}
@@ -827,6 +842,11 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
   <div class="band"><div class="wrap">
     <div class="shead"><div><p class="eyebrow">Odabir bazena</p><h2>Koje rješenje odgovara vašem prostoru?</h2></div><a class="btn btn-ghost" href="#bazeni">Usporedba i cijene →</a></div>
     <div class="types" id="typeCards"></div>
+    <div class="pricepromise">
+      <p class="pp-h">Cijena koju vidite je cijena koju plaćate.</p>
+      <p class="pp-t">Prije potpisa zajedno provjerimo četiri stvari koje utječu na ponudu. Sve što iz njih proizlazi upisano je u ponudu, pa poslije nema iznenađenja.</p>
+      <ul class="pp-l"><li>Pristup terenu</li><li>Pripremni radovi</li><li>Priključak struje</li><li>Dozvole</li></ul>
+    </div>
   </div></div>
   <div class="band soft" id="upit-home"><div class="wrap split">
     <div class="stack"><p class="eyebrow">Upit za bazen · 2 minute</p><h2>Opišite bazen. Mi pripremamo ponudu.</h2><p class="lead">Što više znamo unaprijed, to je prva ponuda točnija. Upit stiže izravno nama, javljamo se s konkretnim sljedećim korakom.</p>
@@ -851,10 +871,9 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
   </div></div>
 
   <div class="band soft pc-top"><div class="wrap">
-    <div class="shead"><div><p class="eyebrow">Alati za vlasnike i servisere</p><h2>Mondo Pool Care za vlasnike i servisere.</h2></div><a class="btn btn-ghost" href="https://play.google.com/store/apps/details?id=hr.mondoacqua.poolcare&amp;referrer=utm_source%3Dmondo-acqua.hr%26utm_medium%3Dweb" target="_blank" rel="noopener">Aplikacija na Google Playu ↗</a></div>
+    <div class="shead"><div><p class="eyebrow">Za vlasnike bazena</p><h2>Kemija i oprema s dostavom.</h2></div><a class="btn btn-ghost" href="https://play.google.com/store/apps/details?id=hr.mondoacqua.poolcare&amp;referrer=utm_source%3Dmondo-acqua.hr%26utm_medium%3Dweb" target="_blank" rel="noopener">Aplikacija na Google Playu ↗</a></div>
     <div class="tools">
       <a class="tool tool-app" href="https://poolcare.mondo-acqua.hr/?stranica=webshop" style="--img:url('slike/odr-zimovanje-winterp.jpg')"><img class="ch-phone" src="slike/app-webshop.png" alt="" loading="lazy"><span class="ch-k">Webshop</span><strong>Kemija i oprema</strong><p>Registrirani vlasnici bazena imaju −10 % na kemiju.</p><span class="ch-go">Otvorite webshop</span></a>
-      <a class="tool" href="#pro" style="--img:url('slike/odr-zelena-ciscenje.jpg')"><span class="ch-k">Za servisere · Pro</span><strong>Pool Care PRO</strong><p>Radni nalozi, vrijeme i kemija po nalogu, ponude i fakturiranje. 30 dana besplatno.</p><span class="ch-go">Upoznajte PRO</span></a>
     </div>
   </div></div>
   <div class="band soft pc-bottom"><div class="wrap zcare">
@@ -1492,11 +1511,20 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
   </div></div>
 </section>
 
+<section class="page" id="p-404">
+  <div class="band"><div class="wrap stack" style="gap:18px;max-width:720px;padding-block:clamp(40px,8vw,90px)">
+    <p class="eyebrow">Greška 404</p>
+    <h1>Stranica nije pronađena.</h1>
+    <p class="lead">Adresa ne postoji ili je stranica premještena. Pogledajte bazene ili se vratite na početnu.</p>
+    <div class="btns"><a class="btn btn-primary" href="#bazeni">Bazeni →</a><a class="btn btn-ghost" href="#pocetna">Početna</a></div>
+  </div></div>
+</section>
+
 <section class="page" id="p-kontakt">
   <div class="band soft"><div class="wrap split">
     <div class="stack">
-      <p class="crumb"><a href="#pocetna">Početna</a> · Kontakt</p>
-      <h1 style="font-size:clamp(2rem,4.4vw,3rem)">Razgovarajmo o vašem bazenu.</h1>
+      <p class="crumb"><a href="#pocetna">Početna</a> · <span id="kontaktCrumb">Kontakt</span></p>
+      <h1 id="kontaktH1" style="font-size:clamp(2rem,4.4vw,3rem)">Razgovarajmo o vašem bazenu.</h1>
       <p class="lead">Pošaljite upit s vrstom bazena, dimenzijama i mjestom. Javit ćemo se s konkretnim sljedećim korakom.</p>
       <div class="form-card stack" style="gap:8px;box-shadow:none">
         <p><b>Telefon / WhatsApp</b><br><a href="tel:+385952087321">+385 95 208 7321</a> · <a href="https://wa.me/385952087321" target="_blank" rel="noopener">WhatsApp ↗</a></p>
@@ -1773,7 +1801,7 @@ const pageFromUrl = () => {
   const legacy = location.hash.replace('#','');
   if (legacy && (SLUG[legacy] !== undefined)) { history.replaceState(null, '', BASE + SLUG[legacy]); return legacy; }
   let p = location.pathname; if (p.indexOf(BASE) === 0) p = p.slice(BASE.length); p = p.replace(/\/+$/,'');
-  if (BYPATH[p] === undefined && p) { history.replaceState(null, '', BASE); return 'pocetna'; }   // nepoznata (stara) adresa: prikaži naslovnicu i ispravi adresu
+  if (BYPATH[p] === undefined && p) return 'nepostojeca';   // nepoznata adresa: stranica 404, adresa ostaje
   return BYPATH[p] !== undefined ? BYPATH[p] : 'pocetna';
 };
 const go = key => { history.pushState(null, '', BASE + SLUG[key]); route(); };
@@ -1789,15 +1817,25 @@ addEventListener('popstate', route);
 function route(){
   let h = pageFromUrl();
   let toForm = false;
-  if (h === 'upit') { h = 'kontakt'; toForm = true; }
-  if (!PAGES.includes(h)) h = 'pocetna';
+  const isUpit = h === 'upit';
+  if (isUpit) { h = 'kontakt'; toForm = true; }
+  const notFound = h === 'nepostojeca';
+  if (!notFound && !PAGES.includes(h)) h = 'pocetna';
+  if (notFound) h = '404';
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'p-' + h));
   document.querySelectorAll('nav.main [data-nav]').forEach(a => a.toggleAttribute('aria-current', a.dataset.nav === h || (a.dataset.nav === 'bazeni' && ['fp','coral','compact','po-mjeri','swim-spa','rekonstrukcija'].includes(h))));
   document.querySelectorAll('nav.main [aria-current]').forEach(a => a.setAttribute('aria-current','page'));
   document.body.classList.toggle('pc', h === 'odrzavanje' || h === 'pro');
-  document.title = h === 'pocetna' ? TITLES.pocetna : `${TITLES[h]} – Mondo Acqua`;
-  const md = document.querySelector('meta[name=description]'); if (md) md.content = DESC[h] || DESC.pocetna;
-  const cn = document.querySelector('link[rel=canonical]'); if (cn) cn.href = 'https://www.mondo-acqua.hr/' + (SLUG[h] || '');
+  document.title = notFound ? 'Stranica nije pronađena – Mondo Acqua'
+    : isUpit ? 'Pošaljite upit – Mondo Acqua'
+    : h === 'pocetna' ? TITLES.pocetna : `${TITLES[h]} – Mondo Acqua`;
+  const md = document.querySelector('meta[name=description]'); if (md) md.content = isUpit ? 'Pošaljite upit za bazen ili održavanje: vrsta bazena, dimenzije i mjesto. Javljamo se s konkretnim sljedećim korakom.' : (DESC[h] || DESC.pocetna);
+  const cn = document.querySelector('link[rel=canonical]'); if (cn) cn.href = 'https://www.mondo-acqua.hr/' + (isUpit ? 'upit' : (SLUG[h] || ''));
+  let rb = document.querySelector('meta[name=robots]');
+  if (notFound) { if (!rb) { rb = document.createElement('meta'); rb.name = 'robots'; document.head.appendChild(rb); } rb.content = 'noindex'; } else if (rb) rb.remove();
+  const kh = document.getElementById('kontaktH1'), kc = document.getElementById('kontaktCrumb');
+  if (kh) kh.textContent = isUpit ? 'Pošaljite upit za bazen.' : 'Razgovarajmo o vašem bazenu.';
+  if (kc) kc.textContent = isUpit ? 'Upit' : 'Kontakt';
   nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded','false'); if (typeof shClose === 'function') shClose();
   if (toForm) {
     const slot = document.getElementById('upit-slot');

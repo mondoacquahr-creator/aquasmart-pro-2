@@ -230,7 +230,7 @@
 # Stare datoteke (slike, PDF) više ne postoje: prava 404 umjesto naslovnice
 [[redirects]]
   from = "https://www.mondo-acqua.hr/sites/*"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/404.html"
   status = 404
   force = true
 # Posluživanje glavne stranice na domeni
@@ -275,11 +275,104 @@
   to = "/mondo-web/sitemap.xml"
   status = 200
   force = true
+# Stara adresa PRO stranice (brošura, LinkedIn): jedina kanonska adresa je /pro
 [[redirects]]
-  from = "https://www.mondo-acqua.hr/*"
+  from = "https://www.mondo-acqua.hr/pool-care-pro"
+  to = "/pro"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/pool-care-pro/"
+  to = "/pro"
+  status = 301
+  force = true
+# Rute glavne stranice (sve ostale adrese dobivaju pravu 404)
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni"
   to = "/mondo-web/index.html"
   status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni/fp"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni/coral"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni/compact"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni/betonski"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni/swim-spa"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bazeni/rekonstrukcija"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/kljuc-u-ruke"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/odrzavanje"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/galerija"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/o-nama"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/kontakt"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/privatnost"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/upit"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/pro"
+  to = "/mondo-web/index.html"
+  status = 200
+  force = true
+# Nepostojeća adresa: prava 404 sa stranicom „Stranica nije pronađena”, adresa ostaje
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/*"
+  to = "/mondo-web/404.html"
+  status = 404
 # --- Pool Care (SPA) ---
+[[redirects]]
+  from = "https://poolcare.mondo-acqua.hr/za-servisere"
+  to = "https://www.mondo-acqua.hr/pro"
+  status = 301
+  force = true
 [[redirects]]
   from = "/*"
   to = "/index.html"
