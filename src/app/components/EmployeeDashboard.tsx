@@ -12,6 +12,7 @@ import { useLanguage } from '../lib/languageContext';
 import { AquaSmartProLogo } from './AquaSmartProLogo';
 import { WorkOrderDetailsModal } from './WorkOrderDetailsModal';
 import { WorkOrdersTable } from './pro/WorkOrdersTable';
+import { ClientsTable } from './pro/ClientsTable';
 import { getPermissions, isLiveMode, isDemoMode, refreshMe } from '../lib/session';
 import { authService } from '../lib/auth';
 import { api } from '../lib/supabase';
@@ -583,51 +584,20 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
   );
 
   const renderClientsView = () => (
-    <div className="max-w-7xl mx-auto px-6 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-3xl font-semibold">Klijenti ({clients.length})</h2>
-        {perms.clients === 'edit' && (
-          <button
-            onClick={() => setShowAddClientModal(true)}
-            className="px-6 py-3 rounded-xl font-bold transition-all hover:scale-105 flex items-center gap-2"
-            style={{ background: T.accent, color: '#000000' }}
-          >
-            <Plus className="w-5 h-5" /><span>Novi klijent</span>
-          </button>
-        )}
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-4">
-        {clients.map((client) => (
-          <div key={client.id} className="p-6 rounded-2xl" style={{
-            background: 'rgba(10,40,52,0.55)',
-            border: '1px solid rgba(120,220,255,0.12)',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.35)'
-          }}>
-            <h3 className="font-semibold text-lg mb-1">{client.name}</h3>
-            {client.location && (
-              <div className="flex items-center gap-2 text-sm mb-2" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                <MapPin className="w-4 h-4" /><span>{client.location}</span>
-              </div>
-            )}
-            <div className="space-y-1 text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-              {client.phone && (
-                <div className="flex items-center gap-2"><Phone className="w-3 h-3" /><span>{client.phone}</span></div>
-              )}
-              {client.email && (
-                <div className="flex items-center gap-2"><Mail className="w-3 h-3" /><span>{client.email}</span></div>
-              )}
-            </div>
-          </div>
-        ))}
-        {clients.length === 0 && (
-          <div className="col-span-2 text-center py-16" style={{ color: 'rgba(255,255,255,0.3)' }}>
-            <UserCog className="w-12 h-12 mx-auto mb-4" />
-            <p>Nema klijenata</p>
-          </div>
-        )}
-      </div>
-    </div>
+    <ClientsTable
+      clients={clients}
+      orders={workOrders}
+      canCreate={perms.clients === 'edit'}
+      onNew={() => setShowAddClientModal(true)}
+      onNewOrder={perms.createOrders ? (c) => {
+        const currentUser = authService.getCurrentUser();
+        setSelectedWorkOrder({
+          id: Date.now(), client: c.name, location: c.location || '', task: 'Novi radni nalog', status: 'pending',
+          dueDate: new Date().toISOString().split('T')[0], priority: 'medium',
+          assignee: currentUser?.name ?? '', assigneeId: currentUser?.id ?? '',
+        });
+      } : undefined}
+    />
   );
 
   const renderMoreView = () => {
