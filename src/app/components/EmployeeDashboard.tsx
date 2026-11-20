@@ -14,7 +14,8 @@ import { WorkOrderDetailsModal } from './WorkOrderDetailsModal';
 import { getPermissions, isLiveMode, isDemoMode, refreshMe } from '../lib/session';
 import { authService } from '../lib/auth';
 import { api } from '../lib/supabase';
-import { loadCompanyData } from '../lib/companyData';
+import { loadCompanyData, lastLoadWasOffline, OFFLINE_MESSAGE } from '../lib/companyData';
+import { saveItem } from '../lib/outbox';
 
 interface EmployeeDashboardProps {
   onBack: () => void;
@@ -139,7 +140,7 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
       setWaterTests(((data.analyses || []) as any[]).filter(a => typeof a.pH === 'number') as WaterTest[]);
       setWarehouse((data.warehouse || []) as WarehouseItem[]);
       setClients((data.clients || []) as ClientItem[]);
-      setSyncError('');
+      setSyncError(lastLoadWasOffline() ? OFFLINE_MESSAGE : '');
     } else {
       setSyncError('Nema veze s poslužiteljem. Prikazani podaci možda nisu najnoviji.');
     }
@@ -223,8 +224,8 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
     const updated = workOrders.map(o => o.id === id ? { ...o, status: 'completed' as const } : o);
     updateWorkOrders(updated);
     if (live && order) {
-      try { await api.post('work-orders', { ...order, status: 'completed' }); }
-      catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
+      try { await saveItem('work-orders', { ...order, status: 'completed' }); }
+      catch (e: any) { setSyncError('Poslužitelj je odbio izmjenu: ' + (e?.message || 'Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.')); }
     }
   };
 
@@ -235,8 +236,8 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
     const reopened = { ...rest, status: 'active' as const };
     updateWorkOrders(workOrders.map(o => o.id === id ? reopened : o));
     if (live) {
-      try { await api.post('work-orders', reopened); }
-      catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
+      try { await saveItem('work-orders', reopened); }
+      catch (e: any) { setSyncError('Poslužitelj je odbio izmjenu: ' + (e?.message || 'Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.')); }
     }
   };
 
@@ -258,8 +259,8 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
     };
     updateWaterTests([newTest, ...waterTests]);
     if (live) {
-      try { await api.post('analyses', newTest); }
-      catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
+      try { await saveItem('analyses', newTest); }
+      catch (e: any) { setSyncError('Poslužitelj je odbio izmjenu: ' + (e?.message || 'Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.')); }
     }
   };
 
@@ -274,8 +275,8 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
     };
     updateClients([...clients, c]);
     if (live) {
-      try { await api.post('clients', c); }
-      catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
+      try { await saveItem('clients', c); }
+      catch (e: any) { setSyncError('Poslužitelj je odbio izmjenu: ' + (e?.message || 'Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.')); }
     }
     setShowAddClientModal(false);
     setNewClientName(''); setNewClientLocation(''); setNewClientPhone(''); setNewClientEmail('');
@@ -631,8 +632,8 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
                         const updated = warehouse.map(w => w.id === item.id ? updatedItem : w);
                         updateWarehouse(updated);
                         if (live) {
-                          try { await api.post('warehouse', updatedItem); }
-                          catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
+                          try { await saveItem('warehouse', updatedItem); }
+                          catch (e: any) { setSyncError('Poslužitelj je odbio izmjenu: ' + (e?.message || 'Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.')); }
                         }
                       }}
                       className="w-8 h-8 rounded-lg font-bold flex items-center justify-center transition-all hover:scale-105"
@@ -646,8 +647,8 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
                         const updated = warehouse.map(w => w.id === item.id ? updatedItem : w);
                         updateWarehouse(updated);
                         if (live) {
-                          try { await api.post('warehouse', updatedItem); }
-                          catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
+                          try { await saveItem('warehouse', updatedItem); }
+                          catch (e: any) { setSyncError('Poslužitelj je odbio izmjenu: ' + (e?.message || 'Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.')); }
                         }
                       }}
                       className="w-8 h-8 rounded-lg font-bold flex items-center justify-center transition-all hover:scale-105"
@@ -891,8 +892,8 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
                 : [...workOrders, updatedOrder];
               updateWorkOrders(updated);
               if (live) {
-                try { await api.post('work-orders', updatedOrder); }
-                catch { setSyncError('Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.'); }
+                try { await saveItem('work-orders', updatedOrder); }
+                catch (e: any) { setSyncError('Poslužitelj je odbio izmjenu: ' + (e?.message || 'Promjena nije spremljena na poslužitelj. Provjerite vezu i pokušajte ponovno.')); }
               }
               setSelectedWorkOrder(null);
             }}
@@ -902,8 +903,8 @@ export function EmployeeDashboard({ onBack, onNavigate }: EmployeeDashboardProps
                 ? workOrders.map(o => o.id === updatedOrder.id ? updatedOrder : o)
                 : [...workOrders, updatedOrder]);
               if (live) {
-                try { await api.post('work-orders', updatedOrder); }
-                catch { setSyncError('Početak rada nije spremljen na poslužitelj. Provjerite vezu i pritisnite Spremi.'); }
+                try { await saveItem('work-orders', updatedOrder); }
+                catch (e: any) { setSyncError('Poslužitelj je odbio izmjenu: ' + (e?.message || 'Početak rada nije spremljen na poslužitelj. Provjerite vezu i pritisnite Spremi.')); }
               }
             }}
           />

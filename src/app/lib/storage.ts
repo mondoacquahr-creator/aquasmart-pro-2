@@ -1,5 +1,6 @@
 import { Pool, WaterAnalysis, Client, UserType, Store } from '../types';
 import { api } from './supabase';
+import { saveItem, deleteItem } from './outbox';
 
 const STORAGE_KEYS = {
   USER_TYPE: 'poolapp_user_type',
@@ -46,7 +47,7 @@ export const storage = {
       
       // Remote Sync
       try {
-        await api.post('pools', pool);
+        await saveItem('pools', pool);
       } catch (err) {
         console.warn('Remote sync failed for pool:', err);
       }
@@ -88,7 +89,7 @@ export const storage = {
 
       // Remote Sync
       try {
-        await api.delete('pools', id);
+        await deleteItem('pools', id);
       } catch (err) {
         console.warn('Remote delete failed for pool:', err);
       }
@@ -126,7 +127,7 @@ export const storage = {
 
     // Remote Sync
     try {
-      await api.post('analyses', analysis);
+      await saveItem('analyses', analysis);
     } catch (err) {
       console.warn('Remote sync failed for analysis:', err);
     }
@@ -154,7 +155,7 @@ export const storage = {
 
     // Remote Sync
     try {
-      await api.post('clients', client);
+      await saveItem('clients', client);
     } catch (err) {
       console.warn('Remote sync failed for client:', err);
     }
@@ -171,7 +172,7 @@ export const storage = {
 
     // Remote Sync
     try {
-      await api.delete('clients', id);
+      await deleteItem('clients', id);
     } catch (err) {
       console.warn('Remote delete failed for client:', err);
     }

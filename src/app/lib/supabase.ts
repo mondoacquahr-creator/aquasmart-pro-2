@@ -133,15 +133,18 @@ export const syncData = async () => {
     const user = session.user;
     console.log('🔄 Starting sync for user:', user.email);
 
-    // 4. Fetch all from server
-    const remoteData = await api.syncAll().catch(err => {
+    // 4. Prvo pošalji izmjene koje čekaju, zatim preuzmi sve s poslužitelja
+    await (await import('./outbox')).flush().catch(() => {});
+    let remoteData = await api.syncAll().catch(err => {
       console.warn('Could not fetch remote data during sync:', err);
       return null;
     });
     
     if (!remoteData) return false;
 
-    // 5. Reconciliation (remote wins)
+    // 5. Reconciliation (remote wins, osim izmjena koje još čekaju slanje)
+    const { overlayPending } = await import('./outbox');
+    remoteData = await overlayPending(remoteData);
     const pools = remoteData?.pools || [];
     const clients = remoteData?.clients || [];
     const analyses = remoteData?.analyses || [];

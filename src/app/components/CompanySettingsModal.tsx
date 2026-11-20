@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { X, Save, Loader2 } from 'lucide-react';
+import { X, Save, Loader2, ImagePlus } from 'lucide-react';
 import { CompanySettings, loadCompanySettings, saveCompanySettings } from '../lib/companySettings';
+import { getCompanyLogo, uploadCompanyLogo } from '../lib/companyLogo';
 
 // Postavke tvrtke servisera: podaci koji se ispisuju na ponudi za plaćanje.
 const inputStyle = { background: 'rgba(2,13,18,0.6)', border: '1px solid rgba(120,220,255,0.18)', fontSize: '16px', outline: 'none', color: '#fff' };
@@ -10,10 +11,26 @@ export function CompanySettingsModal({ onClose }: { onClose: () => void }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [logo, setLogo] = useState<string | null>(null);
+  const [logoBusy, setLogoBusy] = useState(false);
+  const [logoMsg, setLogoMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
   useEffect(() => {
     loadCompanySettings().then(setForm).catch(() => {}).finally(() => setLoading(false));
+    getCompanyLogo().then(setLogo).catch(() => {});
   }, []);
+
+  const onLogo = async (file?: File) => {
+    if (!file) return;
+    setLogoBusy(true); setLogoMsg(null);
+    try {
+      setLogo(await uploadCompanyLogo(file));
+      setLogoMsg({ ok: true, text: 'Logo je spremljen. Ispisuje se na izvještajima i ponudama.' });
+    } catch (e: any) {
+      setLogoMsg({ ok: false, text: e?.message || 'Učitavanje loga nije uspjelo.' });
+    }
+    setLogoBusy(false);
+  };
 
   const field = (key: keyof CompanySettings, label: string, placeholder: string, type = 'text') => (
     <div>
@@ -50,6 +67,22 @@ export function CompanySettingsModal({ onClose }: { onClose: () => void }) {
           <p className="text-sm flex items-center gap-2" style={{ color: 'rgba(255,255,255,0.6)' }}><Loader2 className="w-4 h-4 animate-spin" /> Učitavam…</p>
         ) : (
           <div className="space-y-4">
+            <div>
+              <label className="text-xs font-semibold uppercase tracking-wider mb-2 block" style={{ color: 'rgba(255,255,255,0.45)' }}>Logo tvrtke</label>
+              <div className="flex items-center gap-4">
+                <div className="w-40 h-16 rounded-xl flex items-center justify-center overflow-hidden shrink-0" style={{ background: '#fff', border: '1px solid rgba(120,220,255,0.18)' }}>
+                  {logo ? <img src={logo} alt="Logo tvrtke" className="max-w-full max-h-full object-contain p-2" /> : <span className="text-xs" style={{ color: '#7E939B' }}>Nema loga</span>}
+                </div>
+                <label className="px-4 py-3 rounded-xl text-sm font-semibold cursor-pointer flex items-center gap-2" style={{ border: '1px solid rgba(120,220,255,0.3)', color: '#fff', opacity: logoBusy ? 0.6 : 1 }}>
+                  {logoBusy ? <Loader2 className="w-4 h-4 animate-spin" /> : <ImagePlus className="w-4 h-4" />}
+                  {logo ? 'Zamijeni' : 'Učitaj logo'}
+                  <input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" className="hidden" disabled={logoBusy}
+                    onChange={e => { onLogo(e.target.files?.[0]); e.currentTarget.value = ''; }} />
+                </label>
+              </div>
+              <p className="text-xs mt-2" style={{ color: 'rgba(255,255,255,0.45)' }}>PNG s prozirnom pozadinom izgleda najbolje. Logo se ispisuje u zaglavlju izvještaja i ponude.</p>
+              {logoMsg && <p className="text-xs mt-2" style={{ color: logoMsg.ok ? '#2EE6A6' : '#FF8A80' }}>{logoMsg.text}</p>}
+            </div>
             {field('companyName', 'Naziv tvrtke', 'Bazeni d.o.o.')}
             {field('oib', 'OIB', '12345678901')}
             {field('address', 'Adresa', 'Ulica i broj')}
