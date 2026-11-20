@@ -172,7 +172,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
     if (member && t.memberDiscount > 0) lines.push(`${care ? 'Popust Mondo Care 10 %' : 'Popust za članove 10 %'}: -${t.memberDiscount.toFixed(2)} €`);
     if (member && t.extraDiscount > 0) lines.push(`Dodatni popust ${care ? 10 : 5} %: -${t.extraDiscount.toFixed(2)} €`);
     if (shippingEUR > 0) lines.push(`Dostava: ${shippingEUR.toFixed(2)} €`);
-    lines.push(`Ukupno: ${grandTotal.toFixed(2)} €`);
+    lines.push(`Ukupno: ${grandTotal.toFixed(2)} € (PDV uključen)`);
     if (member) lines.push(care ? 'Kupac je Mondo Care član.' : 'Kupac je registrirani član (Moj bazen).');
     return lines.join('\n');
   };
@@ -396,6 +396,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                 <span className="font-medium">Ukupno:</span>
                 <span className="text-2xl font-bold">{fmtEUR(grandTotal)}</span>
               </div>
+              <p className="text-[11px] text-right -mt-1" style={{ color: T.faint }}>Sve cijene uključuju PDV (25 %).</p>
               {member && totals.toExtra > 0 && (
                 <p className="text-xs" style={{ color: T.muted }}>
                   Još {fmtEUR(totals.toExtra)} do dodatnih {care ? 10 : 5} % popusta.
@@ -874,7 +875,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                         </p>
                       </>
                     )}
-                    <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>Cijena na dan {anchorDateLabel(product.category)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
+                    <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>S PDV-om · Cijena na dan {anchorDateLabel(product.category)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
                   </div>
 
                   {/* Action */}
@@ -953,7 +954,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                           </p>
                         </>
                       )}
-                      <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>Cijena na dan {anchorDateLabel(product.category)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
+                      <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>S PDV-om · Cijena na dan {anchorDateLabel(product.category)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
                     </div>
                     {ActionEl}
                   </div>

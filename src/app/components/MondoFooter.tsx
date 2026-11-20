@@ -165,6 +165,7 @@ export function MondoFooter({ variant = 'full' }: MondoFooterProps) {
                 </div>
                 <span>Lučinići 17, 51216 Marinići, Hrvatska</span>
               </div>
+              <p className="text-xs text-gray-400 pl-11">Radno vrijeme: 08:00–16:00 · OIB 23570721801</p>
             </div>
           </div>
 
