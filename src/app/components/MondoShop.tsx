@@ -1133,6 +1133,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
           <nav className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
             <a href="/uvjeti" style={{ color: '#5ED6E6' }}>Uvjeti kupnje</a>
             <a href="/povrat" style={{ color: '#5ED6E6' }}>Dostava, povrat i reklamacije</a>
+            <a href="/raskid" style={{ color: '#5ED6E6' }}>Raskid ugovora</a>
             <a href="/privatnost.html" style={{ color: '#5ED6E6' }}>Pravila privatnosti</a>
           </nav>
         </div>
