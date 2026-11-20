@@ -77,6 +77,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
   const [member] = useState<boolean>(() => isMemberUser());
   const [care] = useState<boolean>(() => isCareUser());
   const [view, setView] = useState<'shop' | 'checkout' | 'confirmed'>('shop');
+  const [emptyCart, setEmptyCart] = useState(false);
   useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [view]);
   const [search, setSearch] = useState('');
   const [group, setGroup] = useState('Sve');
@@ -597,7 +598,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
               if (cartCount > 0) {
                 setView('checkout');
               } else {
-                productListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setEmptyCart(true);
               }
             }}
             className="relative flex items-center gap-2 px-4 py-2 rounded-full font-bold text-[#020D12] flex-shrink-0 transition-all hover:opacity-90"
@@ -971,7 +972,27 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
 
         <div className="pt-6">
           <ReturnPolicy />
+          <nav className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            <a href="/uvjeti" style={{ color: '#5ED6E6' }}>Uvjeti kupnje</a>
+            <a href="/povrat" style={{ color: '#5ED6E6' }}>Dostava, povrat i reklamacije</a>
+            <a href="/privatnost.html" style={{ color: '#5ED6E6' }}>Pravila privatnosti</a>
+          </nav>
         </div>
+
+        {emptyCart && (
+          <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.6)' }} onClick={() => setEmptyCart(false)}>
+            <div role="dialog" aria-modal="true" className="w-full max-w-sm rounded-3xl p-6 text-center" style={{ background: '#06161D', border: '1px solid rgba(120,220,255,0.15)' }} onClick={(e) => e.stopPropagation()}>
+              <ShoppingCart className="w-10 h-10 mx-auto mb-3" style={{ color: 'rgba(255,255,255,0.35)' }} />
+              <h2 className="text-lg font-bold text-white mb-1">Košarica je prazna</h2>
+              <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.6)' }}>Dodajte proizvode iz kataloga pa se vratite u košaricu.</p>
+              <button
+                onClick={() => { setEmptyCart(false); productListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+                className="w-full py-3 rounded-xl font-bold text-black" style={{ background: '#4FC3F0' }}>
+                Natrag u katalog
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── KARTICA PROIZVODA ────────────────────────────────────────────── */}

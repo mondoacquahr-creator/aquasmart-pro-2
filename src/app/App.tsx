@@ -8,6 +8,7 @@ import { RegisterPage } from './components/RegisterPage';
 import { FreePortal } from './components/FreePortal';
 import { EmployerDashboard } from './components/EmployerDashboard';
 import { OutboxBadge } from './components/OutboxBadge';
+import { TermsPage, ReturnsPage } from './components/LegalPages';
 import { WhatsNew } from './components/WhatsNew';
 import { clearCacheForLogout } from './lib/outbox';
 import { EmployeeDashboard } from './components/EmployeeDashboard';
@@ -30,7 +31,7 @@ import { countVisit } from './lib/stat';
 
 const VISUALIZER_ENABLED = true;
 
-type Page = 'home' | 'visualizer' | 'promo' | 'analysis' | 'products' | 'login' | 'register' | 'member-register' | 'free-portal' | 'pro-portal' | 'member-portal' | 'water-analysis' | 'stores' | 'guest-analysis' | 'shop';
+type Page = 'home' | 'visualizer' | 'promo' | 'analysis' | 'products' | 'login' | 'register' | 'member-register' | 'free-portal' | 'pro-portal' | 'member-portal' | 'water-analysis' | 'stores' | 'guest-analysis' | 'shop' | 'terms' | 'returns';
 
 // Main App Component - Updated with ProductShowcase
 export default function App() {
@@ -38,10 +39,19 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>(() => {
     try {
       const map: Record<string, Page> = { webshop: 'products', analiza: 'analysis', prijava: 'login', registracija: 'register', clan: 'member-register', vizualizator: 'visualizer' };
+      const path = window.location.pathname.replace(/\/+$/, '');
+      if (path === '/uvjeti') return 'terms';
+      if (path === '/povrat') return 'returns';
       return map[new URLSearchParams(window.location.search).get('stranica') || ''] || 'home';
     } catch { return 'home'; }
   });
   const [prevPage, setPrevPage] = useState<Page | null>(null);
+  const baseTitle = useRef(document.title);
+  useEffect(() => {
+    document.title = currentPage === 'terms' ? 'Uvjeti kupnje – Mondo Pool Care'
+      : currentPage === 'returns' ? 'Dostava, povrat i reklamacije – Mondo Pool Care'
+      : baseTitle.current;
+  }, [currentPage]);
   const [returnPage, setReturnPage] = useState<Page | null>(null);
   const isPoppingState = useRef(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -244,7 +254,7 @@ export default function App() {
     <div className="min-h-screen relative overflow-hidden" style={{ background: T.pageBg }}>
       <LanguageProvider>
         <AuthProvider>
-          {['home','login','register','member-register','free-portal','guest-analysis','visualizer','analysis','water-analysis','products','shop','stores'].includes(currentPage) && <SiteHeader app={isStandalone()} onNavigate={(p) => handleNavigate(p)} />}
+          {['home','login','register','member-register','free-portal','guest-analysis','visualizer','analysis','water-analysis','products','shop','stores','terms','returns'].includes(currentPage) && <SiteHeader app={isStandalone()} onNavigate={(p) => handleNavigate(p)} />}
           {currentPage === 'home' && (isStandalone() ? <AppHome onNavigate={(page) => handleNavigate(page)} /> : <HomePageNew onNavigate={(page) => handleNavigate(page)} />)}
           {currentPage === 'login' && <LoginPage onBack={() => setCurrentPage('home')} onLoginSuccess={handleLoginSuccess} onGoToRegister={() => setCurrentPage('register')} />}
           {currentPage === 'register' && <RegisterPage onBack={() => setCurrentPage('home')} onRegisterSuccess={handleRegisterSuccess} onGoToLogin={() => setCurrentPage('login')} />}
@@ -257,6 +267,8 @@ export default function App() {
           {currentPage === 'analysis' && <WaterAnalysis onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} onRegisterMember={() => setCurrentPage('member-register')} onLogin={() => setCurrentPage('login')} />}
           {currentPage === 'water-analysis' && <WaterAnalysis onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} onRegisterMember={() => setCurrentPage('member-register')} onLogin={() => setCurrentPage('login')} />}
           {(currentPage === 'products' || currentPage === 'shop') && <MondoShop onBack={() => setCurrentPage(returnPage || prevPage || 'home')} onRegisterMember={() => setCurrentPage('member-register')} onFinished={() => { setReturnPage(null); setCurrentPage(localStorage.getItem('userRole') === 'member' ? 'member-portal' : 'home'); }} />}
+          {currentPage === 'terms' && <TermsPage onBack={() => { history.pushState(null, '', '/'); setCurrentPage('products'); }} />}
+          {currentPage === 'returns' && <ReturnsPage onBack={() => { history.pushState(null, '', '/'); setCurrentPage('products'); }} />}
           {currentPage === 'stores' && <StoreLocator onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} />}
           
           {/* Member Portal */}

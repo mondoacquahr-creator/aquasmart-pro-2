@@ -49,8 +49,8 @@ export function SiteHeader({ onNavigate, app = false }: { onNavigate: Nav; app?:
 
   return (
     <header className="relative z-[60]" style={{ background: 'rgba(4,24,32,0.92)', borderBottom: '1px solid rgba(120,220,255,0.10)' }}>
-      <div className="max-w-[1180px] mx-auto px-5 py-3 flex items-center justify-between gap-4">
-        {app ? <button onClick={() => go('home')} aria-label="Početna"><MondoLogo size={40} /></button> : <a href={MAIN} aria-label="Mondo Acqua, početna"><MondoLogo size={40} /></a>}
+      <div className="max-w-[1180px] mx-auto px-3 sm:px-5 py-3 flex items-center justify-between gap-2 sm:gap-4">
+        {app ? <button onClick={() => go('home')} aria-label="Početna" className="shrink-0"><><span className="sm:hidden"><MondoLogo size={30} compact /></span><span className="hidden sm:inline-flex"><MondoLogo size={40} /></span></></button> : <a href={MAIN} aria-label="Mondo Acqua, početna" className="shrink-0"><><span className="sm:hidden"><MondoLogo size={30} compact /></span><span className="hidden sm:inline-flex"><MondoLogo size={40} /></span></></a>}
 
         {app ? (
         <nav className="hidden md:flex items-center gap-[22px]">
@@ -72,16 +72,16 @@ export function SiteHeader({ onNavigate, app = false }: { onNavigate: Nav; app?:
         </nav>
         )}
 
-        <div className="flex items-center gap-2">
-          <div className="flex rounded-full p-0.5" style={{ border: '1px solid rgba(120,220,255,0.18)' }} role="group" aria-label="Jezik">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <div className="flex rounded-full p-0.5 shrink-0" style={{ border: '1px solid rgba(120,220,255,0.18)' }} role="group" aria-label="Jezik">
             {(['hr', 'en'] as const).map(l => (
               <button key={l} onClick={() => setLanguage(l)} aria-pressed={language === l}
-                className="px-2.5 py-1 rounded-full text-xs font-bold uppercase"
+                className="px-2 sm:px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase"
                 style={language === l ? { background: 'rgba(92,225,230,0.18)', color: '#5CE1E6' } : { color: 'rgba(255,255,255,0.6)' }}>{l}</button>
             ))}
           </div>
-          {!app && <a href={MAIN + 'upit'} className="px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap" style={{ background: '#4FC3F0', color: '#0a0a0a', boxShadow: '0 6px 24px rgba(79,195,240,0.3)' }}>Zatražite ponudu</a>}
-          <button className={`${app ? 'md:hidden' : 'xl:hidden'} w-11 h-11 rounded-xl grid place-items-center text-white`} style={{ background: 'rgba(255,255,255,0.06)' }} onClick={() => setOpen(!open)} aria-label="Izbornik" aria-expanded={open}>
+          {!app && <a href={MAIN + 'upit'} className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap" style={{ background: '#4FC3F0', color: '#0a0a0a', boxShadow: '0 6px 24px rgba(79,195,240,0.3)' }}><span className="min-[420px]:hidden">Upit</span><span className="hidden min-[420px]:inline">Zatražite ponudu</span></a>}
+          <button className={`${app ? 'md:hidden' : 'xl:hidden'} w-10 h-10 sm:w-11 sm:h-11 rounded-xl grid place-items-center text-white shrink-0`} style={{ background: 'rgba(255,255,255,0.06)' }} onClick={() => setOpen(!open)} aria-label="Izbornik" aria-expanded={open}>
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
