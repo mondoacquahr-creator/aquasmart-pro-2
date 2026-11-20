@@ -364,7 +364,6 @@ export function WorkOrderDetailsModal({
 
   useEffect(() => {
     const hasFailedPhotos = Object.values(photoUploadStates).some(state => state === 'failed');
-  const queuedPhotoCount = Object.values(photoUploadStates).filter(state => state === 'queued').length;
     if (!hasFailedPhotos && saveError === 'Poslužitelj je odbio neke fotografije. Pokušajte ponovno ili ih obrišite.') {
       setSaveError('');
     }
@@ -816,6 +815,7 @@ export function WorkOrderDetailsModal({
   const progress = totalTasksAndServices > 0 ? (completedTasksAndServices / totalTasksAndServices) * 100 : 0;
   const isUploadingPhotos = Object.values(photoUploadStates).some(state => state === 'uploading');
   const hasFailedPhotos = Object.values(photoUploadStates).some(state => state === 'failed');
+  const queuedPhotoCount = Object.values(photoUploadStates).filter(state => state === 'queued').length;
   const filteredPhotos = photos.filter(photo =>
     photoFilter === 'all' || normalizePhotoCategory(photo.category) === photoFilter
   );
