@@ -65,7 +65,8 @@ export function ReturnsPage({ onBack }: { onBack: () => void }) {
         <p>Od narudžbe preko webshopa možete odustati u roku od <b className="text-white">14 dana od dana primitka proizvoda</b>, bez navođenja razloga. Dovoljno je da nam to javite e-mailom na <a href={`mailto:${SELLER.email}`} style={link}>{SELLER.email}</a> ili na <a href={`tel:${SELLER.phone.replace(/\s/g, '')}`} style={link}>{SELLER.phone}</a>, uz broj ili datum narudžbe. Najjednostavnije je upotrijebiti funkciju <a href="/raskid" style={link}>Raskid ugovora</a>: potvrdu primitka dobivate odmah.</p>
       </Section>
       <Section h="Vraćanje proizvoda">
-        <p>Proizvod pošaljite ili donesite najkasnije 14 dana nakon obavijesti o odustanku, na adresu {SELLER.name}, {SELLER.address}. Proizvod treba biti nekorišten, neoštećen i u originalnoj ambalaži. Troškove povrata snosi kupac.</p>
+        <p>Proizvod pošaljite ili donesite najkasnije 14 dana nakon obavijesti o odustanku, na adresu {SELLER.name}, {SELLER.address}. Troškove povrata snosi kupac.</p>
+        <ReturnConditions />
       </Section>
       <Section h="Povrat novca">
         <p>Novac vraćamo najkasnije 14 dana od primitka vaše obavijesti, istim načinom plaćanja kojim ste platili. Povrat možemo zadržati dok ne primimo proizvod.</p>
@@ -119,6 +120,16 @@ export function TermsPage({ onBack }: { onBack: () => void }) {
 
 // Funkcija „Raskid ugovora” (ugovori sklopljeni na daljinu): izjava se šalje Mondo Acqui, sprema u evidenciju,
 // a kupac odmah dobiva potvrdu sa sadržajem, datumom i vremenom (na zaslonu za spremanje/ispis i e-poštom).
+// Uvjeti povrata robe: kemija samo neotvorena (iznimka za zapečaćenu robu zbog zaštite zdravlja), oprema nekorištena.
+export function ReturnConditions() {
+  return (
+    <div className="rounded-xl p-4 space-y-2" style={{ background: 'rgba(255,176,32,0.08)', border: '1px solid rgba(255,176,32,0.35)' }}>
+      <p><b className="text-white">Kemija za bazen i spa:</b> zbog zaštite zdravlja i sigurnosti može se vratiti samo <b className="text-white">neotvorena, u originalnoj ambalaži s neoštećenim zatvaračem</b>. Za otvorenu kemiju pravo na jednostrani raskid ne postoji.</p>
+      <p><b className="text-white">Oprema i pribor:</b> vratite <b className="text-white">nekorišteno, neoštećeno i u originalnoj ambalaži</b>. Proizvod smijete pregledati kao u trgovini; ako je korišten više od toga, odgovarate za umanjenje njegove vrijednosti.</p>
+    </div>
+  );
+}
+
 const field = 'w-full rounded-xl px-4 py-3 text-[15px] text-white outline-none';
 const fieldStyle = { background: 'rgba(2,13,18,0.6)', border: '1px solid rgba(120,220,255,0.18)' };
 
@@ -165,6 +176,7 @@ export function WithdrawalPage({ onBack }: { onBack: () => void }) {
         </section>
         <p>{done.customerEmail ? <>Potvrdu smo poslali i na <b className="text-white">{f.email}</b>.</> : <>Spremite ili ispišite ovu potvrdu.</>}</p>
         <p>Proizvod pošaljite ili donesite najkasnije 14 dana od danas na adresu {SELLER.name}, {SELLER.address}. Novac vraćamo najkasnije 14 dana od primitka izjave, istim načinom plaćanja.</p>
+        <ReturnConditions />
         <button onClick={() => window.print()} className="px-5 py-3 rounded-xl font-bold text-black" style={{ background: '#4FC3F0' }}>Spremi ili ispiši potvrdu</button>
         <SellerBlock />
       </Shell>
@@ -186,6 +198,7 @@ export function WithdrawalPage({ onBack }: { onBack: () => void }) {
         <L t="Proizvodi (prazno = cijela narudžba)"><textarea rows={2} className={field} style={fieldStyle} value={f.items} onChange={set('items')} /></L>
         <L t="Napomena"><textarea rows={2} className={field} style={fieldStyle} value={f.note} onChange={set('note')} /></L>
         <input tabIndex={-1} autoComplete="off" aria-hidden="true" value={f.website} onChange={set('website')} style={{ position: 'absolute', left: '-9999px', width: 1, height: 1 }} />
+        <ReturnConditions />
         {err && <p className="text-sm" style={{ color: '#FF8A80' }}>{err}</p>}
         <button type="submit" disabled={sending} className="w-full sm:w-auto px-6 py-3 rounded-xl font-bold text-black disabled:opacity-60" style={{ background: '#4FC3F0' }}>{sending ? 'Šaljem…' : 'Potvrdi raskid ugovora'}</button>
         <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>Nakon slanja odmah dobivate potvrdu primitka s datumom i vremenom. Izjavu možete poslati i e-poštom na {SELLER.email} ili poštom.</p>
