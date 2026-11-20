@@ -5,7 +5,7 @@ export default async (req: Request) => {
   const url = new URL(req.url);
   let iz = await zadnjiIzvjestaj();
   if (url.searchParams.get('pokreni') === '1') {
-    const staro = iz ? Date.now() - new Date(iz.vrijeme).getTime() : Infinity;
+    const staro = iz?.length ? Date.now() - new Date(iz[0].vrijeme).getTime() : Infinity;
     if (staro > 10 * 60 * 1000) iz = await pokreniProvjeru();
     return Response.redirect(`${url.origin}/provjera-cijena`, 303);
   }
