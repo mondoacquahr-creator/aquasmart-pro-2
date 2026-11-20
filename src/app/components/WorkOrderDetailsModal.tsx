@@ -257,6 +257,9 @@ export function WorkOrderDetailsModal({
   const touchStartXRef = useRef<number | null>(null);
   const [saveError, setSaveError] = useState('');
 
+  // Priprema novog naloga (poslodavac): kvačica znači „dodijeli djelatniku”, a ne „obavljeno”.
+  // Spremaju se samo označene stavke, neobavljene; neoznačeni prijedlozi se ne prenose.
+  const isNewOrder = !readOnlyAssignee && !order.maintenanceTasks && !order.services && !order.workStartedAt;
   const [maintenanceTasks, setMaintenanceTasks] = useState<MaintenanceTask[]>(order.maintenanceTasks || [
     { id: 1, name: 'Čišćenje filtera', completed: false, cost: 150 },
     { id: 2, name: 'Provjera pumpi', completed: false, cost: 100 },
@@ -269,6 +272,9 @@ export function WorkOrderDetailsModal({
   ]);
 
   const [productsUsed, setProductsUsed] = useState<ProductUsed[]>(order.productsUsed || []);
+  const isPrep = isNewOrder && !editedOrder.workStartedAt;
+  const prepared = <I extends { completed?: boolean; completedAt?: string }>(items: I[]): I[] =>
+    items.filter(i => i.completed).map(({ completedAt: _c, ...rest }) => ({ ...(rest as I), completed: false }));
 
   const [waterAnalysis, setWaterAnalysis] = useState<WaterAnalysis>(order.waterAnalysis || {
     pH: 7.2,
@@ -404,7 +410,7 @@ export function WorkOrderDetailsModal({
       name,
       description: newServiceDescription.trim(),
       cost,
-      completed: false,
+      completed: isPrep,
     }]);
     resetServiceForm();
   };
@@ -428,12 +434,13 @@ export function WorkOrderDetailsModal({
       setAddTaskError('Cijena mora biti broj 0 ili veći.');
       return;
     }
-    setMaintenanceTasks([...maintenanceTasks, { id: Date.now(), name, completed: false, cost }]);
+    setMaintenanceTasks([...maintenanceTasks, { id: Date.now(), name, completed: isPrep, cost }]);
     resetTaskForm();
   };
 
   // Označavanje stavke bilježi vrijeme; poništavanje briše vrijeme.
   const stamp = <I extends { completed?: boolean; completedAt?: string }>(item: I): I => {
+    if (isPrep) return { ...item, completed: !item.completed };
     if (item.completed) {
       const { completedAt: _drop, ...rest } = item;
       return { ...(rest as I), completed: false };
@@ -473,6 +480,11 @@ export function WorkOrderDetailsModal({
   ], editedOrder.workStartedAt);
 
   const startWork = () => {
+    if (isPrep) {
+      // Rad počinje na pripremljenom nalogu: ostaju samo označene stavke, sve neobavljene.
+      setMaintenanceTasks(prepared(maintenanceTasks));
+      setServices(prepared(services));
+    }
     const started = {
       ...editedOrder,
       workStartedAt: new Date().toISOString(),
@@ -713,18 +725,20 @@ export function WorkOrderDetailsModal({
     }
     setSaveError('');
     if (extra.workEndedAt) setEditedOrder({ ...editedOrder, ...extra });
+    const outTasks = isPrep ? prepared(maintenanceTasks) : maintenanceTasks;
+    const outServices = isPrep ? prepared(services) : services;
     const updatedOrder = {
       ...editedOrder,
       ...extra,
-      maintenanceTasks,
-      services,
+      maintenanceTasks: outTasks,
+      services: outServices,
       productsUsed,
       waterAnalysis,
       automationData,
       photos,
       totalCost: totals.grandTotal,
       // Nakon ponovnog otvaranja nalog se zatvara tek pritiskom na „Završi rad”.
-      status: ((!reopened || extra.workEndedAt) && maintenanceTasks.every(t => t.completed) && services.every(s => s.completed)) ? 'completed' as const : editedOrder.status
+      status: (!isPrep && (!reopened || extra.workEndedAt) && maintenanceTasks.every(t => t.completed) && services.every(s => s.completed)) ? 'completed' as const : editedOrder.status
     };
     onSave(updatedOrder);
     onClose();
@@ -949,7 +963,9 @@ export function WorkOrderDetailsModal({
         <div className="shrink-0 px-3 sm:px-5 py-2" style={{ background: 'rgba(2,13,18,0.55)', borderBottom: '1px solid rgba(120,220,255,0.08)' }}>
           <div className="flex items-center gap-3">
             <div className="flex-1 min-w-0 text-xs sm:text-sm truncate" style={{ color: 'rgba(255,255,255,0.75)' }}>
-              <b className="text-white">{completedTasksAndServices}/{totalTasksAndServices}</b> obavljeno
+              {isPrep
+                ? <>Priprema · <b className="text-white">{completedTasksAndServices}</b> {completedTasksAndServices === 1 ? 'stavka' : 'stavki'} za djelatnika</>
+                : <><b className="text-white">{completedTasksAndServices}/{totalTasksAndServices}</b> obavljeno</>}
               {workLabel && <> · <span style={{ color: workRunning ? '#2EFF88' : '#5CE1E6' }}>{workLabel}</span></>}
               {!hidePrices && <> · <b style={{ color: '#5CE1E6' }}>{totals.grandTotal.toFixed(2).replace('.', ',')} €</b></>}
             </div>
@@ -1156,7 +1172,7 @@ export function WorkOrderDetailsModal({
 
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                   <span className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                    {completedTasksAndServices} / {totalTasksAndServices} stavki obavljeno{editedOrder.assignee ? ` · ${editedOrder.assignee}` : ''}
+                    {isPrep ? `${completedTasksAndServices} odabrano za djelatnika` : `${completedTasksAndServices} / ${totalTasksAndServices} stavki obavljeno`}{editedOrder.assignee ? ` · ${editedOrder.assignee}` : ''}
                   </span>
                   <button type="button" onClick={() => void handlePrint()} className="px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2" style={{ background: '#4FC3F0', color: '#04202b' }}>
                     <FileText className="w-4 h-4" /> Generiraj izvještaj
@@ -1168,8 +1184,11 @@ export function WorkOrderDetailsModal({
             {/* SERVICES TAB */}
             {activeTab === 'work' && (
               <motion.div key="services" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
+                {isPrep && (
+                  <p className="text-xs mb-3 px-3 py-2 rounded-lg" style={{ color: 'rgba(255,255,255,0.75)', background: 'rgba(92,225,230,0.08)', border: '1px solid rgba(92,225,230,0.25)' }}>Priprema naloga: označite usluge i zadatke koje djelatnik treba obaviti. Neoznačene stavke neće biti u nalogu.</p>
+                )}
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-base font-semibold">Izvršene Usluge</h3>
+                  <h3 className="text-base font-semibold">{isPrep ? 'Usluge' : 'Izvršene Usluge'}</h3>
                   {!showAddServiceForm && (
                     <button
                       onClick={() => setShowAddServiceForm(true)}
@@ -1414,7 +1433,7 @@ export function WorkOrderDetailsModal({
                         </button>
 
                         <span className="flex-1">
-                          <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>{task.name}</span>
+                          <span style={{ textDecoration: task.completed && !isPrep ? 'line-through' : 'none' }}>{task.name}</span>
                           {task.completed && task.completedAt && (
                             <span className="block text-xs mt-1" style={{ color: '#2EFF88' }}>✓ {itemTimeLabel(task, `t${task.id}`, durations)}</span>
                           )}

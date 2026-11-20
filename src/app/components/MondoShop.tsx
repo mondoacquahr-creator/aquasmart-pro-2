@@ -68,8 +68,30 @@ const matchesSearch = (p: { name: string; size: string; category: string; descri
 };
 
 export const SHIPPING_EUR = 10;
+// Lokalna kopija slike nije dostupna -> jednom probaj izvornu sliku dobavljača
+const swapToSource = (el: HTMLImageElement) => {
+  const fb = el.dataset.fallback;
+  if (!fb || el.src === fb) return false;
+  delete el.dataset.fallback;
+  el.src = fb;
+  return true;
+};
 const SUB_LABEL: Record<string, string> = { 'Održavanje': 'Zimovanje i zaštita', 'Ostalo': 'Ostala kemija', 'Robotski usisavači': 'Roboti', 'Baterijski usisavači': 'Ručni baterijski' };
 const DIVIDER_AFTER = 'Testiranje';
+// Straničenje i filteri kataloga (stanje se čuva u adresi: ?stranica=webshop&skupina=…&kat=…&cijena=…&poredak=…&str=…&q=…)
+const PAGE_SIZE = 24;
+const PRICE_RANGES: { key: string; label: string; min: number; max: number }[] = [
+  { key: 'do-20', label: 'do 20 €', min: 0, max: 20 },
+  { key: '20-100', label: '20–100 €', min: 20, max: 100 },
+  { key: '100-500', label: '100–500 €', min: 100, max: 500 },
+  { key: 'iznad-500', label: 'iznad 500 €', min: 500, max: Infinity },
+];
+const inRange = (price: number, key: string) => {
+  const r = PRICE_RANGES.find((x) => x.key === key);
+  return !r || (price >= r.min && price < r.max);
+};
+const urlParam = (k: string) => { try { return new URLSearchParams(window.location.search).get(k) || ''; } catch { return ''; } };
+
 
 
 export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopProps) {
@@ -79,9 +101,15 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
   const [view, setView] = useState<'shop' | 'checkout' | 'confirmed'>('shop');
   const [emptyCart, setEmptyCart] = useState(false);
   useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [view]);
-  const [search, setSearch] = useState('');
-  const [group, setGroup] = useState('Sve');
-  const [category, setCategory] = useState('Sve');
+  const [search, setSearch] = useState(() => urlParam('q'));
+  const [group, setGroup] = useState(() => (GROUPS.some((g) => g.name === urlParam('skupina')) ? urlParam('skupina') : 'Sve'));
+  const [category, setCategory] = useState(() => (SHOP_PRODUCTS.some((p) => p.category === urlParam('kat')) ? urlParam('kat') : 'Sve'));
+  const [priceRange, setPriceRange] = useState(() => (PRICE_RANGES.some((r) => r.key === urlParam('cijena')) ? urlParam('cijena') : ''));
+  const [sort, setSort] = useState<'' | 'cijena-rastuce' | 'cijena-padajuce'>(() => {
+    const v = urlParam('poredak');
+    return v === 'cijena-rastuce' || v === 'cijena-padajuce' ? v : '';
+  });
+  const [page, setPage] = useState(() => Math.max(1, parseInt(urlParam('str'), 10) || 1));
   const [confirmedVia, setConfirmedVia] = useState<'whatsapp' | 'email' | 'paypal' | null>(null);
   const [detailId, setDetailId] = useState<string | null>(() => {
     const id = new URLSearchParams(window.location.search).get('proizvod');
@@ -142,6 +170,55 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
     const g = GROUPS.find((x) => x.name === group);
     return category !== 'Sve' ? p.category === category : !g || g.subs.includes(p.category);
   });
+  const rangeCount = (key: string) => filteredProducts.filter((p) => inRange(p.priceEUR, key)).length;
+  const shownProducts = filteredProducts.filter((p) => inRange(p.priceEUR, priceRange));
+  if (sort) shownProducts.sort((a, b) => (sort === 'cijena-rastuce' ? a.priceEUR - b.priceEUR : b.priceEUR - a.priceEUR));
+  const pageCount = Math.max(1, Math.ceil(shownProducts.length / PAGE_SIZE));
+  const currentPage = Math.min(page, pageCount);
+  const pageProducts = shownProducts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  // Promjena filtra vraća na prvu stranicu
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) { firstRender.current = false; return; }
+    setPage(1);
+  }, [query, group, category, priceRange, sort]);
+  // Stanje kataloga i otvoreni proizvod zapisuju se u adresu (bez novog unosa u povijest)
+  useEffect(() => {
+    try {
+      const u = new URL(window.location.href);
+      const sp = u.searchParams;
+      if (!sp.get('stranica')) sp.set('stranica', 'webshop');
+      const set = (k: string, v: string) => (v ? sp.set(k, v) : sp.delete(k));
+      set('q', query);
+      set('skupina', group !== 'Sve' ? group : '');
+      set('kat', category !== 'Sve' ? category : '');
+      set('cijena', priceRange);
+      set('poredak', sort);
+      set('str', currentPage > 1 ? String(currentPage) : '');
+      set('proizvod', detailId || '');
+      const next = u.pathname + (sp.toString() ? `?${sp.toString()}` : '') + u.hash;
+      if (next !== window.location.pathname + window.location.search + window.location.hash) window.history.replaceState(window.history.state, '', next);
+    } catch { /* adresa nije ključna */ }
+  }, [query, group, category, priceRange, sort, currentPage, detailId]);
+  // Naslov i kanonska adresa otvorenog proizvoda
+  useEffect(() => {
+    const prod = detailId ? findProduct(detailId) : undefined;
+    if (!prod) return;
+    const prevTitle = document.title;
+    document.title = `${prod.name} – ${prod.size} | Mondo Pool Care`;
+    let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    const prevHref = link?.href;
+    if (!link) { link = document.createElement('link'); link.rel = 'canonical'; document.head.appendChild(link); }
+    link.href = `https://www.mondo-acqua.hr/proizvodi/${encodeURIComponent(prod.id)}/`;
+    return () => {
+      document.title = prevTitle;
+      if (prevHref) link!.href = prevHref; else link!.remove();
+    };
+  }, [detailId]);
+  const goToPage = (n: number) => {
+    setPage(n);
+    productListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   const fmtEUR = (val: number) => val.toFixed(2).replace('.', ',') + ' €';
 
@@ -317,9 +394,11 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                         {shopProduct?.imageUrl ? (
                           <img
                             src={shopProduct.imageUrl}
+                            data-fallback={shopProduct.sourceImageUrl}
                             alt={p.name}
                             className="w-full h-full object-contain"
                             onError={(e) => {
+                              if (swapToSource(e.currentTarget)) return;
                               (e.currentTarget as HTMLImageElement).style.display = 'none';
                               const fb = e.currentTarget.nextElementSibling as HTMLElement | null;
                               if (fb) fb.style.display = 'flex';
@@ -538,7 +617,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
   }
 
   // ── SHOP VIEW ───────────────────────────────────────────────────────────────
-  const productCount = filteredProducts.length;
+  const productCount = shownProducts.length;
   const productCountLabel = productCount === 1 ? '1 proizvod' : `${productCount} proizvoda`;
   const activeGroup = GROUPS.find((x) => x.name === group);
   const categoryLabel = query ? `Rezultati za „${query}”` : category !== 'Sve' ? (SUB_LABEL[category] || category) : activeGroup ? activeGroup.name : 'Svi proizvodi';
@@ -642,7 +721,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
               Proizvodi za bazen
             </h1>
             <p className="text-sm" style={{ color: T.muted }}>
-              Kemija i oprema za bazen – pronađite proizvod po nazivu ili namjeni.
+              Kemija i oprema za bazen – pronađite proizvod po nazivu ili namjeni. Sve cijene su s PDV-om.
             </p>
           </div>
 
@@ -733,24 +812,62 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
           )}
         </div>
 
+        {/* Cijena i poredak */}
+        <div className="flex flex-wrap items-center gap-2 mt-4">
+          <span className="text-xs mr-1" style={{ color: T.faint }}>Cijena:</span>
+          {[{ key: '', label: 'Sve' }, ...PRICE_RANGES].map(({ key, label }) => {
+            const on = priceRange === key;
+            const n = key ? rangeCount(key) : filteredProducts.length;
+            if (key && n === 0 && !on) return null;
+            return (
+              <button
+                key={key || 'sve'}
+                onClick={() => setPriceRange(key)}
+                className="px-3 py-1 text-xs font-medium rounded-full transition-all"
+                style={on
+                  ? { background: 'rgba(94,214,230,0.16)', border: `1px solid ${T.cyan}`, color: '#fff' }
+                  : { background: 'transparent', border: '1px solid rgba(255,255,255,0.14)', color: 'rgba(255,255,255,0.8)' }}
+              >
+                {label}<span className="ml-1.5" style={{ opacity: 0.5 }}>{n}</span>
+              </button>
+            );
+          })}
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as typeof sort)}
+            aria-label="Poredak"
+            className="ml-auto text-xs rounded-full px-3 py-1.5"
+            style={{ background: T.inputBg, border: '1px solid rgba(255,255,255,0.14)', color: '#fff' }}
+          >
+            <option value="">Preporučeno</option>
+            <option value="cijena-rastuce">Cijena: od najniže</option>
+            <option value="cijena-padajuce">Cijena: od najviše</option>
+          </select>
+        </div>
+
         {/* Divider row */}
         <div
           className="flex items-center justify-between mt-4 pb-3"
           style={{ borderBottom: T.cardBorder }}
         >
           <span className="font-semibold text-sm text-white">{categoryLabel}</span>
-          <span className="text-sm" style={{ color: T.muted }}>{productCountLabel}</span>
+          <span className="text-sm" style={{ color: T.muted }}>
+            {pageCount > 1 ? `${(currentPage - 1) * PAGE_SIZE + 1}–${Math.min(currentPage * PAGE_SIZE, productCount)} od ${productCount}` : productCountLabel}
+          </span>
         </div>
       </div>
 
       {/* ── PRODUCT LIST ─────────────────────────────────────────────────── */}
       <div ref={productListRef} className="relative z-10 max-w-[1180px] mx-auto px-4 pb-8 grid gap-3 lg:grid-cols-2">
-        {filteredProducts.length === 0 ? (
-          <p className="text-center py-12 lg:col-span-2" style={{ color: T.muted }}>
-            Nema proizvoda za zadani pojam.
-          </p>
+        {shownProducts.length === 0 ? (
+          <div className="text-center py-12 lg:col-span-2" style={{ color: T.muted }}>
+            <p>{priceRange && filteredProducts.length > 0 ? 'Nema proizvoda u odabranom rasponu cijena.' : 'Nema proizvoda za zadani pojam.'}</p>
+            {priceRange && filteredProducts.length > 0 && (
+              <button onClick={() => setPriceRange('')} className="mt-3 text-sm underline" style={{ color: T.cyan }}>Prikaži sve cijene</button>
+            )}
+          </div>
         ) : (
-          filteredProducts.map((product, idx) => {
+          pageProducts.map((product, idx) => {
             const cartItem = cart.items.find((i) => i.productId === product.id);
             const qty = cartItem?.quantity || 0;
             const description = deriveDescription(product as any);
@@ -818,10 +935,12 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                       <>
                         <img
                           src={product.imageUrl}
+                          data-fallback={product.sourceImageUrl}
                           alt={product.name}
                           loading="lazy"
                           className="w-full h-full object-contain"
                           onError={(e) => {
+                            if (swapToSource(e.currentTarget)) return;
                             const el = e.currentTarget;
                             el.style.display = 'none';
                             const fb = el.nextElementSibling as HTMLElement | null;
@@ -875,7 +994,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                         </p>
                       </>
                     )}
-                    <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>S PDV-om · Cijena na dan {anchorDateLabel(product.category)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
+                    <p className="text-[10px] mt-0.5 leading-snug" style={{ color: T.faint }}>Cijena na dan {anchorDateLabel(product.category)}:<br />{fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
                   </div>
 
                   {/* Action */}
@@ -895,10 +1014,12 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                         <>
                           <img
                             src={product.imageUrl}
+                            data-fallback={product.sourceImageUrl}
                             alt={product.name}
                             loading="lazy"
                             className="w-full h-full object-contain"
                             onError={(e) => {
+                              if (swapToSource(e.currentTarget)) return;
                               const el = e.currentTarget;
                               el.style.display = 'none';
                               const fb = el.nextElementSibling as HTMLElement | null;
@@ -954,7 +1075,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                           </p>
                         </>
                       )}
-                      <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>S PDV-om · Cijena na dan {anchorDateLabel(product.category)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
+                      <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>Cijena na dan {anchorDateLabel(product.category)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
                     </div>
                     {ActionEl}
                   </div>
@@ -964,8 +1085,41 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
           })
         )}
 
+        {/* Straničenje */}
+        {pageCount > 1 && (
+          <nav aria-label="Stranice kataloga" className="lg:col-span-2 flex items-center justify-center gap-1.5 pt-4 flex-wrap">
+            <button
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-3 h-9 rounded-full text-sm disabled:opacity-30"
+              style={{ border: '1px solid rgba(255,255,255,0.14)', color: '#fff' }}
+            >‹ Prethodna</button>
+            {Array.from({ length: pageCount }, (_, i) => i + 1)
+              .filter((n) => n === 1 || n === pageCount || Math.abs(n - currentPage) <= 1)
+              .map((n, i, arr) => (
+                <span key={n} className="flex items-center gap-1.5">
+                  {i > 0 && n - arr[i - 1] > 1 && <span style={{ color: T.faint }}>…</span>}
+                  <button
+                    onClick={() => goToPage(n)}
+                    aria-current={n === currentPage ? 'page' : undefined}
+                    className="w-9 h-9 rounded-full text-sm font-semibold"
+                    style={n === currentPage
+                      ? { background: T.cyan, color: '#020D12' }
+                      : { border: '1px solid rgba(255,255,255,0.14)', color: '#fff' }}
+                  >{n}</button>
+                </span>
+              ))}
+            <button
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === pageCount}
+              className="px-3 h-9 rounded-full text-sm disabled:opacity-30"
+              style={{ border: '1px solid rgba(255,255,255,0.14)', color: '#fff' }}
+            >Sljedeća ›</button>
+          </nav>
+        )}
+
         {/* Bottom hint */}
-        {cartCount === 0 && filteredProducts.length > 0 && (
+        {cartCount === 0 && shownProducts.length > 0 && (
           <p className="text-center pt-4 text-sm" style={{ color: T.faint }}>
             Odaberi proizvod za nastavak ›
           </p>
