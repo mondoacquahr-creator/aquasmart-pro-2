@@ -8,7 +8,7 @@ import { RegisterPage } from './components/RegisterPage';
 import { FreePortal } from './components/FreePortal';
 import { EmployerDashboard } from './components/EmployerDashboard';
 import { OutboxBadge } from './components/OutboxBadge';
-import { TermsPage, ReturnsPage } from './components/LegalPages';
+import { TermsPage, ReturnsPage, WithdrawalPage } from './components/LegalPages';
 import { WhatsNew } from './components/WhatsNew';
 import { clearCacheForLogout } from './lib/outbox';
 import { EmployeeDashboard } from './components/EmployeeDashboard';
@@ -31,7 +31,7 @@ import { countVisit } from './lib/stat';
 
 const VISUALIZER_ENABLED = true;
 
-type Page = 'home' | 'visualizer' | 'promo' | 'analysis' | 'products' | 'login' | 'register' | 'member-register' | 'free-portal' | 'pro-portal' | 'member-portal' | 'water-analysis' | 'stores' | 'guest-analysis' | 'shop' | 'terms' | 'returns';
+type Page = 'home' | 'visualizer' | 'promo' | 'analysis' | 'products' | 'login' | 'register' | 'member-register' | 'free-portal' | 'pro-portal' | 'member-portal' | 'water-analysis' | 'stores' | 'guest-analysis' | 'shop' | 'terms' | 'returns' | 'withdrawal';
 
 // Main App Component - Updated with ProductShowcase
 export default function App() {
@@ -42,6 +42,7 @@ export default function App() {
       const path = window.location.pathname.replace(/\/+$/, '');
       if (path === '/uvjeti') return 'terms';
       if (path === '/povrat') return 'returns';
+      if (path === '/raskid') return 'withdrawal';
       return map[new URLSearchParams(window.location.search).get('stranica') || ''] || 'home';
     } catch { return 'home'; }
   });
@@ -50,6 +51,7 @@ export default function App() {
   useEffect(() => {
     document.title = currentPage === 'terms' ? 'Uvjeti kupnje – Mondo Pool Care'
       : currentPage === 'returns' ? 'Dostava, povrat i reklamacije – Mondo Pool Care'
+      : currentPage === 'withdrawal' ? 'Raskid ugovora – Mondo Pool Care'
       : baseTitle.current;
   }, [currentPage]);
   const [returnPage, setReturnPage] = useState<Page | null>(null);
@@ -254,7 +256,7 @@ export default function App() {
     <div className="min-h-screen relative overflow-hidden" style={{ background: T.pageBg }}>
       <LanguageProvider>
         <AuthProvider>
-          {['home','login','register','member-register','free-portal','guest-analysis','visualizer','analysis','water-analysis','products','shop','stores','terms','returns'].includes(currentPage) && <SiteHeader app={isStandalone()} onNavigate={(p) => handleNavigate(p)} />}
+          {['home','login','register','member-register','free-portal','guest-analysis','visualizer','analysis','water-analysis','products','shop','stores','terms','returns','withdrawal'].includes(currentPage) && <SiteHeader app={isStandalone()} onNavigate={(p) => handleNavigate(p)} />}
           {currentPage === 'home' && (isStandalone() ? <AppHome onNavigate={(page) => handleNavigate(page)} /> : <HomePageNew onNavigate={(page) => handleNavigate(page)} />)}
           {currentPage === 'login' && <LoginPage onBack={() => setCurrentPage('home')} onLoginSuccess={handleLoginSuccess} onGoToRegister={() => setCurrentPage('register')} />}
           {currentPage === 'register' && <RegisterPage onBack={() => setCurrentPage('home')} onRegisterSuccess={handleRegisterSuccess} onGoToLogin={() => setCurrentPage('login')} />}
@@ -269,6 +271,7 @@ export default function App() {
           {(currentPage === 'products' || currentPage === 'shop') && <MondoShop onBack={() => setCurrentPage(returnPage || prevPage || 'home')} onRegisterMember={() => setCurrentPage('member-register')} onFinished={() => { setReturnPage(null); setCurrentPage(localStorage.getItem('userRole') === 'member' ? 'member-portal' : 'home'); }} />}
           {currentPage === 'terms' && <TermsPage onBack={() => { history.pushState(null, '', '/'); setCurrentPage('products'); }} />}
           {currentPage === 'returns' && <ReturnsPage onBack={() => { history.pushState(null, '', '/'); setCurrentPage('products'); }} />}
+          {currentPage === 'withdrawal' && <WithdrawalPage onBack={() => { history.pushState(null, '', '/'); setCurrentPage('products'); }} />}
           {currentPage === 'stores' && <StoreLocator onBack={() => setCurrentPage(returnPage || 'home')} onOpenShop={openShop} />}
           
           {/* Member Portal */}
