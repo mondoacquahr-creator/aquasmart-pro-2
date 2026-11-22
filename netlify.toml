@@ -18,6 +18,18 @@
     Content-Type = "application/json"
     Access-Control-Allow-Origin = "*"
 
+# Duplikat glavne stranice na www/mondo-web/ -> prave adrese (dodano 22. 11. 2026., Search Console)
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/mondo-web"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/mondo-web/*"
+  to = "/:splat"
+  status = 301
+  force = true
+
 # --- Glavna stranica Mondo Acqua (dok je na /mondo-web/) ---
 [[redirects]]
   from = "/mondo-web/*"
@@ -225,6 +237,222 @@
 [[redirects]]
   from = "https://www.mondo-acqua.hr/large-chlorine-float-for-200g-tablets"
   to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+# Stari webshop i stare stranice iz Search Consolea (dodano 22. 11. 2026.)
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/tretmani-pitke-vode"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/tretmani-pitke-vode/*"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/ipoclor-30"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/mago"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/mreza-za-izravnavanje-s-alu-sipkom-12m"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/dnevna-mreza"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/povrsinska-mreza-de-luxe"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/surface-mesh-de-luxe"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/dan-net-de-luxe"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/mrezeica"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/ergosan-profumato-light"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/ergosan-profumato-light1"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/ergosan-profumato-pino-mentolato2"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/ergosan-profumato-pino-mentolato-10-lit"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/smart-medical-system"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/brom-20g-tablete-5-kg"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/dozator-klora"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/tricloro"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/seq-06"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/smartwater1"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/smartwater-premium-pack1"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/triclor-90500"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/triclor-9020"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/triclor-90200"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/triclor-90-20"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/easy-pool-kit"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/biozono-ag"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bioacid1"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/bioacid3"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/kopija-od-septisol-1-lit"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/septisol-10-lit"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/mold-stop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/dozirni-uredaj-eng-p-ph-6-lt-h-1-bar-sa-sondom-ph"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/flocculante-pastiglie"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/quasar-7g-tablete-10-kg"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/linea-hth"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/multifunkcionalne-tablete-200g-10-kg"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/teleskopski-stup-24-48-m"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/top-gun2"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/pegasus-s1"
+  to = "/bazeni/coral"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/about-us"
+  to = "/o-nama"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/preuzmite"
+  to = "/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/preuzmite/*"
+  to = "/"
   status = 301
   force = true
 # Stare datoteke (slike, PDF) više ne postoje: prava 404 umjesto naslovnice
