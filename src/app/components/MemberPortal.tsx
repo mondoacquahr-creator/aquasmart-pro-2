@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { MondoMark } from './MondoLogo';
 import { equipmentSpec } from '../lib/equipmentSpec';
 import { motion } from 'motion/react';
 import { Droplets, LogOut, RefreshCw, ChevronDown, ChevronUp, Trash2, Save, CheckCircle, AlertTriangle, XCircle, Phone, MapPin, Calendar, Wrench, BarChart2, User, Home, FlaskConical, Package, Star, MessageCircle, Mail, ShoppingCart } from 'lucide-react';
@@ -971,9 +972,7 @@ export function MemberPortal({ onLogout, onNavigate }: MemberPortalProps) {
         <div className="sticky top-0 z-20 backdrop-blur-xl" style={{ background: 'rgba(4,24,32,0.85)', borderBottom: '1px solid rgba(92,225,230,0.1)' }}>
           <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg, #0ABFCF 0%, #5CE1E6 100%)' }}>
-                <Droplets className="w-5 h-5 text-white" />
-              </div>
+              <MondoMark size={36} radius={10} />
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: T.cyan }}>Moj bazen</p>
                 <div className="flex items-center gap-2">

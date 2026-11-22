@@ -2,8 +2,8 @@
 // Stranice: uvijek najnovija verzija s mreže; spremljena kopija samo kad nema veze.
 // Datoteke iz /assets/ imaju jedinstveno ime po verziji, pa se smiju čuvati.
 // Supabase, slike proizvoda i ostali vanjski zahtjevi ne prolaze kroz ovu predmemoriju.
-const CACHE = 'poolcare-v1';
-const SHELL = ['/', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png', '/favicon.svg'];
+const CACHE = 'poolcare-v2';
+const SHELL = ['/', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png', '/brand/favicon-64.png', '/brand/mondo-acqua-znak.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

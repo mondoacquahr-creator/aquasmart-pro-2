@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { MondoMark } from './MondoLogo';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../lib/languageContext';
 import { motion } from 'motion/react';
@@ -113,15 +114,9 @@ export function LoginPage({ onBack, onLoginSuccess, onGoToRegister }: LoginPageP
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="w-20 h-20 mx-auto mb-8 rounded-3xl glow-pulse overflow-hidden"
-            style={{
-              background: 'linear-gradient(135deg, #0ABFCF 0%, #5CE1E6 100%)',
-              boxShadow: '0 8px 32px rgba(92,225,230,0.35)'
-            }}
+            className="w-24 h-24 mx-auto mb-8"
           >
-            <div className="w-full h-full flex items-center justify-center">
-              <Droplets className="w-10 h-10" style={{ color: '#FFFFFF' }} />
-            </div>
+            <MondoMark size={96} radius={26} />
           </motion.div>
           
           <h1 className="text-5xl font-bold mb-3" style={{ letterSpacing: '-0.03em' }}>
