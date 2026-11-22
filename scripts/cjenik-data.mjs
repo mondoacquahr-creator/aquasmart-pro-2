@@ -35,7 +35,7 @@ export function buildCjenikRows(shopProducts, mainHtmlPath) {
   for (const [name, label] of [['CORAL', 'Kompozitni bazen CORAL'], ['COMPACT', 'Keramički bazen COMPACT']])
     for (const m of arr(name)) rows.push({ tip: 'proizvod', naziv: `${label} ${m[1]} ${m[2]} m`, sifra: `${name.toLowerCase()}-${m[0]}`,
       marka: name, jedinica: 'kom', cijenaJedinica: '', cijena: num(m[3]), posebniOblik: '', sidrena: num(m[5] || m[3]), barkod: '', dostupnost: 'po narudžbi' });
-  for (const [, s, j, n, c] of html.matchAll(/<li data-usluga="([^"]+)" data-jedinica="([^"]+)"><span>([^<]+)<\/span><strong>od (\d+) €/g)) rows.push({ tip: 'usluga', naziv: `${n} (početna cijena)`, sifra: s, marka: 'Mondo Acqua', jedinica: j, cijenaJedinica: Number(c), cijena: Number(c), posebniOblik: '', sidrena: Number(c), barkod: '', dostupnost: 'dostupno' });
+  for (const [, s, j, n, c] of html.matchAll(/<li data-usluga="([^"]+)" data-jedinica="([^"]+)"><span>([^<]+)<\/span><strong>od ([\d.]+) €/g)) rows.push({ tip: 'usluga', naziv: `${n} (početna cijena)`, sifra: s, marka: 'Mondo Acqua', jedinica: j, cijenaJedinica: num(c), cijena: num(c), posebniOblik: '', sidrena: num(c), barkod: '', dostupnost: 'dostupno' });
   rows.push({ tip: 'usluga', naziv: 'Mondo Care – godišnji paket održavanja', sifra: 'mondo-care', marka: 'Mondo Acqua', jedinica: 'godina', cijenaJedinica: 199, cijena: 199, posebniOblik: '', sidrena: 199, barkod: '', dostupnost: 'dostupno' });
   rows.push({ tip: 'usluga', naziv: 'Dostava narudžbe iz webshopa (Hrvatska)', sifra: 'dostava', marka: 'Mondo Acqua', jedinica: 'narudžba', cijenaJedinica: 10, cijena: 10, posebniOblik: '', sidrena: 10, barkod: '', dostupnost: 'dostupno' });
   return rows;
