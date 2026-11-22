@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://www.mondo-acqua.hr/sitemap.xml
+Sitemap: https://www.mondo-acqua.hr/proizvodi-sitemap.xml

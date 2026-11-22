@@ -36,4 +36,7 @@ locations = [el.text for el in ET.parse('dist/sitemap.xml').getroot().findall('s
 assert len(locations) == len(set(locations)) == len(items) + 1
 assert product_links <= set(locations), 'Every feed product must be discoverable in the sitemap'
 assert 'Sitemap: https://poolcare.mondo-acqua.hr/sitemap.xml' in Path('dist/robots.txt').read_text()
+www_locations = [el.text for el in ET.parse('dist/proizvodi-sitemap.xml').getroot().findall('s:url/s:loc', site_ns)]
+assert set(www_locations) == product_links, 'www product sitemap must list every product page'
+assert 'Sitemap: https://www.mondo-acqua.hr/proizvodi-sitemap.xml' in Path('dist/mondo-web/robots.txt').read_text()
 print(f'Validated {len(items)} products: XML, unique IDs, landing pages, price and availability parity, image rewrites.')

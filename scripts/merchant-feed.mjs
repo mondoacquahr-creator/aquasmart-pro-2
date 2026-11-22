@@ -27,6 +27,8 @@ export function merchantAssets(products) {
     {fileName:'_redirects', source: products.filter(p => !p.id.startsWith('vg-') && !p.id.startsWith('vh-')).map(p => `/merchant-images/${p.id}.jpg /.netlify/images?url=${encodeURIComponent(p.sourceImageUrl || p.imageUrl)}&fm=jpg&q=90 200`).join('\n') + '\n'},
     {fileName:'google-products.xml',source:feed},
     {fileName:'sitemap.xml',source:sitemap},
+    // Proizvodi na www.mondo-acqua.hr: zasebna karta za glavnu domenu (www robots.txt je upućuje)
+    {fileName:'proizvodi-sitemap.xml',source:`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${products.map(p => `<url><loc>${escapeXml(productUrl(p))}</loc></url>`).join('\n')}\n</urlset>\n`},
     {fileName:'robots.txt',source:`User-agent: *\nAllow: /\n\nSitemap: ${SHOP_ORIGIN}/sitemap.xml\n`},
     ...products.map(p => ({fileName:`proizvodi/${p.id}/index.html`,source:productPage(p)})),
   ];
