@@ -307,6 +307,10 @@ td.total{font-weight:700;color:var(--navy)}
 .model .dims{font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
 .model .mp{margin-top:auto;padding-top:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .model .mp strong{font:800 1.05rem var(--display);color:var(--navy)}
+.pricelist{margin:4px 0 0;padding:0;list-style:none;border-top:1px solid var(--line);max-width:560px}
+.pricelist li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
+.pricelist span{color:var(--navy);font-weight:600}
+.pricelist strong{font:700 1.05rem var(--display);color:var(--navy);white-space:nowrap;text-align:right}
 .anchor{display:block;font-size:.72rem;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:2px}
 .model .mp a{font:700 .82rem var(--display);color:var(--aqua-ink);text-decoration:none}
 
@@ -1440,7 +1444,9 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
   <div class="phero"><div class="wrap">
     <div class="stack"><p class="crumb"><a href="#pocetna">Početna</a> · Održavanje</p>
       <h1>Održavanje bazena u cijeloj Hrvatskoj.</h1>
-      <p class="lead">Redovno održavanje, otvaranje i zatvaranje sezone, servis opreme i spašavanje zelene vode. Cijene održavanja na upit.</p>
+      <p class="lead">Redovno održavanje, otvaranje i zatvaranje sezone, servis opreme i spašavanje zelene vode.</p>
+      <ul class="pricelist" id="maintPrices" aria-label="Cijene održavanja"></ul>
+      <p class="small">Cijene s PDV-om. Točnu cijenu dobivate nakon upita, ovisno o veličini i stanju bazena.</p>
       <div class="btns"><a class="btn btn-primary" href="#upit">Zatražite ponudu za održavanje →</a></div></div>
     <img src="slike/bazen-sigurnosni-pokrivac.jpg" alt="Postavljen sigurnosni zimski pokrivač na bazenu" loading="lazy">
   </div></div>
@@ -1650,6 +1656,8 @@ document.getElementById('coralModels').innerHTML = CORAL.map(m => modelCard(m,'C
 document.getElementById('compactModels').innerHTML = COMPACT.map(m => modelCard(m,'COMPACT')).join('');
 
 const MAINT = [['Redovno održavanje','tjedno ili po dogovoru: čišćenje, usisavanje, kontrola i doziranje kemije'],['Otvaranje sezone','priprema bazena i opreme za kupanje'],['Zatvaranje sezone i zimovanje','zaštita bazena i opreme preko zime'],['Servis opreme','filter i punjenje, pumpa, elektroliza, dozirne stanice'],['Zelena ili mutna voda','vraćamo bistru vodu i otklanjamo uzrok']];
+const MAINT_PRICES = [['Otvaranje sezone','otvaranje-sezone',90,'usluga'],['Zatvaranje sezone (zimovanje)','zimovanje',90,'usluga'],['Redovno održavanje','redovno-odrzavanje',40,'dolazak'],['Spašavanje zelene vode','zelena-voda',100,'usluga']];
+document.getElementById('maintPrices').innerHTML = MAINT_PRICES.map(([n,,c,j]) => `<li><span>${n}</span><strong>od ${c} €${j === 'dolazak' ? ' po dolasku' : ''}<small class="anchor">${ANCHOR}: od ${c} €</small></strong></li>`).join('');
 const mHtml = MAINT.map(([b,t]) => `<li><span><b>${b}</b>: ${t}</span></li>`).join('');
 $set('maintList1', mHtml);
 document.getElementById('maintList2').innerHTML = mHtml;
@@ -1784,7 +1792,7 @@ document.querySelectorAll('[data-form-slot]').forEach(mountForm);
 
 /* ---------- Usmjeravanje (hash) ---------- */
 const PAGES = ['privatnost','pocetna','pro','bazeni','fp','coral','compact','po-mjeri','swim-spa','rekonstrukcija','kljuc-u-ruke','odrzavanje','galerija','o-nama','kontakt'];
-const TITLES = {privatnost:'Privatnost i kolačići',pro:'Mondo Pool Care PRO – softver za servisere bazena',pocetna:'Mondo Acqua – bazeni, oprema i održavanje',bazeni:'Bazeni',fp:'Montažni FP bazeni',coral:'CORAL kompozitni bazeni',compact:'COMPACT keramički bazeni','po-mjeri':'Betonski bazeni po mjeri',rekonstrukcija:'Rekonstrukcija bazena i izmjena folije','swim-spa':'Swim spa i hidromasaža','kljuc-u-ruke':'Bazen ključ u ruke',odrzavanje:'Održavanje bazena',galerija:'Galerija',['o-nama']:'O nama',kontakt:'Kontakt'};
+const TITLES = {privatnost:'Privatnost i kolačići',pro:'Mondo Pool Care PRO – softver za servisere bazena',pocetna:'Mondo Acqua – bazeni, oprema i održavanje',bazeni:'Bazeni',fp:'Montažni FP bazeni',coral:'CORAL kompozitni bazeni',compact:'COMPACT keramički bazeni','po-mjeri':'Betonski bazeni po mjeri',rekonstrukcija:'Rekonstrukcija bazena i izmjena folije','swim-spa':'Swim spa i hidromasaža','kljuc-u-ruke':'Bazen ključ u ruke',odrzavanje:'Održavanje bazena – cijene',galerija:'Galerija',['o-nama']:'O nama',kontakt:'Kontakt'};
 let pendingModel = '';
 document.addEventListener('click', e => { const a = e.target.closest('[data-model]'); if (a) pendingModel = a.dataset.model; });
 const SLUG = {pocetna:'',pro:'pro',bazeni:'bazeni',fp:'bazeni/fp',coral:'bazeni/coral',compact:'bazeni/compact','po-mjeri':'bazeni/betonski','swim-spa':'bazeni/swim-spa',rekonstrukcija:'bazeni/rekonstrukcija','kljuc-u-ruke':'kljuc-u-ruke',odrzavanje:'odrzavanje',galerija:'galerija','o-nama':'o-nama',kontakt:'kontakt',privatnost:'privatnost',upit:'upit'};
@@ -1801,7 +1809,7 @@ const DESC = {
   rekonstrukcija:'Rekonstrukcija starih bazena: skidanje obloge, sanacija, nova podloga i folija, zamjena opreme.',
   'swim-spa':'Swim spa bazeni s protustrujom i hidromasažom te akrilne hidromasažne kade.',
   'kljuc-u-ruke':'Gradnja bazena ključ u ruke: projekt, iskop, ugradnja, strojarnica, rub i puštanje u rad. Jedan ugovor, jedan kontakt.',
-  odrzavanje:'Održavanje bazena u cijeloj Hrvatskoj, Mondo Care paket i besplatna analiza vode u Mondo Pool Care.',
+  odrzavanje:'Održavanje bazena: otvaranje i zimovanje od 90 €, redovno održavanje od 40 € po dolasku, zelena voda od 100 €. Mondo Care paket i besplatna analiza vode.',
   galerija:'Galerija bazena koje je Mondo Acqua izgradila i održava.',
   'o-nama':'Mondo Acqua d.o.o. iz Viškova: bazeni, oprema, tretman vode i održavanje na jednom mjestu.',
   kontakt:'Pošaljite upit za bazen ili održavanje: +385 95 208 7321, info@mondo-acqua.hr.',
