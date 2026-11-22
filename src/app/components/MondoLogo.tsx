@@ -1,4 +1,4 @@
-// Logo Mondo Acqua (M/A, u kapi globus i orao). Znak je nacrtan za svijetlu podlogu,
+// Logo Mondo Acqua (orao, globus, M/A s kapi). Znak je nacrtan za svijetlu podlogu,
 // pa na tamnim zaglavljima stoji na bijeloj pločici.
 export const MONDO_ZNAK = "/brand/mondo-acqua-znak.png";
 
