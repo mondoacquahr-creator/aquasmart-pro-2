@@ -1120,6 +1120,8 @@ body{background:radial-gradient(ellipse at 20% -10%,#0A3550 0%,#05203A 45%,#020C
     <div class="stack"><p class="crumb"><a href="#pocetna">Početna</a> · Ključ u ruke</p>
       <h1>Ključ u ruke: od iskopa do prvog kupanja.</h1>
       <p class="lead">Jedan ugovor, jedan kontakt i jasan rok. Vi birate bazen, a mi koordiniramo sve radove.</p>
+      <ul class="pricelist" aria-label="Cijena bazena ključ u ruke"><li data-usluga="kljuc-u-ruke-fp" data-jedinica="kom"><span>FP bazen ključ u ruke</span><strong>od 6.530 €<small class="anchor">Cijena na dan 10. 9. 2026.: od 6.530 €</small></strong></li></ul>
+      <p class="small">Uključeno: bazen, oprema, montaža, iskop i ploča. Primjer: FP ovalni 4,50 × 3,00 m. Cijena s PDV-om; točna cijena ovisi o terenu i odabranom bazenu.</p>
       <div class="btns"><a class="btn btn-primary" href="#upit">Zatražite ponudu →</a></div></div>
     <img src="slike/kur-more-keramika.jpg" alt="Završen betonski bazen s keramikom i pogledom na more" loading="lazy">
   </div></div>
@@ -1790,7 +1792,7 @@ document.querySelectorAll('[data-form-slot]').forEach(mountForm);
 
 /* ---------- Usmjeravanje (hash) ---------- */
 const PAGES = ['privatnost','pocetna','pro','bazeni','fp','coral','compact','po-mjeri','swim-spa','rekonstrukcija','kljuc-u-ruke','odrzavanje','galerija','o-nama','kontakt'];
-const TITLES = {privatnost:'Privatnost i kolačići',pro:'Mondo Pool Care PRO – softver za servisere bazena',pocetna:'Mondo Acqua – bazeni, oprema i održavanje',bazeni:'Bazeni',fp:'Montažni FP bazeni',coral:'CORAL kompozitni bazeni',compact:'COMPACT keramički bazeni','po-mjeri':'Betonski bazeni po mjeri',rekonstrukcija:'Rekonstrukcija bazena i izmjena folije','swim-spa':'Swim spa i hidromasaža','kljuc-u-ruke':'Bazen ključ u ruke',odrzavanje:'Održavanje bazena – cijene',galerija:'Galerija',['o-nama']:'O nama',kontakt:'Kontakt'};
+const TITLES = {privatnost:'Privatnost i kolačići',pro:'Mondo Pool Care PRO – softver za servisere bazena',pocetna:'Mondo Acqua – bazeni, oprema i održavanje',bazeni:'Bazeni',fp:'Montažni FP bazeni',coral:'CORAL kompozitni bazeni',compact:'COMPACT keramički bazeni','po-mjeri':'Betonski bazeni po mjeri',rekonstrukcija:'Rekonstrukcija bazena i izmjena folije','swim-spa':'Swim spa i hidromasaža','kljuc-u-ruke':'Bazen ključ u ruke – cijena',odrzavanje:'Održavanje bazena – cijene',galerija:'Galerija',['o-nama']:'O nama',kontakt:'Kontakt'};
 let pendingModel = '';
 document.addEventListener('click', e => { const a = e.target.closest('[data-model]'); if (a) pendingModel = a.dataset.model; });
 const SLUG = {pocetna:'',pro:'pro',bazeni:'bazeni',fp:'bazeni/fp',coral:'bazeni/coral',compact:'bazeni/compact','po-mjeri':'bazeni/betonski','swim-spa':'bazeni/swim-spa',rekonstrukcija:'bazeni/rekonstrukcija','kljuc-u-ruke':'kljuc-u-ruke',odrzavanje:'odrzavanje',galerija:'galerija','o-nama':'o-nama',kontakt:'kontakt',privatnost:'privatnost',upit:'upit'};
@@ -1806,7 +1808,7 @@ const DESC = {
   'po-mjeri':'Betonski bazeni po mjeri sa skimerom ili preljevom, strojarnicom i izvedbom ključ u ruke.',
   rekonstrukcija:'Rekonstrukcija starih bazena: skidanje obloge, sanacija, nova podloga i folija, zamjena opreme.',
   'swim-spa':'Swim spa bazeni s protustrujom i hidromasažom te akrilne hidromasažne kade.',
-  'kljuc-u-ruke':'Gradnja bazena ključ u ruke: projekt, iskop, ugradnja, strojarnica, rub i puštanje u rad. Jedan ugovor, jedan kontakt.',
+  'kljuc-u-ruke':'Bazen ključ u ruke od 6.530 €: bazen, oprema, montaža, iskop i ploča. Jedan ugovor, jedan kontakt, od iskopa do prvog kupanja.',
   odrzavanje:'Održavanje bazena: otvaranje i zimovanje od 90 €, redovno održavanje od 40 € po dolasku, zelena voda od 100 €. Mondo Care paket i besplatna analiza vode.',
   galerija:'Galerija bazena koje je Mondo Acqua izgradila i održava.',
   'o-nama':'Mondo Acqua d.o.o. iz Viškova: bazeni, oprema, tretman vode i održavanje na jednom mjestu.',
