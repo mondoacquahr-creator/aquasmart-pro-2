@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { MondoMark } from './MondoLogo';
 import { motion } from 'motion/react';
 import { UserPlus, Mail, Lock, User, Building, Eye, EyeOff, Droplets, ArrowLeft, Sparkles, Phone, MapPin, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
@@ -135,12 +136,9 @@ export function RegisterPage({ onBack, onRegisterSuccess, onGoToLogin, initialTy
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="w-16 h-16 mx-auto mb-6 rounded-3xl overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, #0ABFCF 0%, #5CE1E6 100%)', boxShadow: '0 8px 32px rgba(92,225,230,0.35)' }}
+            className="w-20 h-20 mx-auto mb-6"
           >
-            <div className="w-full h-full flex items-center justify-center">
-              <Droplets className="w-8 h-8 text-white" />
-            </div>
+            <MondoMark size={80} radius={22} />
           </motion.div>
           <h1 className="text-3xl font-bold mb-1" style={{ letterSpacing: '-0.02em' }}>
             {isMember ? 'Moj bazen – besplatna registracija' : 'Pridružite se Mondo Pool Care'}
