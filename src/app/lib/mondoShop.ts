@@ -30,9 +30,16 @@ let detailsPromise: Promise<Record<string, ProductDetails>> | null = null;
 
 export function loadProductDetails(): Promise<Record<string, ProductDetails>> {
   if (!detailsPromise) {
+    // Opisi Vagner opreme (vh-) dolaze iz repozitorija; podaci sa servera imaju prednost.
+    const local = import('./vagnerDetails.json').then((m: any) => (m.default || m) as Record<string, ProductDetails>);
     detailsPromise = api.get('shop/details')
-      .then((d: any) => (d && typeof d === 'object' && !d.error ? d : {}))
-      .catch((err: any) => { detailsPromise = null; throw err; });
+      .then(async (d: any) => ({ ...(await local), ...(d && typeof d === 'object' && !d.error ? d : {}) }))
+      .catch(async (err: any) => {
+        detailsPromise = null;
+        const fallback = await local.catch(() => null);
+        if (fallback) return fallback;
+        throw err;
+      });
   }
   return detailsPromise;
 }

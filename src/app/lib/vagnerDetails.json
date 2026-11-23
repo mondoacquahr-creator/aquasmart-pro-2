@@ -1,0 +1,2366 @@
+{
+ "vh-565NRA008": {
+  "description": "Kompaktna toplinska pumpa za male montažne bazene i hidromasažne kade do 15 m³. Radi na principu uključeno/isključeno: grije punom snagom dok voda ne dosegne zadanu temperaturu, a zatim se gasi. Spaja se izravno na crijeva filtracije (32/38 mm) i ne treba posebnu instalaciju. Upravlja se preko aplikacije na mobitelu putem Bluetootha. Samo grije, nema hlađenja.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "3 kW"
+   ],
+   [
+    "COP",
+    "do 4,84"
+   ],
+   [
+    "Volumen bazena",
+    "do 15 m³"
+   ],
+   [
+    "Preporučeni protok vode",
+    "0,7 m³/h"
+   ],
+   [
+    "Radna temperatura zraka",
+    "+10 do +43 °C"
+   ],
+   [
+    "Priključak",
+    "32/38 mm (adapter 32/32 mm, spojnica 32–50 mm)"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Dimenzije",
+    "420 × 350 × 380 mm"
+   ],
+   [
+    "Upravljanje",
+    "Bluetooth aplikacija"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565NRP008": {
+  "description": "Mala toplinska pumpa u obliku pingvina, namijenjena manjim montažnim bazenima i hidromasažnim kadama do 15 m³. Klasična izvedba s kompresorom stalne brzine – grije punom snagom do zadane temperature. Upravljanje preko aplikacije na mobitelu (Bluetooth). Samo grije, nema hlađenja.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "4 kW"
+   ],
+   [
+    "COP",
+    "do 5,0"
+   ],
+   [
+    "Volumen bazena",
+    "do 15 m³"
+   ],
+   [
+    "Priključak",
+    "32/38 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Težina",
+    "32 kg"
+   ],
+   [
+    "Upravljanje",
+    "Bluetooth aplikacija"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565NE06": {
+  "description": "Toplinska pumpa za privatne bazene do 50 m³ sa step-inverter tehnologijom: snaga se prilagođava potrebi, pa pumpa troši manje struje nego klasična on/off izvedba. Pri uključenju struja raste postupno (oko 2 minute), što štiti kućnu instalaciju od strujnih udara. Toplinu uzima iz okolnog zraka i predaje je vodi u bazenu. Upravljanje preko Wi-Fi aplikacije. Samo grije, nema hlađenja. Zimska zaštitna navlaka nije u paketu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "6 kW"
+   ],
+   [
+    "COP",
+    "9,5 – 5,9"
+   ],
+   [
+    "Potrošnja",
+    "0,14 – 0,98 kW"
+   ],
+   [
+    "Struja",
+    "0,61 – 4,26 A"
+   ],
+   [
+    "Buka",
+    "38,3 – 51,8 dB"
+   ],
+   [
+    "Radna temperatura zraka",
+    "+5 do +43 °C"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Težina",
+    "33 kg"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565NE08": {
+  "description": "Toplinska pumpa za privatne bazene do 50 m³ sa step-inverter tehnologijom: snaga se prilagođava potrebi, pa pumpa troši manje struje nego klasična on/off izvedba. Pri uključenju struja raste postupno (oko 2 minute), što štiti kućnu instalaciju od strujnih udara. Toplinu uzima iz okolnog zraka i predaje je vodi u bazenu. Upravljanje preko Wi-Fi aplikacije. Samo grije, nema hlađenja. Zimska zaštitna navlaka nije u paketu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "8 kW"
+   ],
+   [
+    "Struja",
+    "0,87 – 5,65 A"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Težina",
+    "42 kg"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565NE10": {
+  "description": "Toplinska pumpa za privatne bazene do 50 m³ sa step-inverter tehnologijom: snaga se prilagođava potrebi, pa pumpa troši manje struje nego klasična on/off izvedba. Pri uključenju struja raste postupno (oko 2 minute), što štiti kućnu instalaciju od strujnih udara. Toplinu uzima iz okolnog zraka i predaje je vodi u bazenu. Upravljanje preko Wi-Fi aplikacije. Samo grije, nema hlađenja. Zimska zaštitna navlaka nije u paketu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "10 kW"
+   ],
+   [
+    "COP",
+    "10,1 – 6,1"
+   ],
+   [
+    "Potrošnja",
+    "0,23 – 1,67 kW"
+   ],
+   [
+    "Struja",
+    "1 – 7,26 A"
+   ],
+   [
+    "Buka",
+    "40,8 – 53,8 dB"
+   ],
+   [
+    "Radna temperatura zraka",
+    "+5 do +43 °C"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Težina",
+    "47 kg"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565NE12": {
+  "description": "Toplinska pumpa za privatne bazene do 50 m³ sa step-inverter tehnologijom: snaga se prilagođava potrebi, pa pumpa troši manje struje nego klasična on/off izvedba. Pri uključenju struja raste postupno (oko 2 minute), što štiti kućnu instalaciju od strujnih udara. Toplinu uzima iz okolnog zraka i predaje je vodi u bazenu. Upravljanje preko Wi-Fi aplikacije. Samo grije, nema hlađenja. Zimska zaštitna navlaka nije u paketu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "12 kW"
+   ],
+   [
+    "COP",
+    "10,5 – 5,9"
+   ],
+   [
+    "Potrošnja",
+    "0,29 – 2,07 kW"
+   ],
+   [
+    "Struja",
+    "1,26 – 9 A"
+   ],
+   [
+    "Buka",
+    "41,1 – 55,3 dB"
+   ],
+   [
+    "Radna temperatura zraka",
+    "+5 do +43 °C"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Težina",
+    "46 kg"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565RIC015": {
+  "description": "Full-inverter toplinska pumpa s grijanjem i hlađenjem. Kompresor i ventilator stalno prilagođavaju brzinu potrebi bazena (od oko 25 do 100 % snage), pa većinu vremena rade na srednjoj ili niskoj brzini – tiho i uz vrlo nisku potrošnju, do 2 puta manju nego kod klasične toplinske pumpe. Radi i pri vanjskoj temperaturi do −7 °C, ima automatsko odmrzavanje, praćenje protoka i digitalni zaslon. Prikladna i za slanu i morsku vodu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "6,5 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "3 kW"
+   ],
+   [
+    "COP (maks.)",
+    "14,7"
+   ],
+   [
+    "SCOP",
+    "7,1"
+   ],
+   [
+    "Volumen bazena",
+    "15 – 30 m³"
+   ],
+   [
+    "Potrošnja",
+    "0,13 – 1,06 kW"
+   ],
+   [
+    "Struja",
+    "0,56 – 4,6 A"
+   ],
+   [
+    "Radna temperatura zraka",
+    "−7 do +43 °C"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Dimenzije",
+    "894 × 359 × 648 mm"
+   ],
+   [
+    "Težina",
+    "42 kg"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565RIC020": {
+  "description": "Full-inverter toplinska pumpa s grijanjem i hlađenjem. Kompresor i ventilator stalno prilagođavaju brzinu potrebi bazena (od oko 25 do 100 % snage), pa većinu vremena rade na srednjoj ili niskoj brzini – tiho i uz vrlo nisku potrošnju, do 2 puta manju nego kod klasične toplinske pumpe. Radi i pri vanjskoj temperaturi do −7 °C, ima automatsko odmrzavanje, praćenje protoka i digitalni zaslon. Prikladna i za slanu i morsku vodu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "8,5 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "4 kW"
+   ],
+   [
+    "COP (maks.)",
+    "14,8"
+   ],
+   [
+    "SCOP",
+    "7,2"
+   ],
+   [
+    "Volumen bazena",
+    "20 – 40 m³"
+   ],
+   [
+    "Potrošnja",
+    "0,17 – 1,2 kW"
+   ],
+   [
+    "Struja",
+    "0,74 – 5,2 A"
+   ],
+   [
+    "Radna temperatura zraka",
+    "−7 do +43 °C"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Dimenzije",
+    "894 × 359 × 648 mm"
+   ],
+   [
+    "Težina",
+    "45 kg"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565RIC026": {
+  "description": "Full-inverter toplinska pumpa s grijanjem i hlađenjem. Kompresor i ventilator stalno prilagođavaju brzinu potrebi bazena (od oko 25 do 100 % snage), pa većinu vremena rade na srednjoj ili niskoj brzini – tiho i uz vrlo nisku potrošnju, do 2 puta manju nego kod klasične toplinske pumpe. Radi i pri vanjskoj temperaturi do −7 °C, ima automatsko odmrzavanje, praćenje protoka i digitalni zaslon. Prikladna i za slanu i morsku vodu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "10,5 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "4,6 kW"
+   ],
+   [
+    "COP (maks.)",
+    "15"
+   ],
+   [
+    "SCOP",
+    "7,1"
+   ],
+   [
+    "Volumen bazena",
+    "25 – 45 m³"
+   ],
+   [
+    "Potrošnja",
+    "0,19 – 1,5 kW"
+   ],
+   [
+    "Struja",
+    "0,83 – 6,5 A"
+   ],
+   [
+    "Radna temperatura zraka",
+    "−7 do +43 °C"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Dimenzije",
+    "894 × 359 × 648 mm"
+   ],
+   [
+    "Težina",
+    "49 kg"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565RIC033": {
+  "description": "Full-inverter toplinska pumpa s grijanjem i hlađenjem. Kompresor i ventilator stalno prilagođavaju brzinu potrebi bazena (od oko 25 do 100 % snage), pa većinu vremena rade na srednjoj ili niskoj brzini – tiho i uz vrlo nisku potrošnju, do 2 puta manju nego kod klasične toplinske pumpe. Radi i pri vanjskoj temperaturi do −7 °C, ima automatsko odmrzavanje, praćenje protoka i digitalni zaslon. Prikladna i za slanu i morsku vodu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "13 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "5,6 kW"
+   ],
+   [
+    "COP (maks.)",
+    "15,4"
+   ],
+   [
+    "SCOP",
+    "7,9"
+   ],
+   [
+    "Volumen bazena",
+    "30 – 55 m³"
+   ],
+   [
+    "Potrošnja",
+    "0,23 – 1,87 kW"
+   ],
+   [
+    "Struja",
+    "1,0 – 7,87 A"
+   ],
+   [
+    "Radna temperatura zraka",
+    "−7 do +43 °C"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Dimenzije",
+    "959 × 359 × 648 mm"
+   ],
+   [
+    "Težina",
+    "50 kg"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565RIC040": {
+  "description": "Full-inverter toplinska pumpa s grijanjem i hlađenjem. Kompresor i ventilator stalno prilagođavaju brzinu potrebi bazena (od oko 25 do 100 % snage), pa većinu vremena rade na srednjoj ili niskoj brzini – tiho i uz vrlo nisku potrošnju, do 2 puta manju nego kod klasične toplinske pumpe. Radi i pri vanjskoj temperaturi do −7 °C, ima automatsko odmrzavanje, praćenje protoka i digitalni zaslon. Prikladna i za slanu i morsku vodu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "15 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "6,8 kW"
+   ],
+   [
+    "COP (maks.)",
+    "15,5"
+   ],
+   [
+    "SCOP",
+    "7,8"
+   ],
+   [
+    "Volumen bazena",
+    "35 – 65 m³"
+   ],
+   [
+    "Potrošnja",
+    "0,27 – 2,2 kW"
+   ],
+   [
+    "Struja",
+    "1,17 – 9,6 A"
+   ],
+   [
+    "Radna temperatura zraka",
+    "−7 do +43 °C"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Dimenzije",
+    "959 × 359 × 648 mm"
+   ],
+   [
+    "Težina",
+    "52 kg"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565RIC045": {
+  "description": "Full-inverter toplinska pumpa s grijanjem i hlađenjem. Kompresor i ventilator stalno prilagođavaju brzinu potrebi bazena (od oko 25 do 100 % snage), pa većinu vremena rade na srednjoj ili niskoj brzini – tiho i uz vrlo nisku potrošnju, do 2 puta manju nego kod klasične toplinske pumpe. Radi i pri vanjskoj temperaturi do −7 °C, ima automatsko odmrzavanje, praćenje protoka i digitalni zaslon. Prikladna i za slanu i morsku vodu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "17,5 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "7,8 kW"
+   ],
+   [
+    "COP (maks.)",
+    "15,8"
+   ],
+   [
+    "SCOP",
+    "8,0"
+   ],
+   [
+    "Volumen bazena",
+    "40 – 75 m³"
+   ],
+   [
+    "Potrošnja",
+    "0,30 – 2,6 kW"
+   ],
+   [
+    "Struja",
+    "1,3 – 11,3 A"
+   ],
+   [
+    "Radna temperatura zraka",
+    "−7 do +43 °C"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Dimenzije",
+    "959 × 429 × 648 mm"
+   ],
+   [
+    "Težina",
+    "63 kg"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565RIC055": {
+  "description": "Full-inverter toplinska pumpa s grijanjem i hlađenjem. Kompresor i ventilator stalno prilagođavaju brzinu potrebi bazena (od oko 25 do 100 % snage), pa većinu vremena rade na srednjoj ili niskoj brzini – tiho i uz vrlo nisku potrošnju, do 2 puta manju nego kod klasične toplinske pumpe. Radi i pri vanjskoj temperaturi do −7 °C, ima automatsko odmrzavanje, praćenje protoka i digitalni zaslon. Prikladna i za slanu i morsku vodu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "20,5 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "10 kW"
+   ],
+   [
+    "COP (maks.)",
+    "15,3"
+   ],
+   [
+    "SCOP",
+    "8,7"
+   ],
+   [
+    "Volumen bazena",
+    "50 – 95 m³"
+   ],
+   [
+    "Potrošnja",
+    "0,63 – 3,18 kW"
+   ],
+   [
+    "Struja",
+    "1,57 – 13,8 A"
+   ],
+   [
+    "Radna temperatura zraka",
+    "−7 do +43 °C"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Dimenzije",
+    "959 × 429 × 755 mm"
+   ],
+   [
+    "Težina",
+    "68 kg"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565X26CP10": {
+  "description": "Inverterska toplinska pumpa proizvođača Fairland s grijanjem i hlađenjem, za privatne i javne bazene. Snaga se kontinuirano prilagođava potrebi bazena (0–100 %, Turbo način do 130 %), a COP u optimalnim uvjetima doseže do 26. Koristi prirodni rashladni plin R290 (propan) s vrlo niskim utjecajem na okoliš. Kućište od aluminija, tehnologija za smanjenje buke u radu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "10 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "4,7 kW"
+   ],
+   [
+    "Struja",
+    "0,57 – 5,3 A"
+   ],
+   [
+    "COP (maks.)",
+    "do 26"
+   ],
+   [
+    "Rashladni plin",
+    "R290"
+   ],
+   [
+    "Kućište",
+    "aluminij"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565X26CP12": {
+  "description": "Inverterska toplinska pumpa proizvođača Fairland s grijanjem i hlađenjem, za privatne i javne bazene. Snaga se kontinuirano prilagođava potrebi bazena (0–100 %, Turbo način do 130 %), a COP u optimalnim uvjetima doseže do 26. Koristi prirodni rashladni plin R290 (propan) s vrlo niskim utjecajem na okoliš. Kućište od aluminija, tehnologija za smanjenje buke u radu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "12 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "5,5 kW"
+   ],
+   [
+    "Struja",
+    "0,65 – 6,61 A"
+   ],
+   [
+    "COP (maks.)",
+    "do 26"
+   ],
+   [
+    "Rashladni plin",
+    "R290"
+   ],
+   [
+    "Kućište",
+    "aluminij"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565X26CP14": {
+  "description": "Inverterska toplinska pumpa proizvođača Fairland s grijanjem i hlađenjem, za privatne i javne bazene. Snaga se kontinuirano prilagođava potrebi bazena (0–100 %, Turbo način do 130 %), a COP u optimalnim uvjetima doseže do 26. Koristi prirodni rashladni plin R290 (propan) s vrlo niskim utjecajem na okoliš. Kućište od aluminija, tehnologija za smanjenje buke u radu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "14,2 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "6,4 kW"
+   ],
+   [
+    "Struja",
+    "0,83 – 7,61 A"
+   ],
+   [
+    "COP (maks.)",
+    "do 26"
+   ],
+   [
+    "Rashladni plin",
+    "R290"
+   ],
+   [
+    "Kućište",
+    "aluminij"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565X26CP17": {
+  "description": "Inverterska toplinska pumpa proizvođača Fairland s grijanjem i hlađenjem, za privatne i javne bazene. Snaga se kontinuirano prilagođava potrebi bazena (0–100 %, Turbo način do 130 %), a COP u optimalnim uvjetima doseže do 26. Koristi prirodni rashladni plin R290 (propan) s vrlo niskim utjecajem na okoliš. Kućište od aluminija, tehnologija za smanjenje buke u radu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "17 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "8,6 kW"
+   ],
+   [
+    "Struja",
+    "0,91 – 9,39 A"
+   ],
+   [
+    "COP (maks.)",
+    "do 26"
+   ],
+   [
+    "Rashladni plin",
+    "R290"
+   ],
+   [
+    "Kućište",
+    "aluminij"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565X26CP23": {
+  "description": "Inverterska toplinska pumpa proizvođača Fairland s grijanjem i hlađenjem, za privatne i javne bazene. Snaga se kontinuirano prilagođava potrebi bazena (0–100 %, Turbo način do 130 %), a COP u optimalnim uvjetima doseže do 26. Koristi prirodni rashladni plin R290 (propan) s vrlo niskim utjecajem na okoliš. Kućište od aluminija, tehnologija za smanjenje buke u radu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "22,5 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "11,3 kW"
+   ],
+   [
+    "Struja",
+    "1,17 – 12,87 A"
+   ],
+   [
+    "COP (maks.)",
+    "do 26"
+   ],
+   [
+    "Rashladni plin",
+    "R290"
+   ],
+   [
+    "Kućište",
+    "aluminij"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565X26CP27": {
+  "description": "Inverterska toplinska pumpa proizvođača Fairland s grijanjem i hlađenjem, za privatne i javne bazene. Snaga se kontinuirano prilagođava potrebi bazena (0–100 %, Turbo način do 130 %), a COP u optimalnim uvjetima doseže do 26. Koristi prirodni rashladni plin R290 (propan) s vrlo niskim utjecajem na okoliš. Kućište od aluminija, tehnologija za smanjenje buke u radu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "27 kW"
+   ],
+   [
+    "Snaga hlađenja",
+    "12,8 kW"
+   ],
+   [
+    "COP (maks.)",
+    "do 26"
+   ],
+   [
+    "Rashladni plin",
+    "R290"
+   ],
+   [
+    "Kućište",
+    "aluminij"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-565X20HP14": {
+  "description": "Inverterska toplinska pumpa s grijanjem i hlađenjem. Titanski izmjenjivač sa spiralom ima oko 30 % veću površinu dodira s vodom, pa je prijenos topline učinkovitiji. Tri načina rada: Turbo (120 %), Smart (20–100 %) i tihi Silence (20–60 %). Zaslon na dodir prikazuje trenutnu potrošnju, Wi-Fi je ugrađen. Ima automatsko odmrzavanje; uz stalnu cirkulaciju vode radi i do −20 °C.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Toplinska snaga",
+    "14 kW"
+   ],
+   [
+    "COP (maks.)",
+    "do 20,0"
+   ],
+   [
+    "SCOP",
+    "8,9"
+   ],
+   [
+    "Volumen bazena",
+    "30 – 50 m³"
+   ],
+   [
+    "Potrošnja",
+    "0,19 – 1,7 kW"
+   ],
+   [
+    "Struja",
+    "0,83 – 7,39 A"
+   ],
+   [
+    "Buka",
+    "37,8 – 45,9 dB"
+   ],
+   [
+    "Izmjenjivač",
+    "titan"
+   ],
+   [
+    "Priključak",
+    "50 mm"
+   ],
+   [
+    "Rashladni plin",
+    "R32"
+   ],
+   [
+    "Dimenzije",
+    "945 × 432 × 660 mm"
+   ],
+   [
+    "Težina",
+    "65 kg"
+   ],
+   [
+    "Upravljanje",
+    "zaslon na dodir, Wi-Fi"
+   ],
+   [
+    "Napajanje",
+    "230 V"
+   ]
+  ]
+ },
+ "vh-603000": {
+  "description": "Široka četka za ručno čišćenje stijenki i dna bazena. Natakne se na standardnu teleskopsku šipku, pa se do dna dolazi bez ulaska u vodu. Redovito četkanje sprječava hvatanje algi i naslaga, osobito u kutovima i uz liniju vode.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Širina",
+    "45 cm"
+   ],
+   [
+    "Priključak",
+    "standardna teleskopska šipka"
+   ]
+  ]
+ },
+ "vh-6030NV": {
+  "description": "Široka četka za ručno čišćenje stijenki i dna bazena. Natakne se na standardnu teleskopsku šipku, pa se do dna dolazi bez ulaska u vodu. Redovito četkanje sprječava hvatanje algi i naslaga, osobito u kutovima i uz liniju vode.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Širina",
+    "45 cm"
+   ],
+   [
+    "Priključak",
+    "standardna teleskopska šipka"
+   ]
+  ]
+ },
+ "vh-603003": {
+  "description": "Četka s nitima od nehrđajućeg čelika za betonske, žbukane i popločane bazene. Tvrđe niti skidaju alge i naslage koje obična plastična četka ne može. Nije za folijske, poliesterske ni plastične bazene jer može oštetiti površinu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Širina",
+    "26 cm"
+   ],
+   [
+    "Niti",
+    "nehrđajući čelik"
+   ],
+   [
+    "Za bazene",
+    "betonski / popločani"
+   ]
+  ]
+ },
+ "vh-603603": {
+  "description": "Mala četka za kutove, stube i teško dostupna mjesta u bazenu, gdje se široka četka ne može dobro priljubiti. Natakne se na teleskopsku šipku.",
+  "source": "Vagner Pool"
+ },
+ "vh-607090": {
+  "description": "Usisna glava s bočnim četkama, oblikovana za kutove betonskih bazena. Spaja se na plutajuće usisno crijevo i teleskopsku šipku, a nečistoću odvodi kroz skimmer ili usisni priključak u filtraciju.",
+  "source": "Vagner Pool"
+ },
+ "vh-603400": {
+  "description": "Osnovna usisna glava za ručno usisavanje dna bazena. Spaja se na plutajuće usisno crijevo (32 ili 38 mm) i teleskopsku šipku; nečistoća odlazi u filter preko skimmera ili usisnog priključka.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Širina",
+    "280 mm"
+   ],
+   [
+    "Priključak crijeva",
+    "32 / 38 mm"
+   ]
+  ]
+ },
+ "vh-603500": {
+  "description": "Usisna glava s bočnim četkama za ručno usisavanje dna. Bočne četke podižu nečistoću uz rubove i u kutovima, pa usisavanje ide brže i temeljitije. Spaja se na plutajuće crijevo (32/38 mm) i teleskopsku šipku.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Širina",
+    "280 mm"
+   ],
+   [
+    "Priključak crijeva",
+    "32 / 38 mm"
+   ],
+   [
+    "Bočne četke",
+    "da"
+   ]
+  ]
+ },
+ "vh-603602": {
+  "description": "Prozirna usisna glava trokutastog oblika – vrh trokuta lako ulazi u kutove i uz stube. Kroz prozirno kućište vidi se kako nečistoća ulazi u usis. Spaja se na plutajuće crijevo (32/38 mm) i teleskopsku šipku.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Oblik",
+    "trokut, prozirna"
+   ],
+   [
+    "Priključak crijeva",
+    "32 / 38 mm"
+   ]
+  ]
+ },
+ "vh-604103": {
+  "description": "Mreža za skupljanje lišća, kukaca i ostalih nečistoća s površine i iz vode. Natakne se na teleskopsku šipku. Redovito skupljanje lišća smanjuje opterećenje filtra i potrošnju klora.",
+  "source": "Vagner Pool"
+ },
+ "vh-604104": {
+  "description": "Mreža za skupljanje lišća, kukaca i ostalih nečistoća s površine i iz vode. Natakne se na teleskopsku šipku. Redovito skupljanje lišća smanjuje opterećenje filtra i potrošnju klora.",
+  "source": "Vagner Pool"
+ },
+ "vh-6041NV": {
+  "description": "Plitka mrežica za skupljanje lišća, kukaca i nečistoća s površine vode. Natakne se na teleskopsku šipku.",
+  "source": "Vagner Pool"
+ },
+ "vh-6042NV": {
+  "description": "Duboka mrežica za skupljanje lišća i krupnije nečistoće s dna i iz dubine bazena. Natakne se na teleskopsku šipku.",
+  "source": "Vagner Pool"
+ },
+ "vh-65412": {
+  "description": "Ojačana teleskopska šipka iz linije Revolution. Na nju se spajaju četke, mrežice i usisne glave; s plutajućim crijevom i usisnom glavom čini komplet za ručno usisavanje dna i stijenki. Dva dijela se izvlače i zaključavaju na potrebnoj duljini.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Duljina",
+    "1,2 – 3,7 m"
+   ],
+   [
+    "Izvedba",
+    "ojačana"
+   ]
+  ]
+ },
+ "vh-6112006": {
+  "description": "Plutajuće usisno crijevo s priključcima za ručno usisavanje bazena. Jednim krajem spaja se na usisnu glavu, drugim na skimmer ili usisni priključak. Crijevo pluta, pa se ne zapliće po dnu. Duljinu odaberite tako da crijevo doseže najudaljeniji kut bazena od skimmera.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Promjer",
+    "Ø 38 mm"
+   ]
+  ]
+ },
+ "vh-6112007": {
+  "description": "Plutajuće usisno crijevo s priključcima za ručno usisavanje bazena. Jednim krajem spaja se na usisnu glavu, drugim na skimmer ili usisni priključak. Crijevo pluta, pa se ne zapliće po dnu. Duljinu odaberite tako da crijevo doseže najudaljeniji kut bazena od skimmera.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Promjer",
+    "Ø 38 mm"
+   ]
+  ]
+ },
+ "vh-6112012": {
+  "description": "Plutajuće usisno crijevo s priključcima za ručno usisavanje bazena. Jednim krajem spaja se na usisnu glavu, drugim na skimmer ili usisni priključak. Crijevo pluta, pa se ne zapliće po dnu. Duljinu odaberite tako da crijevo doseže najudaljeniji kut bazena od skimmera.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Promjer",
+    "Ø 38 mm"
+   ]
+  ]
+ },
+ "vh-6112015": {
+  "description": "Plutajuće usisno crijevo s priključcima za ručno usisavanje bazena. Jednim krajem spaja se na usisnu glavu, drugim na skimmer ili usisni priključak. Crijevo pluta, pa se ne zapliće po dnu. Duljinu odaberite tako da crijevo doseže najudaljeniji kut bazena od skimmera.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Promjer",
+    "Ø 38 mm"
+   ]
+  ]
+ },
+ "vh-603803": {
+  "description": "Osnovni komplet pribora za ručno održavanje bazena: teleskopska šipka, usisna glava, četka i mrežica. Dovoljan za redovito čišćenje dna, stijenki i površine vode.",
+  "source": "Vagner Pool"
+ },
+ "vh-603808": {
+  "description": "Komplet pribora za čišćenje iz linije Revolution: savitljiva četka za stijenke (46 cm, aluminijska ručka), čvrsta mreža za lišće s aluminijskim okvirom, mrežica za površinu, termometar i usisivač lišća. Svi dijelovi pristaju na standardnu teleskopsku šipku, koja nije u kompletu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Sadržaj",
+    "četka, mreža za lišće, površinska mrežica, termometar, usisivač lišća"
+   ],
+   [
+    "Širina četke",
+    "46 cm"
+   ]
+  ]
+ },
+ "vh-603660": {
+  "description": "Hvatač lišća koji se postavlja između usisne glave i crijeva. Krupna nečistoća i lišće ostaju u njegovoj posudi, a ne u skimmeru, pumpi ili filtru – manje začepljenja i rjeđe pranje filtra. Priključak 32/38 mm.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Priključak",
+    "32 / 38 mm"
+   ]
+  ]
+ },
+ "vh-603033": {
+  "description": "Upijajuća spužva koja pluta u skimmeru ili po vodi i veže ulje, kreme za sunčanje i masnoću s površine. Smanjuje masni rub uz liniju vode i opterećenje filtra. Mijenja se kad potamni i prestane upijati.",
+  "source": "Vagner Pool"
+ },
+ "vh-603034": {
+  "description": "Upijajuća spužva koja pluta u skimmeru ili po vodi i veže ulje, kreme za sunčanje i masnoću s površine. Smanjuje masni rub uz liniju vode i opterećenje filtra. Mijenja se kad potamni i prestane upijati.",
+  "source": "Vagner Pool"
+ },
+ "vh-690080": {
+  "description": "Plutajući termometar za mjerenje temperature vode u bazenu. Vezicom se pričvrsti uz rub ili ljestve da ne pluta po cijelom bazenu.",
+  "source": "Vagner Pool"
+ },
+ "vh-690081": {
+  "description": "Plutajući termometar za mjerenje temperature vode u bazenu. Vezicom se pričvrsti uz rub ili ljestve da ne pluta po cijelom bazenu.",
+  "source": "Vagner Pool"
+ },
+ "vh-6900NV": {
+  "description": "Termometar s okruglim brojčanikom za mjerenje temperature vode u bazenu. Čitljiv je i s ruba bazena.",
+  "source": "Vagner Pool"
+ },
+ "vh-69050": {
+  "description": "Digitalni plutajući termometar s brojčanim prikazom temperature vode – očitanje je brže i preciznije nego kod klasičnog termometra.",
+  "source": "Vagner Pool"
+ },
+ "vh-60544": {
+  "description": "Bežični baterijski usisavač za brzo čišćenje dna bez crijeva i spajanja na filtraciju. Potpuno je uranjajući, a nečistoća se skuplja u filtersku košaru od nehrđajućeg čelika koja se lako prazni; za finu prljavštinu tu je dodatna najlonska vrećica. Koristi se ručno ili na teleskopskoj šipki (nije u paketu). Za bazene dubine do 3 m.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Baterija",
+    "Li-ion 2000 mAh, 7,4 V"
+   ],
+   [
+    "Rad",
+    "40 min"
+   ],
+   [
+    "Punjenje",
+    "4 – 6 h"
+   ],
+   [
+    "Protok",
+    "40 l/min"
+   ],
+   [
+    "Filtracija",
+    "380 µm + vrećica 50 µm"
+   ],
+   [
+    "Dubina",
+    "do 3 m"
+   ]
+  ]
+ },
+ "vh-605441": {
+  "description": "Lagani baterijski usisavač s bočnim četkama koje čiste i u kutovima. Ima zamjenjivu glavu – u paketu je i četka za hidromasažne kade. Dva filtra: standardni i fini. Koristi se ručno ili na teleskopskoj šipki.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Baterija",
+    "Li-ion 2000 mAh, 7,4 V"
+   ],
+   [
+    "Rad",
+    "30 min"
+   ],
+   [
+    "Punjenje",
+    "4 – 6 h"
+   ],
+   [
+    "Protok",
+    "45 l/min"
+   ],
+   [
+    "Kapacitet nečistoće",
+    "0,9 l"
+   ],
+   [
+    "Filtracija",
+    "250 µm i 106 µm"
+   ]
+  ]
+ },
+ "vh-605444": {
+  "description": "Baterijski usisavač s pomičnom usisnom glavom i bočnim četkama. Posebna FlocBuster funkcija omogućuje da se istaložena prljavština nakon flokulanta ili mulj izbace izravno u odvod preko običnog vrtnog crijeva, mimo filtra. Standardni filter od nehrđajućeg čelika za lišće; za pijesak se mogu dokupiti filterske kuglice (do 3 µm). Teleskopska šipka nije u paketu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Baterija",
+    "Li-ion 11,1 V"
+   ],
+   [
+    "Rad",
+    "do 75 min"
+   ],
+   [
+    "Punjenje",
+    "5 – 6 h"
+   ],
+   [
+    "Kapacitet nečistoće",
+    "1,22 l"
+   ],
+   [
+    "Filtracija",
+    "250 µm (opcija do 3 µm)"
+   ]
+  ]
+ },
+ "vh-605442": {
+  "description": "Snažniji baterijski usisavač s dvostrukom filtracijom: čelični filter za krupniju i patronski filter za sitnu nečistoću. Dugo traje na jedno punjenje, pa je prikladan za veće bazene. Teleskopska šipka nije u paketu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Baterija",
+    "Li-ion 2000 mAh, 11,1 V"
+   ],
+   [
+    "Rad",
+    "75 min"
+   ],
+   [
+    "Punjenje",
+    "5 – 6 h"
+   ],
+   [
+    "Kapacitet nečistoće",
+    "3 l"
+   ],
+   [
+    "Filtracija",
+    "250 µm + patrona 50 µm"
+   ]
+  ]
+ },
+ "vh-605443": {
+  "description": "Najveći baterijski usisavač iz linije Voltera, za krupnu nečistoću i lišće u svim vrstama bazena. Snažni 12 V motor uključuje se tek kad je uređaj u vodi (senzor vode). Ima skidive bočne nastavke i tri filtra za različitu finoću. Spaja se na standardnu teleskopsku šipku (nije u paketu).",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Motor",
+    "12 V"
+   ],
+   [
+    "Rad",
+    "75 min"
+   ],
+   [
+    "Punjenje",
+    "5 – 6 h"
+   ],
+   [
+    "Protok",
+    "233 l/min"
+   ],
+   [
+    "Kapacitet nečistoće",
+    "do 6,5 l"
+   ],
+   [
+    "Filtracija",
+    "250 / 75 / 50 µm"
+   ]
+  ]
+ },
+ "vh-605SCRB": {
+  "description": "Bežična rotacijska četka za mehaničko čišćenje stijenki, linije vode i površina oko bazena. Kompaktna je, pa se koristi ručno, a za veće površine spaja se na standardnu teleskopsku šipku. Dobro dolazi za teško dostupna mjesta i masni rub uz liniju vode.",
+  "source": "Vagner Pool"
+ },
+ "vh-60XA020": {
+  "description": "Bežični robot za čišćenje dna bazena do 6 × 10 m. Inverterski motori usklađuju kretanje i usis, a na kraju ciklusa robot dolazi do zida da ga lakše izvadite. Ciklus se bira na 1, 1,5 ili 2 sata ili maksimalno. Filterska košara od 120 µm lako se vadi i pere.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Čisti",
+    "dno"
+   ],
+   [
+    "Bazen",
+    "do 6 × 10 m"
+   ],
+   [
+    "Rad",
+    "do 2 h"
+   ],
+   [
+    "Punjenje",
+    "oko 3,5 h"
+   ],
+   [
+    "Filtracija",
+    "120 µm"
+   ],
+   [
+    "Protok",
+    "15 m³/h"
+   ],
+   [
+    "Brzina",
+    "12 m/min"
+   ],
+   [
+    "Težina",
+    "7 kg"
+   ]
+  ]
+ },
+ "vh-60WF1": {
+  "description": "Autonomni robot za čišćenje površine vode – skuplja lišće, kukce i ostalu nečistoću prije nego potone. Puni se solarnom pločom (33 W), a po oblačnom vremenu može se puniti i kabelom. Ima dva motora (pogon i usisna turbina), žiroskop i senzore za izbjegavanje prepreka. Upravljanje i izbor načina rada preko aplikacije; Smart način usklađuje čišćenje i punjenje.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Čisti",
+    "površinu vode"
+   ],
+   [
+    "Napajanje",
+    "solarna ploča 33 W + punjač"
+   ],
+   [
+    "Upravljanje",
+    "aplikacija"
+   ],
+   [
+    "Težina (bruto)",
+    "9,2 kg"
+   ]
+  ]
+ },
+ "vh-60WC1P": {
+  "description": "Bežični robot koji čisti dno, stijenke, stube i liniju vode u bazenima do 150 m². Upravlja se aplikacijom WYBOT s četiri načina čišćenja, a čišćenje se može zakazati unaprijed do 7 dana. Za popločane bazene proizvođač preporučuje plovne blokove.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Čisti",
+    "dno, stijenke, stube, liniju vode"
+   ],
+   [
+    "Bazen",
+    "do 150 m²"
+   ],
+   [
+    "Baterija",
+    "4600 mAh"
+   ],
+   [
+    "Rad",
+    "do 150 min"
+   ],
+   [
+    "Punjenje",
+    "oko 2,5 h"
+   ],
+   [
+    "Filtracija",
+    "180 µm"
+   ],
+   [
+    "Upravljanje",
+    "aplikacija, raspored do 7 dana"
+   ],
+   [
+    "Težina",
+    "7,8 kg"
+   ]
+  ]
+ },
+ "vh-60WS1": {
+  "description": "Bežični robotski usisavač WYBOT za privatne bazene. Uključuje se jednim gumbom, a načini čišćenja biraju se u aplikaciji WYBOT. Filtersku košaru treba isprati nakon svakog čišćenja.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Upravljanje",
+    "aplikacija WYBOT"
+   ]
+  ]
+ },
+ "vh-60K040": {
+  "description": "Bežični robot iz serije iGarden K za privatne bazene. Navigacija 3D S Path vodi ga sustavnom putanjom po bazenu, a Turbo način udvostručuje usis za krupniju nečistoću. Upravlja se dodirnim panelom na robotu. Velika filterska košara lako se vadi.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Rad",
+    "do 4 h"
+   ],
+   [
+    "Punjenje",
+    "oko 4 h"
+   ],
+   [
+    "Navigacija",
+    "3D S Path"
+   ],
+   [
+    "Turbo usis",
+    "200 %"
+   ],
+   [
+    "Težina",
+    "9,8 kg"
+   ]
+  ]
+ },
+ "vh-60X080": {
+  "description": "Bežični robot za bazene do 12 × 10 m (folijske, montažne i inox). Dva ciklusa: samo dno ili dno, stijenke i linija vode. Pametna navigacija 3D S Path i podesivo trajanje ciklusa; na jedno punjenje radi do 8 sati.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Čisti",
+    "dno / dno, stijenke, liniju vode"
+   ],
+   [
+    "Bazen",
+    "do 12 × 10 m"
+   ],
+   [
+    "Rad",
+    "do 8 h"
+   ],
+   [
+    "Punjenje",
+    "oko 8 h"
+   ],
+   [
+    "Filtracija",
+    "100 µm"
+   ],
+   [
+    "Brzina",
+    "12 m/min"
+   ],
+   [
+    "Težina",
+    "12 kg"
+   ]
+  ]
+ },
+ "vh-60K070AI": {
+  "description": "Bežični robot iz serije iGarden K-AI za privatne bazene, s pametnom navigacijom i AI funkcijama za ciljano čišćenje. Čisti dno, stijenke i liniju vode. Filtersku košaru treba isprati nakon svakog ciklusa.",
+  "source": "Vagner Pool"
+ },
+ "vh-60642": {
+  "description": "Automatski robotski usisavač za privatne bazene bilo kojeg oblika, do 15 × 6 m. Četiri PVA četke i dodatna vibrirajuća PVC četka na dnu čiste temeljito i na skliskim površinama poput polipropilena ili mozaika. Tijekom rada svijetli LED rasvjetom.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Bazen",
+    "do 15 × 6 m"
+   ],
+   [
+    "Četke",
+    "4 × PVA + vibrirajuća PVC"
+   ]
+  ]
+ },
+ "vh-60643": {
+  "description": "Automatski robotski usisavač za privatne bazene bilo kojeg oblika, do 15 × 6 m. Četiri PVA četke i dodatna vibrirajuća PVC četka na dnu čiste temeljito i na skliskim površinama poput polipropilena ili mozaika. Tijekom rada svijetli LED rasvjetom.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Bazen",
+    "do 15 × 6 m"
+   ],
+   [
+    "Četke",
+    "4 × PVA + vibrirajuća PVC"
+   ]
+  ]
+ },
+ "vh-7012": {
+  "description": "Klasične ljestve oblika Standard. Ljestve od nehrđajućeg čelika AISI 304 sa sidrištima za ugradnju u rub bazena. Nosači i dvostruka gazišta mogu se dokupiti. Važno: AISI 304 se ne preporučuje za bazene sa slanom elektrolizom – za njih birajte izvedbu AISI 316. Sav inox pribor mora biti uzemljen.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Materijal",
+    "AISI 304"
+   ],
+   [
+    "Broj gazišta",
+    "4"
+   ],
+   [
+    "Broj gazišta",
+    "3"
+   ],
+   [
+    "Broj gazišta",
+    "2"
+   ],
+   [
+    "Sidrišta",
+    "da"
+   ]
+  ]
+ },
+ "vh-7013": {
+  "description": "Klasične ljestve oblika Standard. Ljestve od nehrđajućeg čelika AISI 304 sa sidrištima za ugradnju u rub bazena. Nosači i dvostruka gazišta mogu se dokupiti. Važno: AISI 304 se ne preporučuje za bazene sa slanom elektrolizom – za njih birajte izvedbu AISI 316. Sav inox pribor mora biti uzemljen.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Materijal",
+    "AISI 304"
+   ],
+   [
+    "Broj gazišta",
+    "4"
+   ],
+   [
+    "Broj gazišta",
+    "3"
+   ],
+   [
+    "Broj gazišta",
+    "2"
+   ],
+   [
+    "Sidrišta",
+    "da"
+   ]
+  ]
+ },
+ "vh-7014": {
+  "description": "Klasične ljestve oblika Standard. Ljestve od nehrđajućeg čelika AISI 304 sa sidrištima za ugradnju u rub bazena. Nosači i dvostruka gazišta mogu se dokupiti. Važno: AISI 304 se ne preporučuje za bazene sa slanom elektrolizom – za njih birajte izvedbu AISI 316. Sav inox pribor mora biti uzemljen.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Materijal",
+    "AISI 304"
+   ],
+   [
+    "Broj gazišta",
+    "4"
+   ],
+   [
+    "Broj gazišta",
+    "3"
+   ],
+   [
+    "Broj gazišta",
+    "2"
+   ],
+   [
+    "Sidrišta",
+    "da"
+   ]
+  ]
+ },
+ "vh-7033": {
+  "description": "Ljestve oblika Mixta – kombinacija ravnog i zaobljenog rukohvata. Ljestve od nehrđajućeg čelika AISI 304 sa sidrištima za ugradnju u rub bazena. Nosači i dvostruka gazišta mogu se dokupiti. Važno: AISI 304 se ne preporučuje za bazene sa slanom elektrolizom – za njih birajte izvedbu AISI 316. Sav inox pribor mora biti uzemljen.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Materijal",
+    "AISI 304"
+   ],
+   [
+    "Broj gazišta",
+    "4"
+   ],
+   [
+    "Broj gazišta",
+    "3"
+   ],
+   [
+    "Sidrišta",
+    "da"
+   ]
+  ]
+ },
+ "vh-7034": {
+  "description": "Ljestve oblika Mixta – kombinacija ravnog i zaobljenog rukohvata. Ljestve od nehrđajućeg čelika AISI 304 sa sidrištima za ugradnju u rub bazena. Nosači i dvostruka gazišta mogu se dokupiti. Važno: AISI 304 se ne preporučuje za bazene sa slanom elektrolizom – za njih birajte izvedbu AISI 316. Sav inox pribor mora biti uzemljen.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Materijal",
+    "AISI 304"
+   ],
+   [
+    "Broj gazišta",
+    "4"
+   ],
+   [
+    "Broj gazišta",
+    "3"
+   ],
+   [
+    "Sidrišta",
+    "da"
+   ]
+  ]
+ },
+ "vh-7053": {
+  "description": "Uske ljestve Muro (Slim) koje stoje bliže zidu bazena i manje zauzimaju prostor. Ljestve od nehrđajućeg čelika AISI 304 sa sidrištima za ugradnju u rub bazena. Nosači i dvostruka gazišta mogu se dokupiti. Važno: AISI 304 se ne preporučuje za bazene sa slanom elektrolizom – za njih birajte izvedbu AISI 316. Sav inox pribor mora biti uzemljen.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Materijal",
+    "AISI 304"
+   ],
+   [
+    "Broj gazišta",
+    "4"
+   ],
+   [
+    "Broj gazišta",
+    "3"
+   ],
+   [
+    "Sidrišta",
+    "da"
+   ]
+  ]
+ },
+ "vh-7054": {
+  "description": "Uske ljestve Muro (Slim) koje stoje bliže zidu bazena i manje zauzimaju prostor. Ljestve od nehrđajućeg čelika AISI 304 sa sidrištima za ugradnju u rub bazena. Nosači i dvostruka gazišta mogu se dokupiti. Važno: AISI 304 se ne preporučuje za bazene sa slanom elektrolizom – za njih birajte izvedbu AISI 316. Sav inox pribor mora biti uzemljen.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Materijal",
+    "AISI 304"
+   ],
+   [
+    "Broj gazišta",
+    "4"
+   ],
+   [
+    "Broj gazišta",
+    "3"
+   ],
+   [
+    "Sidrišta",
+    "da"
+   ]
+  ]
+ },
+ "vh-600040030": {
+  "description": "Solarna (mjehurićasta) folija koja se polaže na površinu vode. Mjehurići propuštaju sunčevu toplinu u vodu, a noću smanjuju gubitak topline i isparavanje, pa voda ostaje toplija, a potrošnja kemije i vode je manja. Prodaje se po dužnom metru, može se namatati na namatač. GeoBubble izvedba ima dvostruki mjehurić s više mjesta za širenje zraka, bolju otpornost na UV zračenje i kemikalije te ujednačenu debljinu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "400 µm"
+   ],
+   [
+    "Širina",
+    "3 m"
+   ],
+   [
+    "Boja",
+    "plava"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-600040036": {
+  "description": "Solarna (mjehurićasta) folija koja se polaže na površinu vode. Mjehurići propuštaju sunčevu toplinu u vodu, a noću smanjuju gubitak topline i isparavanje, pa voda ostaje toplija, a potrošnja kemije i vode je manja. Prodaje se po dužnom metru, može se namatati na namatač.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "400 µm"
+   ],
+   [
+    "Širina",
+    "3,6 m"
+   ],
+   [
+    "Boja",
+    "plava"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-600040040": {
+  "description": "Solarna (mjehurićasta) folija koja se polaže na površinu vode. Mjehurići propuštaju sunčevu toplinu u vodu, a noću smanjuju gubitak topline i isparavanje, pa voda ostaje toplija, a potrošnja kemije i vode je manja. Prodaje se po dužnom metru, može se namatati na namatač.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "400 µm"
+   ],
+   [
+    "Širina",
+    "4 m"
+   ],
+   [
+    "Boja",
+    "plava"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-600040050": {
+  "description": "Solarna (mjehurićasta) folija koja se polaže na površinu vode. Mjehurići propuštaju sunčevu toplinu u vodu, a noću smanjuju gubitak topline i isparavanje, pa voda ostaje toplija, a potrošnja kemije i vode je manja. Prodaje se po dužnom metru, može se namatati na namatač.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "400 µm"
+   ],
+   [
+    "Širina",
+    "5 m"
+   ],
+   [
+    "Boja",
+    "plava"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-600040060": {
+  "description": "Solarna (mjehurićasta) folija koja se polaže na površinu vode. Mjehurići propuštaju sunčevu toplinu u vodu, a noću smanjuju gubitak topline i isparavanje, pa voda ostaje toplija, a potrošnja kemije i vode je manja. Prodaje se po dužnom metru, može se namatati na namatač.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "400 µm"
+   ],
+   [
+    "Širina",
+    "6 m"
+   ],
+   [
+    "Boja",
+    "plava"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-600050030G": {
+  "description": "Solarna (mjehurićasta) folija koja se polaže na površinu vode. Mjehurići propuštaju sunčevu toplinu u vodu, a noću smanjuju gubitak topline i isparavanje, pa voda ostaje toplija, a potrošnja kemije i vode je manja. Prodaje se po dužnom metru, može se namatati na namatač. GeoBubble izvedba ima dvostruki mjehurić s više mjesta za širenje zraka, bolju otpornost na UV zračenje i kemikalije te ujednačenu debljinu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "500 µm"
+   ],
+   [
+    "Širina",
+    "3 m"
+   ],
+   [
+    "Boja",
+    "plava"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-600050040G": {
+  "description": "Solarna (mjehurićasta) folija koja se polaže na površinu vode. Mjehurići propuštaju sunčevu toplinu u vodu, a noću smanjuju gubitak topline i isparavanje, pa voda ostaje toplija, a potrošnja kemije i vode je manja. Prodaje se po dužnom metru, može se namatati na namatač. GeoBubble izvedba ima dvostruki mjehurić s više mjesta za širenje zraka, bolju otpornost na UV zračenje i kemikalije te ujednačenu debljinu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "500 µm"
+   ],
+   [
+    "Širina",
+    "4 m"
+   ],
+   [
+    "Boja",
+    "plava"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-85VAPF16W": {
+  "description": "Podvodni LED reflektor VA \"PF\" za folijske bazene, s ABS okvirom, prirubnicom i nišom te zaštitnim crijevom za kabel. Bijelo svjetlo, napajanje 12 V preko sigurnosnog transformatora.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Boja svjetla",
+    "bijela"
+   ],
+   [
+    "Snaga",
+    "13 W"
+   ],
+   [
+    "Svjetlosni tok",
+    "1450 lm"
+   ],
+   [
+    "Napon",
+    "12 V"
+   ],
+   [
+    "Za bazene",
+    "folijske"
+   ]
+  ]
+ },
+ "vh-85VAPF16R": {
+  "description": "Podvodni LED reflektor VA \"PF\" za folijske bazene u RGB izvedbi – bira se boja svjetla. ABS okvir, prirubnica i niša, zaštitno crijevo za kabel. Napajanje 12 V preko sigurnosnog transformatora.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Boja svjetla",
+    "RGB"
+   ],
+   [
+    "Snaga",
+    "16 W"
+   ],
+   [
+    "Napon",
+    "12 V"
+   ],
+   [
+    "Za bazene",
+    "folijske"
+   ]
+  ]
+ },
+ "vh-85501160": {
+  "description": "Plosnati podvodni reflektor SeaMAID s bijelim LED svjetlom. Ravni oblik malo strši iz zida, svjetlo ne zasljepljuje i ravnomjerno osvjetljava bazen. Napomena: SeaMAID svjetla traže napajanje 15–20 V DC, pa nisu za obične 12 V DC izvore.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Boja svjetla",
+    "bijela"
+   ],
+   [
+    "Snaga",
+    "16,3 W"
+   ],
+   [
+    "Svjetlosni tok",
+    "1430 lm"
+   ],
+   [
+    "Napon",
+    "12 V"
+   ]
+  ]
+ },
+ "vh-85501191": {
+  "description": "Plosnati podvodni reflektor SeaMAID s RGB LED svjetlom: 11 stalnih boja i 5 načina s prirodnim prelijevanjem boja. Svjetlo ne zasljepljuje. Napomena: SeaMAID svjetla traže napajanje 15–20 V DC, pa nisu za obične 12 V DC izvore.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Boja svjetla",
+    "RGB, 11 boja"
+   ],
+   [
+    "Snaga",
+    "16 W"
+   ],
+   [
+    "Svjetlosni tok",
+    "510 lm"
+   ],
+   [
+    "Napon",
+    "12 V"
+   ]
+  ]
+ },
+ "vh-80600LED14W": {
+  "description": "Plosnati podvodni LED reflektor VA Flat s bijelim svjetlom. Plitka izvedba malo strši iz zida bazena. Napajanje 12 V preko sigurnosnog transformatora.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Boja svjetla",
+    "bijela"
+   ],
+   [
+    "Napon",
+    "12 V"
+   ]
+  ]
+ },
+ "vh-81501542": {
+  "description": "LED žarulja standardnog formata PAR56 za zamjenu stare halogene žarulje u postojećem podvodnom reflektoru. Troši višestruko manje struje uz jednako jako, ugodno bijelo svjetlo koje ne zasljepljuje.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Format",
+    "PAR56"
+   ],
+   [
+    "Boja svjetla",
+    "bijela"
+   ],
+   [
+    "Snaga",
+    "13,5 W"
+   ],
+   [
+    "Svjetlosni tok",
+    "1650 lm"
+   ],
+   [
+    "Napon",
+    "12 V"
+   ]
+  ]
+ },
+ "vh-81502679": {
+  "description": "LED žarulja SeaMAID u formatu PAR56 za zamjenu stare žarulje u podvodnom reflektoru. Harmonično bijelo svjetlo koje ne zasljepljuje, uz malu potrošnju.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Format",
+    "PAR56"
+   ],
+   [
+    "Boja svjetla",
+    "bijela"
+   ],
+   [
+    "Snaga",
+    "13,5 W"
+   ],
+   [
+    "Svjetlosni tok",
+    "1650 lm"
+   ],
+   [
+    "Napon",
+    "12 V"
+   ]
+  ]
+ },
+ "vh-81501535": {
+  "description": "RGB LED žarulja u formatu PAR56 za zamjenu stare žarulje u podvodnom reflektoru – bazen se može osvijetliti u različitim bojama.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Format",
+    "PAR56"
+   ],
+   [
+    "Boja svjetla",
+    "RGB"
+   ],
+   [
+    "Snaga",
+    "16 W"
+   ],
+   [
+    "Napon",
+    "12 V"
+   ]
+  ]
+ },
+ "vh-81HTW301B": {
+  "description": "Plosnata LED žarulja s bijelim svjetlom za podvodne reflektore. Mala potrošnja i dug vijek trajanja u odnosu na halogene žarulje.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Boja svjetla",
+    "bijela"
+   ],
+   [
+    "Snaga",
+    "21 W"
+   ],
+   [
+    "Napon",
+    "12 V"
+   ]
+  ]
+ },
+ "vh-81HTS301B": {
+  "description": "Plosnata RGB LED žarulja za podvodne reflektore – bazen se može osvijetliti u različitim bojama.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Boja svjetla",
+    "RGB"
+   ],
+   [
+    "Snaga",
+    "23 W"
+   ],
+   [
+    "Napon",
+    "12 V"
+   ]
+  ]
+ },
+ "vh-8900501": {
+  "description": "Sigurnosni transformator 230/12 V za napajanje podvodne rasvjete bazena – rasvjeta u vodi smije raditi samo na sigurnosnom niskom naponu. Snagu transformatora odaberite prema ukupnoj snazi svih priključenih svjetala, uz rezervu. Ugradnju i spajanje treba izvesti električar.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Napon",
+    "230 / 12 V"
+   ],
+   [
+    "Snaga",
+    "50 W"
+   ]
+  ]
+ },
+ "vh-890080": {
+  "description": "Sigurnosni transformator 230/12 V za napajanje podvodne rasvjete bazena – rasvjeta u vodi smije raditi samo na sigurnosnom niskom naponu. Snagu transformatora odaberite prema ukupnoj snazi svih priključenih svjetala, uz rezervu. Ugradnju i spajanje treba izvesti električar. Ova izvedba namijenjena je LED rasvjeti.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Napon",
+    "230 / 12 V"
+   ],
+   [
+    "Snaga",
+    "80 W"
+   ],
+   [
+    "Za",
+    "LED rasvjetu"
+   ]
+  ]
+ },
+ "vh-8901002": {
+  "description": "Sigurnosni transformator 230/12 V za napajanje podvodne rasvjete bazena – rasvjeta u vodi smije raditi samo na sigurnosnom niskom naponu. Snagu transformatora odaberite prema ukupnoj snazi svih priključenih svjetala, uz rezervu. Ugradnju i spajanje treba izvesti električar. Toroidna izvedba je tiha i ima dobru učinkovitost.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Napon",
+    "230 / 12 V"
+   ],
+   [
+    "Snaga",
+    "100 W"
+   ],
+   [
+    "Izvedba",
+    "toroidni"
+   ]
+  ]
+ },
+ "vh-98801165": {
+  "description": "Armirana PVC folija AVfol Master za izradu i obnovu bazena varenjem. Ojačana je poliesterskom mrežicom, pa je čvrsta i dimenzijski stabilna. Ugradnju radi stručna ekipa – izmjera, polaganje i varenje spojeva.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "1,5 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Boja",
+    "plava"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-98802165": {
+  "description": "Armirana PVC folija AVfol Master za izradu i obnovu bazena varenjem. Ojačana je poliesterskom mrežicom, pa je čvrsta i dimenzijski stabilna. Ugradnju radi stručna ekipa – izmjera, polaganje i varenje spojeva.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "1,5 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Boja",
+    "caribic"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-98803165": {
+  "description": "Armirana PVC folija AVfol Master za izradu i obnovu bazena varenjem. Ojačana je poliesterskom mrežicom, pa je čvrsta i dimenzijski stabilna. Ugradnju radi stručna ekipa – izmjera, polaganje i varenje spojeva.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "1,5 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Boja",
+    "azur"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-98804165": {
+  "description": "Armirana PVC folija AVfol Master za izradu i obnovu bazena varenjem. Ojačana je poliesterskom mrežicom, pa je čvrsta i dimenzijski stabilna. Ugradnju radi stručna ekipa – izmjera, polaganje i varenje spojeva.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "1,5 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Boja",
+    "bijela"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-98806165": {
+  "description": "Armirana PVC folija AVfol Master za izradu i obnovu bazena varenjem. Ojačana je poliesterskom mrežicom, pa je čvrsta i dimenzijski stabilna. Ugradnju radi stručna ekipa – izmjera, polaganje i varenje spojeva.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "1,5 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Boja",
+    "antracit"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-98809165": {
+  "description": "Armirana PVC folija AVfol Master za izradu i obnovu bazena varenjem. Ojačana je poliesterskom mrežicom, pa je čvrsta i dimenzijski stabilna. Ugradnju radi stručna ekipa – izmjera, polaganje i varenje spojeva.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "1,5 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Boja",
+    "siva"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-97835165": {
+  "description": "Alkorplan Touch je najčvršća i najotpornija folija iz Alkorplan ponude, s prirodnim izgledom i 3D teksturom koju se vidi i osjeti pod rukom. Armirana je poliesterskom tkaninom, a gornji akrilni sloj štiti površinu od oštećenja i starenja, povećava UV postojanost i sprječava razvoj bakterija. Ugradnju varenjem radi stručna ekipa.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "2,0 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Dezen",
+    "Elegance"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-97836165": {
+  "description": "Alkorplan Touch je najčvršća i najotpornija folija iz Alkorplan ponude, s prirodnim izgledom i 3D teksturom koju se vidi i osjeti pod rukom. Armirana je poliesterskom tkaninom, a gornji akrilni sloj štiti površinu od oštećenja i starenja, povećava UV postojanost i sprječava razvoj bakterija. Ugradnju varenjem radi stručna ekipa.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "2,0 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Dezen",
+    "Relax"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-97837165": {
+  "description": "Alkorplan Touch je najčvršća i najotpornija folija iz Alkorplan ponude, s prirodnim izgledom i 3D teksturom koju se vidi i osjeti pod rukom. Armirana je poliesterskom tkaninom, a gornji akrilni sloj štiti površinu od oštećenja i starenja, povećava UV postojanost i sprječava razvoj bakterija. Ugradnju varenjem radi stručna ekipa.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "2,0 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Dezen",
+    "Authentic"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-97857165": {
+  "description": "Alkorplan Touch je najčvršća i najotpornija folija iz Alkorplan ponude, s prirodnim izgledom i 3D teksturom koju se vidi i osjeti pod rukom. Armirana je poliesterskom tkaninom, a gornji akrilni sloj štiti površinu od oštećenja i starenja, povećava UV postojanost i sprječava razvoj bakterija. Ugradnju varenjem radi stručna ekipa.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "2,0 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Dezen",
+    "Vanity"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-97858165": {
+  "description": "Alkorplan Touch je najčvršća i najotpornija folija iz Alkorplan ponude, s prirodnim izgledom i 3D teksturom koju se vidi i osjeti pod rukom. Armirana je poliesterskom tkaninom, a gornji akrilni sloj štiti površinu od oštećenja i starenja, povećava UV postojanost i sprječava razvoj bakterija. Ugradnju varenjem radi stručna ekipa.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "2,0 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Dezen",
+    "Prestige"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-97863165": {
+  "description": "Alkorplan Touch je najčvršća i najotpornija folija iz Alkorplan ponude, s prirodnim izgledom i 3D teksturom koju se vidi i osjeti pod rukom. Armirana je poliesterskom tkaninom, a gornji akrilni sloj štiti površinu od oštećenja i starenja, povećava UV postojanost i sprječava razvoj bakterija. Ugradnju varenjem radi stručna ekipa.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "2,0 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Dezen",
+    "Sublime"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ },
+ "vh-97814165": {
+  "description": "Protuklizna armirana PVC folija Alkorplan Relief s reljefnom površinom, za stube, plitke dijelove i ulaze u bazen gdje je važno sigurno stajanje. Varenjem se spaja s ostalom folijom u bazenu.",
+  "source": "Vagner Pool",
+  "params": [
+   [
+    "Debljina",
+    "1,8 mm"
+   ],
+   [
+    "Širina role",
+    "1,65 m"
+   ],
+   [
+    "Boja",
+    "bijela"
+   ],
+   [
+    "Površina",
+    "protuklizna"
+   ],
+   [
+    "Prodaja",
+    "po dužnom metru"
+   ]
+  ]
+ }
+}
