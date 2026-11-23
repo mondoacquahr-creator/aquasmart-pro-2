@@ -1,0 +1,36 @@
+# Preuzima slike Vagner opreme (vh- artikli) s vagnerpool.hr i sprema ih u projekt (public/merchant-images/vh/).
+name: Preuzmi slike Vagner opreme
+on:
+  push:
+    branches: [slike-vagner]
+    paths: [.github/workflows/slike-vagner.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  preuzmi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preuzmi slike
+        run: |
+          mkdir -p public/merchant-images/vh
+          python3 - <<'PY'
+          import re, subprocess
+          src = open('src/app/lib/vagnerEquipment.ts', encoding='utf-8').read()
+          for m in re.finditer(r'\["(vh-[^"]+)",[^\n]*?HR \+ "([^"]+)"', src):
+              pid, fn = m.group(1), m.group(2)
+              ext = fn.rsplit('.', 1)[-1]
+              out = f'public/merchant-images/vh/{pid}.{ext}'
+              url = 'https://www.vagnerpool.hr/static/1/produkty/' + fn
+              r = subprocess.run(['curl', '-fsSL', '--retry', '2', '-A', 'Mozilla/5.0', '-o', out, url])
+              print(pid, 'OK' if r.returncode == 0 else 'GREŠKA', url)
+          PY
+          ls public/merchant-images/vh | wc -l
+      - name: Spremi u projekt
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add public/merchant-images/vh
+          git commit -m "Slike Vagner opreme (vh-) preuzete s vagnerpool.hr" || echo "nema promjena"
+          git push
