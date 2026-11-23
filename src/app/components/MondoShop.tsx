@@ -1050,7 +1050,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                       <>
                         <p className="text-xs line-through" style={{ color: T.faint }}>{fmtEUR(product.priceEUR)}</p>
                         <p className="font-bold text-white text-[20px] leading-tight">{fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, care, product.id))}</p>
-                        <p className="text-[11px] font-semibold" style={{ color: '#2EFF88' }}>{bfPrice(product, true) ? `Prvih ${BF_SLOTS_TOTAL} novih članova · još ${bfSlotsLeft} mjesta` : <>{care ? 'Mondo Care cijena' : 'Cijena za članove'}{hasRobotBonus(product.id) ? ' −15 %' : ''}</>}</p>
+                        <p className="text-[11px] font-semibold" style={{ color: '#2EFF88' }}>{bfPrice(product, true) ? `Prvih ${BF_SLOTS_TOTAL} novih članova · još ${bfSlotsLeft} mjesta` : <>{care ? 'Mondo Care cijena' : 'Cijena za članove'}</>}</p>
                       </>
                     ) : (
                       <>
@@ -1132,7 +1132,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                         <>
                           <p className="text-[11px] line-through" style={{ color: T.faint }}>{fmtEUR(product.priceEUR)}</p>
                           <p className="font-bold text-white text-lg leading-tight">{fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, care, product.id))}</p>
-                          <p className="text-[10px] font-semibold" style={{ color: '#2EFF88' }}>{bfPrice(product, true) ? `Prvih ${BF_SLOTS_TOTAL} novih članova · još ${bfSlotsLeft} mjesta` : <>{care ? 'Mondo Care cijena' : 'Cijena za članove'}{hasRobotBonus(product.id) ? ' −15 %' : ''}</>}</p>
+                          <p className="text-[10px] font-semibold" style={{ color: '#2EFF88' }}>{bfPrice(product, true) ? `Prvih ${BF_SLOTS_TOTAL} novih članova · još ${bfSlotsLeft} mjesta` : <>{care ? 'Mondo Care cijena' : 'Cijena za članove'}</>}</p>
                         </>
                       ) : (
                         <>

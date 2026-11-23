@@ -45,44 +45,6 @@
    ]
   ]
  },
- "vh-565NRP008": {
-  "description": "Mala toplinska pumpa u obliku pingvina, namijenjena manjim montažnim bazenima i hidromasažnim kadama do 15 m³. Klasična izvedba s kompresorom stalne brzine – grije punom snagom do zadane temperature. Upravljanje preko aplikacije na mobitelu (Bluetooth). Samo grije, nema hlađenja.",
-  "source": "Vagner Pool",
-  "params": [
-   [
-    "Toplinska snaga",
-    "4 kW"
-   ],
-   [
-    "COP",
-    "do 5,0"
-   ],
-   [
-    "Volumen bazena",
-    "do 15 m³"
-   ],
-   [
-    "Priključak",
-    "32/38 mm"
-   ],
-   [
-    "Rashladni plin",
-    "R32"
-   ],
-   [
-    "Težina",
-    "32 kg"
-   ],
-   [
-    "Upravljanje",
-    "Bluetooth aplikacija"
-   ],
-   [
-    "Napajanje",
-    "230 V"
-   ]
-  ]
- },
  "vh-565NE06": {
   "description": "Toplinska pumpa za privatne bazene do 50 m³ sa step-inverter tehnologijom: snaga se prilagođava potrebi, pa pumpa troši manje struje nego klasična on/off izvedba. Pri uključenju struja raste postupno (oko 2 minute), što štiti kućnu instalaciju od strujnih udara. Toplinu uzima iz okolnog zraka i predaje je vodi u bazenu. Upravljanje preko Wi-Fi aplikacije. Samo grije, nema hlađenja. Zimska zaštitna navlaka nije u paketu.",
   "source": "Vagner Pool",
@@ -1418,40 +1380,6 @@
    [
     "Težina",
     "9,8 kg"
-   ]
-  ]
- },
- "vh-60X080": {
-  "description": "Bežični robot za bazene do 12 × 10 m (folijske, montažne i inox). Dva ciklusa: samo dno ili dno, stijenke i linija vode. Pametna navigacija 3D S Path i podesivo trajanje ciklusa; na jedno punjenje radi do 8 sati.",
-  "source": "Vagner Pool",
-  "params": [
-   [
-    "Čisti",
-    "dno / dno, stijenke, liniju vode"
-   ],
-   [
-    "Bazen",
-    "do 12 × 10 m"
-   ],
-   [
-    "Rad",
-    "do 8 h"
-   ],
-   [
-    "Punjenje",
-    "oko 8 h"
-   ],
-   [
-    "Filtracija",
-    "100 µm"
-   ],
-   [
-    "Brzina",
-    "12 m/min"
-   ],
-   [
-    "Težina",
-    "12 kg"
    ]
   ]
  },

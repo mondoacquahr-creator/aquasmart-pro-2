@@ -58,7 +58,7 @@ export const CARE_EXTRA_DISCOUNT = 0.10;
 // Dodatni popust: registrirani +5 %, Mondo Care +10 %, oboje iznad 1.500 €.
 export const EXTRA_THRESHOLD = 1500;
 export const CARE_EXTRA_THRESHOLD = 1500;
-// Dodatni popust za registrirane samo na odabrane robote (WYBOT S1, iGarden K40) – 10 % + 5 %.
+// Roboti u Black Friday akciji (WYBOT S1, iGarden K40). Stalni članski popust na njih je 10 % kao na sve ostalo.
 export const ROBOT_BONUS = 0.05;
 export const ROBOT_BONUS_IDS = new Set(['vh-60WS1', 'vh-60K040']);
 export const hasRobotBonus = (id?: string): boolean => !!id && ROBOT_BONUS_IDS.has(id);
@@ -101,7 +101,8 @@ export const isCareUser = (): boolean => {
 };
 
 export const memberPrice = (price: number, care = false, productId?: string): number => {
-  const discount = (care ? CARE_DISCOUNT : MEMBER_DISCOUNT) + (hasRobotBonus(productId) ? ROBOT_BONUS : 0);
+  void productId; // zadržano radi kompatibilnosti poziva
+  const discount = care ? CARE_DISCOUNT : MEMBER_DISCOUNT;
   return Math.round(price * (1 - discount) * 100) / 100;
 };
 
@@ -132,13 +133,8 @@ export function calcCartTotals(
   const memberDiscount = member ? Math.round(subtotal * activeDiscount * 100) / 100 : 0;
   const threshold = care ? CARE_EXTRA_THRESHOLD : EXTRA_THRESHOLD;
   const extraDiscount = member && fullSubtotal >= threshold ? Math.round(subtotal * (care ? CARE_EXTRA_DISCOUNT : EXTRA_DISCOUNT) * 100) / 100 : 0;
-  // Dodatnih 5 % na odabrane robote; ne zbraja se s dodatnim popustom za veće narudžbe.
-  const robotDiscount = member && extraDiscount === 0 ? Math.round(
-    items.reduce((sum, item) => {
-      const p = findProduct(item.productId);
-      return sum + (p && hasRobotBonus(item.productId) ? p.priceEUR * item.quantity * ROBOT_BONUS : 0);
-    }, 0) * 100
-  ) / 100 : 0;
+  // Stalnih +5 % na robote nema; roboti imaju dodatni popust samo kroz Black Friday.
+  const robotDiscount = 0;
   const total = Math.round((fullSubtotal - memberDiscount - extraDiscount - robotDiscount - bfDiscount) * 100) / 100;
   const toExtra = member && fullSubtotal < threshold && subtotal > 0 ? Math.round((threshold - fullSubtotal) * 100) / 100 : 0;
   return { subtotal: fullSubtotal, memberDiscount, extraDiscount, robotDiscount, bfDiscount, total, toExtra };
