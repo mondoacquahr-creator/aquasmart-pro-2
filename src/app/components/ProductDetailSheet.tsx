@@ -10,6 +10,10 @@ import {
   setQty,
   isEquipment,
   memberPrice,
+  hasRobotBonus,
+  bfPrice,
+  bfSlotsLeft,
+  BF_SLOTS_TOTAL,
   MONDO_CONTACT,
 } from '../lib/mondoShop';
 
@@ -109,18 +113,19 @@ export function ProductDetailSheet({ product, qty, member, care, onClose, onRegi
                 {member ? (
                   <>
                     <p className="text-xs line-through" style={{ color: T.faint }}>{fmtEUR(product.priceEUR)}</p>
-                    <p className="font-bold text-white text-2xl leading-tight">{fmtEUR(memberPrice(product.priceEUR, care))}</p>
-                    <p className="text-[11px] font-semibold" style={{ color: '#2EFF88' }}>{care ? 'Mondo Care cijena' : 'Cijena za članove'}</p>
+                    <p className="font-bold text-white text-2xl leading-tight">{fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, care, product.id))}</p>
+                    <p className="text-[11px] font-semibold" style={{ color: '#2EFF88' }}>{bfPrice(product, true) ? `Prvih ${BF_SLOTS_TOTAL} novih članova · još ${bfSlotsLeft} mjesta` : <>{care ? 'Mondo Care cijena' : 'Cijena za članove'}{hasRobotBonus(product.id) ? ' −15 %' : ''}</>}</p>
                   </>
                 ) : (
                   <>
-                    <p className="font-bold text-white text-2xl leading-tight">{fmtEUR(product.priceEUR)}</p>
+                    {bfPrice(product, false) && <p className="text-[11px] line-through" style={{ color: T.faint }}>{fmtEUR(product.priceEUR)}</p>}
+                        <p className="font-bold text-white text-2xl leading-tight">{fmtEUR(bfPrice(product, false) ?? product.priceEUR)}</p>
                     <p
                       className="text-[11px]"
                       style={{ color: '#2EFF88', cursor: onRegisterMember ? 'pointer' : 'default' }}
                       onClick={onRegisterMember}
                     >
-                      Članovi: {fmtEUR(memberPrice(product.priceEUR))}
+                      {bfPrice(product, false) ? `Prvih ${BF_SLOTS_TOTAL} novih članova (još ${bfSlotsLeft}): ` : 'Članovi: '} {fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, false, product.id))}
                     </p>
                   </>
                 )}
