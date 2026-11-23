@@ -115,7 +115,7 @@ export function ProductDetailSheet({ product, qty, member, care, onClose, onRegi
                   <>
                     <p className="text-xs line-through" style={{ color: T.faint }}>{fmtEUR(product.priceEUR)}</p>
                     <p className="font-bold text-white text-2xl leading-tight">{fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, care, product.id))}</p>
-                    <p className="text-[11px] font-semibold" style={{ color: '#2EFF88' }}>{bfPrice(product, true) ? `Prvih ${BF_SLOTS_TOTAL} novih članova · još ${bfSlotsLeft} mjesta` : <>{care ? 'Mondo Care cijena' : 'Cijena za članove'}{hasRobotBonus(product.id) ? ' −15 %' : ''}</>}</p>
+                    <p className="text-[11px] font-semibold" style={{ color: '#2EFF88' }}>{bfPrice(product, true) ? `Prvih ${BF_SLOTS_TOTAL} novih članova · još ${bfSlotsLeft} mjesta` : <>{care ? 'Mondo Care cijena' : 'Cijena za članove'}</>}</p>
                   </>
                 ) : (
                   <>
