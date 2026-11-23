@@ -55,7 +55,9 @@ export const MEMBER_DISCOUNT = 0.10;
 export const CARE_DISCOUNT = 0.10;
 export const EXTRA_DISCOUNT = 0.05;
 export const CARE_EXTRA_DISCOUNT = 0.10;
-export const EXTRA_THRESHOLD = 1000;
+// Dodatni popust: registrirani +5 % iznad 1.500 €, Mondo Care +10 % iznad 1.000 €.
+export const EXTRA_THRESHOLD = 1500;
+export const CARE_EXTRA_THRESHOLD = 1000;
 // Dodatni popust za registrirane samo na odabrane robote (WYBOT S1, iGarden K40) – 10 % + 5 %.
 export const ROBOT_BONUS = 0.05;
 export const ROBOT_BONUS_IDS = new Set(['vh-60WS1', 'vh-60K040']);
@@ -128,8 +130,9 @@ export function calcCartTotals(
   ) / 100;
   const activeDiscount = care ? CARE_DISCOUNT : MEMBER_DISCOUNT;
   const memberDiscount = member ? Math.round(subtotal * activeDiscount * 100) / 100 : 0;
-  const extraDiscount = member && fullSubtotal >= EXTRA_THRESHOLD ? Math.round(subtotal * (care ? CARE_EXTRA_DISCOUNT : EXTRA_DISCOUNT) * 100) / 100 : 0;
-  // Dodatnih 5 % na odabrane robote; ne zbraja se s dodatnim popustom iznad 1.000 €.
+  const threshold = care ? CARE_EXTRA_THRESHOLD : EXTRA_THRESHOLD;
+  const extraDiscount = member && fullSubtotal >= threshold ? Math.round(subtotal * (care ? CARE_EXTRA_DISCOUNT : EXTRA_DISCOUNT) * 100) / 100 : 0;
+  // Dodatnih 5 % na odabrane robote; ne zbraja se s dodatnim popustom za veće narudžbe.
   const robotDiscount = member && extraDiscount === 0 ? Math.round(
     items.reduce((sum, item) => {
       const p = findProduct(item.productId);
@@ -137,7 +140,7 @@ export function calcCartTotals(
     }, 0) * 100
   ) / 100 : 0;
   const total = Math.round((fullSubtotal - memberDiscount - extraDiscount - robotDiscount - bfDiscount) * 100) / 100;
-  const toExtra = member && fullSubtotal < EXTRA_THRESHOLD && subtotal > 0 ? Math.round((EXTRA_THRESHOLD - fullSubtotal) * 100) / 100 : 0;
+  const toExtra = member && fullSubtotal < threshold && subtotal > 0 ? Math.round((threshold - fullSubtotal) * 100) / 100 : 0;
   return { subtotal: fullSubtotal, memberDiscount, extraDiscount, robotDiscount, bfDiscount, total, toExtra };
 }
 

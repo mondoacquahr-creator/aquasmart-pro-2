@@ -1109,7 +1109,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                 <div className="flex flex-wrap gap-2 mb-7">
                   {[
                     { Icon: Percent, label: '−10 % na kemiju i opremu' },
-                    { Icon: BadgePercent, label: 'dodatnih −5 % iznad 1.000 €' },
+                    { Icon: BadgePercent, label: 'dodatnih −5 % iznad 1.500 €' },
                     { Icon: LineChart, label: 'povijest analiza i podsjetnici' },
                     { Icon: Wrench, label: 'pregled opreme na vašem bazenu' },
                   ].map(({ Icon, label }) => (
@@ -1166,7 +1166,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
                   −15 %
                 </span>
                 <span className="text-xs mt-2 text-center" style={{ color: 'rgba(255,255,255,0.45)', maxWidth: 110 }}>
-                  za narudžbe iznad 1.000 €
+                  za narudžbe iznad 1.500 €
                 </span>
               </div>
             </div>

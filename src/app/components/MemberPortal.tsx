@@ -177,7 +177,7 @@ function MondoCareCard({ profile, pool, planActive, planValidUntil }: { profile?
         </button>
       </div>
       <p className="text-xs mt-3 leading-relaxed" style={{ color: T.faint }}>
-        Paket aktivira Mondo Acqua nakon dogovora; dodatni popust iznad 1.000 € tada je 10 % umjesto 5 %.
+        Paket aktivira Mondo Acqua nakon dogovora; dodatni popust tada je 10 % već iznad 1.000 € (umjesto 5 % iznad 1.500 €).
       </p>
     </Card>
   );
@@ -210,7 +210,7 @@ function OverviewTab({ data, onRequestVisit, onNewAnalysis, onNavigate }: {
         <ShoppingCart className="w-4 h-4" />
         {(data as any).profile?.planActive
           ? 'Webshop – 10 % popusta, dodatnih 10 % iznad 1.000 €'
-          : 'Webshop – 10 % popusta, dodatnih 5 % iznad 1.000 €'}
+          : 'Webshop – 10 % popusta, dodatnih 5 % iznad 1.500 €'}
       </button>
 
       {/* Latest analysis */}
@@ -284,7 +284,7 @@ function OverviewTab({ data, onRequestVisit, onNewAnalysis, onNavigate }: {
             'Moj bazen s podsjetnicima',
             (data as any).profile?.planActive
               ? '10 % popusta na kemiju i opremu (+10 % iznad 1.000 €)'
-              : '10 % popusta na kemiju i opremu (+5 % iznad 1.000 €)',
+              : '10 % popusta na kemiju i opremu (+5 % iznad 1.500 €)',
             'Pregled opreme na vašem bazenu (besplatan uz kupnju od 150 €)',
           ].map(b => (
             <li key={b} className="flex items-start gap-2">
