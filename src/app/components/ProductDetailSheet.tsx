@@ -10,6 +10,7 @@ import {
   setQty,
   isEquipment,
   memberPrice,
+  hasRobotBonus,
   MONDO_CONTACT,
 } from '../lib/mondoShop';
 
@@ -109,8 +110,8 @@ export function ProductDetailSheet({ product, qty, member, care, onClose, onRegi
                 {member ? (
                   <>
                     <p className="text-xs line-through" style={{ color: T.faint }}>{fmtEUR(product.priceEUR)}</p>
-                    <p className="font-bold text-white text-2xl leading-tight">{fmtEUR(memberPrice(product.priceEUR, care))}</p>
-                    <p className="text-[11px] font-semibold" style={{ color: '#2EFF88' }}>{care ? 'Mondo Care cijena' : 'Cijena za članove'}</p>
+                    <p className="font-bold text-white text-2xl leading-tight">{fmtEUR(memberPrice(product.priceEUR, care, product.id))}</p>
+                    <p className="text-[11px] font-semibold" style={{ color: '#2EFF88' }}>{care ? 'Mondo Care cijena' : 'Cijena za članove'}{hasRobotBonus(product.id) ? ' −15 %' : ''}</p>
                   </>
                 ) : (
                   <>
@@ -120,7 +121,7 @@ export function ProductDetailSheet({ product, qty, member, care, onClose, onRegi
                       style={{ color: '#2EFF88', cursor: onRegisterMember ? 'pointer' : 'default' }}
                       onClick={onRegisterMember}
                     >
-                      Članovi: {fmtEUR(memberPrice(product.priceEUR))}
+                      Članovi: {fmtEUR(memberPrice(product.priceEUR, false, product.id))}
                     </p>
                   </>
                 )}

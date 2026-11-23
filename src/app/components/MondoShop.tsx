@@ -15,6 +15,7 @@ import {
   isMemberUser,
   isCareUser,
   memberPrice,
+  hasRobotBonus,
   calcCartTotals,
 } from '../lib/mondoShop';
 import { T } from '../lib/theme';
@@ -248,6 +249,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
     lines.push('', `Međuzbroj: ${t.subtotal.toFixed(2)} €`);
     if (member && t.memberDiscount > 0) lines.push(`${care ? 'Popust Mondo Care 10 %' : 'Popust za članove 10 %'}: -${t.memberDiscount.toFixed(2)} €`);
     if (member && t.extraDiscount > 0) lines.push(`Dodatni popust ${care ? 10 : 5} %: -${t.extraDiscount.toFixed(2)} €`);
+    if (member && t.robotDiscount > 0) lines.push(`Dodatni popust 5 % na robote: -${t.robotDiscount.toFixed(2)} €`);
     if (shippingEUR > 0) lines.push(`Dostava: ${shippingEUR.toFixed(2)} €`);
     lines.push(`Ukupno: ${grandTotal.toFixed(2)} € (PDV uključen)`);
     if (member) lines.push(care ? 'Kupac je Mondo Care član.' : 'Kupac je registrirani član (Moj bazen).');
@@ -465,6 +467,12 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                 <div className="flex items-center justify-between text-sm">
                   <span style={{ color: '#2EFF88' }}>Dodatni popust {care ? 10 : 5} % (iznad 1.000 €)</span>
                   <span style={{ color: '#2EFF88' }}>−{fmtEUR(totals.extraDiscount)}</span>
+                </div>
+              )}
+              {member && totals.robotDiscount > 0 && (
+                <div className="flex items-center justify-between text-sm">
+                  <span style={{ color: '#2EFF88' }}>Dodatni popust 5 % na robote</span>
+                  <span style={{ color: '#2EFF88' }}>−{fmtEUR(totals.robotDiscount)}</span>
                 </div>
               )}
               <div className="flex items-center justify-between text-sm">
@@ -982,8 +990,8 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                     {member ? (
                       <>
                         <p className="text-xs line-through" style={{ color: T.faint }}>{fmtEUR(product.priceEUR)}</p>
-                        <p className="font-bold text-white text-[20px] leading-tight">{fmtEUR(memberPrice(product.priceEUR, care))}</p>
-                        <p className="text-[11px] font-semibold" style={{ color: '#2EFF88' }}>{care ? 'Mondo Care cijena' : 'Cijena za članove'}</p>
+                        <p className="font-bold text-white text-[20px] leading-tight">{fmtEUR(memberPrice(product.priceEUR, care, product.id))}</p>
+                        <p className="text-[11px] font-semibold" style={{ color: '#2EFF88' }}>{care ? 'Mondo Care cijena' : 'Cijena za članove'}{hasRobotBonus(product.id) ? ' −15 %' : ''}</p>
                       </>
                     ) : (
                       <>
@@ -993,7 +1001,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                           style={{ color: '#2EFF88', cursor: onRegisterMember ? 'pointer' : 'default' }}
                           onClick={onRegisterMember}
                         >
-                          Članovi: {fmtEUR(memberPrice(product.priceEUR))}
+                          Članovi: {fmtEUR(memberPrice(product.priceEUR, false, product.id))}
                         </p>
                       </>
                     )}
@@ -1063,8 +1071,8 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                       {member ? (
                         <>
                           <p className="text-[11px] line-through" style={{ color: T.faint }}>{fmtEUR(product.priceEUR)}</p>
-                          <p className="font-bold text-white text-lg leading-tight">{fmtEUR(memberPrice(product.priceEUR, care))}</p>
-                          <p className="text-[10px] font-semibold" style={{ color: '#2EFF88' }}>{care ? 'Mondo Care cijena' : 'Cijena za članove'}</p>
+                          <p className="font-bold text-white text-lg leading-tight">{fmtEUR(memberPrice(product.priceEUR, care, product.id))}</p>
+                          <p className="text-[10px] font-semibold" style={{ color: '#2EFF88' }}>{care ? 'Mondo Care cijena' : 'Cijena za članove'}{hasRobotBonus(product.id) ? ' −15 %' : ''}</p>
                         </>
                       ) : (
                         <>
@@ -1074,7 +1082,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                             style={{ color: '#2EFF88', cursor: onRegisterMember ? 'pointer' : 'default' }}
                             onClick={onRegisterMember}
                           >
-                            Članovi: {fmtEUR(memberPrice(product.priceEUR))}
+                            Članovi: {fmtEUR(memberPrice(product.priceEUR, false, product.id))}
                           </p>
                         </>
                       )}
