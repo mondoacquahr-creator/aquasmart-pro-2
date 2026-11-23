@@ -17,6 +17,9 @@ import {
   memberPrice,
   hasRobotBonus,
   bfPrice,
+  bfRate,
+  isBlackFriday,
+  bfMembersOpen,
   bfSlotsLeft,
   BF_SLOTS_TOTAL,
   loadProductDetails,
@@ -110,6 +113,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
   const [emptyCart, setEmptyCart] = useState(false);
   useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior }); }, [view]);
   const [search, setSearch] = useState(() => urlParam('q'));
+  const [bfOnly, setBfOnly] = useState(() => urlParam('akcija') === 'black-friday' && isBlackFriday());
   const [group, setGroup] = useState(() => (GROUPS.some((g) => g.name === urlParam('skupina')) ? urlParam('skupina') : 'Sve'));
   const [category, setCategory] = useState(() => (SHOP_PRODUCTS.some((p) => p.category === urlParam('kat')) ? urlParam('kat') : 'Sve'));
   const [priceRange, setPriceRange] = useState(() => (PRICE_RANGES.some((r) => r.key === urlParam('cijena')) ? urlParam('cijena') : ''));
@@ -178,6 +182,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
   const filteredProducts = SHOP_PRODUCTS.filter((p) => {
     // Kad se pretražuje, traži se kroz sve proizvode, bez obzira na odabranu skupinu.
     if (query) return matchesSearch(p, query);
+    if (bfOnly) return bfRate(p, false) > 0;
     const g = GROUPS.find((x) => x.name === group);
     return category !== 'Sve' ? p.category === category : !g || g.subs.includes(p.category);
   });
@@ -192,7 +197,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
   useEffect(() => {
     if (firstRender.current) { firstRender.current = false; return; }
     setPage(1);
-  }, [query, group, category, priceRange, sort]);
+  }, [query, group, category, priceRange, sort, bfOnly]);
   // Stanje kataloga i otvoreni proizvod zapisuju se u adresu (bez novog unosa u povijest)
   useEffect(() => {
     try {
@@ -768,6 +773,38 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
           </div>
         </div>
 
+        {/* Black Friday – istaknuto na vrhu webshopa */}
+        {isBlackFriday() && (
+          <div className="mt-5 rounded-2xl overflow-hidden" style={{ background: '#00BEFF' }}>
+            <div className="px-5 py-5 sm:px-7 sm:py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <p className="font-black tracking-tight leading-none" style={{ color: '#08101A', fontSize: 34 }}>BLACK FRIDAY</p>
+                <p className="mt-2 font-semibold" style={{ color: '#002750', fontSize: 17 }}>
+                  −25 % na dozirne sustave · −15 % na robote WYBOT S1 i iGarden K40
+                </p>
+                <p className="mt-1 text-sm" style={{ color: '#002750' }}>
+                  {bfMembersOpen() ? <>Za prvih {BF_SLOTS_TOTAL} novih članova – <b>još {bfSlotsLeft} mjesta</b>. </> : null}
+                  Za sve ostale −10 % i −5 %. Uz uplatu na račun, do isteka zaliha.
+                </p>
+              </div>
+              <div className="flex gap-2 flex-shrink-0">
+                <button
+                  onClick={() => { setBfOnly(!bfOnly); setSearch(''); }}
+                  className="px-5 py-3 rounded-xl font-bold text-sm"
+                  style={{ background: '#08101A', color: '#fff' }}
+                >
+                  {bfOnly ? 'Prikaži sve proizvode' : 'Pogledaj akciju'}
+                </button>
+                {!member && onRegisterMember && (
+                  <button onClick={onRegisterMember} className="px-5 py-3 rounded-xl font-bold text-sm" style={{ background: '#fff', color: '#002750' }}>
+                    Postani član
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Glavne skupine – kartice s brojem proizvoda */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mt-5">
           {[{ name: 'Sve', subs: [] as string[] }, ...GROUPS].map(({ name, subs }) => {
@@ -776,7 +813,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
             return (
               <button
                 key={name}
-                onClick={() => { setGroup(name); setCategory('Sve'); }}
+                onClick={() => { setGroup(name); setCategory('Sve'); setBfOnly(false); }}
                 className="text-left rounded-2xl px-4 py-3 transition-all"
                 style={on
                   ? { background: T.cyan, color: '#020D12', border: `1px solid ${T.cyan}` }
