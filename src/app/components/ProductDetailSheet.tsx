@@ -1,3 +1,4 @@
+import { BfPrice } from './BfPrice';
 import React, { useEffect, useState } from 'react';
 import { anchorDateLabel, anchorPrice } from '../lib/anchorPrices';
 import { motion } from 'motion/react';
@@ -110,7 +111,7 @@ export function ProductDetailSheet({ product, qty, member, care, onClose, onRegi
 
             <div className="mt-4 flex items-end justify-between gap-3">
               <div>
-                {member ? (
+                {bfPrice(product, true) != null ? <BfPrice product={product} care={care} size={28} align="left" /> : member ? (
                   <>
                     <p className="text-xs line-through" style={{ color: T.faint }}>{fmtEUR(product.priceEUR)}</p>
                     <p className="font-bold text-white text-2xl leading-tight">{fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, care, product.id))}</p>
@@ -125,7 +126,7 @@ export function ProductDetailSheet({ product, qty, member, care, onClose, onRegi
                       style={{ color: '#2EFF88', cursor: onRegisterMember ? 'pointer' : 'default' }}
                       onClick={onRegisterMember}
                     >
-                      {bfPrice(product, false) ? `Prvih ${BF_SLOTS_TOTAL} novih članova (još ${bfSlotsLeft}): ` : 'Članovi: '} {fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, false, product.id))}
+                      {'Članovi: '} {fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, false, product.id))}
                     </p>
                   </>
                 )}
