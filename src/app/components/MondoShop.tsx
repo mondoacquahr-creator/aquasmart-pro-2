@@ -964,7 +964,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                     <p className="text-[10px] font-bold uppercase tracking-widest mb-0.5" style={{ color: T.cyan }}>
                       {product.category}
                     </p>
-                    <p className="font-bold text-white text-[18px] leading-tight truncate">{product.name}</p>
+                    <p className="font-bold text-white text-[18px] leading-tight break-words">{product.name}</p>
                     {description && (
                       <p className="text-sm mt-0.5 truncate" style={{ color: T.muted }}>{description}</p>
                     )}
