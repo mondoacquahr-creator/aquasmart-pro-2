@@ -2,7 +2,7 @@ import { Hono } from "npm:hono";
 import { cors } from "npm:hono/cors";
 import { logger } from "npm:hono/logger";
 import { createClient } from "jsr:@supabase/supabase-js@2.49.8";
-import { Resend } from "npm:resend";
+import { createMailer, usingSmtp } from "./mailer.ts";
 import * as kv from "./kv_store.tsx";
 
 // AquaSmart Pro 2.0 server — verzija s tvrtkama, djelatnicima i ovlastima.
@@ -10,11 +10,11 @@ import * as kv from "./kv_store.tsx";
 // koju korisnik ne može sam mijenjati (user_metadata može).
 
 const app = new Hono();
-const resend = new Resend(Deno.env.get('resend'));
+const resend = createMailer();
 // Primatelj obavijesti (registracije, narudžbe, pregledi). Dok domena mondo-acqua.hr nije potvrđena u Resendu,
 // pošiljatelj resend.dev smije slati samo na adresu Resend računa (mondo.acquahr@gmail.com).
 // Nakon potvrde domene: tajne INQUIRY_EMAIL=info@mondo-acqua.hr i MAIL_FROM='Mondo Pool Care <noreply@mondo-acqua.hr>'.
-const MONDO_ACQUA_EMAIL = Deno.env.get('INQUIRY_EMAIL') || "mondo.acquahr@gmail.com";
+const MONDO_ACQUA_EMAIL = Deno.env.get('INQUIRY_EMAIL') || (usingSmtp ? "info@mondo-acqua.hr" : "mondo.acquahr@gmail.com");
 const MAIL_FROM = Deno.env.get('MAIL_FROM') || 'Mondo Pool Care <orders@resend.dev>';
 
 app.use('*', logger(console.log));

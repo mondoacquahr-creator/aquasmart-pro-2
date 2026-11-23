@@ -1,16 +1,16 @@
 import { Hono } from "npm:hono";
 import { cors } from "npm:hono/cors";
 import { createClient } from "jsr:@supabase/supabase-js@2.49.8";
-import { Resend } from "npm:resend";
+import { createMailer, usingSmtp } from "./mailer.ts";
 import * as kv from "./kv_store.tsx";
 
 // AquaSmart Pro – katalog bazena i AI vizualizator (zasebna funkcija).
 
 const app = new Hono();
-const resend = new Resend(Deno.env.get('resend'));
+const resend = createMailer();
 const MONDO_ACQUA_EMAIL = "info@mondo-acqua.hr";
 // Dok domena mondo-acqua.hr nije potvrđena u Resendu, Resend dostavlja samo na e-mail vlasnika računa.
-const INQUIRY_EMAIL = Deno.env.get('INQUIRY_EMAIL') || "mondo.acquahr@gmail.com";
+const INQUIRY_EMAIL = Deno.env.get('INQUIRY_EMAIL') || (usingSmtp ? "info@mondo-acqua.hr" : "mondo.acquahr@gmail.com");
 
 app.use("/*", cors({
   origin: "*",

@@ -1,10 +1,10 @@
 // Jednostrani raskid ugovora sklopljenog na daljinu (webshop Pool Care).
 // Sprema izjavu (evidencija), šalje je Mondo Acqui i potvrdu kupcu (kad je domena verificirana u Resendu).
 import { createClient } from "npm:@supabase/supabase-js@2";
-import { Resend } from "npm:resend";
+import { createMailer, usingSmtp } from "./mailer.ts";
 
-const resend = new Resend(Deno.env.get("resend"));
-const MONDO = Deno.env.get("INQUIRY_EMAIL") || "mondo.acquahr@gmail.com";
+const resend = createMailer();
+const MONDO = Deno.env.get('INQUIRY_EMAIL') || (usingSmtp ? "info@mondo-acqua.hr" : "mondo.acquahr@gmail.com");
 const FROM = Deno.env.get("MAIL_FROM") || "Mondo Pool Care <orders@resend.dev>";
 const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
 
