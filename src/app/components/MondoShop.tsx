@@ -477,7 +477,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
               )}
               {member && totals.extraDiscount > 0 && (
                 <div className="flex items-center justify-between text-sm">
-                  <span style={{ color: '#2EFF88' }}>Dodatni popust {care ? 10 : 5} % (iznad {care ? '1.000' : '1.500'} €)</span>
+                  <span style={{ color: '#2EFF88' }}>Dodatni popust {care ? 10 : 5} % (iznad 1.500 €)</span>
                   <span style={{ color: '#2EFF88' }}>−{fmtEUR(totals.extraDiscount)}</span>
                 </div>
               )}
@@ -826,7 +826,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
           <p className="text-sm" style={{ color: 'rgba(255,255,255,0.85)' }}>
             {member
               ? care
-                ? '✓ Mondo Care: −10 % na sve proizvode i dodatnih −10 % iznad 1.000 €.'
+                ? '✓ Mondo Care: −10 % na sve proizvode i dodatnih −10 % iznad 1.500 €.'
                 : '✓ Kao član ostvarujete −10 % na sve proizvode i dodatnih −5 % iznad 1.500 €.'
               : 'Registrirani vlasnici bazena: −10 % na kemiju i opremu, dodatnih −5 % za narudžbe iznad 1.500 €.'}
             <span className="block mt-1 text-[13px]" style={{ color: 'rgba(255,255,255,0.7)' }}>

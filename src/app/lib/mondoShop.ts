@@ -55,9 +55,9 @@ export const MEMBER_DISCOUNT = 0.10;
 export const CARE_DISCOUNT = 0.10;
 export const EXTRA_DISCOUNT = 0.05;
 export const CARE_EXTRA_DISCOUNT = 0.10;
-// Dodatni popust: registrirani +5 % iznad 1.500 €, Mondo Care +10 % iznad 1.000 €.
+// Dodatni popust: registrirani +5 %, Mondo Care +10 %, oboje iznad 1.500 €.
 export const EXTRA_THRESHOLD = 1500;
-export const CARE_EXTRA_THRESHOLD = 1000;
+export const CARE_EXTRA_THRESHOLD = 1500;
 // Dodatni popust za registrirane samo na odabrane robote (WYBOT S1, iGarden K40) – 10 % + 5 %.
 export const ROBOT_BONUS = 0.05;
 export const ROBOT_BONUS_IDS = new Set(['vh-60WS1', 'vh-60K040']);
