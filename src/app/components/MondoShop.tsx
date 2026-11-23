@@ -1,3 +1,4 @@
+import { BfPrice } from './BfPrice';
 import React, { useState, useEffect, useRef } from 'react';
 import { anchorDateLabel, anchorPrice } from '../lib/anchorPrices';
 import { ArrowLeft, ShoppingCart, Search, Package, Plus, Minus, X, MessageCircle, Mail, CreditCard, CheckCircle, Waves } from 'lucide-react';
@@ -1045,7 +1046,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
 
                   {/* Price */}
                   <div className="text-right flex-shrink-0">
-                    {member ? (
+                    {bfPrice(product, true) != null ? <BfPrice product={product} care={care} size={22} /> : member ? (
                       <>
                         <p className="text-xs line-through" style={{ color: T.faint }}>{fmtEUR(product.priceEUR)}</p>
                         <p className="font-bold text-white text-[20px] leading-tight">{fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, care, product.id))}</p>
@@ -1060,7 +1061,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                           style={{ color: '#2EFF88', cursor: onRegisterMember ? 'pointer' : 'default' }}
                           onClick={onRegisterMember}
                         >
-                          {bfPrice(product, false) ? `Prvih ${BF_SLOTS_TOTAL} novih članova (još ${bfSlotsLeft}): ` : 'Članovi: '} {fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, false, product.id))}
+                          {'Članovi: '} {fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, false, product.id))}
                         </p>
                       </>
                     )}
@@ -1127,7 +1128,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                   {/* Row 2: price + action aligned right */}
                   <div className="flex items-center justify-end gap-3">
                     <div className="text-right">
-                      {member ? (
+                      {bfPrice(product, true) != null ? <BfPrice product={product} care={care} size={19} /> : member ? (
                         <>
                           <p className="text-[11px] line-through" style={{ color: T.faint }}>{fmtEUR(product.priceEUR)}</p>
                           <p className="font-bold text-white text-lg leading-tight">{fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, care, product.id))}</p>
@@ -1142,7 +1143,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                             style={{ color: '#2EFF88', cursor: onRegisterMember ? 'pointer' : 'default' }}
                             onClick={onRegisterMember}
                           >
-                            {bfPrice(product, false) ? `Prvih ${BF_SLOTS_TOTAL} novih članova (još ${bfSlotsLeft}): ` : 'Članovi: '} {fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, false, product.id))}
+                            {'Članovi: '} {fmtEUR(bfPrice(product, true) ?? memberPrice(product.priceEUR, false, product.id))}
                           </p>
                         </>
                       )}
