@@ -1,5 +1,6 @@
-# Preuzima slike Vagner opreme (vh- artikli) s vagnerpool.hr i sprema ih u projekt (public/merchant-images/vh/).
-name: Preuzmi slike Vagner opreme
+# Preuzima Vagnerov službeni XML feed za kupce (https://www.vagnerpool.hr/feeds/roba.xml)
+# i slike Vagner opreme (vh- artikli) navedene u njemu; sprema ih u public/merchant-images/vh/.
+name: Preuzmi slike Vagner opreme (feed)
 on:
   push:
     branches: [slike-vagner]
@@ -12,25 +13,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Preuzmi slike
+      - name: Feed i slike
         run: |
           mkdir -p public/merchant-images/vh
+          code=$(curl -sSL -o /tmp/roba.xml -w '%{http_code}' https://www.vagnerpool.hr/feeds/roba.xml); echo "feed HTTP $code, $(wc -c < /tmp/roba.xml) bajtova"
           python3 - <<'PY'
-          import re, subprocess
+          import re, subprocess, xml.etree.ElementTree as ET
           src = open('src/app/lib/vagnerEquipment.ts', encoding='utf-8').read()
-          for m in re.finditer(r'\["(vh-[^"]+)",[^\n]*?HR \+ "([^"]+)"', src):
-              pid, fn = m.group(1), m.group(2)
-              ext = fn.rsplit('.', 1)[-1]
+          ids = {m.group(1)[3:]: m.group(1) for m in re.finditer(r'\["(vh-[^"]+)"', src)}
+          root = ET.parse('/tmp/roba.xml').getroot()
+          found = 0
+          for it in root.iter():
+              kod = it.findtext('KOD')
+              if not kod or kod.strip() not in ids: continue
+              pid = ids[kod.strip()]
+              url = (it.findtext('IMGURL') or '').strip()
+              if not url: print(pid, 'nema IMGURL'); continue
+              ext = url.split('?')[0].rsplit('.', 1)[-1].lower()
               out = f'public/merchant-images/vh/{pid}.{ext}'
-              url = 'https://www.vagnerpool.hr/static/1/produkty/' + fn
-              r = subprocess.run(['curl', '-fsSL', '--retry', '2', '-A', 'Mozilla/5.0', '-o', out, url])
-              print(pid, 'OK' if r.returncode == 0 else 'GREŠKA', url)
+              r = subprocess.run(['curl', '-sSL', '-o', out, '-w', '%{http_code}', url], capture_output=True, text=True)
+              print(pid, r.stdout, url)
+              found += 1
+          print('u feedu pronađeno', found, 'od', len(ids))
           PY
+          find public/merchant-images/vh -size -1k -delete
           ls public/merchant-images/vh | wc -l
       - name: Spremi u projekt
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
           git add public/merchant-images/vh
-          git commit -m "Slike Vagner opreme (vh-) preuzete s vagnerpool.hr" || echo "nema promjena"
+          git commit -m "Slike Vagner opreme (vh-) iz službenog feeda" || echo "nema promjena"
           git push
