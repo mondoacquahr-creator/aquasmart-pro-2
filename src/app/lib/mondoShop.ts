@@ -56,6 +56,21 @@ export const ROBOT_BONUS = 0.05;
 export const ROBOT_BONUS_IDS = new Set(['vh-60WS1', 'vh-60K040']);
 export const hasRobotBonus = (id?: string): boolean => !!id && ROBOT_BONUS_IDS.has(id);
 
+// ---------- Black Friday (samo uz uplatu na račun, ne PayPal; do isteka zaliha) ----------
+// Dozirni sustavi Vagner: 10 % za sve, 25 % za članove. Roboti S1 i K40: 5 % za sve, 15 % za članove.
+export const BLACK_FRIDAY_END = new Date('2026-12-01T00:00:00+01:00');
+export const isBlackFriday = (now = new Date()): boolean => now < BLACK_FRIDAY_END;
+export const bfRate = (p: { id: string; category: string } | undefined, member: boolean): number => {
+  if (!p || !isBlackFriday()) return 0;
+  if (p.id.startsWith('vg-') && p.category === 'Doziranje') return member ? 0.25 : 0.10;
+  if (hasRobotBonus(p.id)) return member ? 0.15 : 0.05;
+  return 0;
+};
+export const bfPrice = (p: { id: string; category: string; priceEUR: number }, member: boolean): number | null => {
+  const r = bfRate(p, member);
+  return r ? Math.round(p.priceEUR * (1 - r) * 100) / 100 : null;
+};
+
 export const isMemberUser = (): boolean => {
   try {
     return localStorage.getItem('userRole') === 'member';
@@ -78,10 +93,22 @@ export const memberPrice = (price: number, care = false, productId?: string): nu
 };
 
 export function calcCartTotals(
-  items: { productId: string; quantity: number }[],
+  allItems: { productId: string; quantity: number }[],
   member: boolean,
-  care = false
-): { subtotal: number; memberDiscount: number; extraDiscount: number; robotDiscount: number; total: number; toExtra: number } {
+  care = false,
+  bankTransfer = false
+): { subtotal: number; memberDiscount: number; extraDiscount: number; robotDiscount: number; bfDiscount: number; total: number; toExtra: number } {
+  // Black Friday stavke (uz uplatu na račun) imaju svoj popust umjesto članskog.
+  const isBf = (id: string) => bankTransfer && bfRate(findProduct(id), member) > 0;
+  const bfDiscount = Math.round(allItems.reduce((sum, item) => {
+    const p = findProduct(item.productId);
+    return sum + (p && isBf(item.productId) ? p.priceEUR * item.quantity * bfRate(p, member) : 0);
+  }, 0) * 100) / 100;
+  const items = allItems.filter((i) => !isBf(i.productId));
+  const fullSubtotal = Math.round(allItems.reduce((sum, item) => {
+    const p = findProduct(item.productId);
+    return sum + (p ? p.priceEUR * item.quantity : 0);
+  }, 0) * 100) / 100;
   const subtotal = Math.round(
     items.reduce((sum, item) => {
       const p = findProduct(item.productId);
@@ -90,7 +117,7 @@ export function calcCartTotals(
   ) / 100;
   const activeDiscount = care ? CARE_DISCOUNT : MEMBER_DISCOUNT;
   const memberDiscount = member ? Math.round(subtotal * activeDiscount * 100) / 100 : 0;
-  const extraDiscount = member && subtotal >= EXTRA_THRESHOLD ? Math.round(subtotal * (care ? CARE_EXTRA_DISCOUNT : EXTRA_DISCOUNT) * 100) / 100 : 0;
+  const extraDiscount = member && fullSubtotal >= EXTRA_THRESHOLD ? Math.round(subtotal * (care ? CARE_EXTRA_DISCOUNT : EXTRA_DISCOUNT) * 100) / 100 : 0;
   // Dodatnih 5 % na odabrane robote; ne zbraja se s dodatnim popustom iznad 1.000 €.
   const robotDiscount = member && extraDiscount === 0 ? Math.round(
     items.reduce((sum, item) => {
@@ -98,9 +125,9 @@ export function calcCartTotals(
       return sum + (p && hasRobotBonus(item.productId) ? p.priceEUR * item.quantity * ROBOT_BONUS : 0);
     }, 0) * 100
   ) / 100 : 0;
-  const total = Math.round((subtotal - memberDiscount - extraDiscount - robotDiscount) * 100) / 100;
-  const toExtra = member && subtotal < EXTRA_THRESHOLD ? Math.round((EXTRA_THRESHOLD - subtotal) * 100) / 100 : 0;
-  return { subtotal, memberDiscount, extraDiscount, robotDiscount, total, toExtra };
+  const total = Math.round((fullSubtotal - memberDiscount - extraDiscount - robotDiscount - bfDiscount) * 100) / 100;
+  const toExtra = member && fullSubtotal < EXTRA_THRESHOLD && subtotal > 0 ? Math.round((EXTRA_THRESHOLD - fullSubtotal) * 100) / 100 : 0;
+  return { subtotal: fullSubtotal, memberDiscount, extraDiscount, robotDiscount, bfDiscount, total, toExtra };
 }
 
 export interface Cart {
