@@ -100,7 +100,7 @@ const equipmentProducts: ShopProduct[] = VAGNER_EQUIPMENT.map((p) => ({
 }));
 
 export const SHOP_PRODUCTS: ShopProduct[] = [...chemProducts, ...SPA_PRODUCTS, ...equipmentProducts]
-  .map((p) => ({ ...p, anchorEUR: anchorPrice(p.id, p.priceEUR), anchorDate: anchorDateISO(p.category) }));
+  .map((p) => ({ ...p, anchorEUR: anchorPrice(p.id, p.priceEUR), anchorDate: anchorDateISO(p.category, p.id) }));
 
 export const findProduct = (id: string): ShopProduct | undefined => SHOP_PRODUCTS.find((p) => p.id === id);
 

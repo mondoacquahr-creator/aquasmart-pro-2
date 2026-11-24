@@ -54,6 +54,10 @@ const ROWS: [string, EquipmentCategory, string, string, number, string, string][
   ["vg-931125NK", "Elektroliza", "Slana elektroliza VA SALT SMART C25 + pH sonda", "do 125 m³", 1739.76, "VA%20SALT%20SMART_VA_new%202021.avif", "Elektroliza + automatska regulacija pH"],
   ["vg-93153050", "Elektroliza", "Slana elektroliza Zodiac Ei SALT 12", "do 50 m³", 1367.82, "eisaltrender.avif", "12 g/h klora"],
   ["vg-93153090", "Elektroliza", "Slana elektroliza Zodiac Ei SALT 21", "do 90 m³", 1576.75, "eisaltrender.avif", "21 g/h klora"],
+  ["vh-931ES008", "Elektroliza", "Slana elektroliza Fairland EasySalt 8", "do 40 m³", 630.08, HR + "easy%20salt%202.avif", "Samočisteća ćelija, 3–5 g/l soli, Wi-Fi i MODBUS"],
+  ["vh-931ES016", "Elektroliza", "Slana elektroliza Fairland EasySalt 16", "do 70 m³", 827.96, HR + "easy%20salt%202.avif", "Samočisteća ćelija, 3–5 g/l soli, Wi-Fi i MODBUS"],
+  ["vh-931ES026", "Elektroliza", "Slana elektroliza Fairland EasySalt 26", "do 100 m³", 1017.49, HR + "easy%20salt%202.avif", "Samočisteća ćelija, 3–5 g/l soli, Wi-Fi i MODBUS"],
+  ["vh-931ES036", "Elektroliza", "Slana elektroliza Fairland EasySalt 36", "do 135 m³", 1112.25, HR + "easy%20salt%202.avif", "Samočisteća ćelija, 3–5 g/l soli, Wi-Fi i MODBUS"],
   ["vg-9313000", "Elektroliza", "ORP KIT za VA SALT SMART", "komplet", 140.3, "ORP%20kit.avif", "Mjerenje i regulacija Redoxa – zlatna elektroda"],
   ["vg-9313001", "Elektroliza", "pH KIT za VA HYDROSALT / SALT EVO+", "komplet", 266.34, "9313001.avif", "Mjerenje i regulacija pH"],
   // Testeri – Vagner Pool. Cijene preuzete s vagnerpool.hr 10.11.2026. (bez PDV-a).

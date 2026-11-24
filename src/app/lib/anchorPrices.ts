@@ -6,8 +6,15 @@ export const ANCHOR_DATE_LABEL = '10. 9. 2026.';
 // Bazenska i spa kemija spada u sredstva za čišćenje -> referentni datum 2. 5. 2025. (točka IV. Odluke).
 // Mondo Acqua tada nije prodavala kemiju preko weba; kao sidrena cijena koristi se cijena iz ovog popisa.
 export const CHEM_CATEGORIES = ['pH regulacija', 'Dezinfekcija', 'Alge', 'Bistrenje', 'Održavanje', 'Ostalo', 'Spa i hidromasažne kade'];
-export const anchorDateLabel = (category: string) => (CHEM_CATEGORIES.includes(category) ? '2. 5. 2025.' : ANCHOR_DATE_LABEL);
-export const anchorDateISO = (category: string) => (CHEM_CATEGORIES.includes(category) ? '2025-05-02' : '2026-09-10');
+// Proizvodi dodani nakon referentnog datuma: sidrena cijena je prva ponuđena cijena na dan dodavanja.
+const NEW_PRODUCT_DATES: Record<string, string> = {
+  'vh-931ES008': '2026-11-24', 'vh-931ES016': '2026-11-24', 'vh-931ES026': '2026-11-24', 'vh-931ES036': '2026-11-24',
+};
+const isoToLabel = (iso: string) => { const [y, m, d] = iso.split('-').map(Number); return `${d}. ${m}. ${y}.`; };
+export const anchorDateLabel = (category: string, id?: string) =>
+  (id && NEW_PRODUCT_DATES[id] ? isoToLabel(NEW_PRODUCT_DATES[id]) : CHEM_CATEGORIES.includes(category) ? '2. 5. 2025.' : ANCHOR_DATE_LABEL);
+export const anchorDateISO = (category: string, id?: string) =>
+  (id && NEW_PRODUCT_DATES[id] ? NEW_PRODUCT_DATES[id] : CHEM_CATEGORIES.includes(category) ? '2025-05-02' : '2026-09-10');
 
 export const ANCHOR_PRICES: Record<string, number> = {
   "ph-plus-1kg": 4.75,

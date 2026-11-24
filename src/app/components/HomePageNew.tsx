@@ -840,7 +840,7 @@ export function HomePageNew({ onNavigate }: HomePageNewProps) {
             <a href="/?stranica=webshop&akcija=black-friday" className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-2xl px-6 py-5" style={{ background: '#00BEFF', textDecoration: 'none' }}>
               <div>
                 <p className="font-black leading-none" style={{ color: '#08101A', fontSize: 34, letterSpacing: '-0.02em' }}>BLACK FRIDAY</p>
-                <p className="mt-2 font-semibold" style={{ color: '#002750', fontSize: 17 }}>−25 % na dozirne sustave · −15 % na robote WYBOT S1 i iGarden K40</p>
+                <p className="mt-2 font-semibold" style={{ color: '#002750', fontSize: 17 }}>−25 % na dozirne sustave i EasySalt elektrolizu · −15 % na robote WYBOT S1 i iGarden K40</p>
                 <p className="mt-1 text-sm" style={{ color: '#002750' }}>Za prvih 20 novih članova. Za sve ostale −10 % i −5 %. Do isteka zaliha.</p>
               </div>
               <span className="px-5 py-3 rounded-xl font-bold text-sm text-center flex-shrink-0" style={{ background: '#08101A', color: '#fff' }}>Pogledaj akciju ›</span>
