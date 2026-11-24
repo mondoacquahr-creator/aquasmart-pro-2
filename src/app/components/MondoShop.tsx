@@ -781,7 +781,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
               <div>
                 <p className="font-black tracking-tight leading-none" style={{ color: '#08101A', fontSize: 34 }}>BLACK FRIDAY</p>
                 <p className="mt-2 font-semibold" style={{ color: '#002750', fontSize: 17 }}>
-                  −25 % na dozirne sustave i EasySalt elektrolizu · −15 % na robote WYBOT S1 i iGarden K40
+                  −25 % na dozirne sustave i EasySalt elektrolizu · −15 % na robote WYBOT, iGarden, BWT i Fairland Inverbot
                 </p>
                 <p className="mt-1 text-sm" style={{ color: '#002750' }}>
                   {bfMembersOpen() ? <>Za prvih {BF_SLOTS_TOTAL} novih članova – <b>još {bfSlotsLeft} mjesta</b>. </> : null}

@@ -9,6 +9,7 @@ export const CHEM_CATEGORIES = ['pH regulacija', 'Dezinfekcija', 'Alge', 'Bistre
 // Proizvodi dodani nakon referentnog datuma: sidrena cijena je prva ponuđena cijena na dan dodavanja.
 const NEW_PRODUCT_DATES: Record<string, string> = {
   'vh-931ES008': '2026-11-24', 'vh-931ES016': '2026-11-24', 'vh-931ES026': '2026-11-24', 'vh-931ES036': '2026-11-24',
+  'aq-M60': '2026-11-24', 'aq-COSMY150': '2026-11-24', 'aq-COSMY200': '2026-11-24', 'aq-COSMY250': '2026-11-24', 'aq-P500PLUS': '2026-11-24', 'aq-F1RXT': '2026-11-24',
 };
 const isoToLabel = (iso: string) => { const [y, m, d] = iso.split('-').map(Number); return `${d}. ${m}. ${y}.`; };
 export const anchorDateLabel = (category: string, id?: string) =>

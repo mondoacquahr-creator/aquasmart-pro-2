@@ -202,6 +202,19 @@ export function ProductDetailSheet({ product, qty, member, care, onClose, onRegi
             </div>
           )}
 
+          {!loading && (details?.docs || []).length > 0 && (
+            <div>
+              {sectionTitle('Dokumenti')}
+              <ul className="space-y-1.5">
+                {(details?.docs || []).map(([label, url], i) => (
+                  <li key={i} className="text-sm">
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="underline" style={{ color: T.cyan }}>{label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {!loading && !details && (
             <p className="text-sm" style={{ color: T.muted }}>
               {failed ? 'Podatke o proizvodu trenutno nije moguće učitati. ' : ''}

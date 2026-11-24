@@ -608,7 +608,7 @@
 
 # Merchant product photos: normalize remote chemical and spa photos to JPEG.
 [images]
-  remote_images = ['https://shop\.ivero\.hr/wp-content/uploads/.*', 'https://asset\.productmarketingcloud\.com/api/assetstorage/.*', 'https://www\.vagnerpool\.hr/static/.*']
+  remote_images = ['https://shop\.ivero\.hr/wp-content/uploads/.*', 'https://asset\.productmarketingcloud\.com/api/assetstorage/.*', 'https://www\.vagnerpool\.hr/static/.*', 'https://d2xfa3et54gu2o\.cloudfront\.net/webshop\.aquachem\.hr/uploads/.*']
 
 [[headers]]
   for = "/google-products.xml"
