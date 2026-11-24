@@ -60,9 +60,9 @@ export const CARE_EXTRA_DISCOUNT = 0.10;
 // Dodatni popust: registrirani +5 %, Mondo Care +10 %, oboje iznad 1.500 €.
 export const EXTRA_THRESHOLD = 1500;
 export const CARE_EXTRA_THRESHOLD = 1500;
-// Roboti u Black Friday akciji (WYBOT S1, iGarden K40). Stalni članski popust na njih je 10 % kao na sve ostalo.
+// Roboti u Black Friday akciji (WYBOT S1, iGarden K40, BWT Cosmy 150/200/250, P500+, F1 RXT, Fairland Inverbot M60). Stalni članski popust na njih je 10 % kao na sve ostalo.
 export const ROBOT_BONUS = 0.05;
-export const ROBOT_BONUS_IDS = new Set(['vh-60WS1', 'vh-60K040']);
+export const ROBOT_BONUS_IDS = new Set(['vh-60WS1', 'vh-60K040', 'aq-M60', 'aq-COSMY150', 'aq-COSMY200', 'aq-COSMY250', 'aq-P500PLUS', 'aq-F1RXT']);
 export const hasRobotBonus = (id?: string): boolean => !!id && ROBOT_BONUS_IDS.has(id);
 
 // ---------- Black Friday (samo uz uplatu na račun, ne PayPal; do isteka zaliha) ----------
