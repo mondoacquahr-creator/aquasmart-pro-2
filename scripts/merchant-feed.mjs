@@ -24,7 +24,7 @@ export function merchantAssets(products) {
   const feed = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"><channel><title>Mondo Acqua Pool Care</title><link>${SHOP_ORIGIN}/?stranica=webshop</link><description>Proizvodi za bazene i spa – maloprodajne cijene s PDV-om.</description>\n${items}\n</channel></rss>\n`;
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[`${SHOP_ORIGIN}/?stranica=webshop`, ...products.map(productUrl)].map(url => `<url><loc>${escapeXml(url)}</loc></url>`).join('\n')}\n</urlset>\n`;
   return [
-    {fileName:'_redirects', source: products.filter(p => !p.id.startsWith('vg-') && !p.id.startsWith('vh-')).map(p => `/merchant-images/${p.id}.jpg /.netlify/images?url=${encodeURIComponent(p.sourceImageUrl || p.imageUrl)}&fm=jpg&q=90 200`).join('\n') + '\n'},
+    {fileName:'_redirects', source: products.filter(p => !/^(vg|vh|aq|spa)-/.test(p.id)).map(p => `/merchant-images/${p.id}.jpg /.netlify/images?url=${encodeURIComponent(p.sourceImageUrl || p.imageUrl)}&fm=jpg&q=90 200`).join('\n') + '\n'},
     {fileName:'google-products.xml',source:feed},
     {fileName:'sitemap.xml',source:sitemap},
     // Proizvodi na www.mondo-acqua.hr: zasebna karta za glavnu domenu (www robots.txt je upućuje)
