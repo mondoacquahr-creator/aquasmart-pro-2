@@ -2290,5 +2290,177 @@
     "po dužnom metru"
    ]
   ]
+ },
+ "vh-931ES008": {
+  "description": "EasySalt je automatska jedinica za obradu bazenske vode elektrolizom soli, projektirana za stabilnu i učinkovitu proizvodnju klora pri niskoj radnoj razini saliniteta. Samočisteća elektrolitička ćelija od titana smanjuje taloženje kamenca, produljuje vijek trajanja ćelije i smanjuje potrebe za održavanjem. Jedinicom se upravlja putem Wi-Fi veze ili protokola MODBUS RS485, a pomoću beznaponskog kontakta jednostavno se integrira u nadređene sustave upravljanja bazenskom tehnologijom. Moguće je priključiti vanjsku dozirnu pumpu.",
+  "params": [
+   [
+    "Preporučeni volumen bazena",
+    "do 40 m³"
+   ],
+   [
+    "Optimalna razina soli",
+    "3–5 g/l"
+   ],
+   [
+    "Napajanje",
+    "230 V AC"
+   ],
+   [
+    "Elektrolitička ćelija",
+    "titanska, samočisteća"
+   ],
+   [
+    "Promjena polariteta",
+    "automatska, podesiva 1–10 h"
+   ],
+   [
+    "Mjerenje saliniteta",
+    "integrirano, točnost ±500 ppm"
+   ],
+   [
+    "Upravljanje i povezivanje",
+    "Wi-Fi, MODBUS RS485, beznaponski kontakt"
+   ],
+   [
+    "Vanjska dozirna pumpa",
+    "moguće priključiti"
+   ],
+   [
+    "Instalacija",
+    "jednostavna"
+   ]
+  ],
+  "source": "Vagner Pool",
+  "sourceUrl": "https://www.vagnerpool.hr/hr/obrada-slane-vode-fairland-easysalt-8-do-40-m3/"
+ },
+ "vh-931ES016": {
+  "description": "EasySalt je automatska jedinica za obradu bazenske vode elektrolizom soli, projektirana za stabilnu i učinkovitu proizvodnju klora pri niskoj radnoj razini saliniteta. Samočisteća elektrolitička ćelija od titana smanjuje taloženje kamenca, produljuje vijek trajanja ćelije i smanjuje potrebe za održavanjem. Jedinicom se upravlja putem Wi-Fi veze ili protokola MODBUS RS485, a pomoću beznaponskog kontakta jednostavno se integrira u nadređene sustave upravljanja bazenskom tehnologijom. Moguće je priključiti vanjsku dozirnu pumpu.",
+  "params": [
+   [
+    "Preporučeni volumen bazena",
+    "do 70 m³"
+   ],
+   [
+    "Optimalna razina soli",
+    "3–5 g/l"
+   ],
+   [
+    "Napajanje",
+    "230 V AC"
+   ],
+   [
+    "Elektrolitička ćelija",
+    "titanska, samočisteća"
+   ],
+   [
+    "Promjena polariteta",
+    "automatska, podesiva 1–10 h"
+   ],
+   [
+    "Mjerenje saliniteta",
+    "integrirano, točnost ±500 ppm"
+   ],
+   [
+    "Upravljanje i povezivanje",
+    "Wi-Fi, MODBUS RS485, beznaponski kontakt"
+   ],
+   [
+    "Vanjska dozirna pumpa",
+    "moguće priključiti"
+   ],
+   [
+    "Instalacija",
+    "jednostavna"
+   ]
+  ],
+  "source": "Vagner Pool",
+  "sourceUrl": "https://www.vagnerpool.hr/hr/obrada-slane-vode-fairland-easysalt-16-do-70-m3/"
+ },
+ "vh-931ES026": {
+  "description": "EasySalt je automatska jedinica za obradu bazenske vode elektrolizom soli, projektirana za stabilnu i učinkovitu proizvodnju klora pri niskoj radnoj razini saliniteta. Samočisteća elektrolitička ćelija od titana smanjuje taloženje kamenca, produljuje vijek trajanja ćelije i smanjuje potrebe za održavanjem. Jedinicom se upravlja putem Wi-Fi veze ili protokola MODBUS RS485, a pomoću beznaponskog kontakta jednostavno se integrira u nadređene sustave upravljanja bazenskom tehnologijom. Moguće je priključiti vanjsku dozirnu pumpu.",
+  "params": [
+   [
+    "Preporučeni volumen bazena",
+    "do 100 m³"
+   ],
+   [
+    "Optimalna razina soli",
+    "3–5 g/l"
+   ],
+   [
+    "Napajanje",
+    "230 V AC"
+   ],
+   [
+    "Elektrolitička ćelija",
+    "titanska, samočisteća"
+   ],
+   [
+    "Promjena polariteta",
+    "automatska, podesiva 1–10 h"
+   ],
+   [
+    "Mjerenje saliniteta",
+    "integrirano, točnost ±500 ppm"
+   ],
+   [
+    "Upravljanje i povezivanje",
+    "Wi-Fi, MODBUS RS485, beznaponski kontakt"
+   ],
+   [
+    "Vanjska dozirna pumpa",
+    "moguće priključiti"
+   ],
+   [
+    "Instalacija",
+    "jednostavna"
+   ]
+  ],
+  "source": "Vagner Pool",
+  "sourceUrl": "https://www.vagnerpool.hr/hr/obrada-slane-vode-fairland-easysalt-26-do-100-m3/"
+ },
+ "vh-931ES036": {
+  "description": "EasySalt je automatska jedinica za obradu bazenske vode elektrolizom soli, projektirana za stabilnu i učinkovitu proizvodnju klora pri niskoj radnoj razini saliniteta. Samočisteća elektrolitička ćelija od titana smanjuje taloženje kamenca, produljuje vijek trajanja ćelije i smanjuje potrebe za održavanjem. Jedinicom se upravlja putem Wi-Fi veze ili protokola MODBUS RS485, a pomoću beznaponskog kontakta jednostavno se integrira u nadređene sustave upravljanja bazenskom tehnologijom. Moguće je priključiti vanjsku dozirnu pumpu.",
+  "params": [
+   [
+    "Preporučeni volumen bazena",
+    "do 135 m³"
+   ],
+   [
+    "Optimalna razina soli",
+    "3–5 g/l"
+   ],
+   [
+    "Napajanje",
+    "230 V AC"
+   ],
+   [
+    "Elektrolitička ćelija",
+    "titanska, samočisteća"
+   ],
+   [
+    "Promjena polariteta",
+    "automatska, podesiva 1–10 h"
+   ],
+   [
+    "Mjerenje saliniteta",
+    "integrirano, točnost ±500 ppm"
+   ],
+   [
+    "Upravljanje i povezivanje",
+    "Wi-Fi, MODBUS RS485, beznaponski kontakt"
+   ],
+   [
+    "Vanjska dozirna pumpa",
+    "moguće priključiti"
+   ],
+   [
+    "Instalacija",
+    "jednostavna"
+   ]
+  ],
+  "source": "Vagner Pool",
+  "sourceUrl": "https://www.vagnerpool.hr/hr/obrada-slane-vode-fairland-easysalt-36-do-135-m3/"
  }
 }
