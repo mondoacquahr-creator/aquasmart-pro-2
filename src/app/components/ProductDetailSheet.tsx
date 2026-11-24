@@ -130,7 +130,7 @@ export function ProductDetailSheet({ product, qty, member, care, onClose, onRegi
                     </p>
                   </>
                 )}
-                <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>S PDV-om · Cijena na dan {anchorDateLabel(product.category)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
+                <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>S PDV-om · Cijena na dan {anchorDateLabel(product.category, product.id)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
               </div>
               {qty > 0 ? (
                 <div className="flex items-center rounded-full overflow-hidden flex-shrink-0" style={{ border: T.cardBorder, background: T.inputBg }}>

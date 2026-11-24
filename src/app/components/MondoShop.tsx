@@ -781,7 +781,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
               <div>
                 <p className="font-black tracking-tight leading-none" style={{ color: '#08101A', fontSize: 34 }}>BLACK FRIDAY</p>
                 <p className="mt-2 font-semibold" style={{ color: '#002750', fontSize: 17 }}>
-                  −25 % na dozirne sustave · −15 % na robote WYBOT S1 i iGarden K40
+                  −25 % na dozirne sustave i EasySalt elektrolizu · −15 % na robote WYBOT S1 i iGarden K40
                 </p>
                 <p className="mt-1 text-sm" style={{ color: '#002750' }}>
                   {bfMembersOpen() ? <>Za prvih {BF_SLOTS_TOTAL} novih članova – <b>još {bfSlotsLeft} mjesta</b>. </> : null}
@@ -1065,7 +1065,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                         </p>
                       </>
                     )}
-                    <p className="text-[10px] mt-0.5 leading-snug" style={{ color: T.faint }}>Cijena na dan {anchorDateLabel(product.category)}:<br />{fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
+                    <p className="text-[10px] mt-0.5 leading-snug" style={{ color: T.faint }}>Cijena na dan {anchorDateLabel(product.category, product.id)}:<br />{fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
                   </div>
 
                   {/* Action */}
@@ -1147,7 +1147,7 @@ export function MondoShop({ onBack, onRegisterMember, onFinished }: MondoShopPro
                           </p>
                         </>
                       )}
-                      <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>Cijena na dan {anchorDateLabel(product.category)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
+                      <p className="text-[10px] mt-0.5" style={{ color: T.faint }}>Cijena na dan {anchorDateLabel(product.category, product.id)}: {fmtEUR(anchorPrice(product.id, product.priceEUR))}</p>
                     </div>
                     {ActionEl}
                   </div>

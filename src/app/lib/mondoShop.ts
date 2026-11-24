@@ -64,18 +64,20 @@ export const ROBOT_BONUS_IDS = new Set(['vh-60WS1', 'vh-60K040']);
 export const hasRobotBonus = (id?: string): boolean => !!id && ROBOT_BONUS_IDS.has(id);
 
 // ---------- Black Friday (samo uz uplatu na račun, ne PayPal; do isteka zaliha) ----------
-// Dozirni sustavi Vagner: 10 % za sve, 25 % za članove. Roboti S1 i K40: 5 % za sve, 15 % za članove.
+// Dozirni sustavi Vagner i elektroliza EasySalt: 10 % za sve, 25 % za članove. Roboti S1 i K40: 5 % za sve, 15 % za članove.
 export const BLACK_FRIDAY_END = new Date('2026-12-01T00:00:00+01:00');
 export const isBlackFriday = (now = new Date()): boolean => now < BLACK_FRIDAY_END;
 // Članska Black Friday cijena vrijedi za prvih 20 plaćenih narudžbi novih članova. Broj preostalih mjesta
 // Mondo ručno mijenja u bazi (kv ključ "shop:details:_bf" → { "left": N }); kad je 0, članovi imaju klasičnih 10 %.
 export const BF_SLOTS_TOTAL = 20;
+// Slana elektroliza Fairland EasySalt ulazi u akciju kao dozirni sustavi (25 % članovi, 10 % svi).
+export const EASYSALT_IDS = new Set(['vh-931ES008', 'vh-931ES016', 'vh-931ES026', 'vh-931ES036']);
 export let bfSlotsLeft = BF_SLOTS_TOTAL;
 export const bfMembersOpen = (): boolean => bfSlotsLeft > 0;
 export const bfRate = (p: { id: string; category: string } | undefined, member: boolean): number => {
   if (!p || !isBlackFriday()) return 0;
   if (member && !bfMembersOpen()) return 0;
-  if (p.id.startsWith('vg-') && p.category === 'Doziranje') return member ? 0.25 : 0.10;
+  if ((p.id.startsWith('vg-') && p.category === 'Doziranje') || EASYSALT_IDS.has(p.id)) return member ? 0.25 : 0.10;
   if (hasRobotBonus(p.id)) return member ? 0.15 : 0.05;
   return 0;
 };
