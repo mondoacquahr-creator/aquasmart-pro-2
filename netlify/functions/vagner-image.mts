@@ -1,9 +1,11 @@
-// Slike za Google Merchant Center za proizvode "vh-" (Vagner Pool).
+// Slike za Google Merchant Center za proizvode "vh-" (Vagner Pool), "aq-" (Aquachem) i "spa-" (Astral Spa).
 // Vagnerove slike su AVIF i ne daju se Netlifyjevom CDN-u, pa ih ovdje dohvaćamo i pretvaramo u JPEG.
+// Google od 31. 1. 2027. traži najmanje 500 × 500 px, pa svaku sliku smještamo na bijelo platno 1000 × 1000.
 import sharp from 'sharp';
 import { VAGNER_EQUIPMENT } from '../../src/app/lib/vagnerEquipment';
+import { SPA_PRODUCTS } from '../../src/app/lib/spaProducts';
 
-const SRC = new Map(VAGNER_EQUIPMENT.filter((p) => p.id.startsWith('vh-')).map((p) => [p.id, p.imageUrl]));
+const SRC = new Map([...VAGNER_EQUIPMENT, ...SPA_PRODUCTS].filter((p) => /^(vh|aq|spa)-/.test(p.id)).map((p) => [p.id, p.imageUrl]));
 
 export default async (req: Request) => {
   const file = new URL(req.url).pathname.split('/').pop() || '';
@@ -11,9 +13,11 @@ export default async (req: Request) => {
   const src = SRC.get(id);
   if (!src) return new Response('Not found', { status: 404 });
   // Vagner uz svaku AVIF sliku ima i JPG (ponekad PNG) istog imena – AVIF ovdje ne možemo dekodirati.
+  // Ostali izvori (Aquachem, AstralPool) daju JPG/PNG/WebP pa se dohvaćaju izravno.
+  const isAvif = /\.avif$/i.test(src);
   const base = src.replace(/\.avif$/i, '');
   let buf: Buffer | null = null;
-  for (const ext of ['.jpg', '.png']) {
+  for (const ext of isAvif ? ['.jpg', '.png'] : ['']) {
     const res = await fetch(encodeURI(base + ext), {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36',
@@ -27,7 +31,8 @@ export default async (req: Request) => {
   const img = sharp(buf);
   const jpg = await img
     .flatten({ background: '#ffffff' })
-    .resize(1000, 1000, { fit: 'inside', withoutEnlargement: true })
+    .resize(900, 900, { fit: 'contain', background: '#ffffff' })
+    .extend({ top: 50, bottom: 50, left: 50, right: 50, background: '#ffffff' })
     .jpeg({ quality: 88 })
     .toBuffer();
   return new Response(jpg, {
@@ -39,4 +44,4 @@ export default async (req: Request) => {
   });
 };
 
-export const config = { path: '/merchant-images/vh-*' };
+export const config = { path: ['/merchant-images/vh-*', '/merchant-images/aq-*', '/merchant-images/spa-*'] };
