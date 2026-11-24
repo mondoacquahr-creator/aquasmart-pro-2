@@ -43,7 +43,6 @@ const ROWS: [string, EquipmentCategory, string, string, number, string, string][
   ["vg-9202068NK", "Doziranje", "Dozirna stanica VA DOS BASIC OXY – pH + aktivni kisik", "komplet", 778.27, "montazva-dos-basicdisplayoxy.avif", "Za bazene bez klora"],
   ["vg-9202061NK", "Doziranje", "Dozirna stanica VA DOS BASIC CHLOR – pH + Redox", "komplet", 898.53, "va-dos-basicdisplaymontaz.avif", "Automatsko doziranje pH i klora"],
   ["vg-9202064NK", "Doziranje", "Dozirna stanica VA DOS BASIC SALT – pH + Redox", "komplet", 933.95, "va-dos-basicdisplaymontaz.avif", "pH i Redox uz slanu elektrolizu"],
-  ["vg-D520010090", "Doziranje", "Dinotec YELLOW Kit 1 – pH/Redox, 2 dozirne pumpe", "komplet", 1883.77, "Dinotec_yellow.avif", "Profesionalna regulacija pH i klora"],
   ["vg-92020661NK", "Doziranje", "Dozirna stanica VA DOS EXACT – pH + slobodni klor", "komplet", 2187.45, "va-dos-basicdisplaymontaz.avif", "Mjeri stvarni slobodni klor (amperometrijski)"],
   ["vg-931010N", "Elektroliza", "Slana elektroliza VA SALT C10", "do 25 m³", 987.17, "VA%20SALT_VA-new%202021.avif", "Proizvodnja klora iz soli, digitalni zaslon"],
   ["vg-931015N", "Elektroliza", "Slana elektroliza VA SALT C15", "do 50 m³", 1046.3, "VA%20SALT_VA-new%202021.avif", "Proizvodnja klora iz soli, digitalni zaslon"],

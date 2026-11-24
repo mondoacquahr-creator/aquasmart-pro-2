@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 
 const BRANDS = ['Ivero', 'AstralPool', 'Astral', 'Badu', 'Zodiac', 'Fairland', 'WYBOT', 'Tornado', 'AVfol', 'Alkorplan', 'Lovibond',
-  'eXact', 'PoolCheck', 'Blue Lagoon', 'Blue Connect', 'Dinotec', 'SeaMAID', 'Scrubby', 'Voltera', 'Rapid', 'NORM', 'GeoBubble', 'Revolution', 'EN-VIE'];
+  'eXact', 'PoolCheck', 'Blue Lagoon', 'Blue Connect', 'SeaMAID', 'Scrubby', 'Voltera', 'Rapid', 'NORM', 'GeoBubble', 'Revolution', 'EN-VIE'];
 const brandOf = (p) => {
   if (!p.id.startsWith('vg-') && !p.id.startsWith('vh-')) return /astral|spa/i.test(p.name + p.category) ? 'AstralPool' : 'Ivero';
   const hit = BRANDS.find((b) => new RegExp(`\\b${b.replace('-', '\\-')}\\b`, 'i').test(p.name));
