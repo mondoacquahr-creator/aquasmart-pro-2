@@ -1387,34 +1387,6 @@
   "description": "Bežični robot iz serije iGarden K-AI za privatne bazene, s pametnom navigacijom i AI funkcijama za ciljano čišćenje. Čisti dno, stijenke i liniju vode. Filtersku košaru treba isprati nakon svakog ciklusa.",
   "source": "Vagner Pool"
  },
- "vh-60642": {
-  "description": "Automatski robotski usisavač za privatne bazene bilo kojeg oblika, do 15 × 6 m. Četiri PVA četke i dodatna vibrirajuća PVC četka na dnu čiste temeljito i na skliskim površinama poput polipropilena ili mozaika. Tijekom rada svijetli LED rasvjetom.",
-  "source": "Vagner Pool",
-  "params": [
-   [
-    "Bazen",
-    "do 15 × 6 m"
-   ],
-   [
-    "Četke",
-    "4 × PVA + vibrirajuća PVC"
-   ]
-  ]
- },
- "vh-60643": {
-  "description": "Automatski robotski usisavač za privatne bazene bilo kojeg oblika, do 15 × 6 m. Četiri PVA četke i dodatna vibrirajuća PVC četka na dnu čiste temeljito i na skliskim površinama poput polipropilena ili mozaika. Tijekom rada svijetli LED rasvjetom.",
-  "source": "Vagner Pool",
-  "params": [
-   [
-    "Bazen",
-    "do 15 × 6 m"
-   ],
-   [
-    "Četke",
-    "4 × PVA + vibrirajuća PVC"
-   ]
-  ]
- },
  "vh-7012": {
   "description": "Klasične ljestve oblika Standard. Ljestve od nehrđajućeg čelika AISI 304 sa sidrištima za ugradnju u rub bazena. Nosači i dvostruka gazišta mogu se dokupiti. Važno: AISI 304 se ne preporučuje za bazene sa slanom elektrolizom – za njih birajte izvedbu AISI 316. Sav inox pribor mora biti uzemljen.",
   "source": "Vagner Pool",

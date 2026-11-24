@@ -2,7 +2,7 @@
 // Izvori: webshop (SHOP_PRODUCTS) + bazeni i usluge s glavne stranice (public/mondo-web/index.html).
 import fs from 'node:fs';
 
-const BRANDS = ['Ivero', 'AstralPool', 'Astral', 'Badu', 'Zodiac', 'Fairland', 'WYBOT', 'Tornado', 'AVfol', 'Alkorplan', 'Lovibond',
+const BRANDS = ['Ivero', 'AstralPool', 'Astral', 'Badu', 'Zodiac', 'Fairland', 'WYBOT', 'AVfol', 'Alkorplan', 'Lovibond',
   'eXact', 'PoolCheck', 'Blue Lagoon', 'Blue Connect', 'BWT', 'SeaMAID', 'Scrubby', 'Voltera', 'Rapid', 'NORM', 'GeoBubble', 'Revolution', 'EN-VIE'];
 const brandOf = (p) => {
   if (!p.id.startsWith('vg-') && !p.id.startsWith('vh-') && !p.id.startsWith('aq-')) return /astral|spa/i.test(p.name + p.category) ? 'AstralPool' : 'Ivero';

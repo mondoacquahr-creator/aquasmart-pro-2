@@ -150,8 +150,6 @@ const ROWS: [string, EquipmentCategory, string, string, number, string, string][
   ["aq-COSMY250", "Robotski usisavači", "Robotski usisavač BWT Cosmy 250", "bazeni do 12 m · kabel 18 m", 1149.00, "https://d2xfa3et54gu2o.cloudfront.net/webshop.aquachem.hr/uploads/2025/08/cosmy-250-m-1.webp", "Aplikacija, filter 100 mic, kolica za transport"],
   ["aq-P500PLUS", "Robotski usisavači", "Robotski usisavač BWT P500+", "bazeni do 12 m · kabel 18 m", 1329.00, "https://d2xfa3et54gu2o.cloudfront.net/webshop.aquachem.hr/uploads/2025/08/1018200_bwt_robot_electrique_p500lite-1_retouche-cable.jpg", "Usis 19 m³/h, 4D mikrofibra filter, kolica"],
   ["aq-F1RXT", "Robotski usisavači", "Robotski usisavač BWT F1 RXT", "bazeni do 18 m · kabel 23 m", 1750.00, "https://d2xfa3et54gu2o.cloudfront.net/webshop.aquachem.hr/uploads/2025/08/f1-rxt_robot-electrique_2025.jpg", "Premium aplikacija, daljinski, Turbo, LED rasvjeta"],
-  ["vh-60642", "Robotski usisavači", "Robotski usisavač Tornado D500 Lite", "bazeni do 15 × 6 m", 971.78, HR + "d500liteweb.avif", "Kabel 16 m, čisti dno i stijenke"],
-  ["vh-60643", "Robotski usisavači", "Robotski usisavač Tornado D600", "bazeni do 15 × 6 m", 1192.45, HR + "d600web.avif", "Kabel 18 m, upravljanje aplikacijom"],
   ["vh-7012", "Ljestve", "Ljestve Standard, nehrđajući čelik, 2 gazišta", "AISI 304 · sa sidrištem", 272.01, HR + "826297268.avif", "Za betonske i folijske bazene"],
   ["vh-7013", "Ljestve", "Ljestve Standard, nehrđajući čelik, 3 gazišta", "AISI 304 · sa sidrištem", 298.13, HR + "3495543139.avif", "Za betonske i folijske bazene"],
   ["vh-7014", "Ljestve", "Ljestve Standard, nehrđajući čelik, 4 gazišta", "AISI 304 · sa sidrištem", 354.36, HR + "7014.avif", "Za dublje bazene"],
