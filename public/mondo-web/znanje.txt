@@ -737,6 +737,22 @@ Slana elektroliza VA SALT SMART C25 + pH sonda (do 125 m³): 2.174,70 €
 Slana elektroliza Zodiac Ei SALT 12 (do 50 m³): 1.709,78 €
 Slana elektroliza Zodiac Ei SALT 21 (do 90 m³): 1.970,94 €
 
+[Oprema – Robotski usisavači]
+Baterijski robot Fairland iGarden K-AI 70 (bežični): 1.135,34 €
+Baterijski robot Fairland iGarden K40 (bežični): 642,46 €
+Baterijski robot Fairland Inverbot M60 (bežični · bazeni do 20 m): 936,25 €
+Baterijski robot Fairland XA20 (bazeni do 6 × 10 m): 329,60 €
+Baterijski robot WYBOT C1 PRO (bežični): 567,79 €
+Baterijski robot WYBOT F1 (bežični): 428,10 €
+Baterijski robot WYBOT S1 (bežični): 749,98 €
+Robotski usisavač BWT Cosmy 150 (bazeni do 10 m · kabel 16 m): 1.123,75 €
+Robotski usisavač BWT Cosmy 200 (bazeni do 12 m · kabel 16 m): 1.248,75 €
+Robotski usisavač BWT Cosmy 250 (bazeni do 12 m · kabel 18 m): 1.436,25 €
+Robotski usisavač BWT F1 RXT (bazeni do 18 m · kabel 23 m): 2.187,50 €
+Robotski usisavač BWT P500+ (bazeni do 12 m · kabel 18 m): 1.661,25 €
+Robotski usisavač Tornado D500 Lite (bazeni do 15 × 6 m): 1.214,72 €
+Robotski usisavač Tornado D600 (bazeni do 15 × 6 m): 1.490,56 €
+
 [Oprema – Testiranje]
 Blue Lagoon – test trakice za bakar (50 kom): 33,29 €
 Bluetooth tester eXact pH+ – 5 u 1, Multi KIT (komplet): 716,35 €

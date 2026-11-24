@@ -24,6 +24,8 @@ export interface ProductDetails {
   params?: [string, string][];
   source?: string;
   sourceUrl?: string;
+  // Dokumenti proizvođača (upute za uporabu, brošura) – [naziv, poveznica na PDF].
+  docs?: [string, string][];
 }
 
 let detailsPromise: Promise<Record<string, ProductDetails>> | null = null;
@@ -49,7 +51,7 @@ export function loadProductDetails(): Promise<Record<string, ProductDetails>> {
   return detailsPromise;
 }
 
-export const isEquipment = (id: string): boolean => id.startsWith('vg-');
+export const isEquipment = (id: string): boolean => id.startsWith('vg-') || id.startsWith('vh-') || id.startsWith('aq-');
 
 export const MEMBER_DISCOUNT = 0.10;
 export const CARE_DISCOUNT = 0.10;

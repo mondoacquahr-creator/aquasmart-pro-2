@@ -2462,5 +2462,436 @@
   ],
   "source": "Vagner Pool",
   "sourceUrl": "https://www.vagnerpool.hr/hr/obrada-slane-vode-fairland-easysalt-36-do-135-m3/"
+ },
+ "aq-M60": {
+  "description": "INVERBOT M-60 je bežični robotski čistač za privatne bazene duljine do 20 metara i površine do 100 m². Potpuno inverterska tehnologija, integrirani žiroskop i šest osjetnika omogućuju inteligentno čišćenje koje štedi vrijeme i energiju.\nSustav kretanja „3D S” analizira oblik bazena i optimizira putanju za temeljito čišćenje poda, zidova i vodene linije. Bežični rad uklanja potrebu za kabelima, a širina zahvata od 44 cm omogućuje brz rad.\nKljučne prednosti: potpuno bežičan rad, napredno 3D S kretanje, inverterska tehnologija, višezonsko čišćenje (pod, zidovi, vodena linija), AI tajmer za automatsko planiranje i ponavljanje ciklusa, do 6 sati rada s jednim punjenjem.",
+  "warning": "Nije pogodan za čišćenje zidova bazena obloženih keramikom i staklenim mozaikom.",
+  "params": [
+   [
+    "Namjena",
+    "privatni bazeni do 20 m dužine / 100 m²"
+   ],
+   [
+    "Način rada",
+    "potpuno bežičan"
+   ],
+   [
+    "Navigacija",
+    "žiroskop + 6 senzora"
+   ],
+   [
+    "Kretanje",
+    "inteligentna 3D S putanja"
+   ],
+   [
+    "Zahvat",
+    "44 cm"
+   ],
+   [
+    "Trajanje ciklusa",
+    "0,5 / 1 / 2 sata"
+   ],
+   [
+    "Automatsko pokretanje",
+    "ponavljanje svakih 24 / 48 / 72 sata"
+   ],
+   [
+    "Radno vrijeme",
+    "do 6 sati s jednim punjenjem"
+   ],
+   [
+    "Upravljanje",
+    "automatski AI tajmer"
+   ],
+   [
+    "Težina",
+    "12 kg"
+   ]
+  ],
+  "source": "Fairland, distributer Aquachem d.o.o.",
+  "sourceUrl": "https://webshop.aquachem.hr/proizvod/21257-robot-baterijski-za-ciscenje-bazena-fairland-inverbot-m60/",
+  "docs": [
+   [
+    "Upute za uporabu (PDF, hrvatski)",
+    "https://d2xfa3et54gu2o.cloudfront.net/webshop.aquachem.hr/uploads/2025/08/inverbot-user-manual_hr-hr.pdf"
+   ],
+   [
+    "Brošura (PDF, hrvatski)",
+    "https://d2xfa3et54gu2o.cloudfront.net/webshop.aquachem.hr/uploads/2025/08/fairland_inverbot_robot-brosura-hrv.pdf"
+   ]
+  ]
+ },
+ "aq-COSMY150": {
+  "description": "COSMY 150 je kompaktan i lagan robotski čistač bazena za bazene do 10 metara dužine, neovisno o obliku i vrsti obloge. Pametna navigacija s integriranim žiroskopom vodi ga precizno, a temeljito čisti dno, zidove i vodenu liniju.\nPogon s dvostupanjskim planetarnim zupčanicima i dvostrukim motorima osigurava izvrsnu trakciju i stabilnost, a filter košara finoće 150 mikrona učinkovito skuplja nečistoće. Osnovni model bez aplikacije, s jednim ciklusom čišćenja od 1,5 sata.",
+  "params": [
+   [
+    "Namjena",
+    "bazeni do 10 m, svi oblici i obloge"
+   ],
+   [
+    "Područje čišćenja",
+    "dno, zidovi, vodena linija"
+   ],
+   [
+    "Ciklus čišćenja",
+    "1,5 sata"
+   ],
+   [
+    "Navigacija",
+    "pametna navigacija + žiroskop"
+   ],
+   [
+    "Duljina kabela",
+    "16 m"
+   ],
+   [
+    "Četka",
+    "1 PVC četka"
+   ],
+   [
+    "Usisna snaga",
+    "15 m³/h"
+   ],
+   [
+    "Filter",
+    "jednoslojni, 150 mikrona, pristup odozgo"
+   ],
+   [
+    "Indikator punog filtera",
+    "ne"
+   ],
+   [
+    "Napajanje",
+    "< 29 V"
+   ],
+   [
+    "Potrošnja",
+    "< 150 W"
+   ],
+   [
+    "Dimenzije (Š × V × D)",
+    "365 × 200 × 395 mm"
+   ],
+   [
+    "Težina",
+    "5,75 kg"
+   ],
+   [
+    "Kolica za transport",
+    "ne"
+   ],
+   [
+    "Jamstvo",
+    "2 godine"
+   ]
+  ],
+  "source": "BWT, distributer Aquachem d.o.o.",
+  "sourceUrl": "https://webshop.aquachem.hr/proizvod/19998-robot-cosmy-150/",
+  "docs": [
+   [
+    "Upute za uporabu (PDF, hrvatski)",
+    "https://d2xfa3et54gu2o.cloudfront.net/webshop.aquachem.hr/uploads/2025/08/uputstva-za-upotrebu-hr-cosmy-the-bot.pdf"
+   ]
+  ]
+ },
+ "aq-COSMY200": {
+  "description": "COSMY 200 je lagan i učinkovit robotski čistač za bazene svih oblika i obloga do 12 metara duljine. Pametna navigacija i žiroskop vode ga precizno po dnu, zidovima i vodenoj liniji.\nPogon s dvostupanjskim planetarnim zupčanicima i dvostrukim motorima daje stabilnost i precizno upravljanje, a filter košara (150 mikrona) učinkovito skuplja nečistoće. Upravlja se mobilnom aplikacijom (SPS Full App) s tri ciklusa čišćenja (1,5 / 2 / 2,5 sata), a indikator punog filtera olakšava održavanje.",
+  "params": [
+   [
+    "Namjena",
+    "bazeni do 12 m, svi oblici i obloge"
+   ],
+   [
+    "Područje čišćenja",
+    "dno, zidovi, vodena linija"
+   ],
+   [
+    "Ciklusi čišćenja",
+    "1,5 / 2 / 2,5 sata"
+   ],
+   [
+    "Upravljanje",
+    "aplikacija (SPS Full App)"
+   ],
+   [
+    "Navigacija",
+    "pametna navigacija + žiroskop"
+   ],
+   [
+    "Duljina kabela",
+    "16 m"
+   ],
+   [
+    "Četka",
+    "1 PVC četka"
+   ],
+   [
+    "Usisna snaga",
+    "15 m³/h"
+   ],
+   [
+    "Filter",
+    "150 mikrona, pristup odozgo"
+   ],
+   [
+    "Indikator punog filtera",
+    "da"
+   ],
+   [
+    "Napajanje",
+    "< 29 V"
+   ],
+   [
+    "Potrošnja",
+    "< 150 W"
+   ],
+   [
+    "Dimenzije (Š × V × D)",
+    "365 × 200 × 395 mm"
+   ],
+   [
+    "Težina",
+    "5,75 kg"
+   ],
+   [
+    "Kolica za transport",
+    "ne"
+   ],
+   [
+    "Jamstvo",
+    "2 godine"
+   ]
+  ],
+  "source": "BWT, distributer Aquachem d.o.o.",
+  "sourceUrl": "https://webshop.aquachem.hr/proizvod/19997-robot-cosmy-200/",
+  "docs": [
+   [
+    "Upute za uporabu (PDF, hrvatski)",
+    "https://d2xfa3et54gu2o.cloudfront.net/webshop.aquachem.hr/uploads/2025/08/uputstva-za-upotrebu-hr-cosmy-the-bot-1.pdf"
+   ]
+  ]
+ },
+ "aq-COSMY250": {
+  "description": "COSMY 250 je kompaktan robotski čistač za bazene svih oblika i obloga do 12 metara duljine. Pametna navigacija sa žiroskopom temeljito čisti dno, zidove i vodenu liniju.\nSa samo 5,75 kg lako se rukuje, a pogon s dvostupanjskim planetarnim zupčanicima i dvostrukim motorima osigurava izvrsno prianjanje i precizno manevriranje. Upravlja se aplikacijom (SPS Full App) s tri ciklusa čišćenja (1,5 / 2 / 2,5 sata) i indikatorom punog filtera. Kolica za transport i skladištenje su uključena.",
+  "params": [
+   [
+    "Namjena",
+    "bazeni do 12 m, svi oblici i obloge"
+   ],
+   [
+    "Područje čišćenja",
+    "dno, zidovi, vodena linija"
+   ],
+   [
+    "Ciklusi čišćenja",
+    "1,5 / 2 / 2,5 sata"
+   ],
+   [
+    "Upravljanje",
+    "aplikacija (SPS Full App)"
+   ],
+   [
+    "Navigacija",
+    "pametna navigacija + žiroskop"
+   ],
+   [
+    "Duljina kabela",
+    "18 m"
+   ],
+   [
+    "Četka",
+    "PVC četka"
+   ],
+   [
+    "Usisna snaga",
+    "15 m³/h"
+   ],
+   [
+    "Filter",
+    "jednoslojni, 100 mikrona, pristup odozgo"
+   ],
+   [
+    "Indikator punog filtera",
+    "da"
+   ],
+   [
+    "Napajanje",
+    "< 29 V"
+   ],
+   [
+    "Potrošnja",
+    "< 150 W"
+   ],
+   [
+    "Dimenzije (Š × V × D)",
+    "365 × 200 × 395 mm"
+   ],
+   [
+    "Težina",
+    "5,75 kg"
+   ],
+   [
+    "Kolica za transport",
+    "uključena"
+   ],
+   [
+    "Jamstvo",
+    "2 godine"
+   ]
+  ],
+  "source": "BWT, distributer Aquachem d.o.o.",
+  "sourceUrl": "https://webshop.aquachem.hr/proizvod/19589-robot-cosmy-250/",
+  "docs": [
+   [
+    "Upute za uporabu (PDF, hrvatski)",
+    "https://d2xfa3et54gu2o.cloudfront.net/webshop.aquachem.hr/uploads/2025/08/uputstva-za-upotrebu-hr-cosmy-the-bot-2.pdf"
+   ]
+  ]
+ },
+ "aq-P500PLUS": {
+  "description": "Robotski čistač P500+ dizajniran je za temeljito čišćenje bazena svih oblika i obloga do 12 metara dužine: dna, zidova i vodene linije u jednom ciklusu od 2 sata. Pametna navigacija sa žiroskopom osigurava optimalno kretanje i potpunu pokrivenost.\nZahvaljujući Breezer pogonskoj tehnologiji i Dual Drive sustavu kreće se precizno i učinkovito. Snažan usis od 19 m³/h i vrlo fini 4D filter od mikrofibre daju kristalno čistu vodu. Prozirni poklopac filtera omogućuje brzu provjeru, a kolica za transport i skladištenje su uključena.",
+  "params": [
+   [
+    "Namjena",
+    "bazeni do 12 m, svi oblici i obloge"
+   ],
+   [
+    "Područje čišćenja",
+    "dno, zidovi, vodena linija"
+   ],
+   [
+    "Trajanje ciklusa",
+    "2 sata"
+   ],
+   [
+    "Navigacija",
+    "pametna navigacija + žiroskop"
+   ],
+   [
+    "Pogon",
+    "Dual Drive + Breezer"
+   ],
+   [
+    "Četke",
+    "4 PVA kotača + rotirajuća vibrirajuća PVC četka"
+   ],
+   [
+    "Filter",
+    "4D mikrofibra, pristup odozgo, prozirni poklopac"
+   ],
+   [
+    "Duljina kabela",
+    "18 m, rotirajuća spojnica protiv zaplitanja"
+   ],
+   [
+    "Usisna snaga",
+    "19 m³/h"
+   ],
+   [
+    "Napajanje",
+    "< 29 V"
+   ],
+   [
+    "Potrošnja",
+    "< 150 W"
+   ],
+   [
+    "Dimenzije (Š × V × D)",
+    "391 × 430 × 234 mm"
+   ],
+   [
+    "Težina",
+    "11 kg"
+   ],
+   [
+    "Upravljanje aplikacijom",
+    "ne"
+   ],
+   [
+    "Indikator punog filtera",
+    "ne"
+   ],
+   [
+    "Kolica za transport",
+    "uključena"
+   ],
+   [
+    "Jamstvo",
+    "3 godine + 1 godina uz online registraciju"
+   ]
+  ],
+  "source": "BWT, distributer Aquachem d.o.o.",
+  "sourceUrl": "https://webshop.aquachem.hr/proizvod/19587-robot-p500/",
+  "docs": [
+   [
+    "Upute za uporabu P500 / P600 (PDF, hrvatski)",
+    "https://d2xfa3et54gu2o.cloudfront.net/webshop.aquachem.hr/uploads/2025/12/uputstva-hr-p500_p600.pdf"
+   ]
+  ]
+ },
+ "aq-F1RXT": {
+  "description": "F1 RXT je vrhunski automatski čistač za bazene do 18 metara bilo kojeg oblika i obloge. Pametna navigacija, žiroskop i 4D filter osiguravaju precizno i učinkovito čišćenje poda, zidova i vodene linije.\nPremium aplikacija i daljinski upravljač omogućuju odabir ciklusa (1,5 / 2 / 2,5 sata), odgođeni početak, Turbo način rada i upravljanje LED rasvjetom. Kolica za transport i skladištenje su uključena.",
+  "params": [
+   [
+    "Namjena",
+    "bazeni do 18 m, svi oblici i obloge"
+   ],
+   [
+    "Područje čišćenja",
+    "pod, zidovi, vodena linija"
+   ],
+   [
+    "Ciklusi čišćenja",
+    "1,5 / 2 / 2,5 sata"
+   ],
+   [
+    "Navigacija",
+    "pametna navigacija + žiroskop"
+   ],
+   [
+    "Četke",
+    "4 PVA kotačića + rotirajuća PVC četka"
+   ],
+   [
+    "Filter",
+    "4D, vrlo fina mikrofibra, prozirni poklopac, pristup odozgo"
+   ],
+   [
+    "Indikator punog filtera",
+    "da"
+   ],
+   [
+    "Duljina kabela",
+    "23 m, rotirajuća spojnica"
+   ],
+   [
+    "Upravljanje",
+    "Premium aplikacija + daljinski upravljač"
+   ],
+   [
+    "Odgođeni početak",
+    "da"
+   ],
+   [
+    "Turbo način rada",
+    "da"
+   ],
+   [
+    "Upravljanje LED rasvjetom",
+    "da"
+   ],
+   [
+    "Kolica za transport",
+    "uključena"
+   ]
+  ],
+  "source": "BWT, distributer Aquachem d.o.o.",
+  "sourceUrl": "https://webshop.aquachem.hr/proizvod/22672-robot-f1-rxt/",
+  "docs": [
+   [
+    "Brošura (PDF)",
+    "https://d2xfa3et54gu2o.cloudfront.net/webshop.aquachem.hr/uploads/2025/12/f1rxt-brosura.pdf"
+   ]
+  ]
  }
 }
