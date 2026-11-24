@@ -709,7 +709,6 @@ Filterski set WM300 + pumpa FreeFlo (4 m³/h): 496,70 €
 Filterski set WM300 + pumpa Preva (4 m³/h): 568,20 €
 
 [Oprema – Doziranje]
-Dinotec YELLOW Kit 1 – pH/Redox, 2 dozirne pumpe (komplet): 2.354,71 €
 Dozirna pumpa VA DOS ECO pH + pH sonda (1,5 l/h): 476,81 €
 Dozirna pumpa VA DOS ECO Redox (klor) + ORP sonda (1,5 l/h): 481,01 €
 Dozirna pumpa VA DOS EVO – pH (1,5 l/h): 804,66 €
