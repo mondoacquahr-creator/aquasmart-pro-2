@@ -6,6 +6,13 @@ export const SHOP_ORIGIN = 'https://poolcare.mondo-acqua.hr';
 export const escapeXml = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 const title = p => `${p.name} – ${p.size}`;
 const description = p => `${p.description || p.name}. Pakiranje / izvedba: ${p.size}. Kategorija: ${p.category}.`;
+// Googleova kategorija proizvoda (ID iz Google Product Taxonomy). Bez nje Google sam pogađa (npr. mreža za lišće → „Vino”).
+const GPC = {
+  'pH regulacija': 3017, 'Dezinfekcija': 3017, 'Alge': 3017, 'Bistrenje': 3017, 'Održavanje': 3017, 'Ostalo': 3017, 'Spa i hidromasažne kade': 3017,
+  'Filteri': 2981, 'Elektroliza': 500042, 'Toplinske pumpe': 5654, 'Robotski usisavači': 2997, 'Baterijski usisavači': 2997,
+  'Ljestve': 6766, 'Solarne folije': 2994, 'Folije za bazen': 503751,
+};
+export const googleCategory = p => GPC[p.category] ?? 2832; // 2832 = Home & Garden > Pool & Spa > Pool & Spa Accessories
 export const merchantImage = p => `${ORIGIN}/merchant-images/${encodeURIComponent(p.id)}.jpg`;
 export const productUrl = p => `${ORIGIN}/proizvodi/${encodeURIComponent(p.id)}/`;
 export function merchantAssets(products) {
@@ -19,7 +26,7 @@ export function merchantAssets(products) {
   const items = products.map(p => `<item>${[
     ['id',p.id],['title',title(p)],['description',description(p)],['link',productUrl(p)],
     ['image_link',merchantImage(p)],['availability','in_stock'],['price',`${p.priceEUR.toFixed(2)} EUR`],
-    ['condition','new'],['product_type',p.category],
+    ['condition','new'],['google_product_category',googleCategory(p)],['product_type',p.category],
   ].map(([k,v]) => tag(k,v)).join('')}</item>`).join('\n');
   const feed = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"><channel><title>Mondo Acqua Pool Care</title><link>${SHOP_ORIGIN}/?stranica=webshop</link><description>Proizvodi za bazene i spa – maloprodajne cijene s PDV-om.</description>\n${items}\n</channel></rss>\n`;
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[`${SHOP_ORIGIN}/?stranica=webshop`, ...products.map(productUrl)].map(url => `<url><loc>${escapeXml(url)}</loc></url>`).join('\n')}\n</urlset>\n`;
