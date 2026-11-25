@@ -236,7 +236,7 @@
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/large-chlorine-float-for-200g-tablets"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=chlor-tabs-5kg"
   status = 301
   force = true
 # Stari webshop i stare stranice iz Search Consolea (dodano 22. 11. 2026.)
@@ -252,7 +252,7 @@
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/ipoclor-30"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&kat=Dezinfekcija"
   status = 301
   force = true
 [[redirects]]
@@ -262,32 +262,32 @@
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/mreza-za-izravnavanje-s-alu-sipkom-12m"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=vh-6041NV"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/dnevna-mreza"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=vh-6041NV"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/povrsinska-mreza-de-luxe"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=vh-6041NV"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/surface-mesh-de-luxe"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=vh-6041NV"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/dan-net-de-luxe"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=vh-6041NV"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/mrezeica"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=vh-6041NV"
   status = 301
   force = true
 [[redirects]]
@@ -317,22 +317,22 @@
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/brom-20g-tablete-5-kg"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=spa-brom-tablete"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/dozator-klora"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=chlor-tabs-5kg"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/tricloro"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&q=klor%20tablete"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/seq-06"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&kat=Odr%C5%BEavanje"
   status = 301
   force = true
 [[redirects]]
@@ -347,22 +347,22 @@
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/triclor-90500"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=chlor-tabs-5kg"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/triclor-9020"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=chlor-tabs-20g-5kg"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/triclor-90200"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=chlor-tabs-5kg"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/triclor-90-20"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=chlor-tabs-20g-5kg"
   status = 301
   force = true
 [[redirects]]
@@ -377,12 +377,12 @@
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/bioacid1"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&kat=pH%20regulacija"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/bioacid3"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&kat=pH%20regulacija"
   status = 301
   force = true
 [[redirects]]
@@ -402,32 +402,37 @@
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/dozirni-uredaj-eng-p-ph-6-lt-h-1-bar-sa-sondom-ph"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=vg-93DYNPHNK"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/flocculante-pastiglie"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&kat=Bistrenje"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/quasar-7g-tablete-10-kg"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=chlor-tabs-20g-5kg"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/linea-hth"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&kat=Dezinfekcija"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/multifunkcionalne-tablete-200g-10-kg"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=multitabs-5kg"
   status = 301
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/teleskopski-stup-24-48-m"
-  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&proizvod=vh-65412"
+  status = 301
+  force = true
+[[redirects]]
+  from = "https://www.mondo-acqua.hr/automatski-dozator-ynblue-gold-wifi"
+  to = "https://poolcare.mondo-acqua.hr/?stranica=webshop&kat=Doziranje"
   status = 301
   force = true
 [[redirects]]
