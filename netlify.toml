@@ -522,77 +522,77 @@
 # Rute glavne stranice (sve ostale adrese dobivaju pravu 404)
 [[redirects]]
   from = "https://www.mondo-acqua.hr/bazeni"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/bazeni.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/bazeni/fp"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/fp.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/bazeni/coral"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/coral.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/bazeni/compact"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/compact.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/bazeni/betonski"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/po-mjeri.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/bazeni/swim-spa"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/swim-spa.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/bazeni/rekonstrukcija"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/rekonstrukcija.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/kljuc-u-ruke"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/kljuc-u-ruke.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/odrzavanje"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/odrzavanje.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/galerija"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/galerija.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/o-nama"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/o-nama.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/kontakt"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/kontakt.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/privatnost"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/privatnost.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/upit"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/upit.html"
   status = 200
   force = true
 [[redirects]]
   from = "https://www.mondo-acqua.hr/pro"
-  to = "/mondo-web/index.html"
+  to = "/mondo-web/stranice/pro.html"
   status = 200
   force = true
 # Nepostojeća adresa: prava 404 sa stranicom „Stranica nije pronađena”, adresa ostaje
