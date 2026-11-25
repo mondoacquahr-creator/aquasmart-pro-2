@@ -1,6 +1,7 @@
 import { SHOP_PRODUCTS } from './src/app/lib/shopCatalog'
 import { merchantAssets } from './scripts/merchant-feed.mjs'
 import { buildCjenikRows } from './scripts/cjenik-data.mjs'
+import { mondoWebPages } from './scripts/mondo-web-pages.mjs'
 import fs from 'fs'
 import { defineConfig } from 'vite'
 import path from 'path'
@@ -53,6 +54,10 @@ export default defineConfig({
 
         // Podaci za javni cjenik (Netlify funkcija cjenik)
         fs.writeFileSync(path.resolve(__dirname, 'netlify/functions/cjenik-data.json'), JSON.stringify(buildCjenikRows(SHOP_PRODUCTS, path.resolve(__dirname, 'public/mondo-web/index.html'))));
+        // Glavni web: zasebna kopija za svaku podstranicu s vlastitim naslovom i opisom (scripts/mondo-web-pages.mjs)
+        for (const page of mondoWebPages(fs.readFileSync(path.resolve(__dirname, 'public/mondo-web/index.html'), 'utf8'))) {
+          this.emitFile({ type: 'asset', ...page });
+        }
         for (const asset of merchantAssets(SHOP_PRODUCTS)) {
           this.emitFile({ type: 'asset', ...asset });
         }
